@@ -24,11 +24,6 @@ model User {
   updatedAt             DateTime             @updatedAt
   accounts              Account[]
   sessions              Session[]
-  sites                 Site[]
-  posts                 Post[]
-  organization          UserOnOrganization[]
-  OrganizationUserIdRef Organization[]
-  contactAddedByRef     Contact[]
 }
 
 model Account {
