@@ -61,8 +61,8 @@ export default function PMLogo() {
                     </clipPath>
                 </defs>
                 <path d="M5.975.643.451 11.063l5.149-.045L10.837.616zm0 0" fill="#005191" data-color="3" />
-                <g clip-path="url(#a51f1aa8-bf82-45da-b4b1-a5df1f9c6852)" transform="scale(.35278)">
-                    <g clip-path="url(#859bca5e-e9a7-4a9f-a959-bdb4a54238c2)">
+                <g clipPath="url(#a51f1aa8-bf82-45da-b4b1-a5df1f9c6852)" transform="scale(.35278)">
+                    <g clipPath="url(#859bca5e-e9a7-4a9f-a959-bdb4a54238c2)">
                         <path d="m20.875 21.195 11.43 8.192 11.77 1.949-1.169-10.32-16.843-10.164zm0 0" fill="#75d4ff" data-color="4" />
                     </g>
                 </g>
