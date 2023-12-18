@@ -12,18 +12,18 @@ generator client {
 }
 
 model User {
-  id                    String               @id @default(cuid())
-  name                  String?
+  id            String    @id @default(cuid())
+  name          String?
   // if you are using Github OAuth, you can get rid of the username attribute (that is for Twitter OAuth)
-  username              String?
-  gh_username           String?
-  email                 String?              @unique
-  emailVerified         DateTime?
-  image                 String?
-  createdAt             DateTime             @default(now())
-  updatedAt             DateTime             @updatedAt
-  accounts              Account[]
-  sessions              Session[]
+  username      String?
+  gh_username   String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
 }
 
 model Account {
@@ -65,4 +65,45 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Mineral {
+  id                     String              @id @default(cuid())
+  name                   String
+  mineral_class          String
+  crystal_system         String
+  chemical_formula       String
+  luster                 String
+  streak                 String
+  hardness_min           String
+  hardness_max           String
+  uses                   String
+  localities_description String
+  associatedWith         Mineral[]           @relation("MineralAssociates")
+  associates             Mineral[]           @relation("MineralAssociates")
+  localities             MineralOnLocality[]
+
+  @@index([id])
+}
+
+model Locality {
+  id          String              @id @default(cuid())
+  type_code   String
+  description String
+  latitude    String
+  longitude   String
+  minerals    MineralOnLocality[]
+
+  @@index([id])
+}
+
+model MineralOnLocality {
+  locality   Locality @relation(fields: [localityId], references: [id])
+  localityId String // relation scalar field (used in the `@relation` attribute above)
+  mineral    Mineral  @relation(fields: [mineralId], references: [id])
+  mineralId  String // relation scalar field (used in the `@relation` attribute above)
+  assignedAt DateTime @default(now())
+  assignedBy String
+
+  @@id([localityId, mineralId])
 }
