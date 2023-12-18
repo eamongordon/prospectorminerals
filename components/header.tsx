@@ -4,6 +4,7 @@ import React from "react";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, Button } from "@nextui-org/react";
 import PMLogo from "./pmLogo";
 import { useSession } from "next-auth/react";
+import { Search } from 'lucide-react';
 
 export default function HeaderComp() {
   const { data: session, status } = useSession();
@@ -16,7 +17,8 @@ export default function HeaderComp() {
         <NavbarBrand className="flex-none">
           <PMLogo />
         </NavbarBrand>
-        <NavbarContent className="sm:visible flex-auto w-64 gap-10" justify="center">
+        <NavbarContent className="sm:visible flex-auto gap-[72px]" justify="end">
+        <NavbarContent className="flex gap-10" justify="end">
           <NavbarItem>
             <Link color="foreground" href="#">
               Learn
@@ -42,9 +44,12 @@ export default function HeaderComp() {
               Photos
             </Link>
           </NavbarItem>
-        </NavbarContent>
+          </NavbarContent>
         {status === "authenticated" ? (
-          <NavbarContent className="flex-auto w-32" justify="end">
+          <NavbarContent className="flex gap-5">
+            <Button isIconOnly color="default" variant="faded" aria-label="Take a photo">
+              <Search />
+            </Button>
             <Dropdown placement="bottom-end">
               <DropdownTrigger>
                 <Avatar
@@ -75,12 +80,16 @@ export default function HeaderComp() {
             </Dropdown>
           </NavbarContent>
         ) : (
-          <NavbarContent className="flex-auto w-32" justify="end">
+          <NavbarContent className="flex gap-5">
+            <Button isIconOnly color="default" variant="faded" aria-label="Take a photo">
+              <Search />
+            </Button>
             <Button as={Link} color="default" href="#" variant="flat">
               Log In
             </Button>
-          </NavbarContent>
+            </NavbarContent>
         )}
+        </NavbarContent>
       </Navbar>
     </div>
   )
