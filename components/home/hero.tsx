@@ -11,6 +11,7 @@ export default function Hero() {
                 alt="Hero Image"
                 className="opacity-60 object-cover"
                 fill
+                priority={true}
             />
             <div className="flex flex-col justify-center items-center px-3">
                 <h1 className=" text-center text-3xl md:text-5xl text-white font-bold drop-shadow-lg">WELCOME TO <br />

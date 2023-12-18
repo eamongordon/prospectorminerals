@@ -1,29 +1,25 @@
 import React from "react";
-import { Card, CardHeader, CardBody, CardFooter, Divider, Link, Image } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFooter, Button, Link, Image } from "@nextui-org/react";
 
 export default function NavCard() {
     return (
-        <Card className="col-span-12 sm:col-span-4 w-[300px]">
+        <Card className="max-w-[350px]">
             <Image
                 removeWrapper
                 alt="Card background"
-                className="z-0 w-full h-full object-cover"
+                className="w-full h-48 object-cover rounded-br-none rounded-bl-none"
                 src="/Fluorite-164_horiz-Optimized.jpg"
             />
-            <CardHeader className="z-10 top-1">
-                <h2 className="text-white font-medium text-xxl">Minerals</h2>
+            <CardHeader className="flex gap-3">
+                <h2 className="font-medium text-3xl">Minerals</h2>
             </CardHeader>
-            <CardBody className="z-10 top-3">
-                <h2 className="text-white font-medium text-medium">Learn more about Minerals with our resources.</h2>
+            <CardBody>
+                <p>Learn more about Minerals with our resources</p>
             </CardBody>
-            <CardFooter className="z-10 top-5">
-                <Link
-                    isExternal
-                    showAnchorIcon
-                    href="https://github.com/nextui-org/nextui"
-                >
-                    Read More
-                </Link>
+            <CardFooter>
+                <Button as={Link} color="default" href="#" variant="flat">
+                    Learn More
+                </Button>
             </CardFooter>
         </Card>
     );
