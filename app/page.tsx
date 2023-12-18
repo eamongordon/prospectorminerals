@@ -47,8 +47,8 @@ export default function Home() {
       <div className='max-w-[1024px] mx-auto gap-4 grid grid-cols-1 w-600 sm:grid-cols-3 justify-items-center'>
         {
           cardItemList.map((obj, index) => (
-            <div>
-            <Card key={index.toString()} title={obj.title} description={obj.description} cta={obj.cta} />
+            <div key={index}>
+             <Card title={obj.title} description={obj.description} cta={obj.cta} />
             </div>
           ))
         }
