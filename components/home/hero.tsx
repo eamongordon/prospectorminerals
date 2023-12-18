@@ -11,6 +11,7 @@ export default function Hero() {
                 alt="Hero Image"
                 className="opacity-60 object-cover"
                 fill
+                placeholder="blur"
                 priority={true}
             />
             <div className="flex flex-col justify-center items-center px-3">
