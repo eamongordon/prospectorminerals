@@ -53,6 +53,7 @@ export default function Home() {
           ))
         }
       </div>
+      <Spacer y={40} />
       <FooterComp />
     </main>
   )
