@@ -99,7 +99,7 @@ export default function FooterComp() {
                             </svg>
                         </div>
 
-                        <p className="mt-6 font-medium">Don't be shy! - Follow Us</p>
+                        <p className="mt-6 font-medium">Don&apos;t be shy! - Follow Us</p>
 
                         <ul className="mt-8 flex gap-6">
                             <li>
