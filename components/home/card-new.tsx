@@ -6,12 +6,14 @@ export default function NavCard({
     title,
     description,
     cta,
-    image
+    image,
+    link
 }: {
     title: string;
     description: string;
     cta?: string;
-    image?: string
+    image?: string;
+    link: string
 }) {
     return (
         <Card className="col-span-12 sm:col-span-4 w-[330px] h-[240px]">
@@ -28,10 +30,12 @@ export default function NavCard({
                 <h2 className="text-white font-medium text-medium">{description}</h2>
             </CardBody>
             <CardFooter className="absolute z-10 bottom-1 left-2">
-                <button as={Link} className="bg-transparent left-0 text-align-left inline-flex items-center text-white hover:text-gray-300" href="#" variant="flat">
-                    {cta ? cta : 'Learn More'}
-                    <ArrowRight className = "ml-2" />
-                </button>
+                <Link href={link}>
+                    <button className="bg-transparent left-0 text-align-left inline-flex items-center text-white hover:text-gray-300" variant="flat">
+                        {cta ? cta : 'Learn More'}
+                        <ArrowRight className="ml-2" />
+                    </button>
+                </Link>
             </CardFooter>
         </Card>
     );

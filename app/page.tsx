@@ -54,7 +54,7 @@ export default function Home() {
         {
           cardItemList.map((obj, index) => (
             <div key={index}>
-             <Card title={obj.title} description={obj.description} cta={obj.cta} image={obj.image} />
+             <Card title={obj.title} description={obj.description} cta={obj.cta} image={obj.image} link="#" />
             </div>
           ))
         }
