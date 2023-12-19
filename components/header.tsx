@@ -24,7 +24,7 @@ export default function HeaderComp() {
       <NavbarBrand className="flex-none">
         <PMLogo />
       </NavbarBrand>
-      <NavbarContent className="invisible sm:visible flex-auto gap-[72px]" justify="end">
+      <NavbarContent className="flex-auto gap-[72px]" justify="end">
         <NavbarContent className="hidden lg:flex gap-10" justify="end">
           <NavbarItem>
             <Link color="foreground" href="#">
@@ -53,7 +53,7 @@ export default function HeaderComp() {
           </NavbarItem>
         </NavbarContent>
         {status === "authenticated" ? (
-          <NavbarContent className="flex gap-5">
+          <NavbarContent className="hidden sm:flex gap-5">
             <Button isIconOnly color="default" variant="faded" aria-label="Take a photo">
               <Search />
             </Button>
@@ -91,7 +91,7 @@ export default function HeaderComp() {
             <Button isIconOnly color="default" variant="faded" aria-label="Take a photo">
               <Search />
             </Button>
-            <Button as={Link} color="default" href="#" variant="flat">
+            <Button as={Link} color="default" href="#" variant="flat" className="hidden sm:flex">
               Log In
             </Button>
           </NavbarContent>
