@@ -31,7 +31,7 @@ export default function NavCard({
             </CardBody>
             <CardFooter className="absolute z-10 bottom-1 left-2">
                 <Link href={link}>
-                    <button className="bg-transparent left-0 text-align-left inline-flex items-center text-white hover:text-gray-300" variant="flat">
+                    <button className="bg-transparent left-0 text-align-left inline-flex items-center text-white hover:text-gray-300">
                         {cta ? cta : 'Learn More'}
                         <ArrowRight className="ml-2" />
                     </button>
