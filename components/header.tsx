@@ -19,7 +19,7 @@ export default function HeaderComp() {
     >
       <NavbarMenuToggle
         aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-        className="sm:hidden"
+        className="mr-4 sm:hidden"
       />
       <NavbarBrand className="flex-none">
         <PMLogo />
