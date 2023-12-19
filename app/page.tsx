@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Card from '@/components/home/card';
+import Card from '@/components/home/card-new';
 import HeaderComp from '@/components/header';
 import FooterComp from '@/components/footer';
 import Hero from '@/components/home/hero';
@@ -9,32 +9,38 @@ const cardItemList = [
   {
     title: 'Learn',
     description: 'A starting place for mineralogy research.',
-    cta: 'Get Started'
+    cta: 'Get Started',
+    image: '/Cavansite-45.jpeg'
   },
   {
     title: 'Minerals',
     description: 'Learn more about Minerals with our resources.',
-    cta: 'Learn More'
+    cta: 'Learn More',
+    image: '/Krohnkite-110_horiz.jpeg'
   },
   {
     title: 'Localities',
     description: 'Information and resources detailing localities.',
-    cta: 'Learn More'
+    cta: 'Learn More',
+    image: '/Optimized-DeathValley-Floor (1).jpg'
   },
   {
     title: 'Articles',
     description: 'In-depth Educational Articles on mineralogy-related topics.',
-    cta: 'Read More'
+    cta: 'Read More',
+    image: '/NativeCopper-15_horiz.jpeg'
   },
   {
     title: 'Photos',
     description: 'Photos of mineral specimens from worldwide localities.',
-    cta: 'View Photos'
+    cta: 'View Photos',
+    image: '/Amazonite-106_horiz.jpeg'
   },
   {
     title: 'Members',
     description: 'Join and gain access to all we have to offer. For Free.',
-    cta: 'Log In or Sign Up'
+    cta: 'Log In or Sign Up',
+    image: '/AluminoAdamite-Smithsonite_horiz.jpeg'
   },
 ]
 
@@ -44,11 +50,11 @@ export default function Home() {
       <HeaderComp />
       <Hero />
       <Spacer y={40} />
-      <div className='max-w-[1024px] mx-auto gap-4 grid grid-cols-1 w-600 sm:grid-cols-3 justify-items-center'>
+      <div className='max-w-[1024px] mx-auto gap-4 grid grid-cols-1 w-600 md:grid-cols-2 lg:grid-cols-3 justify-items-center'>
         {
           cardItemList.map((obj, index) => (
             <div key={index}>
-             <Card title={obj.title} description={obj.description} cta={obj.cta} />
+             <Card title={obj.title} description={obj.description} cta={obj.cta} image={obj.image} />
             </div>
           ))
         }
