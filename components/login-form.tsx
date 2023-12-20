@@ -32,6 +32,7 @@ export default function Form({ type }: { type: "login" | "register" }) {
             }
           });
         } else {
+            console.log(e.currentTarget.password.value)
           fetch("/api/auth/register", {
             method: "POST",
             headers: {
@@ -48,9 +49,11 @@ export default function Form({ type }: { type: "login" | "register" }) {
               setTimeout(() => {
                 router.push("/login");
               }, 2000);
-            } else {
+            } else if (res.status === 400) {
               const { error } = await res.json();
               toast.error(error);
+            } else {
+              toast.error("Internal Server Error")
             }
           });
         }
