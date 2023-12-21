@@ -7,10 +7,13 @@ import { Input, Button } from "@nextui-org/react";
 import { toast } from "sonner";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useSearchParams } from 'next/navigation'
 
 export default function Form({ type }: { type: "login" | "register" }) {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+    const searchParams = useSearchParams()
+    const redirectUri = searchParams.get('redirect')
     return (
         <form
             onSubmit={(e) => {
@@ -28,7 +31,11 @@ export default function Form({ type }: { type: "login" | "register" }) {
                             toast.error(error);
                         } else {
                             router.refresh();
-                            router.push("/protected");
+                            if (redirectUri) {
+                                router.push(decodeURIComponent(redirectUri));
+                            } else {
+                                router.push("/");
+                            }
                         }
                     });
                 } else {
