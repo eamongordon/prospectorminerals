@@ -95,12 +95,14 @@ export default function HeaderComp({
                         <Button isIconOnly color="default" variant="faded" aria-label="Take a photo">
                             <Search />
                         </Button>
-                        <Button as={Link} color="default" href={{
+                        <Button as={Link} color="default" href={
+                            `/login?redirect=${encodeURIComponent(pathname)}`
+                            /*{
                             pathname: '/login',
                             query: {
                                 redirect: encodeURIComponent(pathname)
                             }
-                        }} variant="flat" className="hidden sm:flex">
+                        }*/} variant="flat" className="hidden sm:flex">
                             Log In
                         </Button>
                     </NavbarContent>
