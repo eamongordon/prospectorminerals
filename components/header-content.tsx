@@ -3,7 +3,7 @@
 import React from "react";
 import { Navbar, NavbarMenuToggle, NavbarBrand, NavbarContent, NavbarItem, Link, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, Button } from "@nextui-org/react";
 import PMLogo from "./pmLogo";
-import { useSession } from "next-auth/react";
+import { usePathname } from 'next/navigation'
 import { Search } from 'lucide-react';
 
 export default function HeaderComp({
@@ -12,6 +12,7 @@ export default function HeaderComp({
     loggedIn: boolean
 }) {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+    const pathname = usePathname();
     return (
         <Navbar
             isBordered
@@ -94,7 +95,12 @@ export default function HeaderComp({
                         <Button isIconOnly color="default" variant="faded" aria-label="Take a photo">
                             <Search />
                         </Button>
-                        <Button as={Link} color="default" href="#" variant="flat" className="hidden sm:flex">
+                        <Button as={Link} color="default" href={{
+                            pathname: '/login',
+                            query: {
+                                redirect: encodeURIComponent(pathname)
+                            }
+                        }} variant="flat" className="hidden sm:flex">
                             Log In
                         </Button>
                     </NavbarContent>
