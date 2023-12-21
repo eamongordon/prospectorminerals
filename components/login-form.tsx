@@ -93,6 +93,7 @@ export default function Form({ type }: { type: "login" | "register" }) {
                 disabled={loading}
                 isLoading={loading}
                 color="default"
+                type="submit"
             >
                 <p>{type === "login" ? "Sign In" : "Sign Up"}</p>
             </Button>
