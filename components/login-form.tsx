@@ -13,7 +13,7 @@ export default function Form({ type }: { type: "login" | "register" }) {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
     const searchParams = useSearchParams()
-    const redirectUri = searchParams.get('redirect')
+    const redirectUri = searchParams.get('redirect');
     return (
         <form
             onSubmit={(e) => {

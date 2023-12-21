@@ -65,6 +65,7 @@ export const authOptions: NextAuthOptions = {
   },
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
+  /*
   cookies: {
     sessionToken: {
       name: `${VERCEL_DEPLOYMENT ? "__Secure-" : ""}next-auth.session-token`,
@@ -80,13 +81,8 @@ export const authOptions: NextAuthOptions = {
       },
     },
   },
+  */
   callbacks: {
-    jwt: async ({ token, user }) => {
-      if (user) {
-        token.user = user;
-      }
-      return token;
-    },
     session: async ({ session, token }) => {
       session.user = {
         ...session.user,
