@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Form from "@/components/registration/login-form";
+import Form from "@/components/registration/form-inner";
 import Link from "next/link";
 
 export default function Login() {
