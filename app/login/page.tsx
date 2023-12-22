@@ -3,7 +3,7 @@
 import Image from "next/image";
 import LoginButton from "./login-button";
 import { Suspense } from "react";
-import FormWrapper from "@/components/login-form";
+import FormWrapper from "@/components/registration/login-form";
 import Link from "next/link";
 import { Divider, Tab, Tabs } from "@nextui-org/react";
 import React from "react";
