@@ -3,8 +3,9 @@
 import React from "react";
 import { Navbar, NavbarMenuToggle, NavbarBrand, NavbarContent, NavbarItem, Link, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, Button } from "@nextui-org/react";
 import PMLogo from "./pmLogo";
-import { usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation';
 import { Search } from 'lucide-react';
+import { signOut } from "next-auth/react";
 
 export default function HeaderComp({
     loggedIn,
@@ -32,8 +33,11 @@ export default function HeaderComp({
                 aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                 className="mr-4 sm:hidden"
             />
+
             <NavbarBrand className="flex-none">
-                <PMLogo />
+                <Link href="/">
+                    <PMLogo />
+                </Link>
             </NavbarBrand>
             <NavbarContent className="flex-auto gap-[72px]" justify="end">
                 <NavbarContent className="hidden lg:flex gap-10" justify="end">
@@ -80,13 +84,17 @@ export default function HeaderComp({
                                     src={image ? image : undefined}
                                 />
                             </DropdownTrigger>
-                            <DropdownMenu aria-label="Profile Actions" variant="flat">
+                            <DropdownMenu aria-label="Profile Actions" variant="flat" onAction={(item) => {
+                                if (item === 'logout') {
+                                    signOut();
+                                }
+                            }}>
                                 <DropdownItem key="profile" className="h-14 gap-2">
                                     <p className="font-semibold">Signed in as</p>
                                     <p className="font-semibold">{name ? name : email}</p>
                                 </DropdownItem>
                                 <DropdownItem key="dashboard">Dashboard</DropdownItem>
-                                <DropdownItem key="settings">My Settings</DropdownItem>
+                                <DropdownItem key="settings" href="/account/settings">Settings</DropdownItem>
                                 <DropdownItem key="logout" color="danger">
                                     Log Out
                                 </DropdownItem>

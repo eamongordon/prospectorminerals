@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function FooterComp() {
     return (
         <footer className="bg-white dark:bg-zinc-900">
@@ -5,6 +7,7 @@ export default function FooterComp() {
                 <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
                     <div>
                         <div className="text-teal-600">
+                            <Link href="/">
                             <svg data-bbox="0 0 58.561 11.289" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 58.561 11.289" height="42.667" width="221.333" data-type="color">
                                 <g>
                                     <defs>
@@ -97,6 +100,7 @@ export default function FooterComp() {
                                     </g>
                                 </g>
                             </svg>
+                            </Link>
                         </div>
 
                         <p className="mt-6 font-medium">Don&apos;t be shy! - Follow Us</p>
