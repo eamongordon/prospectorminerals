@@ -86,7 +86,7 @@ console.log(pathname)
 
 }
 
-function Form({ type }: { type: string }) {
+export function Form({ type }: { type: "login" | "register" }) {
   const router = useRouter();
   const searchParams = useSearchParams()
   const redirectUri = searchParams.get('redirect');
