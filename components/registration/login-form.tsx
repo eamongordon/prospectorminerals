@@ -3,7 +3,7 @@ import Form from './form-inner';
 import { useRouter, usePathname} from "next/navigation";
 import { useSearchParams } from 'next/navigation'
 import Image from "next/image";
-import LoginButton from "./login-button";
+import LoginButton from "./social-login-button";
 import { Suspense } from "react";
 import { Divider, Tab, Tabs } from "@nextui-org/react";
 import React from "react";
