@@ -44,7 +44,7 @@ export default function FormWrapper({ isModal }: { isModal?: boolean }) {
             <Form type="login" />
             <p className="text-center text-sm pt-8 pb-8 px-16">
               Don&apos;t have an account?{" "}
-              <Link href="/signup" className="font-semibold" color="foreground" >
+              <Link href="/signup" className="font-semibold text-sm" color="foreground" >
                 Sign up
               </Link>{" "}
               for free.
@@ -75,12 +75,12 @@ export default function FormWrapper({ isModal }: { isModal?: boolean }) {
             <p className="text-center text-sm pt-8 pb-8 px-16">
               Already have an account?{" "}
               {isModal ? (
-                <Link href="/login" className="font-semibold" color="foreground">
+                <Link href="/login" className="font-semibold text-sm" color="foreground">
                   Sign in
                 </Link>
                 )
                 : (
-                  <Link href="/login" className="font-semibold" color="foreground">
+                  <Link href="/login" className="font-semibold text-sm" color="foreground">
                     Sign in
                   </Link>
                 )
