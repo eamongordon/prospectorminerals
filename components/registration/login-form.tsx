@@ -8,15 +8,14 @@ import { Suspense } from "react";
 import { Divider, Tab, Tabs, Link } from "@nextui-org/react";
 import React from "react";
 
-export default function FormWrapper({ isModal }: { isModal?: boolean }) {
+export default function FormWrapper({ isModal, onCloseAction }: { isModal?: boolean, onCloseAction?: Function}) {
   const router = useRouter();
   const searchParams = useSearchParams()
   const redirectUri = searchParams.get('redirect');
   const [selected, setSelected] = React.useState("/login");
   const pathname = usePathname();
-  console.log(pathname)
   return (
-    <div className="flex h-screen w-screen items-center justify-center">
+    <div className={`${isModal ? "flex items-center justify-center" : "flex h-screen w-screen items-center justify-center"}`}>
       <div className="mx-5 border border-stone-200 dark:border-stone-700 sm:mx-auto sm:w-full sm:max-w-md sm:rounded-lg sm:shadow-md">
         <Tabs
           fullWidth
@@ -30,7 +29,7 @@ export default function FormWrapper({ isModal }: { isModal?: boolean }) {
             tab: "rounded-t-lg rounded-b-none",
           }}
         >
-          <Tab key="/login" title="Login" href="/login">
+          <Tab key="/login" title="Login" {...(isModal ? {} : { href: "/login" })}>
             <Image
               alt="Platforms Starter Kit"
               width={100}
@@ -41,7 +40,7 @@ export default function FormWrapper({ isModal }: { isModal?: boolean }) {
             <h1 className="mt-6 text-center font-medium text-3xl dark:text-white">
               Welcome Back
             </h1>
-            <Form type="login" />
+            <Form type="login" isModal={isModal} onCloseAction={onCloseAction}/>
             <p className="text-center text-sm pt-8 pb-8 px-16">
               Don&apos;t have an account?{" "}
               <Link href="/signup" className="font-semibold text-sm" color="foreground" >
@@ -60,7 +59,7 @@ export default function FormWrapper({ isModal }: { isModal?: boolean }) {
               </Suspense>
             </div>
           </Tab>
-          <Tab key="/signup" title="Sign Up" href="/signup">
+          <Tab key="/signup" title="Sign Up" {...(isModal ? {} : { href: "/signup" })}>
             <Image
               alt="Platforms Starter Kit"
               width={100}
@@ -71,14 +70,14 @@ export default function FormWrapper({ isModal }: { isModal?: boolean }) {
             <h1 className="mt-6 text-center font-medium text-3xl dark:text-white">
               Get Started
             </h1>
-            <Form type="register" />
+            <Form type="register" isModal={isModal} onCloseAction={onCloseAction} />
             <p className="text-center text-sm pt-8 pb-8 px-16">
               Already have an account?{" "}
               {isModal ? (
                 <Link href="/login" className="font-semibold text-sm" color="foreground">
                   Sign in
                 </Link>
-                )
+              )
                 : (
                   <Link href="/login" className="font-semibold text-sm" color="foreground">
                     Sign in
