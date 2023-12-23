@@ -10,7 +10,7 @@ import { useRouter} from "next/navigation";
 import { useSearchParams } from 'next/navigation'
 import React from "react";
 
-export default function Form({ type }: { type: "login" | "register" }) {
+export default function Form({ type, location }: { type: "login" | "register", location?: "modal" | "page" }) {
     const router = useRouter();
     const searchParams = useSearchParams()
     const redirectUri = searchParams.get('redirect');
@@ -65,7 +65,7 @@ export default function Form({ type }: { type: "login" | "register" }) {
             });
           }
         }}
-        className="flex flex-col space-y-4 px-4 py-8 sm:px-16"
+        className="flex flex-col space-y-4 px-4 mt-8 sm:px-16"
       >
         <div>
           <Input
@@ -98,23 +98,6 @@ export default function Form({ type }: { type: "login" | "register" }) {
         >
           <p>{type === "login" ? "Sign In" : "Sign Up"}</p>
         </Button>
-        {type === "login" ? (
-          <p className="text-center text-sm pt-4">
-            Don&apos;t have an account?{" "}
-            <Link href="/signup" className="font-semibold" >
-              Sign up
-            </Link>{" "}
-            for free.
-          </p>
-        ) : (
-          <p className="text-center text-sm pt-4">
-            Already have an account?{" "}
-            <Link href="/login" className="font-semibold">
-              Sign in
-            </Link>{" "}
-            instead.
-          </p>
-        )}
       </form>
     );
   }

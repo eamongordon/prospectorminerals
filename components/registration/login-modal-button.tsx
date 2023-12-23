@@ -15,7 +15,7 @@ export default function LoginModalButton({
       onClick={() => modal?.show(children)}
       color="default" variant="flat" className="hidden sm:flex"
     >
-      Create New Site
+      Log In
     </Button>
   );
 }

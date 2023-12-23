@@ -6,6 +6,8 @@ import PMLogo from "./pmLogo";
 import { usePathname } from 'next/navigation';
 import { Search } from 'lucide-react';
 import { signOut } from "next-auth/react";
+import LoginModalButton from './registration/login-modal-button';
+import LoginModal from './modal/login';
 
 export default function HeaderComp({
     loggedIn,
