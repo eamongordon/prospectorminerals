@@ -6,98 +6,107 @@ import { signIn } from "next-auth/react";
 import { Input, Button } from "@nextui-org/react";
 import { toast } from "sonner";
 import Link from "next/link";
-import { useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useSearchParams } from 'next/navigation'
 import React from "react";
 
-export default function Form({ type, location }: { type: "login" | "register", location?: "modal" | "page" }) {
-    const router = useRouter();
-    const searchParams = useSearchParams()
-    const redirectUri = searchParams.get('redirect');
-    const [loading, setLoading] = useState(false);
-    return (
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          setLoading(true);
-          if (type === "login") {
-            signIn("credentials", {
-              redirect: false,
-              email: e.currentTarget.email.value,
-              password: e.currentTarget.password.value,
-              // @ts-ignore
-            }).then(({ error }) => {
-              if (error) {
-                setLoading(false);
-                toast.error(error);
+
+export default function Form({ type, isModal, onCloseAction }: { type: "login" | "register", isModal?: boolean, onCloseAction?: Function}) {
+  const router = useRouter();
+  const searchParams = useSearchParams()
+  const redirectUri = searchParams.get('redirect');
+  const [loading, setLoading] = useState(false);
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        setLoading(true);
+        if (type === "login") {
+          signIn("credentials", {
+            redirect: false,
+            email: e.currentTarget.email.value,
+            password: e.currentTarget.password.value,
+            // @ts-ignore
+          }).then(({ error }) => {
+            if (error) {
+              setLoading(false);
+              toast.error(error);
+            } else {
+              router.refresh();
+              if (isModal) {
+                console.log(isModal);
+                console.log('CloseAction');
+                // @ts-expect-error
+                onCloseAction();
               } else {
-                router.refresh();
+                console.log('hey');
                 if (redirectUri) {
                   router.push(decodeURIComponent(redirectUri));
                 } else {
                   router.push("/");
                 }
               }
-            });
-          } else {
-            fetch("/api/auth/register", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                email: e.currentTarget.email.value,
-                password: e.currentTarget.password.value,
-              }),
-            }).then(async (res) => {
-              setLoading(false);
-              if (res.status === 200) {
-                toast.success("Account created! Redirecting to login...");
-                setTimeout(() => {
-                  router.push("/login");
-                }, 2000);
-              } else if (res.status === 400) {
-                const { error } = await res.json();
-                toast.error(error);
-              } else {
-                toast.error("Internal Server Error")
-              }
-            });
-          }
-        }}
-        className="flex flex-col space-y-4 px-4 mt-8 sm:px-16"
+            }
+          });
+        } else {
+          fetch("/api/auth/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: e.currentTarget.email.value,
+              password: e.currentTarget.password.value,
+            }),
+          }).then(async (res) => {
+            setLoading(false);
+            if (res.status === 200) {
+              toast.success("Account created! Redirecting to login...");
+              setTimeout(() => {
+                router.push("/login");
+              }, 2000);
+            } else if (res.status === 400) {
+              const { error } = await res.json();
+              toast.error(error);
+            } else {
+              toast.error("Internal Server Error")
+            }
+          });
+        }
+      }}
+      className="flex flex-col space-y-4 px-4 mt-8 sm:px-16"
+    >
+      <div>
+        <Input
+          id="email"
+          name="email"
+          size="sm"
+          type="email"
+          placeholder="Email"
+          autoComplete="email"
+          required
+        //className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
+        />
+      </div>
+      <div>
+        <Input
+          id="password"
+          name="password"
+          placeholder="Password"
+          size="sm"
+          type="password"
+          required
+        //className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
+        />
+      </div>
+      <Button
+        disabled={loading}
+        isLoading={loading}
+        color="default"
+        type="submit"
       >
-        <div>
-          <Input
-            id="email"
-            name="email"
-            size="sm"
-            type="email"
-            placeholder="Email"
-            autoComplete="email"
-            required
-          //className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
-          />
-        </div>
-        <div>
-          <Input
-            id="password"
-            name="password"
-            placeholder="Password"
-            size="sm"
-            type="password"
-            required
-          //className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
-          />
-        </div>
-        <Button
-          disabled={loading}
-          isLoading={loading}
-          color="default"
-          type="submit"
-        >
-          <p>{type === "login" ? "Sign In" : "Sign Up"}</p>
-        </Button>
-      </form>
-    );
-  }
+        <p>{type === "login" ? "Sign In" : "Sign Up"}</p>
+      </Button>
+    </form>
+  );
+}
