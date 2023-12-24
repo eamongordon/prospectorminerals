@@ -7,7 +7,7 @@ export default function ModalNext() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     return (
         <>
-            <Button onPress={onOpen}>Open Modal</Button>
+            <Button onPress={onOpen} color="default" variant="flat" className="hidden sm:flex">Log In</Button>
             <Modal
                 backdrop="opaque"
                 isOpen={isOpen}

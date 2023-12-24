@@ -8,6 +8,7 @@ import { Search } from 'lucide-react';
 import { signOut } from "next-auth/react";
 import LoginModalButton from './registration/login-modal-button';
 import LoginModal from './modal/login';
+import RegModal from './next-ui-modal';
 
 export default function HeaderComp({
     loggedIn,
@@ -108,16 +109,7 @@ export default function HeaderComp({
                         <Button isIconOnly color="default" variant="faded" aria-label="Take a photo">
                             <Search />
                         </Button>
-                        <Button as={Link} color="default" href={
-                            `/login?redirect=${encodeURIComponent(pathname)}`
-                            /*{
-                            pathname: '/login',
-                            query: {
-                                redirect: encodeURIComponent(pathname)
-                            }
-                        }*/} variant="flat" className="hidden sm:flex">
-                            Log In
-                        </Button>
+                        <RegModal/>
                     </NavbarContent>
                 )}
             </NavbarContent>
