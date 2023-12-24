@@ -141,7 +141,7 @@ export default function HeaderComp({
                 </NavbarMenuItem>
                 <div className="flex flex-col items-center">
                     {!loggedIn ? (
-                        <RegModal />
+                        <RegModal isMobile={true}/>
                     ) : (<></>)}
                 </div>
             </NavbarMenu>
