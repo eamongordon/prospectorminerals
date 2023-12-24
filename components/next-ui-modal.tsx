@@ -16,7 +16,7 @@ export default function ModalNext({ isMobile }: { isMobile?: boolean }) {
                     backdrop: "bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20"
                 }}
                 hideCloseButton={true}
-                {...(isMobile ? {} : { scrollBehavior:"outside"})}
+                {...(isMobile ? {scrollBehavior:"outside"} : {})}
             >
                 <ModalContent>
                     {(onClose) => (
