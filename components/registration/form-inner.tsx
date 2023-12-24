@@ -16,6 +16,10 @@ export default function Form({ type, isModal, onCloseAction }: { type: "login" |
   const searchParams = useSearchParams()
   const redirectUri = searchParams.get('redirect');
   const [loading, setLoading] = useState(false);
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
   return (
     <form
       onSubmit={(e) => {
@@ -60,13 +64,11 @@ export default function Form({ type, isModal, onCloseAction }: { type: "login" |
               name: e.currentTarget.nametxt.value ? e.currentTarget.nametxt.value : undefined
             }),
           }).then(async (res) => {
-            setLoading(false);
             if (res.status === 200) {
-              toast.success("Account created! Redirecting to login...");
               signIn("credentials", {
                 redirect: false,
-                email: e.currentTarget.email.value,
-                password: e.currentTarget.password.value,
+                email: data.email,
+                password: data.password,
                 // @ts-ignore
               }).then(({ error }) => {
                 if (error) {
@@ -75,12 +77,9 @@ export default function Form({ type, isModal, onCloseAction }: { type: "login" |
                 } else {
                   router.refresh();
                   if (isModal) {
-                    console.log(isModal);
-                    console.log('CloseAction');
                     // @ts-expect-error
                     onCloseAction();
                   } else {
-                    console.log('hey');
                     if (redirectUri) {
                       router.push(decodeURIComponent(redirectUri));
                     } else {
@@ -90,6 +89,7 @@ export default function Form({ type, isModal, onCloseAction }: { type: "login" |
                 }
               })
             } else if (res.status === 400) {
+              setLoading(false);
               const { error } = await res.json();
               toast.error(error);
             } else {
@@ -120,6 +120,7 @@ export default function Form({ type, isModal, onCloseAction }: { type: "login" |
           type="email"
           placeholder="Email"
           autoComplete="email"
+          onChange={(e) => setData({ ...data, email: e.target.value })}
           required
         //className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
         />
@@ -131,6 +132,7 @@ export default function Form({ type, isModal, onCloseAction }: { type: "login" |
           placeholder="Password"
           size="sm"
           type="password"
+          onChange={(e) => setData({ ...data, password: e.target.value })}
           required
         //className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
         />

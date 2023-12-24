@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react";
-import { Navbar, NavbarMenuToggle, NavbarBrand, NavbarContent, NavbarItem, Link, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, Button } from "@nextui-org/react";
+import { Navbar, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, NavbarBrand, NavbarContent, NavbarItem, Link, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, Button } from "@nextui-org/react";
 import PMLogo from "./pmLogo";
 import { usePathname } from 'next/navigation';
 import { Search } from 'lucide-react';
@@ -109,10 +109,42 @@ export default function HeaderComp({
                         <Button isIconOnly color="default" variant="faded" aria-label="Take a photo">
                             <Search />
                         </Button>
-                        <RegModal/>
+                        <RegModal />
                     </NavbarContent>
                 )}
             </NavbarContent>
+            <NavbarMenu>
+                <NavbarMenuItem key="learn">
+                    <Link color="foreground" href="#">
+                        Learn
+                    </Link>
+                </NavbarMenuItem>
+                <NavbarMenuItem key="minerals">
+                    <Link color="foreground" href="#">
+                        Minerals
+                    </Link>
+                </NavbarMenuItem>
+                <NavbarMenuItem key="localities">
+                    <Link color="foreground" href="#">
+                        Localities
+                    </Link>
+                </NavbarMenuItem>
+                <NavbarMenuItem key="articles">
+                    <Link color="foreground" href="#">
+                        Articles
+                    </Link>
+                </NavbarMenuItem>
+                <NavbarMenuItem key="photos">
+                    <Link color="foreground" href="#">
+                        Photos
+                    </Link>
+                </NavbarMenuItem>
+                <div className="flex flex-col items-center">
+                    {!loggedIn ? (
+                        <RegModal />
+                    ) : (<></>)}
+                </div>
+            </NavbarMenu>
         </Navbar>
     )
 }

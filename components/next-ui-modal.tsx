@@ -3,11 +3,11 @@
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 import LoginForm from '@/components/registration/login-form';
 
-export default function ModalNext() {
+export default function ModalNext({ isMobile }: { isMobile?: boolean }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     return (
         <>
-            <Button onPress={onOpen} color="default" variant="flat" className="hidden sm:flex">Log In</Button>
+            <Button onPress={onOpen} color="default" variant="flat" className={`${isMobile ? "px-4 mx-auto": "hidden sm:flex"}`}>Log In</Button>
             <Modal
                 backdrop="opaque"
                 isOpen={isOpen}
@@ -20,7 +20,7 @@ export default function ModalNext() {
                 <ModalContent>
                     {(onClose) => (
                         <>
-                        <LoginForm isModal={true} onCloseAction={onClose}/>
+                            <LoginForm isModal={true} onCloseAction={onClose} />
                         </>
                     )}
                 </ModalContent>
