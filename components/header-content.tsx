@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react";
-import { Navbar, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, NavbarBrand, NavbarContent, NavbarItem, Link, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, Button } from "@nextui-org/react";
+import { Navbar, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, NavbarBrand, NavbarContent, NavbarItem, Link, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Divider, Avatar, Button } from "@nextui-org/react";
 import PMLogo from "./pmLogo";
 import { usePathname } from 'next/navigation';
 import { Search } from 'lucide-react';
@@ -139,10 +139,38 @@ export default function HeaderComp({
                         Photos
                     </Link>
                 </NavbarMenuItem>
-                <div className="flex flex-col items-center">
-                    {!loggedIn ? (
-                        <RegModal isMobile={true}/>
-                    ) : (<></>)}
+                <Divider className="my-4" />
+                <div className="flex flex-col">
+                    {loggedIn ? (<Dropdown placement="bottom-start">
+                        <DropdownTrigger>
+                            <NavbarContent className="flex items-center">
+                                <Avatar
+                                    isBordered
+                                    as="button"
+                                    className="transition-transform"
+                                    color="default"
+                                    name={name ? name : undefined}
+                                    size="md"
+                                    src={image ? image : undefined}
+                                />
+                                <div className="h-14 gap-2 py-1">
+                                    <p className="text-sm">Signed in as</p>
+                                    <p className="font-semibold">{name ? name : email}</p>
+                                </div>
+                            </NavbarContent>
+                        </DropdownTrigger>
+                        <DropdownMenu aria-label="Profile Actions" variant="flat" onAction={(item) => {
+                            if (item === 'logout') {
+                                signOut();
+                            }
+                        }}>
+                            <DropdownItem key="dashboard">Dashboard</DropdownItem>
+                            <DropdownItem key="settings" href="/account/settings">Settings</DropdownItem>
+                            <DropdownItem key="logout" color="danger">
+                                Log Out
+                            </DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown>) : (<RegModal isMobile={true} />)}
                 </div>
             </NavbarMenu>
         </Navbar>
