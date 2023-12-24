@@ -13,7 +13,7 @@ export default function LoginModalButton({
   return (
     <Button
       onClick={() => modal?.show(children)}
-      color="default" variant="flat" className="hidden sm:flex"
+      color="default" variant="flat" className="flex"
     >
       Log In
     </Button>
