@@ -37,7 +37,6 @@ export default function Modal({
   }, [onKeyDown]);
 
   const { isMobile, isDesktop } = useWindowSize();
-
   return (
     <AnimatePresence>
       {showModal && (
@@ -59,7 +58,9 @@ export default function Modal({
                     }
                   }}
                 >
+                  <div className="sm:mx-auto w-full sm:max-w-md">
                   {children}
+                  </div>
                 </motion.div>
               </FocusTrap>
               <motion.div
