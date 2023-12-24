@@ -23,6 +23,6 @@ export default function LoginModal() {
   }, [data.name]);
 */
   return (
-    <LoginForm isModal={true}/>
+    <LoginForm isModal={true} onCloseAction={modal?.hide} />
   );
 }
