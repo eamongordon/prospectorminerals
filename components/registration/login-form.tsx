@@ -8,7 +8,7 @@ import { Suspense } from "react";
 import { Divider, Tab, Tabs, Link } from "@nextui-org/react";
 import React from "react";
 
-export default function FormWrapper({ isModal, onCloseAction }: { isModal?: boolean, onCloseAction?: Function}) {
+export default function FormWrapper({ isModal, onCloseAction }: { isModal?: boolean, onCloseAction?: Function }) {
   const router = useRouter();
   const searchParams = useSearchParams()
   const redirectUri = searchParams.get('redirect');
@@ -40,10 +40,10 @@ export default function FormWrapper({ isModal, onCloseAction }: { isModal?: bool
             <h1 className="mt-6 text-center font-medium text-3xl dark:text-white">
               Welcome Back
             </h1>
-            <Form type="login" isModal={isModal} onCloseAction={onCloseAction}/>
+            <Form type="login" isModal={isModal} onCloseAction={onCloseAction} />
             <p className="text-center text-sm pt-8 pb-8 px-16">
               Don&apos;t have an account?{" "}
-              <Link href="/signup" className="font-semibold text-sm" color="foreground" >
+              <Link className="font-semibold text-sm" color="foreground" {...(isModal ? { onPress: () => setSelected("/signup") } : { href: "/signup" })} >
                 Sign up
               </Link>{" "}
               for free.
@@ -73,17 +73,9 @@ export default function FormWrapper({ isModal, onCloseAction }: { isModal?: bool
             <Form type="register" isModal={isModal} onCloseAction={onCloseAction} />
             <p className="text-center text-sm pt-8 pb-8 px-16">
               Already have an account?{" "}
-              {isModal ? (
-                <Link href="/login" className="font-semibold text-sm" color="foreground">
-                  Sign in
-                </Link>
-              )
-                : (
-                  <Link href="/login" className="font-semibold text-sm" color="foreground">
-                    Sign in
-                  </Link>
-                )
-              }
+              <Link className="font-semibold text-sm" color="foreground" {...(isModal ? { onPress: () => setSelected("/login") } : { href: "/login" })}>
+                Sign in
+              </Link>
               {" "}
               instead.
             </p>
