@@ -10,10 +10,9 @@ import { useModal } from "./provider";
 import va from "@vercel/analytics";
 import { useEffect, useState } from "react";
 
-export default function CreateContactModal({ organizationId }: { organizationId?: string }) {
+export default function CreateContactModal({ organizationId }: { organizationId: string }) {
   const router = useRouter();
   const modal = useModal();
-
   const [data, setData] = useState({
     name: "",
     first_name: "",
