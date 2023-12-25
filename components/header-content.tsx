@@ -75,7 +75,7 @@ export default function HeaderComp({
                         <Button isIconOnly color="default" variant="faded" aria-label="Take a photo">
                             <Search />
                         </Button>
-                        <Dropdown placement="bottom-end" className="hidden sm:flex">
+                        <Dropdown placement="bottom-end">
                             <DropdownTrigger>
                                 <Avatar
                                     isBordered
@@ -85,6 +85,7 @@ export default function HeaderComp({
                                     name={name ? name : undefined}
                                     size="sm"
                                     src={image ? image : undefined}
+                                    className="hidden sm:flex"
                                 />
                             </DropdownTrigger>
                             <DropdownMenu aria-label="Profile Actions" variant="flat" onAction={(item) => {
