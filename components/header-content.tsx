@@ -80,12 +80,11 @@ export default function HeaderComp({
                                 <Avatar
                                     isBordered
                                     as="button"
-                                    className="transition-transform"
+                                    className="hidden sm:flex transition-transform"
                                     color="default"
                                     name={name ? name : undefined}
                                     size="sm"
                                     src={image ? image : undefined}
-                                    className="hidden sm:flex"
                                 />
                             </DropdownTrigger>
                             <DropdownMenu aria-label="Profile Actions" variant="flat" onAction={(item) => {
