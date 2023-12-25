@@ -25,8 +25,8 @@ export default function FormWrapper({ isModal, onCloseAction }: { isModal?: bool
           // @ts-ignore
           onSelectionChange={setSelected}
           classNames={{
-            tabList: "rounded-t-lg rounded-b-none",
-            tab: "rounded-t-lg rounded-b-none",
+            tabList: "rounded-t-xl rounded-b-none",
+            tab: "rounded-t-xl rounded-b-none",
           }}
         >
           <Tab key="/login" title="Login" {...(isModal ? {} : { href: "/login" })}>
