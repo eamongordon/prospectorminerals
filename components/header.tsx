@@ -1,5 +1,6 @@
 import HeaderContent from './header-content'
 import { getSession } from "@/lib/auth";
+import { LoginModalProvider } from './modal/registration/provider';
 
 export default async function HeaderWrapper() {
   const session = await getSession();
@@ -16,8 +17,10 @@ export default async function HeaderWrapper() {
       }
     />
   ) : (
-    <HeaderContent
-      loggedIn={false}
-    />
+    <LoginModalProvider>
+      <HeaderContent
+        loggedIn={false}
+      />
+    </LoginModalProvider>
   )
 }

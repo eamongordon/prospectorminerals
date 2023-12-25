@@ -16,7 +16,7 @@ export default function FormWrapper({ isModal, onCloseAction }: { isModal?: bool
   const pathname = usePathname();
   return (
     <div className={`${isModal ? "flex items-center justify-center" : "flex h-screen w-screen items-center justify-center"}`}>
-      <div className={`${isModal ? "border border-stone-200 dark:border-stone-700 sm:mx-auto w-full sm:max-w-md sm:rounded-lg sm:shadow-md" : "border border-stone-200 dark:border-stone-700 sm:mx-auto w-full sm:max-w-md sm:rounded-lg sm:shadow-md"}`}>
+      <div className={`${isModal ? "bg-white dark:bg-black border border-stone-200 dark:border-stone-700 sm:mx-auto w-full sm:max-w-md sm:rounded-xl sm:shadow-md" : "border border-stone-200 dark:border-stone-700 sm:mx-auto w-full sm:max-w-md sm:rounded-xl sm:shadow-md"}`}>
         <Tabs
           fullWidth
           size="md"

@@ -13,7 +13,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
         <NextThemesProvider attribute="class">
           <Toaster className="dark:hidden" />
           <Toaster theme="dark" className="hidden dark:block" />
-          <ModalProvider>{children}</ModalProvider>
+          <ModalProvider>
+            {children}
+          </ModalProvider>
         </NextThemesProvider>
       </NextUIProvider>
     </SessionProvider>
