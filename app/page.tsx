@@ -1,9 +1,11 @@
 import Image from 'next/image';
-import Card from '@/components/home/card-new';
 import HeaderComp from '@/components/header';
-import FooterComp from '@/components/footer';
 import Hero from '@/components/home/hero';
 import { Spacer } from "@nextui-org/react";
+import dynamic from 'next/dynamic';
+
+const FooterComp = dynamic(() => import('@/components/footer'));
+const Card = dynamic(() => import('@/components/home/card-new'));
 
 const cardItemList = [
   {
