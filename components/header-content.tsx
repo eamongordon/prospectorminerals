@@ -75,7 +75,7 @@ export default function HeaderComp({
                         <Button isIconOnly color="default" variant="faded" aria-label="Take a photo">
                             <Search />
                         </Button>
-                        <Dropdown placement="bottom-end">
+                        <Dropdown placement="bottom-end" className="hidden sm:flex">
                             <DropdownTrigger>
                                 <Avatar
                                     isBordered
