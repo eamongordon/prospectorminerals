@@ -10,7 +10,10 @@ export default function Hero() {
                 src={FlouriteBanner}
                 alt="Hero Image"
                 className="opacity-60 object-cover"
+                width={0}
+                height={0}
                 fill
+                sizes="100vw"
                 placeholder="blur"
                 priority={true}
             />
