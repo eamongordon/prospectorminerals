@@ -15,7 +15,7 @@ export default function LoginModalButton({
   return (
     <Button
       onClick={() => modal?.show(children)}
-      color="default" variant="flat" className={`${isMobile ? "px-4 mx-auto": "hidden sm:flex"}`}
+      color="default" variant="flat" className={`${isMobile ? "px-4": "hidden sm:flex"}`}
     >
       Log In
     </Button>
