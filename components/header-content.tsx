@@ -109,7 +109,7 @@ export default function HeaderComp({
                         <Button isIconOnly color="default" variant="faded" aria-label="Take a photo">
                             <Search />
                         </Button>
-                        <RegModal />
+                        <LoginModalButton><LoginModal/></LoginModalButton>
                     </NavbarContent>
                 )}
             </NavbarContent>
@@ -170,7 +170,7 @@ export default function HeaderComp({
                                 Log Out
                             </DropdownItem>
                         </DropdownMenu>
-                    </Dropdown>) : (<RegModal isMobile={true} />)}
+                    </Dropdown>) : (<LoginModalButton isMobile={true}><LoginModal/></LoginModalButton>)}
                 </div>
             </NavbarMenu>
         </Navbar>
