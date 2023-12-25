@@ -71,7 +71,7 @@ export default function HeaderComp({
                     </NavbarItem>
                 </NavbarContent>
                 {loggedIn ? (
-                    <NavbarContent className="hidden sm:flex gap-5">
+                    <NavbarContent className="flex gap-5">
                         <Button isIconOnly color="default" variant="faded" aria-label="Take a photo">
                             <Search />
                         </Button>
