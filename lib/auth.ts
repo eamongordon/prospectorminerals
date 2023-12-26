@@ -1,9 +1,9 @@
 import { getServerSession, type NextAuthOptions } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/lib/prisma";
-import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcrypt";
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
