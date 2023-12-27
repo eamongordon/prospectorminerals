@@ -23,7 +23,7 @@ export default function Form({
   inputAttrs: {
     name: string;
     type: string;
-    defaultValue: string;
+    defaultValue?: string;
     placeholder?: string;
     maxLength?: number;
     pattern?: string;
@@ -53,13 +53,14 @@ export default function Form({
       }}
       className="rounded-lg border border-stone-200 bg-white dark:border-stone-700 dark:bg-black"
     >
-      <div className="relative flex flex-col space-y-4 p-5 sm:p-10">
+      <div className="relative flex flex-col space-y-4 p-5 sm:p-10" {...(inputAttrs.name === "password" ? { id:"new-password" } : {})}>
         <h2 className="font-cal text-xl dark:text-white">{title}</h2>
         <p className="text-sm text-stone-500 dark:text-stone-400">
           {description}
         </p>
         {inputAttrs.name === "image" || inputAttrs.name === "logo" ? (
           <Uploader
+            //@ts-expect-error
             defaultValue={inputAttrs.defaultValue}
             name={inputAttrs.name}
           />

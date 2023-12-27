@@ -2,6 +2,7 @@
 
 import { getSession } from "@/lib/auth";
 import prisma from "@/lib/prisma";
+import { hash } from "bcrypt";
 
 export const editUser = async (
     formData: FormData,
@@ -14,9 +15,12 @@ export const editUser = async (
         error: "Not authenticated",
       };
     }
-    const value = formData.get(key) as string;
+    let value = formData.get(key) as string;
   
     try {
+      if (key === 'password') {
+        value = await hash(value, 10);
+      }
       const response = await prisma.user.update({
         where: {
           id: session.user.id,
