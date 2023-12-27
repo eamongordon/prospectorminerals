@@ -57,7 +57,7 @@ export default function FormWrapper(
                     Reset Password
                   </h1>
                   <p className="text-center text-sm pt-4 px-16">
-                    Send a login link to your account's email.
+                    Send a login link to your account&apos;s email.
                   </p>
                   <div className='pb-8'>
                   <Form type="forgotPassword" isModal={isModal} onCloseAction={onCloseAction} resetPasswordFunc={pull_ForgotPassword} />
