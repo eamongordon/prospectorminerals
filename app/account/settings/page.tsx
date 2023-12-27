@@ -44,6 +44,16 @@ export default async function SettingsPage() {
                         }}
                         handleSubmit={editUser}
                     />
+                    <Form
+                        title="New Password"
+                        description="Create a new password"
+                        helpText="Please enter a valid password."
+                        inputAttrs={{
+                            name: "password",
+                            type: "password",
+                        }}
+                        handleSubmit={editUser}
+                    />
                 </div>
             </div>
             <Footer />

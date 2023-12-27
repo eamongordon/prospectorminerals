@@ -3,18 +3,18 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 //import LoadingDots from "@/components/icons/loading-dots";
-import { Input, Button } from "@nextui-org/react";
+import { Input, Button, Link } from "@nextui-org/react";
 import { toast } from "sonner";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from 'next/navigation'
 import React from "react";
 
 
-export default function Form({ type, isModal, onCloseAction }: { type: "login" | "register", isModal?: boolean, onCloseAction?: Function }) {
+export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }: { type: "login" | "register" | "forgotPassword", isModal?: boolean, onCloseAction?: Function, resetPasswordFunc?: Function }) {
   const router = useRouter();
   const searchParams = useSearchParams()
   const redirectUri = searchParams.get('redirect');
+  const [sentForgotPasswordEmail, setSentForgotPasswordEmail] = useState(false);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     email: "",
@@ -52,7 +52,7 @@ export default function Form({ type, isModal, onCloseAction }: { type: "login" |
               }
             }
           });
-        } else {
+        } else if (type === 'register') {
           fetch("/api/auth/register", {
             method: "POST",
             headers: {
@@ -96,6 +96,14 @@ export default function Form({ type, isModal, onCloseAction }: { type: "login" |
               toast.error("Internal Server Error")
             }
           });
+        } else {
+          //Forgot Password
+          setLoading(true);
+          signIn('email', { redirect: false, email: e.currentTarget.email.value, callbackUrl: '/account/settings/#new-password' }).then(() => {
+            setLoading(false);
+            setSentForgotPasswordEmail(true);
+            toast.success("Email Sent! Check your inbox.");
+          });
         }
       }}
       className="flex flex-col space-y-4 px-4 mt-8 sm:px-16"
@@ -125,25 +133,35 @@ export default function Form({ type, isModal, onCloseAction }: { type: "login" |
         //className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
         />
       </div>
-      <div>
-        <Input
-          id="password"
-          name="password"
-          placeholder="Password"
-          size="sm"
-          type="password"
-          onChange={(e) => setData({ ...data, password: e.target.value })}
-          required
-        //className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
-        />
-      </div>
+      {type === 'register' || type === 'login' ? (
+        <div>
+          <Input
+            id="password"
+            name="password"
+            placeholder="Password"
+            size="sm"
+            type="password"
+            onChange={(e) => setData({ ...data, password: e.target.value })}
+            required
+          //className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
+          />
+        </div>
+      ) : (
+        <></>
+      )
+      }
+      {type === 'login' ? (
+        <Link className="font-semibold text-sm" color="foreground" {...(resetPasswordFunc ? { onPress: () => resetPasswordFunc("data") } : {})} >
+          Forgot Password?
+        </Link>
+      ) : (<></>)}
       <Button
         disabled={loading}
         isLoading={loading}
         color="default"
         type="submit"
       >
-        <p>{type === "login" ? "Sign In" : "Sign Up"}</p>
+        <p>{type === "login" ? "Sign In" : type === "register" ? "Sign Up" : sentForgotPasswordEmail ? "Resend Email" : "Send Email"}</p>
       </Button>
     </form>
   );
