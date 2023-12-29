@@ -107,7 +107,6 @@ export const authOptions: NextAuthOptions = {
       };
       return session;
     },
-    //@ts-expect-error
     signIn: async ({ user, profile }) => {
       if (!profile) {
         const userExists = await prisma.user.findUnique({
@@ -120,6 +119,8 @@ export const authOptions: NextAuthOptions = {
         } else {
           return false;
         }
+      } else {
+        return true;
       }
     },
   }
