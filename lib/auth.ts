@@ -107,8 +107,23 @@ export const authOptions: NextAuthOptions = {
       };
       return session;
     },
-  },
-};
+    //@ts-expect-error
+    signIn: async ({ user, profile }) => {
+      if (!profile) {
+        const userExists = await prisma.user.findUnique({
+          where: {
+            email: user.email || undefined
+          },
+        });
+        if (userExists) {
+          return true;   //if the email exists in the User collection, email them a magic login link
+        } else {
+          return false;
+        }
+      }
+    },
+  }
+}
 
 export function getSession() {
   return getServerSession(authOptions) as Promise<{
