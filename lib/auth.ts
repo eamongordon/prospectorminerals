@@ -99,7 +99,8 @@ export const authOptions: NextAuthOptions = {
   theme: {
     colorScheme: "auto", // "auto" | "dark" | "light"
     brandColor: "#666565", // Hex color code
-    logo: "", // Absolute URL to image
+    //DOMAIN_UPDATE
+    logo: "https://prospectorminerals.vercel.app/_next/image?url=%2FPM-Favicon-New-Square.png&w=128&q=75", // Absolute URL to image
     buttonText: "#FFFFFF" // Hex color code
   },
   callbacks: {
