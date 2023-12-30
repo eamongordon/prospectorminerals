@@ -96,6 +96,12 @@ export const authOptions: NextAuthOptions = {
     },
   },
   */
+  theme: {
+    colorScheme: "auto", // "auto" | "dark" | "light"
+    brandColor: "#666565", // Hex color code
+    logo: "", // Absolute URL to image
+    buttonText: "#FFFFFF" // Hex color code
+  },
   callbacks: {
     session: async ({ session, token }) => {
       session.user = {
