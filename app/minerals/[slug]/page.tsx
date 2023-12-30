@@ -17,8 +17,8 @@ export default function Page({ params }: { params: { slug: string } }) {
                 <div>My Post: {params.slug}</div>
                 <Image
                     src="/PM-Favicon-New-Square.png"
-                    width={55}
-                    height={55}
+                    width={50}
+                    height={50}
                     alt="Prospector Minerals Logo"
                 />
                 <RegModal />
