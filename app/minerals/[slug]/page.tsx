@@ -8,6 +8,7 @@ import { LoginModalProvider } from "@/components/modal/registration/provider";
 //import Modal from "@/components/next-ui-modal";
 import RegModal from "@/components/next-ui-modal";
 import Image from 'next/image';
+import Gallery from "@/components/mineral-gallery";
 
 export default function Page({ params }: { params: { slug: string } }) {
     return (
@@ -21,6 +22,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                     height={50}
                     alt="Prospector Minerals Logo"
                 />
+                <Gallery />
                 <RegModal />
                 <Footer />
             </LoginModalProvider>
