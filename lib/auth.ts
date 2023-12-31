@@ -197,7 +197,7 @@ function html(params: { url: string, host: string, theme: Theme }) {
     <tr>
       <td align="center"
         style="padding: 10px 0px; font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: light-dark(${color.text}, ${color.textDark})">
-        You can reset your password once signed in.
+        You can reset your password once logged in.
       </td>
     </tr>
     <tr>
