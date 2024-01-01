@@ -151,7 +151,7 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
       )
       }
       {type === 'login' ? (
-        <Link className="font-semibold text-sm" color="foreground" {...(resetPasswordFunc ? { onPress: () => resetPasswordFunc("data") } : {})} >
+        <Link className="font-semibold text-sm" color="foreground" {...(resetPasswordFunc ? { onPress: () => resetPasswordFunc(false) } : {})} >
           Forgot Password?
         </Link>
       ) : (<></>)}
