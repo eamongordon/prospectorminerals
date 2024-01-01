@@ -33,8 +33,8 @@ export default function Gallery({ data }: { data?: galleryItem[] }) {
                 />
                 {hoverItem === 'image1' ? (
                     <>
-                        <h3 className="text-xl z-10 font-medium text-white">Title</h3>
-                        <p className="text-md z-10 text-white">Caption</p>
+                        <h3 className="text-sm sm:text-xl z-10 font-medium text-white">Title</h3>
+                        <p className="text-sm sm:text-md z-10 text-white">Caption</p>
                     </>
                 ) : (
                     <></>
@@ -56,8 +56,8 @@ export default function Gallery({ data }: { data?: galleryItem[] }) {
                 />
                 {hoverItem === 'image2' ? (
                     <>
-                        <h3 className="text-xl z-10 font-medium text-white">Title</h3>
-                        <p className="text-md z-10 text-white">Caption</p>
+                        <h3 className="text-sm sm:text-xl z-10 font-medium text-white">Title</h3>
+                        <p className="text-sm sm:text-md z-10 text-white">Caption</p>
                     </>
                 ) : (
                     <></>
@@ -79,8 +79,8 @@ export default function Gallery({ data }: { data?: galleryItem[] }) {
                 />
                 {hoverItem === 'image3' ? (
                     <>
-                        <h3 className="text-xl z-10 font-medium text-white">Title</h3>
-                        <p className="text-md z-10 text-white">Caption</p>
+                        <h3 className="text-sm sm:text-xl z-10 font-medium text-white">Title</h3>
+                        <p className="text-sm sm:text-md z-10 text-white">Caption</p>
                     </>
                 ) : (
                     <></>
