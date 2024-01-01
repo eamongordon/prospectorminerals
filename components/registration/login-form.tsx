@@ -22,9 +22,12 @@ export default function FormWrapper(
   const redirectUri = searchParams.get('redirect');
   const [selected, setSelected] = React.useState("/login");
   const [forgotPassword, setForgotPassword] = React.useState(false);
-  const pull_ForgotPassword = (data: string) => {
-    console.log(data)
-    setForgotPassword(true);
+  const pull_ForgotPassword = (back: boolean) => {
+    if (back) {
+      setForgotPassword(false);
+    } else {
+      setForgotPassword(true);
+    }
   }
   const pathname = usePathname();
   return (
@@ -59,9 +62,12 @@ export default function FormWrapper(
                   <p className="text-center text-sm pt-4 px-16">
                     Send a login link to your account&apos;s email.
                   </p>
-                  <div className='pb-8'>
                   <Form type="forgotPassword" isModal={isModal} onCloseAction={onCloseAction} resetPasswordFunc={pull_ForgotPassword} />
-                  </div>
+                  <p className="text-center text-sm pt-8 pb-8 px-16">
+                    <Link className="font-semibold text-sm" color="foreground" onPress={() => pull_ForgotPassword(true)} >
+                      Back to Login
+                    </Link>
+                  </p>
                 </>
               ) : (
                 <>
