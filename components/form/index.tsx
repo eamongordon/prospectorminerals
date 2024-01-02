@@ -44,7 +44,8 @@ export default function Form({
             if (id) {
               router.refresh();
             } else {
-              await update();
+              let value = data.get(inputAttrs.name) as string;
+              await update({[inputAttrs.name] : value});
               router.refresh();
             }
             toast.success(`Successfully updated ${inputAttrs.name}!`);
