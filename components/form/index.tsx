@@ -33,6 +33,7 @@ export default function Form({
   const { id } = useParams() as { id?: string };
   const router = useRouter();
   const { update } = useSession();
+  const { pending } = useFormStatus();
   return (
     <form
       action={async (data: FormData) => {
@@ -53,7 +54,7 @@ export default function Form({
       }}
       className="rounded-lg border border-stone-200 bg-white dark:border-stone-700 dark:bg-black"
     >
-      <div className="relative flex flex-col space-y-4 p-5 sm:p-10" {...(inputAttrs.name === "password" ? { id:"new-password" } : {})}>
+      <div className="relative flex flex-col space-y-4 p-5 sm:p-10" {...(inputAttrs.name === "password" ? { id: "new-password" } : {})}>
         <h2 className="font-cal text-xl dark:text-white">{title}</h2>
         <p className="text-sm text-stone-500 dark:text-stone-400">
           {description}
@@ -75,7 +76,7 @@ export default function Form({
           <Input
             {...inputAttrs}
             required
-            //className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+          //className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
           />
         )}
       </div>
@@ -90,16 +91,11 @@ export default function Form({
 function FormButton() {
   const { pending } = useFormStatus();
   return (
-    <button
-      className={cn(
-        "flex h-8 w-32 items-center justify-center space-x-2 rounded-md border text-sm transition-all focus:outline-none sm:h-10",
-        pending
-          ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
-          : "border-black bg-black text-white hover:bg-white hover:text-black dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:hover:text-white dark:active:bg-stone-800",
-      )}
-      disabled={pending}
+    <Button
+      type="submit"
+      isLoading={pending}
     >
-      {pending ? <LoadingDots color="#808080" /> : <p>Save Changes</p>}
-    </button>
+      <p>Save Changes</p>
+    </Button>
   );
 }
