@@ -226,7 +226,7 @@ function html(params: { url: string, host: string, theme: Theme }) {
 
 /** Email Text body (fallback for email clients that don't render HTML, e.g. feature phones) */
 function text({ url, host }: { url: string, host: string }) {
-  return `Sign in to ${host}\n${url}\n\n`
+  return `Log In to ${host}\n${url}\n\n`
 }
 
 export function getSession() {

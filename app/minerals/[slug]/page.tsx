@@ -10,6 +10,21 @@ import RegModal from "@/components/next-ui-modal";
 import Image from 'next/image';
 import Gallery from "@/components/mineral-gallery";
 
+const galleryData = [
+    {
+        title: "Amazonite",
+        caption: "Smoky Hawk Mine, Routte Co., Colorado"
+    }, 
+    {
+        title: "Cavansite",
+        caption: "Pune, Maharashtra Province, India"
+    }, 
+    {
+        title: "Krohnkite",
+        caption: "Chuquicamata Mine, El Loa Province, Chile"
+    }
+];
+
 export default function Page({ params }: { params: { slug: string } }) {
     return (
         <main>
@@ -22,7 +37,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                     height={50}
                     alt="Prospector Minerals Logo"
                 />
-                <Gallery />
+                <Gallery data={galleryData} />
                 <RegModal />
                 <Footer />
             </LoginModalProvider>
