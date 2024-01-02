@@ -33,7 +33,6 @@ export default function Form({
   const { id } = useParams() as { id?: string };
   const router = useRouter();
   const { update } = useSession();
-  const { pending } = useFormStatus();
   return (
     <form
       action={async (data: FormData) => {
