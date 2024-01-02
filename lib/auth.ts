@@ -7,6 +7,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/lib/prisma";
 import { compare } from "bcrypt";
 import { createTransport } from "nodemailer";
+import { hash } from "bcrypt";
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
 
@@ -122,6 +123,24 @@ export const authOptions: NextAuthOptions = {
     buttonText: "#FFFFFF" // Hex color code
   },
   callbacks: {
+    jwt: async ({ token, user, trigger, session }) => {
+      if (trigger === "update") {
+        const sessionKeyList = Object.keys(session);
+        sessionKeyList.forEach(async (key) => {
+          token[key] = session[key];
+          //@ts-expect-error;
+          if (token?.user[key]) {
+            if (key === 'password') {
+              //@ts-expect-error
+              token.user.password = await hash(session[key], 10);
+            }
+            //@ts-expect-error;
+            token.user[key] = session[key];
+          }
+        });
+      }
+      return token;
+    },
     session: async ({ session, token }) => {
       session.user = {
         ...session.user,
