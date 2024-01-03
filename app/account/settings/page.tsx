@@ -9,7 +9,7 @@ import Footer from '@/components/footer';
 export default async function SettingsPage() {
     const session = await getSession();
     if (!session) {
-        redirect("/login");
+        redirect(`/login?redirect=/account/settings`);
     }
     return (
         <main>
