@@ -126,10 +126,14 @@ export const authOptions: NextAuthOptions = {
     jwt: async ({ token, user, trigger, session }) => {
       if (trigger === "update") {
         const sessionKeyList = Object.keys(session);
+        console.log("session");
+        console.log(session);
+        console.log("token");
+        console.log(token);
         sessionKeyList.forEach(async (key) => {
           token[key] = session[key];
           //@ts-expect-error;
-          if (token?.user[key]) {
+          if (token?.user && token?.user[key]) {
             if (key === 'password') {
               //@ts-expect-error
               token.user.password = await hash(session[key], 10);
