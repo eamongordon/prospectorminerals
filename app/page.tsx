@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import HeaderComp from '@/components/header';
 import Hero from '@/components/home/hero';
 import { Spacer } from "@nextui-org/react";
