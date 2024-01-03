@@ -26,32 +26,37 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
         e.preventDefault();
         setLoading(true);
         if (type === "login") {
-          signIn("credentials", {
-            redirect: false,
-            email: e.currentTarget.email.value,
-            password: e.currentTarget.password.value,
-            // @ts-ignore
-          }).then(({ error }) => {
-            if (error) {
-              setLoading(false);
-              toast.error(error);
-            } else {
-              router.refresh();
-              if (isModal) {
-                console.log(isModal);
-                console.log('CloseAction');
-                // @ts-expect-error
-                onCloseAction();
+          if (isModal) {
+            signIn("credentials", {
+              redirect: false,
+              email: e.currentTarget.email.value,
+              password: e.currentTarget.password.value,
+              // @ts-ignore
+            }).then(({ error }) => {
+              if (error) {
+                setLoading(false);
+                toast.error(error);
               } else {
-                console.log('hey');
-                if (redirectUri) {
-                  router.push(decodeURIComponent(redirectUri));
-                } else {
-                  router.push("/");
+                router.refresh();
+                if (isModal) {
+                  // @ts-expect-error
+                  onCloseAction();
                 }
               }
-            }
-          });
+            });
+          } else {
+            signIn("credentials", {
+              callbackUrl: decodeURIComponent(redirectUri || "/"),
+              email: e.currentTarget.email.value,
+              password: e.currentTarget.password.value,
+              // @ts-ignore
+            }).then(({ error }) => {
+              if (error) {
+                setLoading(false);
+                toast.error(error);
+              }
+            });
+          }
         } else if (type === 'register') {
           fetch("/api/auth/register", {
             method: "POST",

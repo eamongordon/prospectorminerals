@@ -126,10 +126,6 @@ export const authOptions: NextAuthOptions = {
     jwt: async ({ token, user, trigger, session }) => {
       if (trigger === "update") {
         const sessionKeyList = Object.keys(session);
-        console.log("session");
-        console.log(session);
-        console.log("token");
-        console.log(token);
         sessionKeyList.forEach(async (key) => {
           token[key] = session[key];
           //@ts-expect-error;

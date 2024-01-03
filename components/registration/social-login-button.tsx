@@ -8,14 +8,17 @@ import { useState, useEffect } from "react";
 import { toast } from "sonner";
 
 export default function LoginButton({
-  signup
+  signup,
+  isModal
 }: {
-  signup?: boolean
+  signup?: boolean;
+  isModal?: boolean;
 }) {
   const [loading, setLoading] = useState(false);
 
   // Get error message added by next/auth in URL.
   const searchParams = useSearchParams();
+  const redirectUri = searchParams.get('redirect');
   const error = searchParams?.get("error");
 
   useEffect(() => {
@@ -27,7 +30,7 @@ export default function LoginButton({
       disabled={loading}
       onClick={() => {
         setLoading(true);
-        signIn("google");
+        isModal ? signIn("google") : signIn("google", { callbackUrl: decodeURIComponent(redirectUri || "/") })
       }}
       variant="flat"
       className="flex w-full items-center"
