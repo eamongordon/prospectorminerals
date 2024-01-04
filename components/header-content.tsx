@@ -89,7 +89,7 @@ export default function HeaderComp({
                             </DropdownTrigger>
                             <DropdownMenu aria-label="Profile Actions" variant="flat" onAction={(item) => {
                                 if (item === 'logout') {
-                                    signOut();
+                                    signOut({ callbackUrl: pathname.includes('/account') ? '/' : undefined });
                                 }
                             }}>
                                 <DropdownItem key="profile" className="h-14 gap-2">
@@ -109,7 +109,7 @@ export default function HeaderComp({
                         <Button isIconOnly color="default" variant="faded" aria-label="Take a photo">
                             <Search />
                         </Button>
-                        <LoginModalButton><LoginModal/></LoginModalButton>
+                        <LoginModalButton><LoginModal /></LoginModalButton>
                     </NavbarContent>
                 )}
             </NavbarContent>
@@ -161,7 +161,7 @@ export default function HeaderComp({
                         </DropdownTrigger>
                         <DropdownMenu aria-label="Profile Actions" variant="flat" onAction={(item) => {
                             if (item === 'logout') {
-                                signOut();
+                                signOut({ callbackUrl: pathname.includes('/account') ? '/' : undefined });
                             }
                         }}>
                             <DropdownItem key="dashboard">Dashboard</DropdownItem>
@@ -170,7 +170,7 @@ export default function HeaderComp({
                                 Log Out
                             </DropdownItem>
                         </DropdownMenu>
-                    </Dropdown>) : (<LoginModalButton isMobile={true}><LoginModal/></LoginModalButton>)}
+                    </Dropdown>) : (<LoginModalButton isMobile={true}><LoginModal /></LoginModalButton>)}
                 </div>
             </NavbarMenu>
         </Navbar>
