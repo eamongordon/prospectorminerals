@@ -8,11 +8,11 @@ import Resizer from "react-image-file-resizer";
 export default function Uploader({
   defaultValue,
   name,
-  reset
+  formFunction
 }: {
   defaultValue: string | null;
   name: "image" | "avatar";
-  reset?: boolean
+  formFunction?: Function
 }) {
   const aspectRatio = name === "image" ? "aspect-video" : "aspect-square";
 
@@ -34,25 +34,37 @@ export default function Uploader({
       ) {
         toast.error("Invalid file type (must be .png, .jpg, or .jpeg)");
       } else {
-        /*
-                Resizer.imageFileResizer(
-          file,
-          240,
-          240,
-          "PNG",
-          80,
-          0,
-          (uri) => {
-            setData((prev) => ({ ...prev, [name]: uri as string }));
-          },
-          "base64"
-        );
-        */
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          setData((prev) => ({ ...prev, [name]: e.target?.result as string }));
-        };
-        reader.readAsDataURL(file);
+        if (formFunction) {
+          let formattedFileType;
+          if (file.type === 'image/jpeg') {
+            formattedFileType = "JPEG"
+          } else {
+            formattedFileType = "PNG"
+          }
+          Resizer.imageFileResizer(
+            file,
+            240,
+            240,
+            formattedFileType,
+            80,
+            0,
+            (newfile) => {
+              const reader = new FileReader();
+              reader.onload = (e) => {
+                setData((prev) => ({ ...prev, [name]: e.target?.result as string }));
+                formFunction(e.target?.result as string);
+              };
+              reader.readAsDataURL(newfile as Blob);
+            },
+            "file"
+          )
+        } else {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            setData((prev) => ({ ...prev, [name]: e.target?.result as string }));
+          };
+          reader.readAsDataURL(file);
+        }
       }
     }
   };
@@ -143,7 +155,6 @@ export default function Uploader({
           type="file"
           accept="image/*"
           className="sr-only"
-          key={reset ? "key1" : "key2"}
           onChange={(e) => {
             const file = e.currentTarget.files && e.currentTarget.files[0];
             handleUpload(file);
