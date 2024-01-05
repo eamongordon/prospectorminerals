@@ -12,7 +12,7 @@ const nanoid = customAlphabet(
 ); // 7-character random string
 
 export const editUser = async (
-  formData: string,
+  formData: any,
   _id: unknown,
   key: string,
 ) => {
@@ -34,10 +34,11 @@ export const editUser = async (
             "Missing BLOB_READ_WRITE_TOKEN token. Note: Vercel Blob is currently in beta – please fill out this form for access: https://tally.so/r/nPDMNd",
         };
       }
-      const res: Response = await fetch(formData);
+      const { fileUri, type } = formData;
+      const res: Response = await fetch(fileUri);
       const blob: Blob = await res.blob();
-      const filename = `${nanoid()}.${"image/png".split("/")[1]}`;
-      const file = new File([blob], filename, { type: 'image/png' });
+      const filename = `${nanoid()}.${type.split("/")[1]}`;
+      const file = new File([blob], filename, { type: type });
       const { url } = await put(filename, file, {
         access: "public",
       });

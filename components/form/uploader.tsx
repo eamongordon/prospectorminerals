@@ -52,7 +52,7 @@ export default function Uploader({
               const reader = new FileReader();
               reader.onload = (e) => {
                 setData((prev) => ({ ...prev, [name]: e.target?.result as string }));
-                formFunction(e.target?.result as string);
+                formFunction(e.target?.result as string, file.type);
               };
               reader.readAsDataURL(newfile as Blob);
             },
