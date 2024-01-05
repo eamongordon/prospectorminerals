@@ -34,17 +34,17 @@ export default function Form({
   const { id } = useParams() as { id?: string };
   const router = useRouter();
   const { update } = useSession();
-  const [data, setData] = useState<Object | string | null>(null);
-  const [fileType, setFileType] = useState('');
+  const [data, setData] = useState<FormData | string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const formUpdate = (event: any) => {
     setData(event.target.value);
   }
 
-  const uploadFormFunction = (fileUri: string, fileType: string) => {
-    setData({fileUri: fileUri, type: fileType});
-    //setFileType(type);
+  const uploadFormFunction = (file: File) => {
+    const formData = new FormData();
+    formData.append("avatar", file)
+    setData(formData);
   }
 
   function submitForm() {
