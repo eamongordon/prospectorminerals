@@ -129,6 +129,7 @@ export default function Uploader({
           type="file"
           accept="image/*"
           className="sr-only"
+          value={""}
           onChange={(e) => {
             const file = e.currentTarget.files && e.currentTarget.files[0];
             handleUpload(file);

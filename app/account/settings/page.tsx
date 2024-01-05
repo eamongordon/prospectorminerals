@@ -26,7 +26,7 @@ export default async function SettingsPage() {
                         inputAttrs={{
                             name: "avatar",
                             type: "file",
-                            defaultValue: session.user?.image!,
+                            defaultValue: session.user.image!
                         }}
                         handleSubmit={editUser}
                     />
