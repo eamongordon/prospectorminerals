@@ -3,6 +3,13 @@
 import { getSession } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { hash } from "bcrypt";
+import { put } from "@vercel/blob";
+import { customAlphabet } from "nanoid";
+
+const nanoid = customAlphabet(
+  "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+  7,
+); // 7-character random string
 
 export const editUser = async (
     formData: FormData,
@@ -20,6 +27,21 @@ export const editUser = async (
     try {
       if (key === 'password') {
         value = await hash(value, 10);
+      } else if (key === "image" || key === "avatar") {
+          if (!process.env.BLOB_READ_WRITE_TOKEN) {
+            return {
+              error:
+                "Missing BLOB_READ_WRITE_TOKEN token. Note: Vercel Blob is currently in beta – please fill out this form for access: https://tally.so/r/nPDMNd",
+            };
+          }
+  
+          const file = formData.get(key) as File;
+          const filename = `${nanoid()}.${file.type.split("/")[1]}`;
+          const { url } = await put(filename, file, {
+            access: "public",
+          });
+          value = url;
+          key = "image";
       }
       const response = await prisma.user.update({
         where: {
