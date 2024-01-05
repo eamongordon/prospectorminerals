@@ -34,20 +34,11 @@ export const editUser = async (
             "Missing BLOB_READ_WRITE_TOKEN token. Note: Vercel Blob is currently in beta – please fill out this form for access: https://tally.so/r/nPDMNd",
         };
       }
-      const { fileUri, type } = formData;
-      const res: Response = await fetch(fileUri);
-      console.log("res");
-      console.log(res);
-      const blob: Blob = await res.blob();
-      console.log("blob");
-      console.log(blob);
-      const filename = `${nanoid()}.${type.split("/")[1]}`;
-      /*
-      const file = new File([blob], filename, { type: type });
-      console.log("file");
-      console.log(file);
-      */
-      const { url } = await put(filename, blob, {
+      
+      const file = formData.get(key) as File;
+      const filename = `${nanoid()}.${file.type.split("/")[1]}`;
+
+      const { url } = await put(filename, file, {
         access: "public",
       });
       value = url;
