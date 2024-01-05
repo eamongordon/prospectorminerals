@@ -1,15 +1,18 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { toast } from "sonner";
+import Resizer from "react-image-file-resizer";
 
 export default function Uploader({
   defaultValue,
   name,
+  reset
 }: {
   defaultValue: string | null;
   name: "image" | "avatar";
+  reset?: boolean
 }) {
   const aspectRatio = name === "image" ? "aspect-video" : "aspect-square";
 
@@ -31,6 +34,20 @@ export default function Uploader({
       ) {
         toast.error("Invalid file type (must be .png, .jpg, or .jpeg)");
       } else {
+        /*
+                Resizer.imageFileResizer(
+          file,
+          240,
+          240,
+          "PNG",
+          80,
+          0,
+          (uri) => {
+            setData((prev) => ({ ...prev, [name]: uri as string }));
+          },
+          "base64"
+        );
+        */
         const reader = new FileReader();
         reader.onload = (e) => {
           setData((prev) => ({ ...prev, [name]: e.target?.result as string }));
@@ -54,7 +71,7 @@ export default function Uploader({
         )}
       >
         <div
-          className={cn("absolute z-[5] h-full w-full", {"rounded-full" : aspectRatio === "aspect-square", "rounded-md" : aspectRatio === "aspect-video"})}
+          className={cn("absolute z-[5] h-full w-full", { "rounded-full": aspectRatio === "aspect-square", "rounded-md": aspectRatio === "aspect-video" })}
           onDragOver={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -81,18 +98,15 @@ export default function Uploader({
           }}
         />
         <div
-          className={`${
-            dragActive ? "border-2 border-black" : ""
-          } absolute z-[3] flex h-full w-full flex-col items-center justify-center ${aspectRatio === "aspect-square" ? "rounded-full" : "rounded-md"} px-10 transition-all ${
-            data[name]
+          className={`${dragActive ? "border-2 border-black" : ""
+            } absolute z-[3] flex h-full w-full flex-col items-center justify-center ${aspectRatio === "aspect-square" ? "rounded-full" : "rounded-md"} px-10 transition-all ${data[name]
               ? "bg-white/80 opacity-0 hover:opacity-100 hover:backdrop-blur-md"
               : "bg-white opacity-100 hover:bg-gray-50"
-          }`}
+            }`}
         >
           <svg
-            className={`${
-              dragActive ? "scale-110" : "scale-100"
-            } h-7 w-7 text-gray-500 transition-all duration-75 group-hover:scale-110 group-active:scale-95`}
+            className={`${dragActive ? "scale-110" : "scale-100"
+              } h-7 w-7 text-gray-500 transition-all duration-75 group-hover:scale-110 group-active:scale-95`}
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -117,11 +131,11 @@ export default function Uploader({
           <img
             src={data[name] as string}
             alt="Preview"
-            className={cn("h-full w-full object-cover", {"rounded-full" : aspectRatio === "aspect-square", "rounded-md" : aspectRatio === "aspect-video"})}
+            className={cn("h-full w-full object-cover", { "rounded-full": aspectRatio === "aspect-square", "rounded-md": aspectRatio === "aspect-video" })}
           />
         )}
       </label>
-      <div className={cn("mt-1 flex shadow-sm", {"rounded-full" : aspectRatio === "aspect-square", "rounded-md" : aspectRatio === "aspect-video"})}>
+      <div className={cn("mt-1 flex shadow-sm", { "rounded-full": aspectRatio === "aspect-square", "rounded-md": aspectRatio === "aspect-video" })}>
         <input
           id={`${name}-upload`}
           ref={inputRef}
@@ -129,7 +143,7 @@ export default function Uploader({
           type="file"
           accept="image/*"
           className="sr-only"
-          value={""}
+          key={reset ? "key1" : "key2"}
           onChange={(e) => {
             const file = e.currentTarget.files && e.currentTarget.files[0];
             handleUpload(file);

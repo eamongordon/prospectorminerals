@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
+import { useState } from "react";
 import Uploader from "./uploader";
 import va from "@vercel/analytics";
 
@@ -33,6 +34,7 @@ export default function Form({
   const { id } = useParams() as { id?: string };
   const router = useRouter();
   const { update } = useSession();
+  const [resetFileUpload, setResetFileUpload] = useState(false);
   return (
     <form
       action={async (data: FormData) => {
@@ -45,14 +47,17 @@ export default function Form({
               router.refresh();
             } else {
               let value;
+              let inputAttrsName = inputAttrs.name;
               if (inputAttrs.name === "avatar") {
                 value = res.image;
-                inputAttrs.name = "picture";
+                inputAttrsName = "picture";
+                setResetFileUpload(true);
               } else {
                 value = data.get(inputAttrs.name) as string;
               }
-              await update({ [inputAttrs.name]: value });
+              await update({ [inputAttrsName]: value });
               router.refresh();
+              setResetFileUpload(false);
             }
             toast.success(`Successfully updated ${inputAttrs.name}!`);
           }
@@ -70,6 +75,7 @@ export default function Form({
             //@ts-expect-error
             defaultValue={inputAttrs.defaultValue}
             name={inputAttrs.name}
+            reset={resetFileUpload}
           />
         ) : inputAttrs.name === "description" ? (
           <textarea
