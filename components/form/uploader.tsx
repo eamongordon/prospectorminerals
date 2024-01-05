@@ -9,7 +9,7 @@ export default function Uploader({
   name,
 }: {
   defaultValue: string | null;
-  name: "image" | "logo";
+  name: "image" | "avatar";
 }) {
   const aspectRatio = name === "image" ? "aspect-video" : "aspect-square";
 
@@ -45,16 +45,16 @@ export default function Uploader({
       <label
         htmlFor={`${name}-upload`}
         className={cn(
-          "group relative mt-2 flex cursor-pointer flex-col items-center justify-center rounded-md border border-gray-300 bg-white shadow-sm transition-all hover:bg-gray-50",
+          "group relative mt-2 flex cursor-pointer flex-col items-center justify-center border border-gray-300 bg-white shadow-sm transition-all hover:bg-gray-50",
           aspectRatio,
           {
-            "max-w-screen-md": aspectRatio === "aspect-video",
-            "max-w-xs": aspectRatio === "aspect-square",
+            "max-w-screen-md rounded-md": aspectRatio === "aspect-video",
+            "max-w-[160px] rounded-full": aspectRatio === "aspect-square",
           },
         )}
       >
         <div
-          className="absolute z-[5] h-full w-full rounded-md"
+          className={cn("absolute z-[5] h-full w-full", {"rounded-full" : aspectRatio === "aspect-square", "rounded-md" : aspectRatio === "aspect-video"})}
           onDragOver={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -83,7 +83,7 @@ export default function Uploader({
         <div
           className={`${
             dragActive ? "border-2 border-black" : ""
-          } absolute z-[3] flex h-full w-full flex-col items-center justify-center rounded-md px-10 transition-all ${
+          } absolute z-[3] flex h-full w-full flex-col items-center justify-center ${aspectRatio === "aspect-square" ? "rounded-full" : "rounded-md"} px-10 transition-all ${
             data[name]
               ? "bg-white/80 opacity-0 hover:opacity-100 hover:backdrop-blur-md"
               : "bg-white opacity-100 hover:bg-gray-50"
@@ -110,9 +110,6 @@ export default function Uploader({
           <p className="mt-2 text-center text-sm text-gray-500">
             Drag and drop or click to upload.
           </p>
-          <p className="mt-2 text-center text-sm text-gray-500">
-            Max file size: 50MB
-          </p>
           <span className="sr-only">Photo upload</span>
         </div>
         {data[name] && (
@@ -120,11 +117,11 @@ export default function Uploader({
           <img
             src={data[name] as string}
             alt="Preview"
-            className="h-full w-full rounded-md object-cover"
+            className={cn("h-full w-full object-cover", {"rounded-full" : aspectRatio === "aspect-square", "rounded-md" : aspectRatio === "aspect-video"})}
           />
         )}
       </label>
-      <div className="mt-1 flex rounded-md shadow-sm">
+      <div className={cn("mt-1 flex shadow-sm", {"rounded-full" : aspectRatio === "aspect-square", "rounded-md" : aspectRatio === "aspect-video"})}>
         <input
           id={`${name}-upload`}
           ref={inputRef}
