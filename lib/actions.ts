@@ -39,8 +39,12 @@ export const editUser = async (
       console.log("res");
       console.log(res);
       const blob: Blob = await res.blob();
+      console.log("blob");
+      console.log(blob);
       const filename = `${nanoid()}.${type.split("/")[1]}`;
       const file = new File([blob], filename, { type: type });
+      console.log("file");
+      console.log(file);
       const { url } = await put(filename, file, {
         access: "public",
       });
