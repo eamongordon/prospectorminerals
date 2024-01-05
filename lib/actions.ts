@@ -36,6 +36,8 @@ export const editUser = async (
       }
       const { fileUri, type } = formData;
       const res: Response = await fetch(fileUri);
+      console.log("res");
+      console.log(res);
       const blob: Blob = await res.blob();
       const filename = `${nanoid()}.${type.split("/")[1]}`;
       const file = new File([blob], filename, { type: type });
