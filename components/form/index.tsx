@@ -42,8 +42,8 @@ export default function Form({
     setData(event.target.value);
   }
 
-  const uploadFormFunction = (fileUri: string) => {
-    setData(fileUri);
+  const uploadFormFunction = (fileUri: string, fileType: string) => {
+    setData({fileUri: fileUri, type: fileType});
     //setFileType(type);
   }
 
