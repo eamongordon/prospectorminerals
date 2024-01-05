@@ -34,35 +34,48 @@ export default function Form({
   const { id } = useParams() as { id?: string };
   const router = useRouter();
   const { update } = useSession();
-  const [resetFileUpload, setResetFileUpload] = useState(false);
-  return (
-    <form
-      action={async (data: FormData) => {
-        handleSubmit(data, id, inputAttrs.name).then(async (res: any) => {
-          if (res.error) {
-            toast.error(res.error);
+  const [data, setData] = useState<Object | string | null>(null);
+  const [fileType, setFileType] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const formUpdate = (event: any) => {
+    setData(event.target.value);
+  }
+
+  const uploadFormFunction = (fileUri: string) => {
+    setData(fileUri);
+    //setFileType(type);
+  }
+
+  function submitForm() {
+    setLoading(true);
+    handleSubmit(data, id, inputAttrs.name).then(async (res: any) => {
+      setLoading(false);
+      if (res.error) {
+        toast.error(res.error);
+      } else {
+        va.track(`Updated ${inputAttrs.name}`, id ? { id } : {});
+        if (id) {
+          router.refresh();
+        } else {
+          let value;
+          let inputAttrsName = inputAttrs.name;
+          if (inputAttrs.name === "avatar") {
+            value = res.image;
+            inputAttrsName = "picture";
           } else {
-            va.track(`Updated ${inputAttrs.name}`, id ? { id } : {});
-            if (id) {
-              router.refresh();
-            } else {
-              let value;
-              let inputAttrsName = inputAttrs.name;
-              if (inputAttrs.name === "avatar") {
-                value = res.image;
-                inputAttrsName = "picture";
-                setResetFileUpload(true);
-              } else {
-                value = data.get(inputAttrs.name) as string;
-              }
-              await update({ [inputAttrsName]: value });
-              router.refresh();
-              setResetFileUpload(false);
-            }
-            toast.success(`Successfully updated ${inputAttrs.name}!`);
+            value = data;
           }
-        });
-      }}
+          await update({ [inputAttrsName]: value });
+          router.refresh();
+        }
+        toast.success(`Successfully updated ${inputAttrs.name}!`);
+      }
+    });
+  }
+
+  return (
+    <div
       className="rounded-lg border border-stone-200 bg-white dark:border-stone-700 dark:bg-black"
     >
       <div className="relative flex flex-col space-y-4 p-5 sm:p-10" {...(inputAttrs.name === "password" ? { id: "new-password" } : {})}>
@@ -75,7 +88,7 @@ export default function Form({
             //@ts-expect-error
             defaultValue={inputAttrs.defaultValue}
             name={inputAttrs.name}
-            reset={resetFileUpload}
+            formFunction={uploadFormFunction}
           />
         ) : inputAttrs.name === "description" ? (
           <textarea
@@ -83,23 +96,31 @@ export default function Form({
             rows={3}
             required
             className="w-full max-w-xl rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+            onChange={formUpdate}
           />
         ) : (
           <Input
             {...inputAttrs}
             required
+            onChange={formUpdate}
           //className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
           />
         )}
       </div>
       <div className="flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t border-stone-200 bg-stone-50 p-3 dark:border-stone-700 dark:bg-stone-800 sm:flex-row sm:justify-between sm:space-y-0 sm:px-10">
         <p className="text-sm text-stone-500 dark:text-stone-400">{helpText}</p>
-        <FormButton />
+        <Button
+          onClick={() => submitForm()}
+          isLoading={loading}
+        >
+          <p>Save Changes</p>
+        </Button>
       </div>
-    </form>
+    </div>
   );
 }
 
+/*
 function FormButton() {
   const { pending } = useFormStatus();
   return (
@@ -111,3 +132,4 @@ function FormButton() {
     </Button>
   );
 }
+*/
