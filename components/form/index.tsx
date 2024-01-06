@@ -78,11 +78,22 @@ export default function Form({
     <div
       className="rounded-lg border border-stone-200 bg-white dark:border-stone-700 dark:bg-black"
     >
-      <div className="relative flex flex-col space-y-4 p-5 sm:p-10" {...(inputAttrs.name === "password" ? { id: "new-password" } : {})}>
-        <h2 className="font-cal text-xl dark:text-white">{title}</h2>
-        <p className="text-sm text-stone-500 dark:text-stone-400">
-          {description}
-        </p>
+      <div className={`relative flex ${inputAttrs.name === "avatar" ? "justify-between" : "flex-col"} space-y-4 p-5 sm:p-10`} {...(inputAttrs.name === "password" ? { id: "new-password" } : {})}>
+        {inputAttrs.name === "avatar" ?
+          (
+            <>
+              <div className="flex-col">
+                <h2 className="font-cal text-xl dark:text-white">{title}</h2>
+                <p className="text-sm text-stone-500 dark:text-stone-400 py-4">{description}</p>
+              </div>
+            </>
+          ) : (
+            <>
+              <h2 className="font-cal text-xl dark:text-white">{title}</h2>
+              <p className="text-sm text-stone-500 dark:text-stone-400">{description}</p>
+            </>
+          )
+        }
         {inputAttrs.name === "image" || inputAttrs.name === "avatar" ? (
           <Uploader
             //@ts-expect-error
