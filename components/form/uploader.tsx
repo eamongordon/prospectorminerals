@@ -78,7 +78,7 @@ export default function Uploader({
           aspectRatio,
           {
             "max-w-screen-md rounded-md": aspectRatio === "aspect-video",
-            "max-w-[160px] rounded-full sm:w-[160px]": aspectRatio === "aspect-square",
+            "max-w-[160px] rounded-full sm:w-[160px] sm:mt-0": aspectRatio === "aspect-square",
           },
         )}
       >
