@@ -85,6 +85,17 @@ model Mineral {
   associatedWith         Mineral[]           @relation("MineralAssociates")
   associates             Mineral[]           @relation("MineralAssociates")
   localities             MineralOnLocality[]
+  photos                 PhotosOnMineral[]
+
+  @@index([id])
+}
+
+model Photo {
+  id          String            @id @default(cuid())
+  title       String
+  description String
+  image       String
+  minerals    PhotosOnMineral[]
 
   @@index([id])
 }
@@ -109,4 +120,15 @@ model MineralOnLocality {
   assignedBy String
 
   @@id([localityId, mineralId])
+}
+
+model PhotosOnMineral {
+  mineral    Mineral  @relation(fields: [mineralId], references: [id])
+  mineralId  String // relation scalar field (used in the `@relation` attribute above)
+  photo      Photo    @relation(fields: [photoId], references: [id])
+  photoId    String // relation scalar field (used in the `@relation` attribute above)
+  assignedAt DateTime @default(now())
+  assignedBy String
+
+  @@id([mineralId, photoId])
 }
