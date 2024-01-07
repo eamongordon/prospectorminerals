@@ -124,10 +124,16 @@ export const fetchMinerals = async (
       //@ts-expect-error;
       where: { AND: queryArray },
       select: {
-        name: true,
+        name: true
+      },
+      include: {
         photos: {
-          select: {
-            image: true
+          include: {
+            photo: {
+              select: {
+                title: true
+              }
+            }
           }
         }
       }
