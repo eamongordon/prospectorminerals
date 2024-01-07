@@ -9,6 +9,7 @@ import { LoginModalProvider } from "@/components/modal/registration/provider";
 import RegModal from "@/components/next-ui-modal";
 import Image from 'next/image';
 import Gallery from "@/components/mineral-gallery";
+import Card from "@/components/mineral-card";
 
 const galleryData = [
     {
@@ -38,6 +39,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                     alt="Prospector Minerals Logo"
                 />
                 <Gallery data={galleryData} />
+                <Card name="Azurite" />
                 <RegModal />
                 <Footer />
             </LoginModalProvider>
