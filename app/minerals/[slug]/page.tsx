@@ -10,6 +10,7 @@ import RegModal from "@/components/next-ui-modal";
 import Image from 'next/image';
 import Gallery from "@/components/mineral-gallery";
 import Card from "@/components/mineral-card";
+import MineralFilters from '@/components/mineral-filters';
 
 const galleryData = [
     {
@@ -40,6 +41,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                 />
                 <Gallery data={galleryData} />
                 <Card name="Azurite" />
+                <MineralFilters/>
                 <RegModal />
                 <Footer />
             </LoginModalProvider>
