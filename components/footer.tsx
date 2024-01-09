@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import ThemeSwitch from "./theme-switch";
 
 export default function FooterComp() {
     return (
@@ -161,6 +162,7 @@ export default function FooterComp() {
                                 </a>
                             </li>
                         </ul>
+                        <ThemeSwitch />
                     </div>
 
                     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-4">
@@ -249,7 +251,7 @@ export default function FooterComp() {
                         </div>
                     </div>
                 </div>
-                <p className="text-xs text-gray-500 dark:text-gray-200">&copy; {new Date().getFullYear()} Company Name. All rights reserved.</p>
+                <p className="text-xs text-gray-500 dark:text-gray-200">&copy; {new Date().getFullYear()} Prospector Minerals. All rights reserved.</p>
             </div>
         </footer>
     )
