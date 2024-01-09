@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-gradient-to-b from-[rgb(214,219,220)] to-[rgb(255,255,255)] text-black dark:bg-gradient-to-b dark:from-black dark:to-black dark:text-white`}>
         <Providers>{children}</Providers>
         <Analytics/>
       </body>
