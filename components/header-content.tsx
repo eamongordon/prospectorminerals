@@ -1,8 +1,9 @@
 "use client"
 
 import React from "react";
-import { Navbar, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, NavbarBrand, NavbarContent, NavbarItem, Link, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Divider, Avatar, Button } from "@nextui-org/react";
+import { Navbar, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, NavbarBrand, NavbarContent, NavbarItem, Link as UILink, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Divider, Avatar, Button } from "@nextui-org/react";
 import PMLogo from "./pmLogo";
+import Link from "next/link";
 import { usePathname } from 'next/navigation';
 import { Search } from 'lucide-react';
 import { signOut } from "next-auth/react";
@@ -45,29 +46,29 @@ export default function HeaderComp({
             <NavbarContent className="flex-auto gap-[72px]" justify="end">
                 <NavbarContent className="hidden lg:flex gap-10" justify="end">
                     <NavbarItem>
-                        <Link color="foreground" href="#">
+                        <UILink color="foreground" href="#">
                             Learn
-                        </Link>
+                        </UILink>
                     </NavbarItem>
                     <NavbarItem>
-                        <Link color="foreground" href="#">
+                        <UILink color="foreground" href="#">
                             Minerals
-                        </Link>
+                        </UILink>
                     </NavbarItem>
                     <NavbarItem>
-                        <Link color="foreground" href="#">
+                        <UILink color="foreground" href="#">
                             Localities
-                        </Link>
+                        </UILink>
                     </NavbarItem>
                     <NavbarItem>
-                        <Link color="foreground" href="#">
+                        <UILink color="foreground" href="#">
                             Articles
-                        </Link>
+                        </UILink>
                     </NavbarItem>
                     <NavbarItem>
-                        <Link color="foreground" href="#">
+                        <UILink color="foreground" href="#">
                             Photos
-                        </Link>
+                        </UILink>
                     </NavbarItem>
                 </NavbarContent>
                 {loggedIn ? (
@@ -97,7 +98,7 @@ export default function HeaderComp({
                                     <p className="font-semibold">{name ? name : email}</p>
                                 </DropdownItem>
                                 <DropdownItem key="dashboard">Dashboard</DropdownItem>
-                                <DropdownItem key="settings" href="/account/settings">Settings</DropdownItem>
+                                <DropdownItem key="settings" as={Link} href="/account/settings">Settings</DropdownItem>
                                 <DropdownItem key="logout" color="danger">
                                     Log Out
                                 </DropdownItem>
@@ -115,29 +116,29 @@ export default function HeaderComp({
             </NavbarContent>
             <NavbarMenu>
                 <NavbarMenuItem key="learn">
-                    <Link color="foreground" href="#">
+                    <UILink color="foreground" href="#">
                         Learn
-                    </Link>
+                    </UILink>
                 </NavbarMenuItem>
                 <NavbarMenuItem key="minerals">
-                    <Link color="foreground" href="#">
+                    <UILink color="foreground" href="#">
                         Minerals
-                    </Link>
+                    </UILink>
                 </NavbarMenuItem>
                 <NavbarMenuItem key="localities">
-                    <Link color="foreground" href="#">
+                    <UILink color="foreground" href="#">
                         Localities
-                    </Link>
+                    </UILink>
                 </NavbarMenuItem>
                 <NavbarMenuItem key="articles">
-                    <Link color="foreground" href="#">
+                    <UILink color="foreground" href="#">
                         Articles
-                    </Link>
+                    </UILink>
                 </NavbarMenuItem>
                 <NavbarMenuItem key="photos">
-                    <Link color="foreground" href="#">
+                    <UILink color="foreground" href="#">
                         Photos
-                    </Link>
+                    </UILink>
                 </NavbarMenuItem>
                 <Divider className="my-4" />
                 <div className="flex flex-col">
@@ -165,7 +166,7 @@ export default function HeaderComp({
                             }
                         }}>
                             <DropdownItem key="dashboard">Dashboard</DropdownItem>
-                            <DropdownItem key="settings" href="/account/settings">Settings</DropdownItem>
+                            <DropdownItem key="settings" as={Link} href="/account/settings">Settings</DropdownItem>
                             <DropdownItem key="logout" color="danger">
                                 Log Out
                             </DropdownItem>
