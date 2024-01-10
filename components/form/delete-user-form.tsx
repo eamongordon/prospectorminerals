@@ -9,28 +9,35 @@ import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
 import { deleteUser } from "@/lib/actions";
 import va from "@vercel/analytics";
+import { useState } from "react";
 
 export default function DeleteUserForm() {
   const { id } = useParams() as { id: string };
   const router = useRouter();
-  return (
-    <form
-      action={async (data: FormData) =>
-        window.confirm("Are you sure you want to delete your account?") &&
-        deleteUser()
-          .then(async (res) => {
+  const [data, setData] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const formUpdate = (event: any) => {
+    setData(event.target.value);
+  }
+  function submitForm() {
+    setLoading(true);
+    window.confirm("Are you sure you want to delete your account?") &&
+      deleteUser()
+        .then(async (res) => {
+          //@ts-expect-error
+          if (res.error) {
             //@ts-expect-error
-            if (res.error) {
-              //@ts-expect-error
-              toast.error(res.error);
-            } else {
-              va.track("Deleted User");
-              signOut({callbackUrl: "/"});
-              toast.success(`Account deleted.`);
-            }
-          })
-          .catch((err: Error) => toast.error(err.message))
-      }
+            toast.error(res.error);
+          } else {
+            va.track("Deleted User");
+            signOut({ callbackUrl: "/" });
+            toast.success(`Account deleted.`);
+          }
+        })
+        .catch((err: Error) => toast.error(err.message))
+  }
+  return (
+    <div
       className="rounded-lg border border-red-600 bg-white dark:bg-black"
     >
       <div className="relative flex flex-col space-y-4 p-5 sm:p-10">
@@ -45,6 +52,7 @@ export default function DeleteUserForm() {
           required
           pattern={"DELETE"}
           placeholder={"DELETE"}
+          onChange={formUpdate}
         />
       </div>
 
@@ -53,22 +61,16 @@ export default function DeleteUserForm() {
           This action is irreversible. Please proceed with caution.
         </p>
         <div className="w-32">
-          <FormButton />
+          <Button
+            color="danger"
+            onClick={() => submitForm()}
+            isLoading={loading}
+            isDisabled={data === "DELETE" ? false : true}
+          >
+            <p>Confirm Delete</p>
+          </Button>
         </div>
       </div>
-    </form>
-  );
-}
-
-function FormButton() {
-  const { pending } = useFormStatus();
-  return (
-    <Button
-      type="submit"
-      color="danger"
-      isLoading={pending}
-    >
-      <p>Confirm Delete</p>
-    </Button>
+    </div>
   );
 }
