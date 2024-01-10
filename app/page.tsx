@@ -1,6 +1,5 @@
 import HeaderComp from '@/components/header';
 import Hero from '@/components/home/hero';
-import { Spacer } from "@nextui-org/react";
 import dynamic from 'next/dynamic';
 
 const FooterComp = dynamic(() => import('@/components/footer'));
@@ -50,7 +49,7 @@ export default function Home() {
     <main>
       <HeaderComp />
       <Hero />
-      <Spacer y={40} />
+      <div className="pb-[40px]" />
       <div className='max-w-[1024px] mx-auto gap-4 grid grid-cols-1 w-600 md:grid-cols-2 lg:grid-cols-3 justify-items-center'>
         {
           cardItemList.map((obj, index) => (
@@ -60,7 +59,7 @@ export default function Home() {
           ))
         }
       </div>
-      <Spacer y={40} />
+      <div className="pb-[40px]" />
       <FooterComp />
     </main>
   )
