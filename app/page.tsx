@@ -49,7 +49,7 @@ export default function Home() {
     <main>
       <HeaderComp />
       <Hero />
-      <div className="pb-[40px]" />
+      <div className="pb-40" />
       <div className='max-w-[1024px] mx-auto gap-4 grid grid-cols-1 w-600 md:grid-cols-2 lg:grid-cols-3 justify-items-center'>
         {
           cardItemList.map((obj, index) => (
@@ -59,7 +59,7 @@ export default function Home() {
           ))
         }
       </div>
-      <div className="pb-[40px]" />
+      <div className="pb-40" />
       <FooterComp />
     </main>
   )
