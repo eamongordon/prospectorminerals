@@ -66,6 +66,28 @@ export const editUser = async (
   }
 };
 
+export const deleteUser = async () => {
+  try {
+    const session = await getSession();
+    if (!session?.user.id) {
+      return {
+        error: "Not authenticated",
+      };
+    } else {
+      const response = await prisma.user.delete({
+        where: {
+          id: session.user.id,
+        },
+      });
+      return response;
+    }
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
+};
+
 export const fetchMinerals = async (
   names: [],
   minHardness?: number,

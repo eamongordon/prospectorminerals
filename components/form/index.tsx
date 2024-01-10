@@ -83,13 +83,13 @@ export default function Form({
           (
             <>
               <div className="sm:flex-col">
-                <h2 className="font-cal text-xl dark:text-white">{title}</h2>
+                <h2 className="text-xl dark:text-white">{title}</h2>
                 <p className="text-sm text-stone-500 dark:text-stone-400 py-4">{description}</p>
               </div>
             </>
           ) : (
             <>
-              <h2 className="font-cal text-xl dark:text-white">{title}</h2>
+              <h2 className="text-xl dark:text-white">{title}</h2>
               <p className="text-sm text-stone-500 dark:text-stone-400">{description}</p>
             </>
           )
