@@ -21,7 +21,7 @@ export default function DeleteUserForm() {
   }
   function submitForm() {
     setLoading(true);
-    window.confirm("Are you sure you want to delete your account?") &&
+    if (window.confirm("Are you sure you want to delete your account?")) {
       deleteUser()
         .then(async (res) => {
           //@ts-expect-error
@@ -35,6 +35,7 @@ export default function DeleteUserForm() {
           }
         })
         .catch((err: Error) => toast.error(err.message))
+    }
   }
   return (
     <div
@@ -60,7 +61,6 @@ export default function DeleteUserForm() {
         <p className="text-center text-sm text-stone-500 dark:text-stone-400">
           This action is irreversible. Please proceed with caution.
         </p>
-        <div className="w-32">
           <Button
             color="danger"
             onClick={() => submitForm()}
@@ -69,7 +69,6 @@ export default function DeleteUserForm() {
           >
             <p>Confirm Delete</p>
           </Button>
-        </div>
       </div>
     </div>
   );
