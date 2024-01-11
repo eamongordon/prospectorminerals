@@ -75,7 +75,7 @@ export const deleteUser = async () => {
         error: "Not authenticated",
       };
     } else {
-      if (session.user.image) {
+      if (session.user.image && new URL(session.user.image).hostname === "ousfgajmtaam7m3j.public.blob.vercel-storage.com") {
         await del(session.user.image);
       }
       const response = await prisma.user.delete({
@@ -104,7 +104,7 @@ type FilterObj = {
   associates?: string[]
 }
 
-export async function fetchMinerals ({filterObj} : {filterObj: FilterObj}) {
+export async function fetchMinerals({ filterObj }: { filterObj: FilterObj }) {
   let queryArray = [];
   function pushArrayField(propertyArray: string[], property: string) {
     let filterArray: { property: { contains: string } }[] = [];
@@ -117,7 +117,7 @@ export async function fetchMinerals ({filterObj} : {filterObj: FilterObj}) {
   const { names, minHardness, maxHardness, lusters, streaks, mineralClasses, chemistry, associates } = Object(filterObj)
   if (names && names.length > 0) {
     let filterArray: { name: { contains: string } }[] = [];
-    names.forEach((name : string) => {
+    names.forEach((name: string) => {
       let pushObj = { name: { contains: name } }
       filterArray.push(pushObj);
     })
