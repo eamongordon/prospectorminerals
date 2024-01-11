@@ -47,7 +47,7 @@ export default function FormWrapper(
         >
           <Tab key="/login" title="Login" {...(isModal ? {} : { href: "/login" })}>
             <Image
-              alt="Platforms Starter Kit"
+              alt="Prospector Minerals"
               width={100}
               height={100}
               className="relative mx-auto h-12 w-auto dark:scale-120 dark:rounded-full dark:border dark:border-stone-400 my-5"
