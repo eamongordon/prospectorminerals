@@ -104,9 +104,9 @@ export default function FooterComp() {
                             </Link>
                         </div>
 
-                        <p className="mt-6 font-medium">Don&apos;t be shy! - Follow Us</p>
+                        <p className="mt-6 font-medium">Follow Us!</p>
 
-                        <ul className="mt-8 flex gap-6">
+                        <ul className="mt-2 flex gap-6">
                             <li>
                                 <a
                                     href="/"
@@ -168,7 +168,7 @@ export default function FooterComp() {
 
                     </div>
 
-                    <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-4">
+                    <div className="grid grid-cols-2 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-4">
                         <div>
                             <p className="font-medium">Services</p>
 
