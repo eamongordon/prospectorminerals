@@ -88,18 +88,20 @@ export const deleteUser = async () => {
   }
 };
 
-export const fetchMinerals = async (
-  names: [],
+type FilterObj = {
+  names: string[],
   minHardness?: number,
   maxHardness?: number,
-  lusters?: [],
-  streaks?: [],
-  mineralClasses?: [],
-  chemistry?: [],
-  associates?: []
-) => {
+  lusters?: string[],
+  streaks?: string[],
+  mineralClasses?: string[],
+  chemistry?: string[],
+  associates?: string[]
+}
+
+export async function fetchMinerals ({filterObj} : {filterObj: FilterObj}) {
   let queryArray = [];
-  function pushArrayField(propertyArray: [], property: string) {
+  function pushArrayField(propertyArray: string[], property: string) {
     let filterArray: { property: { contains: string } }[] = [];
     propertyArray.forEach((propertyItem) => {
       let pushObj = { property: { contains: propertyItem } }
@@ -107,9 +109,10 @@ export const fetchMinerals = async (
     })
     queryArray.push({ OR: filterArray })
   }
+  const { names, minHardness, maxHardness, lusters, streaks, mineralClasses, chemistry, associates } = Object(filterObj)
   if (names && names.length > 0) {
     let filterArray: { name: { contains: string } }[] = [];
-    names.forEach((name) => {
+    names.forEach((name : string) => {
       let pushObj = { name: { contains: name } }
       filterArray.push(pushObj);
     })
@@ -135,7 +138,7 @@ export const fetchMinerals = async (
   }
   if (associates && associates.length > 0) {
     let associatesArray: { name: { contains: string } }[] = [];
-    associates.forEach((associate) => {
+    associates.forEach((associate: string) => {
       let pushObj = { name: { contains: associate } }
       associatesArray.push(pushObj);
     })
@@ -143,14 +146,11 @@ export const fetchMinerals = async (
   }
   const results = await prisma.mineral.findMany(
     {
-      //@ts-expect-error;
       where: { AND: queryArray },
       select: {
-        name: true
-      },
-      include: {
+        name: true,
         photos: {
-          include: {
+          select: {
             photo: {
               select: {
                 title: true
