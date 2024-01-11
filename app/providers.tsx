@@ -5,11 +5,13 @@ import { Toaster } from "sonner";
 import { NextUIProvider } from '@nextui-org/react';
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ModalProvider } from "@/components/modal/provider";
+import { useRouter } from 'next/navigation';
 
 export function Providers({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
   return (
     <SessionProvider>
-      <NextUIProvider>
+      <NextUIProvider navigate={router.push}>
         <NextThemesProvider attribute="class">
           <Toaster className="dark:hidden" />
           <Toaster theme="dark" className="hidden dark:block" />
