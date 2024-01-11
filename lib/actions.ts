@@ -5,6 +5,7 @@ import prisma from "@/lib/prisma";
 import { hash } from "bcrypt";
 import { put } from "@vercel/blob";
 import { customAlphabet } from "nanoid";
+import { del } from '@vercel/blob';
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -74,11 +75,15 @@ export const deleteUser = async () => {
         error: "Not authenticated",
       };
     } else {
+      if (session.user.image) {
+        await del(session.user.image);
+      }
       const response = await prisma.user.delete({
         where: {
           id: session.user.id,
         },
       });
+
       return response;
     }
   } catch (error: any) {
