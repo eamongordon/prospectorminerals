@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import Image from "next/image";
 import LoginButton from "./social-login-button";
 import { Suspense } from "react";
-import { Divider, Tab, Tabs, Link, Spacer } from "@nextui-org/react";
+import { Divider, Tab, Tabs, Link as UILink, Spacer } from "@nextui-org/react";
 import React from "react";
 
 export default function FormWrapper(
@@ -45,7 +45,7 @@ export default function FormWrapper(
             tab: "rounded-t-xl rounded-b-none",
           }}
         >
-          <Tab key="/login" title="Login" {...(isModal ? {} : { href: "/login" })}>
+          <Tab key="/login" title="Login" {...(isModal ? {} : { href: "/login", as:UILink })}>
             <Image
               alt="Prospector Minerals"
               width={100}
@@ -64,9 +64,9 @@ export default function FormWrapper(
                   </p>
                   <Form type="forgotPassword" isModal={isModal} onCloseAction={onCloseAction} resetPasswordFunc={pull_ForgotPassword} />
                   <p className="text-center text-sm pt-8 pb-8 px-16">
-                    <Link className="font-semibold text-sm" color="foreground" onPress={() => pull_ForgotPassword(true)} >
+                    <UILink className="font-semibold text-sm" color="foreground" onPress={() => pull_ForgotPassword(true)} >
                       Back to Login
-                    </Link>
+                    </UILink>
                   </p>
                 </>
               ) : (
@@ -77,9 +77,9 @@ export default function FormWrapper(
                   <Form type="login" isModal={isModal} onCloseAction={onCloseAction} resetPasswordFunc={pull_ForgotPassword} />
                   <p className="text-center text-sm pt-8 pb-8 px-16">
                     Don&apos;t have an account?{" "}
-                    <Link className="font-semibold text-sm" color="foreground" {...(isModal ? { onPress: () => setSelected("/signup") } : { href: "/signup" })} >
+                    <UILink className="font-semibold text-sm" color="foreground" {...(isModal ? { onPress: () => setSelected("/signup") } : { href: "/signup" })} >
                       Sign up
-                    </Link>{" "}
+                    </UILink>{" "}
                     for free.
                   </p>
                   <Divider />
@@ -96,7 +96,7 @@ export default function FormWrapper(
               )
             }
           </Tab>
-          <Tab key="/signup" title="Sign Up" {...(isModal ? {} : { href: "/signup" })}>
+          <Tab key="/signup" title="Sign Up" {...(isModal ? {} : { href: "/signup", as:UILink })}>
             <Image
               alt="Platforms Starter Kit"
               width={100}
@@ -110,9 +110,9 @@ export default function FormWrapper(
             <Form type="register" isModal={isModal} onCloseAction={onCloseAction} />
             <p className="text-center text-sm pt-8 pb-8 px-16">
               Already have an account?{" "}
-              <Link className="font-semibold text-sm" color="foreground" {...(isModal ? { onPress: () => setSelected("/login") } : { href: "/login" })}>
+              <UILink className="font-semibold text-sm" color="foreground" {...(isModal ? { onPress: () => setSelected("/login") } : { href: "/login" })}>
                 Sign in
-              </Link>
+              </UILink>
               {" "}
               instead.
             </p>
