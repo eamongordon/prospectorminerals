@@ -1,9 +1,5 @@
 import HeaderComp from '@/components/header';
 import Hero from '@/components/home/hero';
-import dynamic from 'next/dynamic';
-
-const FooterComp = dynamic(() => import('@/components/footer'));
-const Card = dynamic(() => import('@/components/home/card-new'));
 
 const cardItemList = [
   {
