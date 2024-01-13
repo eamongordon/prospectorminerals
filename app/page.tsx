@@ -1,5 +1,7 @@
 import HeaderComp from '@/components/header';
 import Hero from '@/components/home/hero';
+import FooterComp from '@/components/footer';
+import Card from '@/components/home/card-new';
 
 const cardItemList = [
   {
