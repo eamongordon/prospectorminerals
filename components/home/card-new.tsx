@@ -1,27 +1,31 @@
 import React from "react";
 import { Card, CardHeader, CardBody, CardFooter, Button, Link, Image } from "@nextui-org/react";
 import { ArrowRight } from 'lucide-react';
+import BlurImage from "../blur-image";
 
 export default function NavCard({
     title,
     description,
     cta,
     image,
-    link
+    link,
+    blurDataURL
 }: {
     title: string;
     description: string;
     cta?: string;
     image?: string;
-    link: string
+    link: string;
+    blurDataURL?: string;
 }) {
     return (
         <Card className="col-span-12 sm:col-span-4 w-[330px] h-[240px]">
-            <Image
-                removeWrapper
+            <BlurImage
                 alt="Card background"
+                fill
                 className="z-0 w-full h-full object-cover brightness-50"
                 src={image ? image : "/Fluorite-164_horiz-Optimized.jpg"}
+                blurDataURL={blurDataURL ? blurDataURL : undefined}
             />
             <CardHeader className="absolute z-10 bottom-28 left-2">
                 <h2 className="text-white font-medium text-3xl">{title}</h2>
