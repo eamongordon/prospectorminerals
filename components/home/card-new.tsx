@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardHeader, CardBody, CardFooter, Button, Link, Image } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFooter, Link } from "@nextui-org/react";
 import { ArrowRight } from 'lucide-react';
 import BlurImage from "../blur-image";
 
