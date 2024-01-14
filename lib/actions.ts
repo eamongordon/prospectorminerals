@@ -2,10 +2,12 @@
 
 import { getSession } from "@/lib/auth";
 import prisma from "@/lib/prisma";
+import { PrismaClient, Prisma } from '@prisma/client'
 import { hash } from "bcrypt";
 import { put } from "@vercel/blob";
 import { customAlphabet } from "nanoid";
 import { del } from '@vercel/blob';
+import { getBlurDataURL } from "@/lib/utils";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -13,6 +15,112 @@ const nanoid = customAlphabet(
 ); // 7-character random string
 
 export const editUser = async (
+  formData: any,
+  _id: unknown,
+  key: string,
+) => {
+  const session = await getSession();
+  if (!session?.user.id) {
+    return {
+      error: "Not authenticated",
+    };
+  }
+  let value = formData;
+
+  try {
+    if (key === 'password') {
+      value = await hash(value, 10);
+    } else if (key === "image" || key === "avatar") {
+      if (!process.env.BLOB_READ_WRITE_TOKEN) {
+        return {
+          error:
+            "Missing BLOB_READ_WRITE_TOKEN token. Note: Vercel Blob is currently in beta – please fill out this form for access: https://tally.so/r/nPDMNd",
+        };
+      }
+
+      const file = formData.get(key) as File;
+      const filename = `${nanoid()}.${file.type.split("/")[1]}`;
+
+      const { url } = await put(filename, file, {
+        access: "public",
+      });
+      value = url;
+      key = "image";
+    }
+    const response = await prisma.user.update({
+      where: {
+        id: session.user.id,
+      },
+      data: {
+        [key]: value,
+      },
+    });
+    return response;
+  } catch (error: any) {
+    if (error.code === "P2002") {
+      return {
+        error: `This ${key} is already in use`,
+      };
+    } else {
+      return {
+        error: error.message,
+      };
+    }
+  }
+};
+
+export const createPhotoBulk = async (
+  input: string
+) => {
+  const session = await getSession();
+  if (!session?.user.id || session.user.email !== "ekeokigordon@icloud.com") {
+    return {
+      error: "Not authenticated",
+    };
+  }
+
+  try {
+    console.log("itemsArray");
+    const itemArray = JSON.parse(input);
+    console.log(itemArray);
+    const newItems = await Promise.all(itemArray.map(async (obj: any) => {
+      const fetchRes = await fetch(obj.image);
+      const imageBlob = await fetchRes.blob();
+      const filename = `${obj.id}.${obj.fileExtension.split("/")[1]}`;
+
+      const { url } = await put(filename, imageBlob, {
+        access: "public",
+      });
+      const blurhash = await getBlurDataURL(url);
+      obj.fileExtension = undefined;
+      if (obj.specimen_height) {
+        obj.specimen_height = new Prisma.Decimal(obj.specimen_height)
+      };
+      if (obj.specimen_width) {
+        obj.specimen_width = new Prisma.Decimal(obj.specimen_width)
+      };
+      if (obj.specimen_length) {
+        obj.specimen_length = new Prisma.Decimal(obj.specimen_length)
+      };
+      return {
+        ...obj,
+        image: url,
+        imageBlurhash: blurhash
+      }
+    }));
+    console.log("new items");
+    console.log(newItems);
+    const response = prisma.photo.createMany({data: newItems});
+    return response;
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
+};
+
+
+export const createPhoto = async (
   formData: any,
   _id: unknown,
   key: string,
