@@ -2,7 +2,7 @@
 "use client"
 
 import { getBlurDataURL } from "@/lib/utils";
-import { use, useState } from "react";
+import { useState } from "react";
 import { Button, Input } from "@nextui-org/react";
 
 export default function Blurhash() {
