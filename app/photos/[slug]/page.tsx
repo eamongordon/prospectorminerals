@@ -32,21 +32,24 @@ export default async function Page({ params }: { params: { slug: string } }) {
     return (
         <main>
             <Header />
-            <div className='flex-col space-y-5 max-w-screen-xl mx-auto py-5'>
-                <div className='flex items-center justify-start'>
-                    <p className='text-5xl text-left px-8'>{photo.title ? photo.title : ""}</p>
-                </div>
-                <div className='grid grid-rows-1 grid-cols-1 gap-2 sm:gap-4 max-w-screen-xl aspect-[8/3] max-h-[500px] px-8 mx-auto'>
-                    <div className='relative rounded-md row-span-1 col-span-1 flex flex-col items-center justify-center'>
+            <div className='flex-col space-y-5 max-w-screen-md mx-auto py-5'>
+                <div className='grid grid-rows-1 grid-cols-1 gap-2 sm:gap-4 max-w-screen-md px-8 mx-auto'>
+                    <div className='relative rounded-md row-span-1 col-span-1 flex flex-col items-center justify-center aspect-video max-w-screen-md'>
                         <BlurImage
                             className={`rounded-xl z-0`}
-                            src={photo.image ? photo.image : '/Cavansite-45.jpeg'}
                             fill
+                            src={photo.image ? photo.image : '/Cavansite-45.jpeg'}
                             objectFit='cover'
                             blurDataURL={photo.imageBlurhash || undefined}
                             alt={photo.title ? photo.title : ""}
                         />
                     </div>
+                </div>
+                <div className='flex-col items-center justify-start px-8 text-left space-y-3'>
+                        <p className='text-4xl font-semibold'>{photo.title ? photo.title : ""}</p>
+                        <p className='text-lg font-semibold'>{"Smoky Hawk Claim, Lake George Co., Colorado"}</p>
+                        <p className='text-md'>{"6.0 x 4.3 x 2.5 cm"}</p>
+                        <p className='text-md'>{photo.description ? photo.description : ""}</p>
                 </div>
             </div>
             <Footer />
