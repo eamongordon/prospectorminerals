@@ -201,7 +201,7 @@ export const deleteUser = async () => {
   }
 };
 
-type FilterObj = {
+type MineralsFilterObj = {
   names: string[],
   minHardness?: number,
   maxHardness?: number,
@@ -212,7 +212,7 @@ type FilterObj = {
   associates?: string[]
 }
 
-export async function fetchMinerals({ filterObj }: { filterObj: FilterObj }) {
+export async function fetchMinerals({ filterObj }: { filterObj: MineralsFilterObj }) {
   let queryArray = [];
   function pushArrayField(propertyArray: string[], property: string) {
     let filterArray: { property: { contains: string } }[] = [];
@@ -275,4 +275,39 @@ export async function fetchMinerals({ filterObj }: { filterObj: FilterObj }) {
     }
   );
   return results;
+}; 
+
+type PhotosFilterObj = {
+  name: string[]
+}
+
+export async function fetchPhotos({ filterObj, cursor, limit }: { filterObj: PhotosFilterObj, cursor?: number, limit?: number }) {
+  if (!limit) {
+    limit = 5;
+  }
+  const cursorObj = !cursor ? undefined : { number: cursor };
+  const { name } = Object(filterObj)
+  const results = await prisma.photo.findMany(
+    {
+      skip: !cursor ? 1 : 0,
+      cursor: cursorObj,
+      take: limit,
+      where: { 
+        title: {
+          contains: name
+        }
+      },
+      select: {
+        title: true,
+        image: true,
+        imageBlurhash: true,
+        number: true
+      },
+      ...(limit ? { take: limit } : {}),
+    }
+  );
+  return {
+    results,
+    next: results.length === limit ? results[limit - 1].number : undefined,
+  };
 }; 
