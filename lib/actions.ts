@@ -285,17 +285,17 @@ export async function fetchPhotos({ filterObj, cursor, limit }: { filterObj: Pho
   if (!limit) {
     limit = 10;
   }
-  const takeNumber = limit + 1;
   const cursorObj = !cursor ? undefined : { number: cursor };
   const { name } = Object(filterObj)
   const results = await prisma.photo.findMany(
     {
-      skip: !cursor ? 1 : 0,
+      skip: 1,
       cursor: cursorObj,
-      take: takeNumber,
+      take: limit,
       where: {
         title: {
-          contains: name
+          contains: name,
+          mode: 'insensitive'
         }
       },
       select: {
@@ -308,15 +308,17 @@ export async function fetchPhotos({ filterObj, cursor, limit }: { filterObj: Pho
         {
           number: "asc",
         }],
-      ...(limit ? { take: takeNumber } : {}),
+      ...(limit ? { take: limit } : {}),
     }
   );
+  /*
   let resultsCopy = [...results];
   if (results.length > 1) {
     resultsCopy.length = results.length - 1;
   }
+  */
   return {
-    results: resultsCopy,
-    next: resultsCopy.length === limit ? results[results.length - 1].number : undefined
+    results: results,
+    next: results.length === limit ? results[results.length - 1].number : undefined
   };
 }; 

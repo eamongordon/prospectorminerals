@@ -19,7 +19,7 @@ const Search = ({ search }: { search?: string }) => {
     }
 
     if (!query) {
-      //router.push(`/photos`)
+      router.push(`/photos`)
     } else {
       router.push(`/photos?search=${query}`)
     }
