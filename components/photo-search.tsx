@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Search as MagnifyingGlassIcon } from 'lucide-react'
-import { useDebounce } from 'use-debounce'
+import { useDebounce } from 'use-debounce';
+import { Input } from '@nextui-org/react';
 
 const Search = ({ search }: { search?: string }) => {
   const router = useRouter()
@@ -33,11 +34,14 @@ const Search = ({ search }: { search?: string }) => {
           aria-hidden='true'
         />
       </div>
-      <input
+      <Input
+        type="text"
         value={text}
-        placeholder='Search movies...'
+        placeholder="Search"
         onChange={e => setText(e.target.value)}
-        className='block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
+        endContent={
+          <MagnifyingGlassIcon />
+        }
       />
     </div>
   )
