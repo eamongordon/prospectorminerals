@@ -10,7 +10,7 @@ const Search = ({ search }: { search?: string }) => {
   const initialRender = useRef(true)
 
   const [text, setText] = useState(search)
-  const [query] = useDebounce(text, 750)
+  const [query] = useDebounce(text, 250)
 
   useEffect(() => {
     if (initialRender.current) {

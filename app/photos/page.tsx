@@ -19,8 +19,8 @@ const Page = async ({
     const search =
         typeof searchParams.search === 'string' ? searchParams.search : undefined
 
-    const photos = (await fetchPhotos({ filterObj: { name: search }, cursor: undefined, limit: 10 })).results;
-
+    const photosQuery = await fetchPhotos({ filterObj: { name: search }, cursor: undefined, limit: 10 });
+    console.log(photosQuery);
     return (
         <main>
             <Header />
@@ -39,7 +39,7 @@ const Page = async ({
                         role='list'
                         className='grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 sm:gap-x-6 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-8'
                     >
-                        <InfiniteScrollPhotos search={search} initialPhotos={photos} />
+                        <InfiniteScrollPhotos search={search} initialPhotos={photosQuery.results} initialCursor={photosQuery.next ? photosQuery.next : undefined}/>
                     </ul>
                 </div>
             </section>
