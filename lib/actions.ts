@@ -110,7 +110,7 @@ export const createPhotoBulk = async (
     }));
     console.log("new items");
     console.log(newItems);
-    const response = prisma.photo.createMany({data: newItems});
+    const response = prisma.photo.createMany({ data: newItems });
     return response;
   } catch (error: any) {
     return {
@@ -275,15 +275,15 @@ export async function fetchMinerals({ filterObj }: { filterObj: MineralsFilterOb
     }
   );
   return results;
-}; 
+};
 
 type PhotosFilterObj = {
-  name: string[]
+  name: string | undefined
 }
 
 export async function fetchPhotos({ filterObj, cursor, limit }: { filterObj: PhotosFilterObj, cursor?: number, limit?: number }) {
   if (!limit) {
-    limit = 5;
+    limit = 10;
   }
   const cursorObj = !cursor ? undefined : { number: cursor };
   const { name } = Object(filterObj)
@@ -292,7 +292,7 @@ export async function fetchPhotos({ filterObj, cursor, limit }: { filterObj: Pho
       skip: !cursor ? 1 : 0,
       cursor: cursorObj,
       take: limit,
-      where: { 
+      where: {
         title: {
           contains: name
         }
@@ -303,11 +303,15 @@ export async function fetchPhotos({ filterObj, cursor, limit }: { filterObj: Pho
         imageBlurhash: true,
         number: true
       },
+      orderBy: [
+        {
+          number: "asc",
+        }],
       ...(limit ? { take: limit } : {}),
     }
   );
   return {
     results,
-    next: results.length === limit ? results[limit - 1].number : undefined,
+    next: results.length === limit ? cursor ? cursor + results.length + 1 : results.length + 1 : undefined
   };
 }; 
