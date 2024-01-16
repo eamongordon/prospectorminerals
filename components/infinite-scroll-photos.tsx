@@ -37,7 +37,6 @@ export default function InfiniteScrollPhotos({
         ]);
       };
     } else {
-
     }
   }
 
@@ -51,7 +50,7 @@ export default function InfiniteScrollPhotos({
   return (
     <>
       {photos?.map(photo => (
-        <li key={nanoid()} className='relative'>
+        <li key={photo.id} className='relative'>
           <div className='group aspect-square w-full overflow-hidden rounded-lg bg-gray-100'>
             {photo.image && (
               <BlurImage
