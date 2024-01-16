@@ -23,7 +23,7 @@ const Page = async ({
     return (
         <main>
             <Header />
-            <section className='py-24'>
+            <section className='py-24 flex justify-center items-center'>
                 <div className='container'>
                     <div className='mb-12 flex items-center justify-between gap-x-16'>
                         <h1 className='flex-1 text-3xl font-bold'>Photos</h1>
@@ -36,7 +36,7 @@ const Page = async ({
                     <ul
                         key={nanoid()}
                         role='list'
-                        className='grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 sm:gap-x-6 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-8'
+                        className='grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-5 xl:gird-cols-6 max-w-screen-xl px-8'
                     >
                         <InfiniteScrollPhotos search={search} initialPhotos={photosQuery.results} initialCursor={photosQuery.next ? photosQuery.next : undefined}/>
                     </ul>

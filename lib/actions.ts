@@ -289,7 +289,7 @@ export async function fetchPhotos({ filterObj, cursor, limit }: { filterObj: Pho
   const { name } = Object(filterObj)
   const results = await prisma.photo.findMany(
     {
-      skip: 1,
+      skip: !cursor ? 0 : 1,
       cursor: cursorObj,
       take: limit,
       where: {
@@ -302,7 +302,8 @@ export async function fetchPhotos({ filterObj, cursor, limit }: { filterObj: Pho
         title: true,
         image: true,
         imageBlurhash: true,
-        number: true
+        number: true,
+        id: true
       },
       orderBy: [
         {
@@ -317,6 +318,14 @@ export async function fetchPhotos({ filterObj, cursor, limit }: { filterObj: Pho
     resultsCopy.length = results.length - 1;
   }
   */
+  const photoTest = await prisma.photo.findMany({
+    where: {
+      title: {
+        contains: name,
+        mode: 'insensitive'
+      }
+    }
+  });
   return {
     results: results,
     next: results.length === limit ? results[results.length - 1].number : undefined

@@ -5,7 +5,7 @@ import { useInView } from 'react-intersection-observer'
 import { fetchPhotos } from '@/lib/actions';
 import Image from 'next/image'
 import { customAlphabet } from "nanoid";
-import {Spinner} from "@nextui-org/react";
+import { Spinner } from "@nextui-org/react";
 import BlurImage from './blur-image';
 
 const nanoid = customAlphabet(
@@ -22,9 +22,19 @@ export default function InfiniteScrollPhotos({
   initialPhotos: any[] | undefined,
   initialCursor: number | undefined
 }) {
-  const [photos, setPhotos] = useState(initialPhotos)
+
+  const [photos, setPhotos] = useState(initialPhotos);
   const [page, setPage] = useState(initialCursor || undefined);
-  const [ref, inView] = useInView()
+  const [ref, inView] = useInView();
+
+  const [hoverItem, setHoverItem] = useState("");
+  function handleHoverIn(itemId: string) {
+    setHoverItem(itemId);
+    console.log(itemId)
+  };
+  function handleHoverOut(itemId: string) {
+    setHoverItem("");
+  };
 
   async function loadMorePhotos() {
     if (page) {
@@ -51,18 +61,31 @@ export default function InfiniteScrollPhotos({
     <>
       {photos?.map(photo => (
         <li key={photo.id} className='relative'>
-          <div className='group aspect-square w-full overflow-hidden rounded-lg bg-gray-100'>
+          <div
+            className='relative flex flex-col items-center justify-center text-center group aspect-square w-full overflow-hidden rounded-lg'
+            id={photo.id}
+            onMouseEnter={(e) => handleHoverIn(e.currentTarget.id)}
+            onMouseLeave={(e) => handleHoverOut(e.currentTarget.id)}
+          >
             {photo.image && (
               <BlurImage
-                src={photo.image}
+                src="/Cavansite-45.jpeg"
                 alt=''
-                className='w-full object-cover group-hover:opacity-75'
-                width={300}
-                height={300}
+                id={photo.id}
+                className={`${hoverItem === photo.id ? "brightness-50 blur-sm" : ""} rounded-lg`}
+                fill={true}
+                objectFit='cover'
                 blurDataURL={photo.blurDataURL}
               />
             )}
-            <p>{photo.title}</p>
+            {hoverItem === photo.id ? (
+              <>
+                <h3 className="text-sm sm:text-xl z-10 font-medium text-white">{photo?.title}</h3>
+                <p className="text-sm sm:text-md z-10 text-white">{photo?.number}</p>
+              </>
+            ) : (
+              <></>
+            )}
           </div>
         </li>
       ))}
@@ -70,9 +93,9 @@ export default function InfiniteScrollPhotos({
       {/* loading spinner */}
       <div
         ref={ref}
-        className={`${!page ? "hidden": ""} col-span-1 mt-16 flex items-center justify-center sm:col-span-2 md:col-span-3 lg:col-span-4`}
+        className={`${!page ? "hidden" : ""} mt-16 flex items-center justify-center col-span-2 sm:col-span-2 md:col-span-4 lg:col-span-5`}
       >
-        <Spinner/>
+        <Spinner />
       </div>
     </>
   )
