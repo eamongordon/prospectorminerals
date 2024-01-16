@@ -20,7 +20,6 @@ const Page = async ({
         typeof searchParams.search === 'string' ? searchParams.search : undefined
 
     const photosQuery = await fetchPhotos({ filterObj: { name: search }, cursor: undefined, limit: 10 });
-    console.log(photosQuery);
     return (
         <main>
             <Header />
