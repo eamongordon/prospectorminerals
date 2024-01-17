@@ -36,7 +36,7 @@ const Page = async ({
                     <ul
                         key={nanoid()}
                         role='list'
-                        className='grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-5 xl:gird-cols-6 max-w-screen-xl px-8'
+                        className='w-full max-w-screen-xl grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-5'
                     >
                         <InfiniteScrollPhotos search={search} initialPhotos={photosQuery.results} initialCursor={photosQuery.next ? photosQuery.next : undefined}/>
                     </ul>
