@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Fragment } from 'react'
 import { useInView } from 'react-intersection-observer'
 import { fetchPhotos } from '@/lib/actions';
 import Image from 'next/image'
@@ -80,8 +80,8 @@ export default function InfiniteScrollPhotos({
             )}
             {hoverItem === photo.id ? (
               <>
-                <h3 className="text-sm sm:text-xl z-10 font-medium text-white">{photo?.title}</h3>
-                <p className="text-sm sm:text-md z-10 text-white">{photo?.number}</p>
+                <h3 className="text-sm sm:text-xl z-10 font-medium text-white px-2">{photo?.title}</h3>
+                <p className="text-sm sm:text-md z-10 text-white px-2">{photo?.number}</p>
               </>
             ) : (
               <></>
