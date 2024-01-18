@@ -281,7 +281,12 @@ type PhotosFilterObj = {
   name: string | undefined
 }
 
-export async function fetchPhotos({ filterObj, cursor, limit }: { filterObj: PhotosFilterObj, cursor?: number, limit?: number }) {
+type PhotosSortObj = {
+  property: string
+  order: string
+}
+
+export async function fetchPhotos({ filterObj, cursor, limit, sortObj }: { filterObj: PhotosFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj}) {
   if (!limit) {
     limit = 10;
   }
@@ -306,9 +311,11 @@ export async function fetchPhotos({ filterObj, cursor, limit }: { filterObj: Pho
         id: true
       },
       orderBy: [
+        sortObj ? { [sortObj.property] : sortObj.order } : {},
         {
           number: "asc",
-        }],
+        },
+      ],
       ...(limit ? { take: limit } : {}),
     }
   );

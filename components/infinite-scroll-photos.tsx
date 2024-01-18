@@ -13,14 +13,21 @@ const nanoid = customAlphabet(
   7,
 ); // 7-character random string
 
+type PhotosSortObj = {
+  property: string
+  order: string
+}
+
 export default function InfiniteScrollPhotos({
   search,
   initialPhotos,
-  initialCursor
+  initialCursor,
+  sort
 }: {
   search: string | undefined
   initialPhotos: any[] | undefined,
   initialCursor: number | undefined
+  sort?: PhotosSortObj | undefined
 }) {
 
   const [photos, setPhotos] = useState(initialPhotos);
@@ -38,7 +45,7 @@ export default function InfiniteScrollPhotos({
 
   async function loadMorePhotos() {
     if (page) {
-      const photosQuery = await fetchPhotos({ filterObj: { name: search }, cursor: page, limit: 10 });
+      const photosQuery = await fetchPhotos({ filterObj: { name: search }, cursor: page, limit: 10, ...(sort ? { sortObj: sort } : {}),});
       if (photosQuery.results?.length) {
         setPage(photosQuery.next ? photosQuery.next : undefined)
         setPhotos((prev: any[] | undefined) => [
