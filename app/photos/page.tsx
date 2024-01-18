@@ -8,9 +8,9 @@ const nanoid = customAlphabet(
 import { fetchPhotos } from '@/lib/actions'
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import Search from '@/components/photo-search';
+import Search from '@/components/photos/photo-search';
 import SortDropdown from '@/components/photos/sort-dropdown';
-import InfiniteScrollPhotos from '@/components/infinite-scroll-photos';
+import InfiniteScrollPhotos from '@/components/photos/infinite-scroll-photos';
 
 const Page = async ({
     searchParams
@@ -23,19 +23,18 @@ const Page = async ({
         typeof searchParams.property === 'string' ? searchParams.property : undefined
     const order =
         typeof searchParams.order === 'string' ? searchParams.order : undefined
-    const photosQuery = await fetchPhotos({ filterObj: { name: search }, cursor: undefined, limit: 10 });
+    const photosQuery = await fetchPhotos({ filterObj: { name: search }, cursor: undefined, limit: 10, ...(property && order ? { sortObj: {property: property, order: order} } : {})});
     return (
         <main>
             <Header />
             <div className="flex justify-center items-center">
-                <section className='flex-col justify-center items-center py-24 px-6 w-full max-w-screen-xl'>
-                    <div className='mb-12 flex items-center justify-between gap-x-16'>
-                        <h1 className='flex-1 text-3xl font-bold'>Photos</h1>
-                        <div className='flex-1'>
+                <section className='flex-col justify-center items-center py-6 sm:py-24 px-6 w-full max-w-screen-xl'>
+                    <div className='mb-12 flex-row my-5 sm:flex sm:gap-x-10 items-center justify-between'>
+                        <div className='py-2 sm:basis-2/3'>
                             <Search search={search} />
                         </div>
-                        <div className='flex-1'>
-                            <SortDropdown sort={`${property},${order}`} />
+                        <div className='py-2 sm:basis-1/3'>
+                            <SortDropdown {...(property && order ? { sort: `${property},${order}` } : {})} />
                         </div>
                     </div>
 
