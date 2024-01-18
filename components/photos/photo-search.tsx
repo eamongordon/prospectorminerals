@@ -1,13 +1,15 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { Search as MagnifyingGlassIcon } from 'lucide-react'
 import { useDebounce } from 'use-debounce';
 import { Input } from '@nextui-org/react';
 
 const Search = ({ search }: { search?: string }) => {
-  const router = useRouter()
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const initialRender = useRef(true)
 
   const [text, setText] = useState(search)
@@ -18,12 +20,20 @@ const Search = ({ search }: { search?: string }) => {
       initialRender.current = false
       return
     }
-
+    // now you got a read/write object
+    const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+    // update as necessary
     if (!query) {
-      router.push(`/photos`)
+      current.delete("search");
     } else {
-      router.push(`/photos?search=${query}`)
+      current.set("search", query);
     }
+    // cast to string
+    const search = current.toString();
+    // or const query = `${'?'.repeat(search.length && 1)}${search}`;
+    const queryParam = search ? `?${search}` : "";
+
+    router.push(`${pathname}${queryParam}`);
   }, [query])
 
   return (

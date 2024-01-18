@@ -6,7 +6,7 @@ import { fetchPhotos } from '@/lib/actions';
 import Image from 'next/image'
 import { customAlphabet } from "nanoid";
 import { Spinner } from "@nextui-org/react";
-import BlurImage from './blur-image';
+import BlurImage from '../blur-image';
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -33,11 +33,9 @@ export default function InfiniteScrollPhotos({
   const [photos, setPhotos] = useState(initialPhotos);
   const [page, setPage] = useState(initialCursor || undefined);
   const [ref, inView] = useInView();
-
   const [hoverItem, setHoverItem] = useState("");
   function handleHoverIn(itemId: string) {
     setHoverItem(itemId);
-    console.log(itemId)
   };
   function handleHoverOut(itemId: string) {
     setHoverItem("");
