@@ -16,7 +16,6 @@ export default function SortDropdown({ sort }: { sort?: string }) {
     const searchParams = useSearchParams();
     const initialRender = useRef(true);
     const [query, setQuery] = useState(sort);
-
     useEffect(() => {
         if (initialRender.current) {
             initialRender.current = false
@@ -24,10 +23,10 @@ export default function SortDropdown({ sort }: { sort?: string }) {
         }
         // now you got a read/write object
         const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
-
         // update as necessary
         if (!query) {
-            current.delete("property", "order");
+            current.delete("property");
+            current.delete("order");
         } else {
             const orderArray = query.split(",");
             const property = orderArray.length > 0 ? orderArray[0] : undefined;
@@ -52,11 +51,15 @@ export default function SortDropdown({ sort }: { sort?: string }) {
         <div className='relative rounded-md shadow-sm'>
             <Select
                 isRequired
-                label="Favorite Animal"
-                placeholder="Select an animal"
-                defaultSelectedKeys={["A-Z"]}
-                className="max-w-xs"
-                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Sort By"
+                defaultSelectedKeys={[]}
+                aria-label="Sort By"
+                onChange={(event) => {
+                    if (event.target.value) {
+                    setQuery(event.target.value)
+                    }
+                }
+            }
             >
                 {sortItems.map((item) => (
                     <SelectItem key={item.value} value={item.value}>
