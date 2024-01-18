@@ -325,14 +325,6 @@ export async function fetchPhotos({ filterObj, cursor, limit, sortObj }: { filte
     resultsCopy.length = results.length - 1;
   }
   */
-  const photoTest = await prisma.photo.findMany({
-    where: {
-      title: {
-        contains: name,
-        mode: 'insensitive'
-      }
-    }
-  });
   return {
     results: results,
     next: results.length === limit ? results[results.length - 1].number : undefined
