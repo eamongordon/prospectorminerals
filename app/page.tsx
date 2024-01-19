@@ -2,7 +2,6 @@ import HeaderComp from '@/components/header';
 import Hero from '@/components/home/hero';
 import FooterComp from '@/components/footer';
 import Card from '@/components/home/card';
-import Link from 'next/link';
 
 const cardItemList = [
   {
@@ -65,7 +64,7 @@ export default function Home() {
         {
           cardItemList.map((obj, index) => (
             <div key={index}>
-                <Card title={obj.title} description={obj.description} cta={obj.cta} image={obj.image} link={obj.link} />
+             <Card title={obj.title} description={obj.description} cta={obj.cta} image={obj.image} link={obj.link} />
             </div>
           ))
         }
