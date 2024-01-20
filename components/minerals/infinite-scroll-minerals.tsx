@@ -2,8 +2,8 @@
 
 import { useEffect, useState, Fragment } from 'react'
 import { useInView } from 'react-intersection-observer'
-import { fetchPhotos } from '@/lib/actions';
-import Image from 'next/image'
+import { fetchMinerals } from '@/lib/actions';
+import MineralCard from './mineral-card';
 import { customAlphabet } from "nanoid";
 import { Spinner } from "@nextui-org/react";
 import BlurImage from '../blur-image';
@@ -33,17 +33,9 @@ export default function InfiniteScrollPhotos({
   const [photos, setPhotos] = useState(initialPhotos);
   const [page, setPage] = useState(initialCursor || undefined);
   const [ref, inView] = useInView();
-  const [hoverItem, setHoverItem] = useState("");
-  function handleHoverIn(itemId: string) {
-    setHoverItem(itemId);
-  };
-  function handleHoverOut(itemId: string) {
-    setHoverItem("");
-  };
-
   async function loadMorePhotos() {
     if (page) {
-      const photosQuery = await fetchPhotos({ filterObj: { name: search }, cursor: page, limit: 10, ...(sort ? { sortObj: sort } : {}),});
+      const photosQuery = await fetchMinerals({ filterObj: { name: search }, cursor: page, limit: 10, ...(sort ? { sortObj: sort } : {}), });
       if (photosQuery.results?.length) {
         setPage(photosQuery.next ? photosQuery.next : undefined)
         setPhotos((prev: any[] | undefined) => [
@@ -64,33 +56,13 @@ export default function InfiniteScrollPhotos({
 
   return (
     <>
-      {photos?.map(photo => (
-        <li key={photo.id} className='relative'>
+      {photos?.map(mineral => (
+        <li key={mineral.id} className='relative'>
           <div
             className='relative flex flex-col items-center justify-center text-center group aspect-square w-full overflow-hidden rounded-lg'
-            id={photo.id}
-            onMouseEnter={(e) => handleHoverIn(e.currentTarget.id)}
-            onMouseLeave={(e) => handleHoverOut(e.currentTarget.id)}
+            id={mineral.id}
           >
-            {photo.image && (
-              <BlurImage
-                src="/Cavansite-45.jpeg"
-                alt=''
-                id={photo.id}
-                className={`${hoverItem === photo.id ? "brightness-50 blur-sm" : ""} rounded-lg`}
-                fill={true}
-                objectFit='cover'
-                blurDataURL={photo.blurDataURL}
-              />
-            )}
-            {hoverItem === photo.id ? (
-              <>
-                <h3 className="text-sm sm:text-xl z-10 font-medium text-white px-2">{photo?.title}</h3>
-                <p className="text-sm sm:text-md z-10 text-white px-2">{photo?.number}</p>
-              </>
-            ) : (
-              <></>
-            )}
+            <MineralCard name={mineral.name} />
           </div>
         </li>
       ))}
