@@ -85,6 +85,7 @@ model Mineral {
   associatedWith         Mineral[]           @relation("MineralAssociates")
   associates             Mineral[]           @relation("MineralAssociates")
   localities             MineralOnLocality[]
+  number                 Int                 @unique @default(autoincrement())
   photos                 PhotosOnMineral[]
 
   @@index([id])
