@@ -42,7 +42,7 @@ export default function MineralFilters() {
     const [isLusterInvalid, setIsLusterInvalid] = React.useState(false);
     const [isStreakInvalid, setIsStreakInvalid] = React.useState(true);
     return (
-        <>
+        <div className="w-80">
             <Input
                 type="text"
                 label="Search"
@@ -94,6 +94,6 @@ export default function MineralFilters() {
                 </AccordionItem>
 
             </Accordion>
-        </>
+        </div>
     );
 }
