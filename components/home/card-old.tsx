@@ -17,7 +17,6 @@ export default function NavCard({
                 alt="Card background"
                 className="w-full h-48 object-cover rounded-br-none rounded-bl-none"
                 src="/Fluorite-164_horiz-Optimized.jpg"
-                placeholder="blur"
             />
             <CardHeader className="flex gap-3">
                 <h2 className="font-medium text-3xl">{title}</h2>
