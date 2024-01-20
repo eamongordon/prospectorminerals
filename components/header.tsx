@@ -2,7 +2,7 @@ import HeaderContent from './header-content'
 import { getSession } from "@/lib/auth";
 import { LoginModalProvider } from './modal/registration/provider';
 
-export default async function HeaderWrapper() {
+export default async function Header() {
   const session = await getSession();
   const { name, image, email } = session?.user || {};
   return session ? (
