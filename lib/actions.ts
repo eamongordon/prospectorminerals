@@ -202,34 +202,29 @@ export const deleteUser = async () => {
 };
 
 type MineralsFilterObj = {
-  names: string[],
-  minHardness?: number,
-  maxHardness?: number,
-  lusters?: string[],
-  streaks?: string[],
-  mineralClasses?: string[],
-  chemistry?: string[],
-  associates?: string[]
+  name: string | undefined,
+  minHardness?: number | undefined,
+  maxHardness?: number | undefined,
+  lusters?: string[] | undefined,
+  streaks?: string[] | undefined,
+  mineralClasses?: string[] | undefined,
+  chemistry?: string[] | undefined,
+  associates?: string[] | undefined
 }
 
-export async function fetchMinerals({ filterObj }: { filterObj: MineralsFilterObj }) {
+export async function fetchMinerals({ filterObj, cursor, limit, sortObj }: { filterObj: MineralsFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj }) {
   let queryArray = [];
   function pushArrayField(propertyArray: string[], property: string) {
-    let filterArray: { property: { contains: string } }[] = [];
+    let filterArray: { [property: string]: { contains: string } }[] = [];
     propertyArray.forEach((propertyItem) => {
-      let pushObj = { property: { contains: propertyItem } }
+      let pushObj = { [property]: { contains: propertyItem } }
       filterArray.push(pushObj);
     })
     queryArray.push({ OR: filterArray })
   }
-  const { names, minHardness, maxHardness, lusters, streaks, mineralClasses, chemistry, associates } = Object(filterObj)
-  if (names && names.length > 0) {
-    let filterArray: { name: { contains: string } }[] = [];
-    names.forEach((name: string) => {
-      let pushObj = { name: { contains: name } }
-      filterArray.push(pushObj);
-    })
-    queryArray.push({ OR: filterArray })
+  const { name, minHardness, maxHardness, lusters, streaks, mineralClasses, chemistry, associates } = Object(filterObj)
+  if (name) {
+    queryArray.push({ name: { contains: name } });
   }
   if (minHardness) {
     queryArray.push({ hardness_min: { equals: minHardness } })
@@ -257,8 +252,12 @@ export async function fetchMinerals({ filterObj }: { filterObj: MineralsFilterOb
     })
     queryArray.push({ associates: { some: { OR: [] } } })
   }
+  const cursorObj = !cursor ? undefined : { number: cursor };
   const results = await prisma.mineral.findMany(
     {
+      skip: !cursor ? 0 : 1,
+      cursor: cursorObj,
+      take: limit,
       where: { AND: queryArray },
       select: {
         name: true,
@@ -270,11 +269,23 @@ export async function fetchMinerals({ filterObj }: { filterObj: MineralsFilterOb
               }
             }
           }
-        }
-      }
+        },
+        number: true,
+        id: true
+      },
+      orderBy: [
+        sortObj ? { [sortObj.property]: sortObj.order } : {},
+        {
+          number: "asc",
+        },
+      ],
+      ...(limit ? { take: limit } : {}),
     }
   );
-  return results;
+  return {
+    results: results,
+    next: results.length === limit ? results[results.length - 1].number : undefined
+  };
 };
 
 type PhotosFilterObj = {
@@ -286,7 +297,7 @@ type PhotosSortObj = {
   order: string
 }
 
-export async function fetchPhotos({ filterObj, cursor, limit, sortObj }: { filterObj: PhotosFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj}) {
+export async function fetchPhotos({ filterObj, cursor, limit, sortObj }: { filterObj: PhotosFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj }) {
   if (!limit) {
     limit = 10;
   }
@@ -311,7 +322,7 @@ export async function fetchPhotos({ filterObj, cursor, limit, sortObj }: { filte
         id: true
       },
       orderBy: [
-        sortObj ? { [sortObj.property] : sortObj.order } : {},
+        sortObj ? { [sortObj.property]: sortObj.order } : {},
         {
           number: "asc",
         },
