@@ -78,8 +78,8 @@ model Mineral {
   chemical_formula       String
   luster                 String
   streak                 String
-  hardness_min           String
-  hardness_max           String
+  hardness_min           Decimal?
+  hardness_max           Decimal?
   uses                   String
   localities_description String
   associatedWith         Mineral[]           @relation("MineralAssociates")
