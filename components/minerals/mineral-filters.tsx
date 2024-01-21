@@ -123,22 +123,22 @@ export default function MineralPageLayout({
     }, [hardnessVal]);
 
     useEffect(() => {
-        const nameParam =
-        typeof searchParams.get("name") === 'string' ? searchParams.get("name") : undefined;
-        const lustersParam =
-            typeof searchParams.get("lusters") === 'string' ? searchParams.get("lusters") : undefined
-        const minHardnessParam =
-            typeof searchParams.get("minHardness") === 'string' ? searchParams.get("minHardness") : undefined
-        const maxHardnessParam =
-            typeof searchParams.get("maxHardness") === 'string' ? searchParams.get("maxHardness") : undefined
-        setSearchText(nameParam);
-        let hardnessNewState = [];
-        if (minHardnessParam && maxHardnessParam) {
-            hardnessNewState.push(minHardnessParam);
-            hardnessNewState.push(maxHardnessParam);
+        if (!name) {
+            setSearchText("");
         }
-        setHardnessVal(hardnessNewState.length > 0 ? hardnessNewState.map(Number) : undefined);
-        setLustersVal(lustersParam?.split(',') as string[] | undefined);
+        if (!minHardness && !maxHardness) {
+            let hardnessNewState = [];
+            if (minHardness && maxHardness) {
+                hardnessNewState.push(0);
+                hardnessNewState.push(10);
+            }
+
+            setHardnessVal(hardnessNewState.length > 0 ? hardnessNewState.map(Number) : undefined);
+        }
+        if (!lusters) {
+            setLustersVal(undefined);
+        }
+        console.log("searchParamChange" + name);
     }, [searchParams]);
 
     return (

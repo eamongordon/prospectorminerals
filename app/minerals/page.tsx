@@ -31,6 +31,9 @@ const Page = async ({
     const order =
         typeof searchParams.order === 'string' ? searchParams.order : undefined
     const photosQuery = await fetchMinerals({ filterObj: { name: name, lusters: lusters?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }, cursor: undefined, limit: 10, ...(property && order ? { sortObj: { property: property, order: order } } : {}) });
+    function updatedState(value:string) {
+
+    }
     return (
         <main>
             <Header />
@@ -52,6 +55,7 @@ const Page = async ({
                             </ul>
                             </div>
                         </div>
+    {/*<MineralPageLayout filterObj={{ name: name, lusters: lusters?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }} initialPhotos={photosQuery.results} initialCursor={photosQuery.next ? photosQuery.next : undefined} {...(property && order ? { sort: { property: property, order: order } } : {})}/>*/}
                     </div>
                 </section>
             </div>
