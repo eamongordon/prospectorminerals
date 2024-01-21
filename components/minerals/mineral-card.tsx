@@ -12,7 +12,7 @@ export default function MineralCard({ name }: { name: string }) {
                     src="/Amazonite-106_horiz.jpeg"
                 />
                 <CardFooter className="absolute bg-white/30 bottom-0 z-10 justify-between">
-                    <p className="mx-auto text-lg font-semibold">{name}</p>
+                    <p className="mx-auto text-white text-lg font-semibold">{name}</p>
                 </CardFooter>
             </Card >
         </Link>
