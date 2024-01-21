@@ -42,7 +42,6 @@ export default function Page({ params }: { params: { slug: string } }) {
                 />
                 <Gallery data={galleryData} />
                 <Card name="Azurite" />
-                <MineralFilters />
                 <RegModal />
                 <TestServerActions/>
                 <Footer />

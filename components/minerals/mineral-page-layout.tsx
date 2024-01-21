@@ -18,6 +18,11 @@ type MineralsFilterObj = {
     associates?: string[] | undefined
 }
 
+type PhotosSortObj = {
+    property: string
+    order: string
+}
+
 export default function MineralPageLayout({
     filterObj
 }: {
@@ -122,25 +127,6 @@ export default function MineralPageLayout({
         router.push(`${pathname}${queryParam}`);
     }, [hardnessVal]);
 
-    useEffect(() => {
-        const nameParam =
-        typeof searchParams.get("name") === 'string' ? searchParams.get("name") : undefined;
-        const lustersParam =
-            typeof searchParams.get("lusters") === 'string' ? searchParams.get("lusters") : undefined
-        const minHardnessParam =
-            typeof searchParams.get("minHardness") === 'string' ? searchParams.get("minHardness") : undefined
-        const maxHardnessParam =
-            typeof searchParams.get("maxHardness") === 'string' ? searchParams.get("maxHardness") : undefined
-        setSearchText(nameParam);
-        let hardnessNewState = [];
-        if (minHardnessParam && maxHardnessParam) {
-            hardnessNewState.push(minHardnessParam);
-            hardnessNewState.push(maxHardnessParam);
-        }
-        setHardnessVal(hardnessNewState.length > 0 ? hardnessNewState.map(Number) : undefined);
-        setLustersVal(lustersParam?.split(',') as string[] | undefined);
-    }, [searchParams]);
-
     return (
         <>
             <div className="w-80">
@@ -178,7 +164,6 @@ export default function MineralPageLayout({
                             isInvalid={isLusterInvalid}
                             label="Select lusters"
                             defaultValue={["silky", "vitreous", "waxy", "submetallic", "metallic", "resinous", "pearly", "greasy", "dull", "adamantine"]}
-                            value={lustersVal}
                             onValueChange={(value) => {
                                 setIsLusterInvalid(value.length < 1);
                                 setLustersVal(value);
@@ -198,6 +183,35 @@ export default function MineralPageLayout({
                     </AccordionItem>
 
                 </Accordion>
+            </div>
+            <div className="w-96">
+                {
+                    (searchText) ? (
+                        <Chip onClose={() => setSearchText(undefined)} variant="bordered">
+                            {`Name: ${searchText}`}
+                        </Chip>
+                    ) : (
+                        <></>
+                    )
+                }
+                {
+                    (hardnessVal) ? (
+                        <Chip onClose={() => setHardnessVal(undefined)} variant="bordered">
+                            {`Hardness: ${hardnessVal[0].toString()} - ${hardnessVal[1].toString()}`}
+                        </Chip>
+                    ) : (
+                        <></>
+                    )
+                }
+                {
+                    (lustersVal) ? (
+                        <Chip onClose={() => setLustersVal(undefined)} variant="bordered">
+                            {`Lusters: ${lustersVal.join(", ")}`}
+                        </Chip>
+                    ) : (
+                        <></>
+                    )
+                }
             </div>
         </>
     );
