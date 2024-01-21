@@ -18,13 +18,24 @@ type PhotosSortObj = {
   order: string
 }
 
+type MineralsFilterObj = {
+  name: string | undefined,
+  minHardness?: number | undefined,
+  maxHardness?: number | undefined,
+  lusters?: string[] | undefined,
+  streaks?: string[] | undefined,
+  mineralClasses?: string[] | undefined,
+  chemistry?: string[] | undefined,
+  associates?: string[] | undefined
+}
+
 export default function InfiniteScrollPhotos({
-  search,
+  filterObj,
   initialPhotos,
   initialCursor,
   sort
 }: {
-  search: string | undefined
+  filterObj: MineralsFilterObj | undefined
   initialPhotos: any[] | undefined,
   initialCursor: number | undefined
   sort?: PhotosSortObj | undefined
@@ -33,9 +44,10 @@ export default function InfiniteScrollPhotos({
   const [photos, setPhotos] = useState(initialPhotos);
   const [page, setPage] = useState(initialCursor || undefined);
   const [ref, inView] = useInView();
+
   async function loadMorePhotos() {
     if (page) {
-      const photosQuery = await fetchMinerals({ filterObj: { name: search }, cursor: page, limit: 10, ...(sort ? { sortObj: sort } : {}), });
+      const photosQuery = await fetchMinerals({ ...(filterObj ? { filterObj: filterObj } : {}) || {}, cursor: page, limit: 10, ...(sort ? { sortObj: sort } : {}), });
       if (photosQuery.results?.length) {
         setPage(photosQuery.next ? photosQuery.next : undefined)
         setPhotos((prev: any[] | undefined) => [

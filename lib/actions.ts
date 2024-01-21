@@ -212,19 +212,19 @@ type MineralsFilterObj = {
   associates?: string[] | undefined
 }
 
-export async function fetchMinerals({ filterObj, cursor, limit, sortObj }: { filterObj: MineralsFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj }) {
+export async function fetchMinerals({ filterObj, cursor, limit, sortObj }: { filterObj?: MineralsFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj }) {
   let queryArray = [];
   function pushArrayField(propertyArray: string[], property: string) {
     let filterArray: { [property: string]: { contains: string } }[] = [];
     propertyArray.forEach((propertyItem) => {
-      let pushObj = { [property]: { contains: propertyItem } }
+      let pushObj = { [property]: { contains: propertyItem, mode: 'insensitive' } }
       filterArray.push(pushObj);
     })
     queryArray.push({ OR: filterArray })
   }
   const { name, minHardness, maxHardness, lusters, streaks, mineralClasses, chemistry, associates } = Object(filterObj)
   if (name) {
-    queryArray.push({ name: { contains: name } });
+    queryArray.push({ name: { contains: name, mode: 'insensitive' } });
   }
   if (minHardness) {
     queryArray.push({ hardness_min: { equals: minHardness } })
@@ -258,6 +258,7 @@ export async function fetchMinerals({ filterObj, cursor, limit, sortObj }: { fil
       skip: !cursor ? 0 : 1,
       cursor: cursorObj,
       take: limit,
+      //@ts-expect-error ERROR Caused by Insensitive "Name" filter
       where: { AND: queryArray },
       select: {
         name: true,
