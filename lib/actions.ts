@@ -215,7 +215,7 @@ type MineralsFilterObj = {
 export async function fetchMinerals({ filterObj, cursor, limit, sortObj }: { filterObj?: MineralsFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj }) {
   let queryArray = [];
   function pushArrayField(propertyArray: string[], property: string) {
-    let filterArray: { [property: string]: { contains: string } }[] = [];
+    let filterArray: { [property: string]: { contains: string, mode?: string} }[] = [];
     propertyArray.forEach((propertyItem) => {
       let pushObj = { [property]: { contains: propertyItem, mode: 'insensitive' } }
       filterArray.push(pushObj);

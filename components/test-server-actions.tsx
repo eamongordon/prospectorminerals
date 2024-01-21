@@ -5,7 +5,7 @@ import { Button } from "@nextui-org/react"
 
 export default function TestServerActions() {
     function mineralGet() {
-        fetchMinerals({filterObj:{names: ["Test"]}}).then((res) => {
+        fetchMinerals({filterObj:{name: "Test"}}).then((res) => {
             console.log("A")
             console.log(res);
         });
