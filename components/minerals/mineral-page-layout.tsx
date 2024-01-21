@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { fetchMinerals } from '@/lib/actions'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { Accordion, AccordionItem, Slider, CheckboxGroup, Checkbox, Input, Chip } from "@nextui-org/react";
 import { Search as MagnifyingGlassIcon } from 'lucide-react';
@@ -24,9 +25,15 @@ type PhotosSortObj = {
 }
 
 export default function MineralPageLayout({
-    filterObj
+    filterObj,
+    initialPhotos,
+    initialCursor,
+    sort
 }: {
-    filterObj: MineralsFilterObj | undefined
+    filterObj: MineralsFilterObj | undefined,
+    initialPhotos: any[] | undefined,
+    initialCursor: number | undefined
+    sort?: PhotosSortObj | undefined
 }) {
     /*
         const mapAccordionItems = (label: string, value: string, optionsArray: [], stateName: string) => {
@@ -67,6 +74,8 @@ export default function MineralPageLayout({
     const searchParams = useSearchParams();
     const initialRender = useRef(true);
     const [searchText, setSearchText] = useState(name);
+    const [initialPhotosState, setInitialPhotosState] = useState(initialPhotos); 
+    const [initialCursorState, setInitialCursorState] = useState(initialCursor); 
     const [lustersVal, setLustersVal] = useState<string[] | undefined>(lusters);
     let hardnessNewState = [];
     if (minHardness && maxHardness) {
@@ -76,6 +85,17 @@ export default function MineralPageLayout({
     const [hardnessVal, setHardnessVal] = useState<number[] | undefined>(hardnessNewState.length > 0 ? hardnessNewState : undefined);
     const [isLusterInvalid, setIsLusterInvalid] = useState(false);
     const [searchQuery] = useDebounce(searchText, 500);
+    const property =
+        typeof searchParams.get("property") === 'string' ? searchParams.get("property") : undefined
+    const order =
+        typeof searchParams.get("order") === 'string' ? searchParams.get("order") : undefined
+    useEffect( () => {
+        fetchMinerals({ filterObj: { name: name, lusters: lusters?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }, cursor: undefined, limit: 10, ...(property && order ? { sortObj: { property: property, order: order } } : {}) }).then((res) => {
+            setInitialPhotosState(res.results);
+            setInitialCursorState(res.next ? res.next : undefined);
+        });
+        console.log("did change")
+    }, [searchParams]);
 
     useEffect(() => {
         if (initialRender.current) {
@@ -206,12 +226,13 @@ export default function MineralPageLayout({
                 {
                     (lustersVal) ? (
                         <Chip onClose={() => setLustersVal(undefined)} variant="bordered">
-                            {`Lusters: ${lustersVal.join(", ")}`}
+                            {`Lusters: ${lustersVal.join(',').length}`}
                         </Chip>
                     ) : (
                         <></>
                     )
                 }
+                <InfiniteScrollMinerals filterObj={{ name: searchText, lusters: lusters?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }} initialPhotos={initialPhotosState} initialCursor={initialCursorState} />
             </div>
         </>
     );
