@@ -7,6 +7,7 @@ import MineralCard from './mineral-card';
 import { customAlphabet } from "nanoid";
 import { Spinner } from "@nextui-org/react";
 import BlurImage from '../blur-image';
+import { useSearchParams } from 'next/navigation'
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
