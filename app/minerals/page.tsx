@@ -21,24 +21,26 @@ const Page = async ({
         typeof searchParams.name === 'string' ? searchParams.name : undefined
     const lusters =
         typeof searchParams.lusters === 'string' ? searchParams.lusters : undefined
+    const hardness =
+        typeof searchParams.hardness === 'string' ? searchParams.hardness : undefined
     const property =
         typeof searchParams.property === 'string' ? searchParams.property : undefined
     const order =
         typeof searchParams.order === 'string' ? searchParams.order : undefined
-    const photosQuery = await fetchMinerals({ filterObj: { name: name, lusters: lusters?.split(',') }, cursor: undefined, limit: 10, ...(property && order ? { sortObj: { property: property, order: order } } : {}) });
+    const photosQuery = await fetchMinerals({ filterObj: { name: name, lusters: lusters?.split(','), minHardness: hardness?.split(',').map(Number)[0], maxHardness: hardness?.split(',').map(Number)[1] }, cursor: undefined, limit: 10, ...(property && order ? { sortObj: { property: property, order: order } } : {}) });
     return (
         <main>
             <Header />
             <div className="flex justify-center items-center">
                 <section className='flex-col justify-center items-center py-4 px-6 w-full max-w-screen-xl'>
                     <div className='mb-4 sm:mb-12 flex-row my-5 sm:flex sm:gap-x-10 justify-between'>
-                        <MineralFilters name={name} lusters={lusters?.split(",")} />
+                        <MineralFilters name={name} lusters={lusters?.split(",")} hardness={hardness?.split(",").map(Number)} />
                         <ul
                             key={nanoid()}
                             role='list'
                             className='w-full grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-3'
                         >
-                            <InfiniteScrollMinerals filterObj={{ name: name, lusters: lusters?.split(',') }} initialPhotos={photosQuery.results} initialCursor={photosQuery.next ? photosQuery.next : undefined} {...(property && order ? { sort: { property: property, order: order } } : {})} />
+                            <InfiniteScrollMinerals filterObj={{ name: name, lusters: lusters?.split(','), minHardness: hardness?.split(',').map(Number)[0], maxHardness: hardness?.split(',').map(Number)[1]}} initialPhotos={photosQuery.results} initialCursor={photosQuery.next ? photosQuery.next : undefined} {...(property && order ? { sort: { property: property, order: order } } : {})} />
                         </ul>
                     </div>
                 </section>
