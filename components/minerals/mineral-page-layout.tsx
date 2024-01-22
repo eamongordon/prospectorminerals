@@ -1,6 +1,12 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Children, cloneElement } from "react";
+import { customAlphabet } from "nanoid";
+
+const nanoid = customAlphabet(
+    "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+    7,
+); // 7-character random string
 import { fetchMinerals } from '@/lib/actions'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { Accordion, AccordionItem, Slider, CheckboxGroup, Checkbox, Input, Chip } from "@nextui-org/react";
@@ -156,9 +162,29 @@ export default function MineralPageLayout({
         console.log(hardnessVal + "HAD")
     }, [hardnessVal]);
 
+    const clearFilters = () => {
+        setSearchText(undefined);
+        setLustersVal(undefined);
+        setHardnessVal(undefined);
+    }
+
+    const renderChildren = () => {
+        return Children.map(children, (child) => {
+            return cloneElement(child as React.ReactElement<any>, {
+                clearFilters: () => clearFilters()
+            });
+        });
+    };
+    console.log(renderChildren())
+
     return (
         <>
-            <div className="flex">
+        <ul
+            key={nanoid()}
+            role='list'
+            className='w-full grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-3'
+        >
+            <div className="flex-col sm:flex-row">
                 <div className="w-full sm:w-80">
                     <Input
                         type="text"
@@ -174,7 +200,7 @@ export default function MineralPageLayout({
                     <Accordion>
                         <AccordionItem key="hardness" aria-label="Hardness" title="Hardness">
                             <Slider
-                                label="Hardness"
+                                label="Mohs Hardness"
                                 step={1}
                                 showTooltip={true}
                                 color="foreground"
@@ -182,7 +208,7 @@ export default function MineralPageLayout({
                                 maxValue={10}
                                 defaultValue={[0, 10]}
                                 value={hardnessVal || [0, 10]}
-                                className="max-w-[220px]"
+                                className="w-full pr-3"
                                 onChangeEnd={value => setHardnessVal(value as number[])}
                             />
                         </AccordionItem>
@@ -216,36 +242,39 @@ export default function MineralPageLayout({
                     </Accordion>
                 </div>
             </div>
-            <div className="flex-col items-center justify-start">
-                {
-                    (searchText) ? (
-                        <Chip onClose={() => setSearchText(undefined)} variant="bordered">
-                            {`Name: ${searchText}`}
-                        </Chip>
-                    ) : (
-                        <></>
-                    )
-                }
-                {
-                    (hardnessVal) ? (
-                        <Chip onClose={() => setHardnessVal(undefined)} variant="bordered">
-                            {`Hardness: ${hardnessVal[0].toString()} - ${hardnessVal[1].toString()}`}
-                        </Chip>
-                    ) : (
-                        <></>
-                    )
-                }
-                {
-                    (lustersVal) ? (
-                        <Chip onClose={() => setLustersVal(undefined)} variant="bordered">
-                            {`Lusters: ${lustersVal.length}`}
-                        </Chip>
-                    ) : (
-                        <></>
-                    )
-                }
-                {children}
+            <div className="flex-col items-center w-full">
+                <div className="justify-start">
+                    {
+                        (searchText) ? (
+                            <Chip onClose={() => setSearchText(undefined)} variant="bordered">
+                                {`Name: ${searchText}`}
+                            </Chip>
+                        ) : (
+                            <></>
+                        )
+                    }
+                    {
+                        (hardnessVal) ? (
+                            <Chip onClose={() => setHardnessVal(undefined)} variant="bordered">
+                                {`Hardness: ${hardnessVal[0].toString()} - ${hardnessVal[1].toString()}`}
+                            </Chip>
+                        ) : (
+                            <></>
+                        )
+                    }
+                    {
+                        (lustersVal) ? (
+                            <Chip onClose={() => setLustersVal(undefined)} variant="bordered">
+                                {`Lusters: ${lustersVal.length}`}
+                            </Chip>
+                        ) : (
+                            <></>
+                        )
+                    }
+                </div>
+                {renderChildren()}
             </div>
+        </ul>
         </>
     );
 }
