@@ -7,6 +7,12 @@ import { Accordion, AccordionItem, Slider, CheckboxGroup, Checkbox, Input, Chip 
 import { Search as MagnifyingGlassIcon } from 'lucide-react';
 import { useDebounce } from 'use-debounce';
 import InfiniteScrollMinerals from "./infinite-scroll-minerals";
+import { customAlphabet } from "nanoid";
+
+const nanoid = customAlphabet(
+    "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+    7,
+); // 7-character random string
 
 type MineralsFilterObj = {
     name: string | undefined,
@@ -172,7 +178,7 @@ export default function MineralPageLayout({
 
     return (
         <>
-            <div className="flex-col sm:flex-row">
+            <div className="'w-full flex-col sm:flex-row">
                 <div className="w-full sm:w-80">
                     <Input
                         type="text"
@@ -232,35 +238,41 @@ export default function MineralPageLayout({
             </div>
             <div className="flex-col items-center w-full">
                 <div className="justify-start">
-                {
-                    (searchText) ? (
-                        <Chip onClose={() => setSearchText(undefined)} variant="bordered">
-                            {`Name: ${searchText}`}
-                        </Chip>
-                    ) : (
-                        <></>
-                    )
-                }
-                {
-                    (hardnessVal) ? (
-                        <Chip onClose={() => setHardnessVal(undefined)} variant="bordered">
-                            {`Hardness: ${hardnessVal[0].toString()} - ${hardnessVal[1].toString()}`}
-                        </Chip>
-                    ) : (
-                        <></>
-                    )
-                }
-                {
-                    (lustersVal) ? (
-                        <Chip onClose={() => setLustersVal(undefined)} variant="bordered">
-                            {`Lusters: ${lustersVal.length}`}
-                        </Chip>
-                    ) : (
-                        <></>
-                    )
-                }
+                    {
+                        (searchText) ? (
+                            <Chip onClose={() => setSearchText(undefined)} variant="bordered">
+                                {`Name: ${searchText}`}
+                            </Chip>
+                        ) : (
+                            <></>
+                        )
+                    }
+                    {
+                        (hardnessVal) ? (
+                            <Chip onClose={() => setHardnessVal(undefined)} variant="bordered">
+                                {`Hardness: ${hardnessVal[0].toString()} - ${hardnessVal[1].toString()}`}
+                            </Chip>
+                        ) : (
+                            <></>
+                        )
+                    }
+                    {
+                        (lustersVal) ? (
+                            <Chip onClose={() => setLustersVal(undefined)} variant="bordered">
+                                {`Lusters: ${lustersVal.length}`}
+                            </Chip>
+                        ) : (
+                            <></>
+                        )
+                    }
                 </div>
-                {renderChildren()}
+                <ul
+                    key={nanoid()}
+                    role='list'
+                    className='w-full grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-3'
+                >
+                    {renderChildren()}
+                </ul>
             </div>
         </>
     );
