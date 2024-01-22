@@ -238,7 +238,7 @@ export default function MineralPageLayout({
                 </div>
             </div>
             <div className="flex-col items-center w-full">
-                <div className="justify-start">
+                <div className="justify-start pb-5 pt-1 sm:pb-5 sm:pt-0">
                     {
                         (searchText) ? (
                             <Chip onClose={() => setSearchText(undefined)} variant="bordered">
