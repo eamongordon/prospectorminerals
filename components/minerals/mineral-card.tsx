@@ -1,11 +1,13 @@
-import { Card, CardHeader, CardBody, CardFooter, Image, Button } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFooter, Image as UIImage, Button } from "@nextui-org/react";
 import Link from 'next/link';
+import BlurImage from "../blur-image";
+import Image from "next/image";
 
-export default function MineralCard({ name }: { name: string }) {
+export default function MineralCard({ name, image, blurDataURL }: { name: string, image?: string, blurDataURL?: string }) {
     return (
         <Link href="/photos">
             <Card isFooterBlurred className="w-full">
-                <Image
+                <UIImage
                     removeWrapper
                     alt="Card example background"
                     className="z-0 w-full h-full scale-125 -translate-y-6 object-cover"
