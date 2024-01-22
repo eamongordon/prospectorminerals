@@ -170,6 +170,7 @@ export default function MineralPageLayout({
 
     const renderChildren = () => {
         return Children.map(children, (child) => {
+            console.log(child);
             return cloneElement(child as React.ReactElement<any>, {
                 clearFilters: () => clearFilters()
             });
