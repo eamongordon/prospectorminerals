@@ -19,9 +19,11 @@ type MineralsFilterObj = {
 }
 
 export default function MineralPageLayout({
-    filterObj
+    filterObj,
+    handleInput
 }: {
-    filterObj: MineralsFilterObj | undefined
+    filterObj: MineralsFilterObj | undefined,
+    handleInput?: any
 }) {
     /*
         const mapAccordionItems = (label: string, value: string, optionsArray: [], stateName: string) => {
@@ -86,6 +88,9 @@ export default function MineralPageLayout({
         const search = current.toString();
         const queryParam = search ? `?${search}` : "";
         router.push(`${pathname}${queryParam}`);
+        if (handleInput) {
+        handleInput(searchQuery);
+        }
     }, [searchQuery]);
 
     useEffect(() => {
