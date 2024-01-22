@@ -1,12 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef, Children, cloneElement } from "react";
-import { customAlphabet } from "nanoid";
-
-const nanoid = customAlphabet(
-    "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
-    7,
-); // 7-character random string
 import { fetchMinerals } from '@/lib/actions'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { Accordion, AccordionItem, Slider, CheckboxGroup, Checkbox, Input, Chip } from "@nextui-org/react";
@@ -175,15 +169,9 @@ export default function MineralPageLayout({
             });
         });
     };
-    console.log(renderChildren())
 
     return (
         <>
-        <ul
-            key={nanoid()}
-            role='list'
-            className='w-full grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-3'
-        >
             <div className="flex-col sm:flex-row">
                 <div className="w-full sm:w-80">
                     <Input
@@ -244,37 +232,36 @@ export default function MineralPageLayout({
             </div>
             <div className="flex-col items-center w-full">
                 <div className="justify-start">
-                    {
-                        (searchText) ? (
-                            <Chip onClose={() => setSearchText(undefined)} variant="bordered">
-                                {`Name: ${searchText}`}
-                            </Chip>
-                        ) : (
-                            <></>
-                        )
-                    }
-                    {
-                        (hardnessVal) ? (
-                            <Chip onClose={() => setHardnessVal(undefined)} variant="bordered">
-                                {`Hardness: ${hardnessVal[0].toString()} - ${hardnessVal[1].toString()}`}
-                            </Chip>
-                        ) : (
-                            <></>
-                        )
-                    }
-                    {
-                        (lustersVal) ? (
-                            <Chip onClose={() => setLustersVal(undefined)} variant="bordered">
-                                {`Lusters: ${lustersVal.length}`}
-                            </Chip>
-                        ) : (
-                            <></>
-                        )
-                    }
+                {
+                    (searchText) ? (
+                        <Chip onClose={() => setSearchText(undefined)} variant="bordered">
+                            {`Name: ${searchText}`}
+                        </Chip>
+                    ) : (
+                        <></>
+                    )
+                }
+                {
+                    (hardnessVal) ? (
+                        <Chip onClose={() => setHardnessVal(undefined)} variant="bordered">
+                            {`Hardness: ${hardnessVal[0].toString()} - ${hardnessVal[1].toString()}`}
+                        </Chip>
+                    ) : (
+                        <></>
+                    )
+                }
+                {
+                    (lustersVal) ? (
+                        <Chip onClose={() => setLustersVal(undefined)} variant="bordered">
+                            {`Lusters: ${lustersVal.length}`}
+                        </Chip>
+                    ) : (
+                        <></>
+                    )
+                }
                 </div>
                 {renderChildren()}
             </div>
-        </ul>
         </>
     );
 }
