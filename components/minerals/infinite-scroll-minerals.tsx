@@ -5,7 +5,7 @@ import { useInView } from 'react-intersection-observer'
 import { fetchMinerals } from '@/lib/actions';
 import MineralCard from './mineral-card';
 import { customAlphabet } from "nanoid";
-import { Spinner, Button } from "@nextui-org/react";
+import { Spinner, Button, Card, CardBody, CardFooter, Image as UIImage, Link } from "@nextui-org/react";
 import BlurImage from '../blur-image';
 import { useSearchParams } from 'next/navigation'
 
@@ -84,7 +84,19 @@ export default function InfiniteScrollPhotos({
                 className='relative flex flex-col items-center justify-center text-center group w-full overflow-hidden rounded-lg'
                 id={mineral.id}
               >
-                <MineralCard name={mineral.name} />
+                <Link href="/photos">
+                  <Card isFooterBlurred className="w-full">
+                    <UIImage
+                      removeWrapper
+                      alt="Card example background"
+                      className="z-0 w-full h-full scale-125 -translate-y-6 object-cover"
+                      src="/Amazonite-106_horiz.jpeg"
+                    />
+                    <CardFooter className="absolute bg-white/30 bottom-0 z-10 justify-between">
+                      <p className="mx-auto text-white text-lg font-semibold">{mineral.name}</p>
+                    </CardFooter>
+                  </Card >
+                </Link>
               </div>
             </li>
           ))

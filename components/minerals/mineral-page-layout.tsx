@@ -43,6 +43,7 @@ export default function MineralPageLayout({
     initialCursor: number | undefined
     sort?: PhotosSortObj | undefined
 }) {
+    console.log("is render")
     /*
         const mapAccordionItems = (label: string, value: string, optionsArray: [], stateName: string) => {
             return (
@@ -159,7 +160,6 @@ export default function MineralPageLayout({
         const search = current.toString();
         const queryParam = search ? `?${search}` : "";
         router.push(`${pathname}${queryParam}`);
-        console.log(hardnessVal + "HAD")
     }, [hardnessVal]);
 
     const clearFilters = () => {
