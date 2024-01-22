@@ -25,11 +25,13 @@ type PhotosSortObj = {
 }
 
 export default function MineralPageLayout({
+    children,
     filterObj,
     initialPhotos,
     initialCursor,
     sort
 }: {
+    children: React.ReactNode;
     filterObj: MineralsFilterObj | undefined,
     initialPhotos: any[] | undefined,
     initialCursor: number | undefined
@@ -74,8 +76,10 @@ export default function MineralPageLayout({
     const searchParams = useSearchParams();
     const initialRender = useRef(true);
     const [searchText, setSearchText] = useState(name);
+    /*
     const [initialPhotosState, setInitialPhotosState] = useState(initialPhotos); 
     const [initialCursorState, setInitialCursorState] = useState(initialCursor); 
+    */
     const [lustersVal, setLustersVal] = useState<string[] | undefined>(lusters);
     let hardnessNewState = [];
     if (minHardness && maxHardness) {
@@ -85,16 +89,20 @@ export default function MineralPageLayout({
     const [hardnessVal, setHardnessVal] = useState<number[] | undefined>(hardnessNewState.length > 0 ? hardnessNewState : undefined);
     const [isLusterInvalid, setIsLusterInvalid] = useState(false);
     const [searchQuery] = useDebounce(searchText, 500);
+    /*
     const property =
         typeof searchParams.get("property") === 'string' ? searchParams.get("property") : undefined
     const order =
         typeof searchParams.get("order") === 'string' ? searchParams.get("order") : undefined
-    useEffect( () => {
+        */
+    useEffect(() => {
+        /*
         fetchMinerals({ filterObj: { name: name, lusters: lusters?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }, cursor: undefined, limit: 10, ...(property && order ? { sortObj: { property: property, order: order } } : {}) }).then((res) => {
             setInitialPhotosState(res.results);
             setInitialCursorState(res.next ? res.next : undefined);
         });
         console.log("did change")
+        */
     }, [searchParams]);
 
     useEffect(() => {
@@ -145,66 +153,70 @@ export default function MineralPageLayout({
         const search = current.toString();
         const queryParam = search ? `?${search}` : "";
         router.push(`${pathname}${queryParam}`);
+        console.log(hardnessVal + "HAD")
     }, [hardnessVal]);
 
     return (
         <>
-            <div className="w-80">
-                <Input
-                    type="text"
-                    label="Search"
-                    placeholder="Search"
-                    value={searchText}
-                    labelPlacement="outside"
-                    onChange={e => setSearchText(e.target.value)}
-                    endContent={
-                        <MagnifyingGlassIcon />
-                    }
-                />
-                <Accordion>
-                    <AccordionItem key="hardness" aria-label="Hardness" title="Hardness">
-                        <Slider
-                            label="Hardness"
-                            step={1}
-                            showTooltip={true}
-                            color="foreground"
-                            minValue={0}
-                            maxValue={10}
-                            defaultValue={[0, 10]}
-                            value={hardnessVal}
-                            className="max-w-[220px]"
-                            onChangeEnd={value => setHardnessVal(value as number[])}
-                        />
-                    </AccordionItem>
-                    <AccordionItem key="2" aria-label="Lusters" title="Lusters">
-                        <CheckboxGroup
-                            isRequired
-                            color="default"
-                            description="Select lusters to filter by"
-                            isInvalid={isLusterInvalid}
-                            label="Select lusters"
-                            defaultValue={["silky", "vitreous", "waxy", "submetallic", "metallic", "resinous", "pearly", "greasy", "dull", "adamantine"]}
-                            onValueChange={(value) => {
-                                setIsLusterInvalid(value.length < 1);
-                                setLustersVal(value);
-                            }}
-                        >
-                            <Checkbox value="silky">Silky</Checkbox>
-                            <Checkbox value="vitreous">Vitreous</Checkbox>
-                            <Checkbox value="waxy">Waxy</Checkbox>
-                            <Checkbox value="submetallic">Submetallic</Checkbox>
-                            <Checkbox value="metallic">Metallic</Checkbox>
-                            <Checkbox value="resinous">Resinous</Checkbox>
-                            <Checkbox value="pearly">Pearly</Checkbox>
-                            <Checkbox value="greasy">Greasy</Checkbox>
-                            <Checkbox value="dull">Dull</Checkbox>
-                            <Checkbox value="adamantine">Adamantine</Checkbox>
-                        </CheckboxGroup>
-                    </AccordionItem>
+            <div className="flex">
+                <div className="w-full sm:w-80">
+                    <Input
+                        type="text"
+                        label="Search"
+                        placeholder="Search"
+                        value={searchText || ""}
+                        labelPlacement="outside"
+                        onChange={e => setSearchText(e.target.value)}
+                        endContent={
+                            <MagnifyingGlassIcon />
+                        }
+                    />
+                    <Accordion>
+                        <AccordionItem key="hardness" aria-label="Hardness" title="Hardness">
+                            <Slider
+                                label="Hardness"
+                                step={1}
+                                showTooltip={true}
+                                color="foreground"
+                                minValue={0}
+                                maxValue={10}
+                                defaultValue={[0, 10]}
+                                value={hardnessVal || [0, 10]}
+                                className="max-w-[220px]"
+                                onChangeEnd={value => setHardnessVal(value as number[])}
+                            />
+                        </AccordionItem>
+                        <AccordionItem key="2" aria-label="Lusters" title="Lusters">
+                            <CheckboxGroup
+                                isRequired
+                                color="default"
+                                description="Select lusters to filter by"
+                                isInvalid={isLusterInvalid}
+                                label="Select lusters"
+                                value={lustersVal || ["silky", "vitreous", "waxy", "submetallic", "metallic", "resinous", "pearly", "greasy", "dull", "adamantine"]}
+                                defaultValue={["silky", "vitreous", "waxy", "submetallic", "metallic", "resinous", "pearly", "greasy", "dull", "adamantine"]}
+                                onValueChange={(value) => {
+                                    setIsLusterInvalid(value.length < 1);
+                                    setLustersVal(value);
+                                }}
+                            >
+                                <Checkbox value="silky">Silky</Checkbox>
+                                <Checkbox value="vitreous">Vitreous</Checkbox>
+                                <Checkbox value="waxy">Waxy</Checkbox>
+                                <Checkbox value="submetallic">Submetallic</Checkbox>
+                                <Checkbox value="metallic">Metallic</Checkbox>
+                                <Checkbox value="resinous">Resinous</Checkbox>
+                                <Checkbox value="pearly">Pearly</Checkbox>
+                                <Checkbox value="greasy">Greasy</Checkbox>
+                                <Checkbox value="dull">Dull</Checkbox>
+                                <Checkbox value="adamantine">Adamantine</Checkbox>
+                            </CheckboxGroup>
+                        </AccordionItem>
 
-                </Accordion>
+                    </Accordion>
+                </div>
             </div>
-            <div className="w-96">
+            <div className="flex-col items-center justify-start">
                 {
                     (searchText) ? (
                         <Chip onClose={() => setSearchText(undefined)} variant="bordered">
@@ -226,13 +238,13 @@ export default function MineralPageLayout({
                 {
                     (lustersVal) ? (
                         <Chip onClose={() => setLustersVal(undefined)} variant="bordered">
-                            {`Lusters: ${lustersVal.join(',').length}`}
+                            {`Lusters: ${lustersVal.length}`}
                         </Chip>
                     ) : (
                         <></>
                     )
                 }
-                <InfiniteScrollMinerals filterObj={{ name: searchText, lusters: lusters?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }} initialPhotos={initialPhotosState} initialCursor={initialCursorState} />
+                {children}
             </div>
         </>
     );
