@@ -4,7 +4,7 @@ import Link from 'next/link';
 export default function MineralCard({ name }: { name: string }) {
     return (
         <Link href="/photos">
-            <Card isFooterBlurred className="w-full col-span-12 sm:col-span-5">
+            <Card isFooterBlurred className="w-full">
                 <Image
                     removeWrapper
                     alt="Card example background"
