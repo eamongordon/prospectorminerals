@@ -5,7 +5,7 @@ import { useInView } from 'react-intersection-observer'
 import { fetchMinerals } from '@/lib/actions';
 import MineralCard from './mineral-card';
 import { customAlphabet } from "nanoid";
-import { Spinner } from "@nextui-org/react";
+import { Spinner, Button } from "@nextui-org/react";
 import BlurImage from '../blur-image';
 import { useSearchParams } from 'next/navigation'
 
@@ -34,18 +34,19 @@ export default function InfiniteScrollPhotos({
   filterObj,
   initialPhotos,
   initialCursor,
-  sort
+  sort,
+  clearFilters
 }: {
   filterObj: MineralsFilterObj | undefined
-  initialPhotos: any[] | undefined,
+  initialPhotos: any[] | undefined
   initialCursor: number | undefined
   sort?: PhotosSortObj | undefined
+  clearFilters?: any | undefined
 }) {
 
   const [photos, setPhotos] = useState(initialPhotos);
   const [page, setPage] = useState(initialCursor || undefined);
   const [ref, inView] = useInView();
-
   async function loadMorePhotos() {
     if (page) {
       const photosQuery = await fetchMinerals({ ...(filterObj ? { filterObj: filterObj } : {}) || {}, cursor: page, limit: 10, ...(sort ? { sortObj: sort } : {}), });
@@ -69,21 +70,37 @@ export default function InfiniteScrollPhotos({
 
   return (
     <>
-      {photos?.map(mineral => (
-        <li key={mineral.id} className='relative'>
-          <div
-            className='relative flex flex-col items-center justify-center text-center group aspect-square w-full overflow-hidden rounded-lg'
-            id={mineral.id}
-          >
-            <MineralCard name={mineral.name} />
+      {
+        photos?.map(mineral => (
+          <li key={mineral.id} className='relative'>
+            <div
+              className='relative flex flex-col items-center justify-center text-center group aspect-square w-full overflow-hidden rounded-lg'
+              id={mineral.id}
+            >
+              <MineralCard name={mineral.name} />
+            </div>
+          </li>
+        ))
+      }
+      {
+        photos?.length && photos.length > 0 ? (
+          <></>
+        ) : (
+          <div className='flex-col items-center justify-center col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-3'>
+              <p className='w-full text-center'>No Minerals Found. Try adjusting your filters</p>
+              <div className='flex items-center justify-center'>
+              <Button className="flex" onClick={() => clearFilters ? clearFilters() : console.log("no clear func provided")}>
+                Clear Filters
+              </Button>
+              </div>
           </div>
-        </li>
-      ))}
+        )
+      }
 
       {/* loading spinner */}
       <div
         ref={ref}
-        className={`${!page ? "hidden" : ""} mt-16 mb-16 flex items-center justify-center col-span-2 sm:col-span-2 md:col-span-4 lg:col-span-5`}
+        className={`${!page ? "hidden" : ""} mt-16 mb-16 flex items-center justify-center col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-3`}
       >
         <Spinner />
       </div>
