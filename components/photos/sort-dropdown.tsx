@@ -6,8 +6,9 @@ import { useDebounce } from 'use-debounce';
 import { Select, SelectItem } from "@nextui-org/react";
 
 const sortItems = [
-    { label: "A-Z", value: "title,asc" },
-    { label: "Z-A", value: "title,desc" }
+    { label: "Default", value: "default" },
+    { label: "A - Z", value: "title,asc" },
+    { label: "Z - A", value: "title,desc" }
 ];
 
 export default function SortDropdown({ sort }: { sort?: string }) {
@@ -48,15 +49,17 @@ export default function SortDropdown({ sort }: { sort?: string }) {
     }, [query])
 
     return (
-        <div className='relative rounded-md shadow-sm'>
+        <div className='relative'>
             <Select
                 isRequired
                 placeholder="Sort By"
-                defaultSelectedKeys={[]}
                 aria-label="Sort By"
+                defaultSelectedKeys={query ? [query] : undefined}
                 onChange={(event) => {
-                    if (event.target.value) {
-                    setQuery(event.target.value)
+                    if (event.target.value && event.target.value !== "default") {
+                        setQuery(event.target.value)
+                    } else {
+                        setQuery(undefined);
                     }
                 }
             }
