@@ -8,6 +8,7 @@ import { customAlphabet } from "nanoid";
 import { Spinner, Button, Card, CardBody, CardFooter, Image as UIImage, Link } from "@nextui-org/react";
 import BlurImage from '../blur-image';
 import { useSearchParams } from 'next/navigation'
+import Image from "next/image";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -86,8 +87,8 @@ export default function InfiniteScrollPhotos({
               >
                 <Link href="/photos" key={mineral.id}>
                 <div className='w-[300px] h-[200px]'>
-                    <UIImage
-                      removeWrapper
+                    <Image
+                      fill
                       alt="Card example background"
                       className="z-0 w-full h-full scale-125 -translate-y-6 object-cover"
                       src="/Amazonite-106_horiz.jpeg"
