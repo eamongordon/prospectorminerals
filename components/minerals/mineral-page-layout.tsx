@@ -8,7 +8,6 @@ import { Search as MagnifyingGlassIcon } from 'lucide-react';
 import { useDebounce } from 'use-debounce';
 import InfiniteScrollMinerals from "./infinite-scroll-minerals";
 import { customAlphabet } from "nanoid";
-import SortDropdown from "./sort-dropdown";
 
 const nanoid = customAlphabet(
     "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -33,12 +32,14 @@ type PhotosSortObj = {
 
 export default function MineralPageLayout({
     infiniteScrollElem,
+    sortDropdownElem,
     filterObj,
     initialPhotos,
     initialCursor,
     sort
 }: {
-    infiniteScrollElem: React.ReactElement
+    infiniteScrollElem: React.ReactElement,
+    sortDropdownElem: React.ReactElement,
     filterObj: MineralsFilterObj | undefined,
     initialPhotos: any[] | undefined,
     initialCursor: number | undefined
@@ -235,8 +236,8 @@ export default function MineralPageLayout({
                 </div>
             </div>
             <div className="flex-col items-center w-full">
-                <div>
-                    <div className="justify-start pb-5 pt-1 sm:pb-5 sm:pt-0">
+                <div className='mb-4 sm:mb-12 flex-row my-5 sm:flex sm:gap-x-10 items-center justify-between'>
+                    <div className="sm:basis-2/3 justify-start pb-5 pt-1 sm:pb-5 sm:pt-0">
                         {
                             (searchText) ? (
                                 <Chip onClose={() => setSearchText(undefined)} variant="bordered">
@@ -264,6 +265,9 @@ export default function MineralPageLayout({
                                 <></>
                             )
                         }
+                    </div>
+                    <div className="py-2 sm:basis-1/3">
+                        {sortDropdownElem}
                     </div>
                 </div>
                 {renderChildren()}
