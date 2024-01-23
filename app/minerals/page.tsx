@@ -9,8 +9,6 @@ import { fetchMinerals } from '@/lib/actions'
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import InfiniteScrollMinerals from '@/components/minerals/infinite-scroll-minerals';
-import MineralFilters from "@/components/minerals/mineral-filters";
-import MineralFilterTags from "@/components/minerals/mineral-filter-tags";
 import MineralPageLayout from "@/components/minerals/mineral-page-layout";
 
 const Page = async ({
@@ -54,7 +52,13 @@ const Page = async ({
     </div>*/}
 
                         <MineralPageLayout filterObj={{ name: name, lusters: lusters?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }} initialPhotos={photosQuery.results} initialCursor={photosQuery.next ? photosQuery.next : undefined} {...(property && order ? { sort: { property: property, order: order } } : {})}>
+                        <ul
+                            key={nanoid()}
+                            role='list'
+                            className='w-full grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'
+                        >
                             <InfiniteScrollMinerals filterObj={{ name: name, lusters: lusters?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }} initialPhotos={photosQuery.results} initialCursor={photosQuery.next ? photosQuery.next : undefined} {...(property && order ? { sort: { property: property, order: order } } : {})} key={nanoid()} />
+                        </ul>
                         </MineralPageLayout>
                     </div>
                 </section>
