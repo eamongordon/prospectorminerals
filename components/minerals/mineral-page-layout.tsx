@@ -101,7 +101,57 @@ export default function MineralPageLayout({
     const order =
         typeof searchParams.get("order") === 'string' ? searchParams.get("order") : undefined
         */
+/*
+    useEffect(() => {
+        if (initialRender.current) {
+            initialRender.current = false
+            return
+        }
+        const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+        if (!searchQuery) {
+            current.delete("name");
+        } else {
+            current.set("name", searchQuery);
+        }
+        const search = current.toString();
+        const queryParam = search ? `?${search}` : "";
+        router.push(`${pathname}${queryParam}`);
+    }, [searchQuery]);
 
+    useEffect(() => {
+        if (initialRender.current) {
+            initialRender.current = false
+            return
+        }
+        const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+        if (!lustersVal) {
+            current.delete("lusters");
+        } else {
+            current.set("lusters", lustersVal.join(','));
+        }
+        const search = current.toString();
+        const queryParam = search ? `?${search}` : "";
+        router.push(`${pathname}${queryParam}`);
+    }, [lustersVal]);
+
+    useEffect(() => {
+        if (initialRender.current) {
+            initialRender.current = false
+            return
+        }
+        const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+        if (!hardnessVal) {
+            current.delete("minHardness");
+            current.delete("maxHardness");
+        } else {
+            current.set("minHardness", hardnessVal[0].toString());
+            current.set("maxHardness", hardnessVal[1].toString());
+        }
+        const search = current.toString();
+        const queryParam = search ? `?${search}` : "";
+        router.push(`${pathname}${queryParam}`);
+    }, [hardnessVal]);
+*/
     const clearFilters = () => {
         setSearchText(undefined);
         setLustersVal(undefined);
@@ -125,6 +175,7 @@ export default function MineralPageLayout({
                         type="text"
                         label="Search"
                         placeholder="Search"
+                        value={searchText || ""}
                         labelPlacement="outside"
                         onChange={e => setSearchText(e.target.value)}
                         endContent={
@@ -140,8 +191,8 @@ export default function MineralPageLayout({
                                 color="foreground"
                                 minValue={0}
                                 maxValue={10}
-                                //defaultValue={[0, 10]}
-                                //value={hardnessVal || [0, 10]}
+                                defaultValue={[0, 10]}
+                                value={hardnessVal || [0, 10]}
                                 className="w-full pr-3"
                                 onChangeEnd={value => setHardnessVal(value as number[])}
                             />
@@ -153,8 +204,8 @@ export default function MineralPageLayout({
                                 description="Select lusters to filter by"
                                 isInvalid={isLusterInvalid}
                                 label="Select lusters"
-                                //value={lustersVal || ["silky", "vitreous", "waxy", "submetallic", "metallic", "resinous", "pearly", "greasy", "dull", "adamantine"]}
-                                //defaultValue={["silky", "vitreous", "waxy", "submetallic", "metallic", "resinous", "pearly", "greasy", "dull", "adamantine"]}
+                                value={lustersVal || ["silky", "vitreous", "waxy", "submetallic", "metallic", "resinous", "pearly", "greasy", "dull", "adamantine"]}
+                                defaultValue={["silky", "vitreous", "waxy", "submetallic", "metallic", "resinous", "pearly", "greasy", "dull", "adamantine"]}
                                 onValueChange={(value) => {
                                     setIsLusterInvalid(value.length < 1);
                                     setLustersVal(value);
@@ -178,6 +229,33 @@ export default function MineralPageLayout({
             </div>
             <div className="flex-col items-center w-full">
                 <div className="justify-start pb-5 pt-1 sm:pb-5 sm:pt-0">
+                    {
+                        (searchText) ? (
+                            <Chip onClose={() => setSearchText(undefined)} variant="bordered">
+                                {`Name: ${searchText}`}
+                            </Chip>
+                        ) : (
+                            <></>
+                        )
+                    }
+                    {
+                        (hardnessVal) ? (
+                            <Chip onClose={() => setHardnessVal(undefined)} variant="bordered">
+                                {`Hardness: ${hardnessVal[0].toString()} - ${hardnessVal[1].toString()}`}
+                            </Chip>
+                        ) : (
+                            <></>
+                        )
+                    }
+                    {
+                        (lustersVal) ? (
+                            <Chip onClose={() => setLustersVal(undefined)} variant="bordered">
+                                {`Lusters: ${lustersVal.length}`}
+                            </Chip>
+                        ) : (
+                            <></>
+                        )
+                    }
                 </div>
                     {renderChildren()}
             </div>
