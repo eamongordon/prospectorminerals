@@ -52,6 +52,7 @@ export default function InfiniteScrollPhotos({
   const [ref, inView] = useInView();
   async function loadMorePhotos() {
     if (page) {
+      console.log("loadMoreMin")
       const photosQuery = await fetchMinerals({ ...(filterObj ? { filterObj: filterObj } : {}) || {}, cursor: page, limit: 10, ...(sort ? { sortObj: sort } : {}), });
       if (photosQuery.results?.length) {
         setPage(photosQuery.next ? photosQuery.next : undefined)
