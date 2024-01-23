@@ -105,7 +105,7 @@ export default function MineralPageLayout({
     const order =
         typeof searchParams.get("order") === 'string' ? searchParams.get("order") : undefined
         */
-
+/*
     useEffect(() => {
         if (initialRender.current) {
             initialRender.current = false
@@ -159,7 +159,7 @@ export default function MineralPageLayout({
         const queryParam = search ? `?${search}` : "";
         router.push(`${pathname}${queryParam}`);
     }, [hardnessVal]);
-
+*/
     const clearFilters = () => {
         setSearchText(undefined);
         setLustersVal(undefined);
