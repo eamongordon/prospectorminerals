@@ -52,6 +52,8 @@ const Page = async ({
     </div>*/}
 
                         <MineralPageLayout filterObj={{ name: name, lusters: lusters?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }} initialPhotos={photosQuery.results} initialCursor={photosQuery.next ? photosQuery.next : undefined} {...(property && order ? { sort: { property: property, order: order } } : {})}>
+                            <></>
+                        </MineralPageLayout>
                         <ul
                             key={nanoid()}
                             role='list'
@@ -59,7 +61,6 @@ const Page = async ({
                         >
                             <InfiniteScrollMinerals filterObj={{ name: name, lusters: lusters?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }} initialPhotos={photosQuery.results} initialCursor={photosQuery.next ? photosQuery.next : undefined} {...(property && order ? { sort: { property: property, order: order } } : {})} key={nanoid()} />
                         </ul>
-                        </MineralPageLayout>
                     </div>
                 </section>
             </div>
