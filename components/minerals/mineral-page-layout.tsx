@@ -102,56 +102,6 @@ export default function MineralPageLayout({
         typeof searchParams.get("order") === 'string' ? searchParams.get("order") : undefined
         */
 
-    useEffect(() => {
-        if (initialRender.current) {
-            initialRender.current = false
-            return
-        }
-        const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
-        if (!searchQuery) {
-            current.delete("name");
-        } else {
-            current.set("name", searchQuery);
-        }
-        const search = current.toString();
-        const queryParam = search ? `?${search}` : "";
-        router.push(`${pathname}${queryParam}`);
-    }, [searchQuery]);
-
-    useEffect(() => {
-        if (initialRender.current) {
-            initialRender.current = false
-            return
-        }
-        const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
-        if (!lustersVal) {
-            current.delete("lusters");
-        } else {
-            current.set("lusters", lustersVal.join(','));
-        }
-        const search = current.toString();
-        const queryParam = search ? `?${search}` : "";
-        router.push(`${pathname}${queryParam}`);
-    }, [lustersVal]);
-
-    useEffect(() => {
-        if (initialRender.current) {
-            initialRender.current = false
-            return
-        }
-        const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
-        if (!hardnessVal) {
-            current.delete("minHardness");
-            current.delete("maxHardness");
-        } else {
-            current.set("minHardness", hardnessVal[0].toString());
-            current.set("maxHardness", hardnessVal[1].toString());
-        }
-        const search = current.toString();
-        const queryParam = search ? `?${search}` : "";
-        router.push(`${pathname}${queryParam}`);
-    }, [hardnessVal]);
-
     const clearFilters = () => {
         setSearchText(undefined);
         setLustersVal(undefined);
@@ -175,7 +125,6 @@ export default function MineralPageLayout({
                         type="text"
                         label="Search"
                         placeholder="Search"
-                        value={searchText || ""}
                         labelPlacement="outside"
                         onChange={e => setSearchText(e.target.value)}
                         endContent={
