@@ -257,7 +257,7 @@ export default function MineralPageLayout({
                         )
                     }
                 </div>
-                    {children}
+                    {renderChildren()}
             </div>
         </>
     );
