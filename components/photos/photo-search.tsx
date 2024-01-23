@@ -46,7 +46,7 @@ const Search = ({ search }: { search?: string }) => {
       </div>
       <Input
         type="text"
-        value={text}
+        defaultValue={text || undefined}
         placeholder="Search"
         onChange={e => setText(e.target.value)}
         endContent={
