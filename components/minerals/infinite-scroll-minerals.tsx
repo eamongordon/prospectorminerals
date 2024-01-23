@@ -85,7 +85,7 @@ export default function InfiniteScrollPhotos({
                 id={mineral.id}
               >
                 <Link href="/photos" key={mineral.id}>
-                  <Card isFooterBlurred className="w-full" key={mineral.id}>
+                <div className='w-[300px] h-[200px]'>
                     <UIImage
                       removeWrapper
                       alt="Card example background"
@@ -93,10 +93,7 @@ export default function InfiniteScrollPhotos({
                       src="/Amazonite-106_horiz.jpeg"
                       key={mineral.id}
                     />
-                    <CardFooter key={mineral.id} className="absolute bg-white/30 bottom-0 z-10 justify-between">
-                      <p className="mx-auto text-white text-lg font-semibold">{mineral.name}</p>
-                    </CardFooter>
-                  </Card >
+                    </div>
                 </Link>
               </div>
             </li>
