@@ -266,7 +266,7 @@ export default function MineralPageLayout({
                         }
                     </div>
                     <div className="py-2 sm:basis-1/3">
-                        {<></>}
+                        {sortDropdownElem}
                     </div>
                 </div>
                 {renderChildren()}
