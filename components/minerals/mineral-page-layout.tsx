@@ -81,6 +81,7 @@ export default function MineralPageLayout({
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const initialRender = useRef(true);
+    const initialLusterRender = useRef(true);
     const [searchText, setSearchText] = useState(name);
     /*
     const [initialPhotosState, setInitialPhotosState] = useState(initialPhotos); 
@@ -103,6 +104,7 @@ export default function MineralPageLayout({
         */
 
     useEffect(() => {
+        console.log("search effect triggered");
         if (initialRender.current) {
             initialRender.current = false
             return
@@ -119,8 +121,8 @@ export default function MineralPageLayout({
     }, [searchQuery]);
     
     useEffect(() => {
-        if (initialRender.current) {
-            initialRender.current = false
+        if (initialLusterRender.current) {
+            initialLusterRender.current = false
             return
         }
         const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
