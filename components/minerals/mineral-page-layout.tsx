@@ -105,7 +105,7 @@ export default function MineralPageLayout({
     const order =
         typeof searchParams.get("order") === 'string' ? searchParams.get("order") : undefined
         */
-/*
+
     useEffect(() => {
         if (initialRender.current) {
             initialRender.current = false
@@ -159,7 +159,7 @@ export default function MineralPageLayout({
         const queryParam = search ? `?${search}` : "";
         router.push(`${pathname}${queryParam}`);
     }, [hardnessVal]);
-*/
+
     const clearFilters = () => {
         setSearchText(undefined);
         setLustersVal(undefined);
@@ -168,7 +168,6 @@ export default function MineralPageLayout({
 
     const renderChildren = () => {
         return Children.map(infiniteScrollElem, (child) => {
-            console.log(child);
             return cloneElement(child as React.ReactElement<any>, {
                 clearFilters: () => clearFilters()
             });
@@ -267,7 +266,7 @@ export default function MineralPageLayout({
                         }
                     </div>
                     <div className="py-2 sm:basis-1/3">
-                        {sortDropdownElem}
+                        {<></>}
                     </div>
                 </div>
                 {renderChildren()}
