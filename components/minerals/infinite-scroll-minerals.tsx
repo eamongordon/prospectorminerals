@@ -84,15 +84,16 @@ export default function InfiniteScrollPhotos({
                 className='relative flex flex-col items-center justify-center text-center group w-full overflow-hidden rounded-lg'
                 id={mineral.id}
               >
-                <Link href="/photos">
-                  <Card isFooterBlurred className="w-full">
+                <Link href="/photos" key={mineral.id}>
+                  <Card isFooterBlurred className="w-full" key={mineral.id}>
                     <UIImage
                       removeWrapper
                       alt="Card example background"
                       className="z-0 w-full h-full scale-125 -translate-y-6 object-cover"
                       src="/Amazonite-106_horiz.jpeg"
+                      key={mineral.id}
                     />
-                    <CardFooter className="absolute bg-white/30 bottom-0 z-10 justify-between">
+                    <CardFooter key={mineral.id} className="absolute bg-white/30 bottom-0 z-10 justify-between">
                       <p className="mx-auto text-white text-lg font-semibold">{mineral.name}</p>
                     </CardFooter>
                   </Card >
