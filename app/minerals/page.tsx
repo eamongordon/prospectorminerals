@@ -57,7 +57,7 @@ const Page = async ({
                             initialPhotos={photosQuery.results}
                             initialCursor={photosQuery.next ? photosQuery.next : undefined} {...(property && order ? { sort: { property: property, order: order } } : {})}
                             infiniteScrollElem={<InfiniteScrollMinerals filterObj={{ name: name, lusters: lusters?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }} initialPhotos={photosQuery.results} initialCursor={photosQuery.next ? photosQuery.next : undefined} {...(property && order ? { sort: { property: property, order: order } } : {})} key={nanoid()} />}
-                            sortDropdownElem={<SortDropdown {...(property && order ? { sort: `${property},${order}` } : {})} />}
+                            sortDropdownElem={<></>}
                         />
                     </div>
                 </section>
