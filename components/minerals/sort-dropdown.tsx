@@ -6,8 +6,8 @@ import { useDebounce } from 'use-debounce';
 import { Select, SelectItem } from "@nextui-org/react";
 
 const sortItems = [
-    { label: "A-Z", value: "title,asc" },
-    { label: "Z-A", value: "title,desc" }
+    { label: "A-Z", value: "name,asc" },
+    { label: "Z-A", value: "name,desc" }
 ];
 
 export default function SortDropdown({ sort }: { sort?: string }) {

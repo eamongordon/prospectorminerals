@@ -10,6 +10,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import InfiniteScrollMinerals from '@/components/minerals/infinite-scroll-minerals';
 import MineralPageLayout from "@/components/minerals/mineral-page-layout";
+import SortDropdown from "@/components/minerals/sort-dropdown";
 
 const Page = async ({
     searchParams
@@ -51,7 +52,13 @@ const Page = async ({
                             </div>
     </div>*/}
 
-                        <MineralPageLayout filterObj={{ name: name, lusters: lusters?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }} initialPhotos={photosQuery.results} initialCursor={photosQuery.next ? photosQuery.next : undefined} {...(property && order ? { sort: { property: property, order: order } } : {})} infiniteScrollElem={<InfiniteScrollMinerals filterObj={{ name: name, lusters: lusters?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }} initialPhotos={photosQuery.results} initialCursor={photosQuery.next ? photosQuery.next : undefined} {...(property && order ? { sort: { property: property, order: order } } : {})} key={nanoid()} />}/>
+                        <MineralPageLayout
+                            filterObj={{ name: name, lusters: lusters?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }}
+                            initialPhotos={photosQuery.results}
+                            initialCursor={photosQuery.next ? photosQuery.next : undefined} {...(property && order ? { sort: { property: property, order: order } } : {})}
+                            infiniteScrollElem={<InfiniteScrollMinerals filterObj={{ name: name, lusters: lusters?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }} initialPhotos={photosQuery.results} initialCursor={photosQuery.next ? photosQuery.next : undefined} {...(property && order ? { sort: { property: property, order: order } } : {})} key={nanoid()} />}
+                            sortDropdownElem={<SortDropdown {...(property && order ? { sort: `${property},${order}` } : {})} />}
+                        />
                     </div>
                 </section>
             </div>
