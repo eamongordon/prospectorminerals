@@ -191,8 +191,8 @@ export default function MineralPageLayout({
                                 color="foreground"
                                 minValue={0}
                                 maxValue={10}
-                                defaultValue={[0, 10]}
-                                value={hardnessVal || [0, 10]}
+                                //defaultValue={[0, 10]}
+                                //value={hardnessVal || [0, 10]}
                                 className="w-full pr-3"
                                 onChangeEnd={value => setHardnessVal(value as number[])}
                             />
@@ -204,8 +204,8 @@ export default function MineralPageLayout({
                                 description="Select lusters to filter by"
                                 isInvalid={isLusterInvalid}
                                 label="Select lusters"
-                                value={lustersVal || ["silky", "vitreous", "waxy", "submetallic", "metallic", "resinous", "pearly", "greasy", "dull", "adamantine"]}
-                                defaultValue={["silky", "vitreous", "waxy", "submetallic", "metallic", "resinous", "pearly", "greasy", "dull", "adamantine"]}
+                                //value={lustersVal || ["silky", "vitreous", "waxy", "submetallic", "metallic", "resinous", "pearly", "greasy", "dull", "adamantine"]}
+                                //defaultValue={["silky", "vitreous", "waxy", "submetallic", "metallic", "resinous", "pearly", "greasy", "dull", "adamantine"]}
                                 onValueChange={(value) => {
                                     setIsLusterInvalid(value.length < 1);
                                     setLustersVal(value);
@@ -229,33 +229,6 @@ export default function MineralPageLayout({
             </div>
             <div className="flex-col items-center w-full">
                 <div className="justify-start pb-5 pt-1 sm:pb-5 sm:pt-0">
-                    {
-                        (searchText) ? (
-                            <Chip onClose={() => setSearchText(undefined)} variant="bordered">
-                                {`Name: ${searchText}`}
-                            </Chip>
-                        ) : (
-                            <></>
-                        )
-                    }
-                    {
-                        (hardnessVal) ? (
-                            <Chip onClose={() => setHardnessVal(undefined)} variant="bordered">
-                                {`Hardness: ${hardnessVal[0].toString()} - ${hardnessVal[1].toString()}`}
-                            </Chip>
-                        ) : (
-                            <></>
-                        )
-                    }
-                    {
-                        (lustersVal) ? (
-                            <Chip onClose={() => setLustersVal(undefined)} variant="bordered">
-                                {`Lusters: ${lustersVal.length}`}
-                            </Chip>
-                        ) : (
-                            <></>
-                        )
-                    }
                 </div>
                     {renderChildren()}
             </div>
