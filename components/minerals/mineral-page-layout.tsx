@@ -82,6 +82,7 @@ export default function MineralPageLayout({
     const searchParams = useSearchParams();
     const initialRender = useRef(true);
     const initialLusterRender = useRef(true);
+    const initialHardnessRender = useRef(true);
     const [searchText, setSearchText] = useState(name);
     /*
     const [initialPhotosState, setInitialPhotosState] = useState(initialPhotos); 
@@ -104,7 +105,6 @@ export default function MineralPageLayout({
         */
 
     useEffect(() => {
-        console.log("search effect triggered");
         if (initialRender.current) {
             initialRender.current = false
             return
@@ -119,12 +119,16 @@ export default function MineralPageLayout({
         const queryParam = search ? `?${search}` : "";
         router.push(`${pathname}${queryParam}`);
     }, [searchQuery]);
-    
+
     useEffect(() => {
         if (initialLusterRender.current) {
+            //TO REMOVE
+            console.log("initialRenderLusters");
             initialLusterRender.current = false
             return
         }
+        //TO REMOVE
+        console.log("afterInitialRenderLusters");
         const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
         if (!lustersVal) {
             current.delete("lusters");
@@ -135,10 +139,10 @@ export default function MineralPageLayout({
         const queryParam = search ? `?${search}` : "";
         router.push(`${pathname}${queryParam}`);
     }, [lustersVal]);
-/*
+
     useEffect(() => {
-        if (initialRender.current) {
-            initialRender.current = false
+        if (initialHardnessRender.current) {
+            initialHardnessRender.current = false
             return
         }
         const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
@@ -153,7 +157,7 @@ export default function MineralPageLayout({
         const queryParam = search ? `?${search}` : "";
         router.push(`${pathname}${queryParam}`);
     }, [hardnessVal]);
-*/
+
     const clearFilters = () => {
         setSearchText(undefined);
         setLustersVal(undefined);
@@ -259,7 +263,7 @@ export default function MineralPageLayout({
                         )
                     }
                 </div>
-                    {renderChildren()}
+                {renderChildren()}
             </div>
         </>
     );
