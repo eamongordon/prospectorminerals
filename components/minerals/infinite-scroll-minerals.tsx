@@ -72,6 +72,11 @@ export default function InfiniteScrollPhotos({
   }, [inView])
 
   return (
+    <ul
+      key={key}
+      role='list'
+      className='w-full grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'
+    >
       <>
         {
           photos?.map(mineral => (
@@ -108,5 +113,6 @@ export default function InfiniteScrollPhotos({
           <Spinner />
         </div>
       </>
+    </ul>
   )
 }
