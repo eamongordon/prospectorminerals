@@ -117,7 +117,7 @@ export default function MineralPageLayout({
         const queryParam = search ? `?${search}` : "";
         router.push(`${pathname}${queryParam}`);
     }, [searchQuery]);
-    /*
+    
     useEffect(() => {
         if (initialRender.current) {
             initialRender.current = false
@@ -133,7 +133,7 @@ export default function MineralPageLayout({
         const queryParam = search ? `?${search}` : "";
         router.push(`${pathname}${queryParam}`);
     }, [lustersVal]);
-
+/*
     useEffect(() => {
         if (initialRender.current) {
             initialRender.current = false
