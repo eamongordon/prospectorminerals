@@ -43,7 +43,6 @@ export default function MineralPageLayout({
     initialCursor: number | undefined
     sort?: PhotosSortObj | undefined
 }) {
-    console.log("is render")
     /*
         const mapAccordionItems = (label: string, value: string, optionsArray: [], stateName: string) => {
             return (
@@ -102,15 +101,6 @@ export default function MineralPageLayout({
     const order =
         typeof searchParams.get("order") === 'string' ? searchParams.get("order") : undefined
         */
-    useEffect(() => {
-        /*
-        fetchMinerals({ filterObj: { name: name, lusters: lusters?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }, cursor: undefined, limit: 10, ...(property && order ? { sortObj: { property: property, order: order } } : {}) }).then((res) => {
-            setInitialPhotosState(res.results);
-            setInitialCursorState(res.next ? res.next : undefined);
-        });
-        console.log("did change")
-        */
-    }, [searchParams]);
 
     useEffect(() => {
         if (initialRender.current) {
@@ -267,6 +257,7 @@ export default function MineralPageLayout({
                         )
                     }
                 </div>
+                    {children}
             </div>
         </>
     );
