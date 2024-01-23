@@ -57,6 +57,8 @@ export default function SortDropdown({ sort }: { sort?: string }) {
                 placeholder="Sort By"
                 defaultSelectedKeys={[]}
                 aria-label="Sort By"
+                //selectedKeys={[query] as React.Key[] || undefined}
+                onSelectionChange={(keys: React.Key[]) => console.log(keys)}
                 onChange={(event) => {
                     if (event.target.value && event.target.value !== "default") {
                         setQuery(event.target.value)
