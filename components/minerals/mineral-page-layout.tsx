@@ -8,6 +8,7 @@ import { Search as MagnifyingGlassIcon } from 'lucide-react';
 import { useDebounce } from 'use-debounce';
 import InfiniteScrollMinerals from "./infinite-scroll-minerals";
 import { customAlphabet } from "nanoid";
+import SortDropdown from "./sort-dropdown";
 
 const nanoid = customAlphabet(
     "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -31,13 +32,13 @@ type PhotosSortObj = {
 }
 
 export default function MineralPageLayout({
-    children,
+    infiniteScrollElem,
     filterObj,
     initialPhotos,
     initialCursor,
     sort
 }: {
-    children: React.ReactNode;
+    infiniteScrollElem: React.ReactElement
     filterObj: MineralsFilterObj | undefined,
     initialPhotos: any[] | undefined,
     initialCursor: number | undefined
@@ -165,7 +166,7 @@ export default function MineralPageLayout({
     }
 
     const renderChildren = () => {
-        return Children.map(children, (child) => {
+        return Children.map(infiniteScrollElem, (child) => {
             console.log(child);
             return cloneElement(child as React.ReactElement<any>, {
                 clearFilters: () => clearFilters()
@@ -234,34 +235,36 @@ export default function MineralPageLayout({
                 </div>
             </div>
             <div className="flex-col items-center w-full">
-                <div className="justify-start pb-5 pt-1 sm:pb-5 sm:pt-0">
-                    {
-                        (searchText) ? (
-                            <Chip onClose={() => setSearchText(undefined)} variant="bordered">
-                                {`Name: ${searchText}`}
-                            </Chip>
-                        ) : (
-                            <></>
-                        )
-                    }
-                    {
-                        (hardnessVal) ? (
-                            <Chip onClose={() => setHardnessVal(undefined)} variant="bordered">
-                                {`Hardness: ${hardnessVal[0].toString()} - ${hardnessVal[1].toString()}`}
-                            </Chip>
-                        ) : (
-                            <></>
-                        )
-                    }
-                    {
-                        (lustersVal) ? (
-                            <Chip onClose={() => setLustersVal(undefined)} variant="bordered">
-                                {`Lusters: ${lustersVal.length}`}
-                            </Chip>
-                        ) : (
-                            <></>
-                        )
-                    }
+                <div>
+                    <div className="justify-start pb-5 pt-1 sm:pb-5 sm:pt-0">
+                        {
+                            (searchText) ? (
+                                <Chip onClose={() => setSearchText(undefined)} variant="bordered">
+                                    {`Name: ${searchText}`}
+                                </Chip>
+                            ) : (
+                                <></>
+                            )
+                        }
+                        {
+                            (hardnessVal) ? (
+                                <Chip onClose={() => setHardnessVal(undefined)} variant="bordered">
+                                    {`Hardness: ${hardnessVal[0].toString()} - ${hardnessVal[1].toString()}`}
+                                </Chip>
+                            ) : (
+                                <></>
+                            )
+                        }
+                        {
+                            (lustersVal) ? (
+                                <Chip onClose={() => setLustersVal(undefined)} variant="bordered">
+                                    {`Lusters: ${lustersVal.length}`}
+                                </Chip>
+                            ) : (
+                                <></>
+                            )
+                        }
+                    </div>
                 </div>
                 {renderChildren()}
             </div>
