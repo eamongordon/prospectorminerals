@@ -41,7 +41,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                     alt="Prospector Minerals Logo"
                 />
                 <Gallery data={galleryData} />
-                <Card name="Azurite" />
+                <Card name="Azurite" id="az" />
                 <RegModal />
                 <TestServerActions/>
                 <Footer />
