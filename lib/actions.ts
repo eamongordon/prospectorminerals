@@ -226,10 +226,10 @@ export async function fetchMinerals({ filterObj, cursor, limit, sortObj }: { fil
   if (name) {
     queryArray.push({ name: { contains: name, mode: 'insensitive' } });
   }
-  if (minHardness) {
+  if (minHardness || minHardness === 0) {
     queryArray.push({ hardness_min: { lte: maxHardness } })
   }
-  if (maxHardness) {
+  if (maxHardness || maxHardness === 0) {
     queryArray.push({ hardness_max: { gte: minHardness } })
   }
   if (lusters) {
