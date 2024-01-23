@@ -48,17 +48,20 @@ export default function SortDropdown({ sort }: { sort?: string }) {
 
     }, [query])
 
+    function handleKeys(key: React.Key[]) {
+        console.log("key");
+        console.log(key);
+    }
+
     return (
-        <div className='relative shadow-sm'>
+        <div className='relative'>
             <Select
                 isRequired
                 size="sm"
                 radius='lg'
                 placeholder="Sort By"
-                defaultSelectedKeys={[]}
                 aria-label="Sort By"
-                //selectedKeys={[query] as React.Key[] || undefined}
-                onSelectionChange={(keys: React.Key[]) => console.log(keys)}
+                defaultSelectedKeys={query ? [query] : undefined}
                 onChange={(event) => {
                     if (event.target.value && event.target.value !== "default") {
                         setQuery(event.target.value)
