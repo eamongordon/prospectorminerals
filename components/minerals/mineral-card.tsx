@@ -3,9 +3,9 @@ import Link from 'next/link';
 import BlurImage from "../blur-image";
 import Image from "next/image";
 
-export default function MineralCard({ name, image, blurDataURL }: { name: string, image?: string, blurDataURL?: string }) {
+export default function MineralCard({ name, id, image, blurDataURL }: { name: string, id: string, image?: string, blurDataURL?: string }) {
     return (
-        <Link href="/photos">
+        <Link href={`/minerals/${id}`}>
             <Card isFooterBlurred className="w-full">
                 <UIImage
                     removeWrapper
