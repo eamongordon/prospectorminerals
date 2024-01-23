@@ -123,10 +123,10 @@ export default function MineralPageLayout({
     }, [searchQuery]);
 
     useEffect(() => {
-        if (initialLusterRender.current) {
+        if (initialRender.current) {
             //TO REMOVE
             console.log("initialRenderLusters");
-            initialLusterRender.current = false
+            initialRender.current = false
             return
         }
         //TO REMOVE
