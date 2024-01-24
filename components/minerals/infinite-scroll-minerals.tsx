@@ -41,7 +41,7 @@ export default function InfiniteScrollPhotos({
   initialCursor: number | undefined
   sort?: PhotosSortObj | undefined,
   key?: string | undefined,
-  clearFilters?: any | undefined
+  clearFilters?: Function | undefined
 }) {
 
   const [photos, setPhotos] = useState(initialPhotos);

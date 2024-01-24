@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
-import { useDebounce } from 'use-debounce';
 import { Select, SelectItem } from "@nextui-org/react";
 
 const sortItems = [
@@ -47,11 +46,6 @@ export default function SortDropdown({ sort }: { sort?: string }) {
         router.push(`${pathname}${queryParam}`);
 
     }, [query])
-
-    function handleKeys(key: React.Key[]) {
-        console.log("key");
-        console.log(key);
-    }
 
     return (
         <div className='relative'>

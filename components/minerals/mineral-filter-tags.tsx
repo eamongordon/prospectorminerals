@@ -3,8 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { Chip } from "@nextui-org/react";
-import { Search as MagnifyingGlassIcon } from 'lucide-react';
-import { useDebounce } from 'use-debounce';
 
 type MineralsFilterObj = {
     name: string | undefined,

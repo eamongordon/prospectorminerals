@@ -5,7 +5,6 @@ import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { Accordion, AccordionItem, Slider, CheckboxGroup, Checkbox, Input, Chip } from "@nextui-org/react";
 import { Search as MagnifyingGlassIcon } from 'lucide-react';
 import { useDebounce } from 'use-debounce';
-import InfiniteScrollMinerals from "./infinite-scroll-minerals";
 
 type MineralsFilterObj = {
     name: string | undefined,

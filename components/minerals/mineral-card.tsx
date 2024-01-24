@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardBody, CardFooter, Image as UIImage, Button } from "@nextui-org/react";
 import Link from 'next/link';
-import BlurImage from './blur-ui-image';
+//import BlurImage from './blur-ui-image';
 
 export default function MineralCard({ name, id, image, blurDataURL }: { name: string, id: string, image?: string, blurDataURL?: string }) {
     return (
