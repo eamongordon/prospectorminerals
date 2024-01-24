@@ -174,7 +174,7 @@ export default function MineralPageLayout({
                         type="text"
                         label="Search"
                         placeholder="Search"
-                        defaultValue={searchText || ""}
+                        value={searchText || ""}
                         labelPlacement="outside"
                         onChange={e => setSearchText(e.target.value)}
                         endContent={
@@ -190,7 +190,7 @@ export default function MineralPageLayout({
                                 color="foreground"
                                 minValue={0}
                                 maxValue={10}
-                                defaultValue={hardnessVal || [0, 10]}
+                                value={hardnessVal || [0, 10]}
                                 className="w-full pr-3"
                                 onChangeEnd={value => setHardnessVal(value as number[])}
                             />
@@ -202,7 +202,7 @@ export default function MineralPageLayout({
                                 description="Select lusters to filter by"
                                 isInvalid={isLusterInvalid}
                                 label="Select lusters"
-                                defaultValue={lustersVal || ["silky", "vitreous", "waxy", "submetallic", "metallic", "resinous", "pearly", "greasy", "dull", "adamantine"]}
+                                value={lustersVal || ["silky", "vitreous", "waxy", "submetallic", "metallic", "resinous", "pearly", "greasy", "dull", "adamantine"]}
                                 onValueChange={(value) => {
                                     setIsLusterInvalid(value.length < 1);
                                     setLustersVal(value);
