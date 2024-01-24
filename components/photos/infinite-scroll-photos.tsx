@@ -132,7 +132,7 @@ export default function InfiniteScrollPhotos({
           ) : (
             <>
               <div className='flex-col items-center justify-center col-span-2 sm:col-span-2 md:col-span-4 lg:col-span-5'>
-                <p className='w-full text-center'>No Photos Found. Try adjusting your filters</p>
+                <p className='w-full text-center'>No Photos Found. Try adjusting your filters.</p>
                 <div className='flex items-center justify-center py-4'>
                   <Button className="flex" onClick={() => clearFilters ? clearFilters() : console.log("no clear func provided")}>
                     Clear Filters
