@@ -6,7 +6,6 @@ import { fetchMinerals } from '@/lib/actions';
 import MineralCard from './mineral-card';
 import { customAlphabet } from "nanoid";
 import { Spinner, Button, Card, CardBody, CardFooter, Image as UIImage, Link } from "@nextui-org/react";
-import BlurImage from '../blur-image';
 import { useSearchParams } from 'next/navigation'
 import Image from "next/image";
 
