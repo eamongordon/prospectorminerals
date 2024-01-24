@@ -50,6 +50,12 @@ export default function InfiniteScrollPhotos({
   const [photos, setPhotos] = useState(initialPhotos);
   const [page, setPage] = useState(initialCursor || undefined);
   const [ref, inView] = useInView();
+
+  console.log("page");
+  console.log(page);
+  console.log("photos");
+  console.log(photos);
+
   async function loadMorePhotos() {
     if (page) {
       console.log("loadMoreMin")
@@ -62,6 +68,7 @@ export default function InfiniteScrollPhotos({
         ]);
       };
     } else {
+      console.log("noMoreMin")
     }
   }
 
