@@ -31,7 +31,7 @@ export default function InfiniteScrollPhotos({
   initialCursor: number | undefined
   sort?: PhotosSortObj | undefined,
   key: string | undefined,
-  clearFilters?: Function | undefined
+  clearFilters: Function
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -42,6 +42,7 @@ export default function InfiniteScrollPhotos({
   const [hoverItem, setHoverItem] = useState("");
   const initialRender = useRef(true)
   const [text, setText] = useState(search)
+  const [noPhotosLoading, setNoPhotosLoading] = useState(false);
 
   function handleHoverIn(itemId: string) {
     setHoverItem(itemId);
@@ -134,7 +135,7 @@ export default function InfiniteScrollPhotos({
               <div className='flex-col items-center justify-center col-span-2 sm:col-span-2 md:col-span-4 lg:col-span-5'>
                 <p className='w-full text-center'>No Photos Found. Try adjusting your filters.</p>
                 <div className='flex items-center justify-center py-4'>
-                  <Button className="flex" onClick={() => clearFilters ? clearFilters() : console.log("no clear func provided")}>
+                  <Button isLoading={noPhotosLoading} className="flex" onClick={() => {setNoPhotosLoading(true); clearFilters().then(() => {setNoPhotosLoading(false)})}}>
                     Clear Filters
                   </Button>
                 </div>

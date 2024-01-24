@@ -46,6 +46,7 @@ export default function PhotosLayout({
 
     const clearFilters = () => {
         setText(undefined);
+        return;
     }
 
     const renderChildren = () => {
