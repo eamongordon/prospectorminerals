@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
-import { useDebounce } from 'use-debounce';
 import { Select, SelectItem } from "@nextui-org/react";
 
 const sortItems = [
