@@ -233,8 +233,8 @@ export default function MineralPageLayout({
                 </div>
             </div>
             <div className="flex-col items-center w-full">
-                <div className='mb-4 sm:mb-12 flex-row py-2 sm:py-5 sm:flex sm:gap-x-10 items-center justify-between'>
-                    <div className={`${searchText || hardnessVal || lustersVal ? "pb-4" : "pb-0"} sm:basis-2/3 justify-start pt-1 sm:pb-5 sm:pt-0`}>
+                <div className='mb-4 flex-row sm:py-5 sm:flex sm:gap-x-10 items-center justify-between'>
+                    <div className={`${searchText || hardnessVal || lustersVal ? "pb-4 sm:pb-0" : "pb-0"} sm:basis-2/3 justify-start pt-1 sm:pt-0`}>
                         {
                             (searchText) ? (
                                 <Chip onClose={() => setSearchText(undefined)} variant="bordered">
@@ -263,7 +263,7 @@ export default function MineralPageLayout({
                             )
                         }
                     </div>
-                    <div className="pb-2 sm:py-2 sm:basis-1/3">
+                    <div className="pb-2 sm:pb-0 sm:py-2 sm:basis-1/3">
                         {sortDropdownElem}
                     </div>
                 </div>
