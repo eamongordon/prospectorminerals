@@ -5,9 +5,7 @@ import { useInView } from 'react-intersection-observer'
 import { fetchMinerals } from '@/lib/actions';
 import MineralCard from './mineral-card';
 import { customAlphabet } from "nanoid";
-import { Spinner, Button, Card, CardBody, CardFooter, Image as UIImage, Link } from "@nextui-org/react";
-import { useSearchParams } from 'next/navigation'
-import Image from "next/image";
+import { Spinner, Button} from "@nextui-org/react";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",

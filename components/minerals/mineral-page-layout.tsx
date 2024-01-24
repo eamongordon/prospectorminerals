@@ -1,18 +1,10 @@
 "use client";
 
 import { useState, useEffect, useRef, Children, cloneElement } from "react";
-import { fetchMinerals } from '@/lib/actions'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { Accordion, AccordionItem, Slider, CheckboxGroup, Checkbox, Input, Chip } from "@nextui-org/react";
 import { Search as MagnifyingGlassIcon } from 'lucide-react';
 import { useDebounce } from 'use-debounce';
-import InfiniteScrollMinerals from "./infinite-scroll-minerals";
-import { customAlphabet } from "nanoid";
-
-const nanoid = customAlphabet(
-    "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
-    7,
-); // 7-character random string
 
 type MineralsFilterObj = {
     name: string | undefined,
@@ -233,7 +225,7 @@ export default function MineralPageLayout({
                 </div>
             </div>
             <div className="flex-col items-center w-full">
-                <div className='mb-4 flex-row sm:py-5 sm:flex sm:gap-x-10 items-center justify-between'>
+                <div className='mb-4 sm:mb-5 flex-row sm:py-5 sm:flex sm:gap-x-10 items-center justify-between'>
                     <div className={`${searchText || hardnessVal || lustersVal ? "pb-4 sm:pb-0" : "pb-0"} sm:basis-2/3 justify-start pt-1 sm:pt-0`}>
                         {
                             (searchText) ? (
