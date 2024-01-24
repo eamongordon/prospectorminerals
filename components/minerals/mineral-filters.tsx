@@ -170,7 +170,6 @@ export default function MineralPageLayout({
                             minValue={0}
                             maxValue={10}
                             defaultValue={[0, 10]}
-                            value={hardnessVal}
                             className="max-w-[220px]"
                             onChangeEnd={value => setHardnessVal(value as number[])}
                         />
