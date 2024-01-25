@@ -172,10 +172,10 @@ export default function MineralPageLayout({
                 <div className="w-full sm:w-80">
                     <Input
                         type="text"
-                        label="Search"
                         placeholder="Search"
                         value={searchText || ""}
                         labelPlacement="outside"
+                        size="md"
                         onChange={e => setSearchText(e.target.value)}
                         endContent={
                             <MagnifyingGlassIcon />
@@ -225,7 +225,7 @@ export default function MineralPageLayout({
                 </div>
             </div>
             <div className="flex-col items-center w-full">
-                <div className='mb-4 sm:mb-5 flex-row sm:py-5 sm:flex sm:gap-x-10 items-center justify-between'>
+                <div className='mb-4 sm:mb-5 flex-row sm:flex sm:gap-x-10 items-center justify-between'>
                     <div className={`${searchText || hardnessVal || lustersVal ? "pb-4 sm:pb-0" : "pb-0"} sm:basis-2/3 justify-start pt-1 sm:pt-0`}>
                         {
                             (searchText) ? (
@@ -255,7 +255,7 @@ export default function MineralPageLayout({
                             )
                         }
                     </div>
-                    <div className="pb-2 sm:pb-0 sm:py-2 sm:basis-1/3">
+                    <div className="pb-2 sm:pb-2 sm:basis-1/3">
                         {sortDropdownElem}
                     </div>
                 </div>
