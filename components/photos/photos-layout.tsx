@@ -46,9 +46,8 @@ export default function PhotosLayout({
 
     const clearFilters = () => {
         setText(undefined);
-        return;
     }
-
+    
     const renderChildren = () => {
         return Children.map(infiniteScrollElem, (child) => {
             return cloneElement(child as React.ReactElement<any>, {
@@ -83,7 +82,7 @@ export default function PhotosLayout({
                     {sortDropdownElem}
                 </div>
             </div>
-                {renderChildren()}
+            {renderChildren()}
         </>
     )
 }

@@ -47,11 +47,7 @@ export default function InfiniteScrollPhotos({
   const [photos, setPhotos] = useState(initialPhotos);
   const [page, setPage] = useState(initialCursor || undefined);
   const [ref, inView] = useInView();
-
-  console.log("page");
-  console.log(page);
-  console.log("photos");
-  console.log(photos);
+  const [noPhotosLoading, setNoPhotosLoading] = useState(false);
 
   async function loadMorePhotos() {
     if (page) {
@@ -101,7 +97,7 @@ export default function InfiniteScrollPhotos({
             <div className='flex-col items-center justify-center col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-3'>
               <p className='w-full text-center'>No Minerals Found. Try adjusting your filters.</p>
               <div className='flex items-center justify-center py-4'>
-                <Button className="flex" onClick={() => clearFilters ? clearFilters() : console.log("no clear func provided")}>
+                <Button className="flex" isLoading={noPhotosLoading} onClick={() => {if (clearFilters) {setNoPhotosLoading(true); clearFilters();}}}>
                   Clear Filters
                 </Button>
               </div>
