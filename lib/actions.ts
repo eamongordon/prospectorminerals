@@ -208,6 +208,7 @@ type MineralsFilterObj = {
   lusters?: string[] | undefined,
   streaks?: string[] | undefined,
   mineralClasses?: string[] | undefined,
+  crystalSystems?: string[] | undefined,
   chemistry?: string[] | undefined,
   associates?: string[] | undefined
 }
@@ -222,7 +223,7 @@ export async function fetchMinerals({ filterObj, cursor, limit, sortObj }: { fil
     })
     queryArray.push({ OR: filterArray })
   }
-  const { name, minHardness, maxHardness, lusters, streaks, mineralClasses, chemistry, associates } = Object(filterObj)
+  const { name, minHardness, maxHardness, lusters, streaks, mineralClasses, crystalSystems, chemistry, associates } = Object(filterObj)
   if (name) {
     queryArray.push({ name: { contains: name, mode: 'insensitive' } });
   }
@@ -234,6 +235,9 @@ export async function fetchMinerals({ filterObj, cursor, limit, sortObj }: { fil
   }
   if (lusters) {
     pushArrayField(lusters, "luster");
+  }
+  if (crystalSystems) {
+    pushArrayField(crystalSystems, "crystal_system");
   }
   if (streaks) {
     pushArrayField(streaks, "streak");

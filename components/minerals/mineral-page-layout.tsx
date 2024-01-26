@@ -13,6 +13,7 @@ type MineralsFilterObj = {
     lusters?: string[] | undefined,
     streaks?: string[] | undefined,
     mineralClasses?: string[] | undefined,
+    crystalSystems?: string[] | undefined,
     chemistry?: string[] | undefined,
     associates?: string[] | undefined
 }
@@ -70,13 +71,14 @@ export default function MineralPageLayout({
             )
         }
     */
-    const { name, minHardness, maxHardness, lusters, streaks, mineralClasses, chemistry, associates } = Object(filterObj);
+    const { name, minHardness, maxHardness, lusters, streaks, mineralClasses, crystalSystems, chemistry, associates } = Object(filterObj);
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const initialRender = useRef(true);
     const initialLusterRender = useRef(true);
     const initialMineralClassRender = useRef(true);
+    const initialCrystalSystemsRender = useRef(true);
     const initialHardnessRender = useRef(true);
     const [searchText, setSearchText] = useState(name);
     /*
@@ -91,7 +93,9 @@ export default function MineralPageLayout({
     }
     const [hardnessVal, setHardnessVal] = useState<number[] | undefined>(hardnessNewState.length > 0 ? hardnessNewState : undefined);
     const [mineralClassVal, setMineralClassVal] = useState<string[] | undefined>(mineralClasses);
+    const [crystalSystemsVal, setCrystalSystemsVal] = useState<string[] | undefined>(crystalSystems);
     const [isMineralClassInvalid, setIsMineralClassInvalid] = useState(false);
+    const [isCrystalSystemsInvalid, setIsCrystalSystemsInvalid] = useState(false);
     const [isLusterInvalid, setIsLusterInvalid] = useState(false);
     const [searchQuery] = useDebounce(searchText, 500);
     /*
@@ -155,6 +159,23 @@ export default function MineralPageLayout({
     }, [mineralClassVal]);
 
     useEffect(() => {
+        if (initialCrystalSystemsRender.current) {
+            initialCrystalSystemsRender.current = false
+            return
+        }
+        //TO REMOVE
+        const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+        if (!crystalSystemsVal) {
+            current.delete("crystalSystems");
+        } else {
+            current.set("crystalSystems", crystalSystemsVal.join(','));
+        }
+        const search = current.toString();
+        const queryParam = search ? `?${search}` : "";
+        router.push(`${pathname}${queryParam}`);
+    }, [crystalSystemsVal]);
+
+    useEffect(() => {
         if (initialHardnessRender.current) {
             initialHardnessRender.current = false
             return
@@ -177,6 +198,7 @@ export default function MineralPageLayout({
         setLustersVal(undefined);
         setHardnessVal(undefined);
         setMineralClassVal(undefined);
+        setCrystalSystemsVal(undefined);
     }
 
     const renderChildren = () => {
@@ -264,6 +286,28 @@ export default function MineralPageLayout({
                                 <Checkbox value="native elements">Native Elements</Checkbox>
                             </CheckboxGroup>
                         </AccordionItem>
+                        <AccordionItem key="4" aria-label="Crystal Systems" title="Crystal Systems">
+                            <CheckboxGroup
+                                isRequired
+                                color="default"
+                                description="Select crystal systems to filter by"
+                                isInvalid={isCrystalSystemsInvalid}
+                                label="Select crystal systems"
+                                value={crystalSystemsVal || ["tetragonal", "isometric", "hexagonal", "triclinic", "monoclinic", "trigonal", "orthorhombic"]}
+                                onValueChange={(value) => {
+                                    setIsCrystalSystemsInvalid(value.length < 1);
+                                    setCrystalSystemsVal(value);
+                                }}
+                            >
+                                <Checkbox value="tetragonal">Tetragonal</Checkbox>
+                                <Checkbox value="isometric">Isometric</Checkbox>
+                                <Checkbox value="hexagonal">Hexagonal</Checkbox>
+                                <Checkbox value="triclinic">Triclinic</Checkbox>
+                                <Checkbox value="monoclinic">Monoclinic</Checkbox>
+                                <Checkbox value="trigonal">Trigonal</Checkbox>
+                                <Checkbox value="orthorhombic">Orthorhombic</Checkbox>
+                            </CheckboxGroup>
+                        </AccordionItem>
                     </Accordion>
                 </div>
             </div>
@@ -272,7 +316,7 @@ export default function MineralPageLayout({
                     <div className={`${searchText || hardnessVal || lustersVal ? "pb-4 sm:pb-0" : "pb-0"} sm:basis-2/3 justify-start pt-1 sm:pt-0`}>
                         {
                             (searchText) ? (
-                                <Chip onClose={() => setSearchText(undefined)} variant="bordered">
+                                <Chip className="mr-1 mb-1" onClose={() => setSearchText(undefined)} variant="bordered">
                                     {`Name: ${searchText}`}
                                 </Chip>
                             ) : (
@@ -281,7 +325,7 @@ export default function MineralPageLayout({
                         }
                         {
                             (hardnessVal) ? (
-                                <Chip onClose={() => setHardnessVal(undefined)} variant="bordered">
+                                <Chip className="mr-1 mb-1" onClose={() => setHardnessVal(undefined)} variant="bordered">
                                     {`Hardness: ${hardnessVal[0].toString()} - ${hardnessVal[1].toString()}`}
                                 </Chip>
                             ) : (
@@ -290,7 +334,7 @@ export default function MineralPageLayout({
                         }
                         {
                             (lustersVal) ? (
-                                <Chip onClose={() => setLustersVal(undefined)} variant="bordered">
+                                <Chip className="mr-1 mb-1" onClose={() => setLustersVal(undefined)} variant="bordered">
                                     {`Lusters: ${lustersVal.length}`}
                                 </Chip>
                             ) : (
@@ -299,8 +343,17 @@ export default function MineralPageLayout({
                         }
                         {
                             (mineralClassVal) ? (
-                                <Chip onClose={() => setMineralClassVal(undefined)} variant="bordered">
+                                <Chip className="mr-1 mb-1" onClose={() => setMineralClassVal(undefined)} variant="bordered">
                                     {`Mineral Classes: ${mineralClassVal.length}`}
+                                </Chip>
+                            ) : (
+                                <></>
+                            )
+                        }
+                        {
+                            (crystalSystemsVal) ? (
+                                <Chip className="mr-1 mb-1" onClose={() => setCrystalSystemsVal(undefined)} variant="bordered">
+                                    {`Crystal Systems: ${crystalSystemsVal.length}`}
                                 </Chip>
                             ) : (
                                 <></>
