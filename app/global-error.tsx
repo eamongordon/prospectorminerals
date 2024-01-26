@@ -32,11 +32,10 @@ export default function GlobalError({
                                 <button className="bg-gray-100 p-3 hover:bg-gray-300 dark:bg-gray-600 rounded-xl">Try Again</button>
                                 <button className="bg-gray-100 p-3 dark:bg-gray-600 hover:bg-gray-300 rounded-xl">Go Home</button>
                                 */}
-                            <button onClick={() => {
-                                console.log("reseting component");
+                            <Button onClick={
                                 // Attempt to recover by trying to re-render the segment
-                                reset();
-                            }}>Try Again</button>
+                                () => reset()
+                            }>Try Again</Button>
                             <Button as={Link} href="/" >Go Home</Button>
                         </div>
                     </div>
