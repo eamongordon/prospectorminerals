@@ -1,3 +1,4 @@
+/*
 'use client'
 
 export default function GlobalError({
@@ -23,3 +24,4 @@ export default function GlobalError({
         </html>
     )
 }
+*/
