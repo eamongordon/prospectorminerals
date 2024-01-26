@@ -76,6 +76,7 @@ export default function MineralPageLayout({
     const searchParams = useSearchParams();
     const initialRender = useRef(true);
     const initialLusterRender = useRef(true);
+    const initialMineralClassRender = useRef(true);
     const initialHardnessRender = useRef(true);
     const [searchText, setSearchText] = useState(name);
     /*
@@ -89,6 +90,8 @@ export default function MineralPageLayout({
         hardnessNewState.push(maxHardness);
     }
     const [hardnessVal, setHardnessVal] = useState<number[] | undefined>(hardnessNewState.length > 0 ? hardnessNewState : undefined);
+    const [mineralClassVal, setMineralClassVal] = useState<string[] | undefined>(mineralClasses);
+    const [isMineralClassInvalid, setIsMineralClassInvalid] = useState(false);
     const [isLusterInvalid, setIsLusterInvalid] = useState(false);
     const [searchQuery] = useDebounce(searchText, 500);
     /*
@@ -133,6 +136,23 @@ export default function MineralPageLayout({
         const queryParam = search ? `?${search}` : "";
         router.push(`${pathname}${queryParam}`);
     }, [lustersVal]);
+
+    useEffect(() => {
+        if (initialMineralClassRender.current) {
+            initialMineralClassRender.current = false
+            return
+        }
+        //TO REMOVE
+        const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+        if (!mineralClassVal) {
+            current.delete("mineralClasses");
+        } else {
+            current.set("mineralClasses", mineralClassVal.join(','));
+        }
+        const search = current.toString();
+        const queryParam = search ? `?${search}` : "";
+        router.push(`${pathname}${queryParam}`);
+    }, [mineralClassVal]);
 
     useEffect(() => {
         if (initialHardnessRender.current) {
@@ -220,7 +240,29 @@ export default function MineralPageLayout({
                                 <Checkbox value="adamantine">Adamantine</Checkbox>
                             </CheckboxGroup>
                         </AccordionItem>
-
+                        <AccordionItem key="3" aria-label="Mineral Class" title="Mineral Class">
+                            <CheckboxGroup
+                                isRequired
+                                color="default"
+                                description="Select mineral classes to filter by"
+                                isInvalid={isMineralClassInvalid}
+                                label="Select mineral classes"
+                                value={mineralClassVal || ["silicates", "phosphates", "carbonates", "sulfates", "sulfides", "halides", "oxides", "native elements"]}
+                                onValueChange={(value) => {
+                                    setIsMineralClassInvalid(value.length < 1);
+                                    setMineralClassVal(value);
+                                }}
+                            >
+                                <Checkbox value="silicates">Silicates</Checkbox>
+                                <Checkbox value="phosphates">Phosphates</Checkbox>
+                                <Checkbox value="carbonates">Carbonates</Checkbox>
+                                <Checkbox value="sulfates">Sulfates</Checkbox>
+                                <Checkbox value="sulfides">Sulfides</Checkbox>
+                                <Checkbox value="halides">Halides</Checkbox>
+                                <Checkbox value="oxides">Oxides</Checkbox>
+                                <Checkbox value="native elements">Native Elements</Checkbox>
+                            </CheckboxGroup>
+                        </AccordionItem>
                     </Accordion>
                 </div>
             </div>
@@ -249,6 +291,15 @@ export default function MineralPageLayout({
                             (lustersVal) ? (
                                 <Chip onClose={() => setLustersVal(undefined)} variant="bordered">
                                     {`Lusters: ${lustersVal.length}`}
+                                </Chip>
+                            ) : (
+                                <></>
+                            )
+                        }
+                        {
+                            (mineralClassVal) ? (
+                                <Chip onClose={() => setMineralClassVal(undefined)} variant="bordered">
+                                    {`Mineral Classes: ${mineralClassVal.length}`}
                                 </Chip>
                             ) : (
                                 <></>
