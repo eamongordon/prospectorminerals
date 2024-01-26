@@ -1,9 +1,11 @@
 'use client'
 import { Work_Sans } from 'next/font/google'
 import './globals.css';
+/*
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { NextUIProvider } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
+*/
 import { Button } from "@nextui-org/react";
 
 const inter = Work_Sans({ subsets: ['latin'] })
@@ -15,12 +17,12 @@ export default function GlobalError({
     error: Error & { digest?: string }
     reset: () => void
 }) {
-    const router = useRouter();
+    //const router = useRouter();
     return (
         <html>
             <body className={`${inter.className} bg-gradient-to-b from-[rgb(214,219,220)] to-white text-black dark:bg-gradient-to-b dark:from-black dark:to-black dark:text-white`}>
-                <NextUIProvider navigate={router.push}>
-                <NextThemesProvider attribute="class">
+                {/*<NextUIProvider navigate={router.push}>
+                <NextThemesProvider attribute="class">*/}
                 <div className="h-screen flex gap-y-5 items-center justify-center">
                     <div className="flex-col items-center justify-center">
                         <h2 className="mb-3 mx-auto">Oops! Something went wrong.</h2>
@@ -37,8 +39,9 @@ export default function GlobalError({
                         </div>
                     </div>
                 </div>
+                {/*
                 </NextThemesProvider>
-                </NextUIProvider>
+                        </NextUIProvider>*/}
             </body>
         </html>
     )
