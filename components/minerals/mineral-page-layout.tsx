@@ -176,6 +176,7 @@ export default function MineralPageLayout({
         setSearchText(undefined);
         setLustersVal(undefined);
         setHardnessVal(undefined);
+        setMineralClassVal(undefined);
     }
 
     const renderChildren = () => {
