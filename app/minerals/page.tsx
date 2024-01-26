@@ -29,7 +29,8 @@ const Page = async ({
         typeof searchParams.property === 'string' ? searchParams.property : undefined
     const order =
         typeof searchParams.order === 'string' ? searchParams.order : undefined
-    const photosQuery = await fetchMinerals({ filterObj: { name: name, lusters: lusters?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }, cursor: undefined, limit: 10, ...(property && order ? { sortObj: { property: property, order: order } } : {}) });
+    const filterObj = { name: name, lusters: lusters?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }
+    const photosQuery = await fetchMinerals({ filterObj: filterObj, cursor: undefined, limit: 10, ...(property && order ? { sortObj: { property: property, order: order } } : {}) });
     return (
         <main>
             <Header />
@@ -53,10 +54,10 @@ const Page = async ({
     </div>*/}
 
                         <MineralPageLayout
-                            filterObj={{ name: name, lusters: lusters?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }}
+                            filterObj={filterObj}
                             initialPhotos={photosQuery.results}
                             initialCursor={photosQuery.next ? photosQuery.next : undefined} {...(property && order ? { sort: { property: property, order: order } } : {})}
-                            infiniteScrollElem={<InfiniteScrollMinerals filterObj={{ name: name, lusters: lusters?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }} initialPhotos={photosQuery.results} initialCursor={photosQuery.next ? photosQuery.next : undefined} {...(property && order ? { sort: { property: property, order: order } } : {})} key={nanoid()} />}
+                            infiniteScrollElem={<InfiniteScrollMinerals filterObj={filterObj} initialPhotos={photosQuery.results} initialCursor={photosQuery.next ? photosQuery.next : undefined} {...(property && order ? { sort: { property: property, order: order } } : {})} key={nanoid()} />}
                             sortDropdownElem={<SortDropdown {...(property && order ? { sort: `${property},${order}` } : {})} />}
                         />
                     </div>
