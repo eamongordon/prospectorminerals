@@ -390,7 +390,7 @@ export default function MineralPageLayout({
                         }
                     />
                     <Button
-                        className="sm:hidden w-full my-3 bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-600 hover:bg-gray-200 justify-between px-3"
+                        className="sm:hidden w-full mb-2 mt-3 bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-600 hover:bg-gray-200 justify-between px-3"
                         startContent={<Filter height={18} />}
                         endContent={
                             isMobileFiltersOpen ? (<ChevronUp />) : (<ChevronDown />)
