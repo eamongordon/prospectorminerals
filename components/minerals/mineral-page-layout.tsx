@@ -233,147 +233,7 @@ export default function MineralPageLayout({
             });
         });
     };
-
-    function AccordionContent({ isMobile }: { isMobile?: Boolean | undefined }) {
-        return (<Accordion
-            {...(isMobile ? { className: "contents sm:hidden" } : { className: "hidden sm:contents" })}
-        //className="hidden sm:contents"
-        //{...(isMobileFiltersOpen ? { className: "contents sm:content" } : { className: "hidden sm:contents" })}
-        //className={isMobileFiltersOpen ? 'contents sm:contents' : 'hidden sm:contents' }
-        >
-            <AccordionItem key="hardness" aria-label="Hardness" title="Hardness">
-                <Slider
-                    label="Mohs Hardness"
-                    step={1}
-                    showTooltip={true}
-                    color="foreground"
-                    minValue={0}
-                    maxValue={10}
-                    value={hardnessVal || [0, 10]}
-                    className="w-full pr-3"
-                    onChangeEnd={value => setHardnessVal(value as number[])}
-                />
-            </AccordionItem>
-            <AccordionItem key="2" aria-label="Lusters" title="Lusters">
-                <CheckboxGroup
-                    isRequired
-                    color="default"
-                    description="Select lusters to filter by"
-                    isInvalid={isLusterInvalid}
-                    label="Select lusters"
-                    value={lustersVal || ["silky", "vitreous", "waxy", "submetallic", "metallic", "resinous", "pearly", "greasy", "dull", "adamantine"]}
-                    onValueChange={(value) => {
-                        setIsLusterInvalid(value.length < 1);
-                        setLustersVal(value);
-                    }}
-                >
-                    <Checkbox value="silky">Silky</Checkbox>
-                    <Checkbox value="vitreous">Vitreous</Checkbox>
-                    <Checkbox value="waxy">Waxy</Checkbox>
-                    <Checkbox value="submetallic">Submetallic</Checkbox>
-                    <Checkbox value="metallic">Metallic</Checkbox>
-                    <Checkbox value="resinous">Resinous</Checkbox>
-                    <Checkbox value="pearly">Pearly</Checkbox>
-                    <Checkbox value="greasy">Greasy</Checkbox>
-                    <Checkbox value="dull">Dull</Checkbox>
-                    <Checkbox value="adamantine">Adamantine</Checkbox>
-                </CheckboxGroup>
-            </AccordionItem>
-            <AccordionItem key="3" aria-label="Mineral Class" title="Mineral Class">
-                <CheckboxGroup
-                    isRequired
-                    color="default"
-                    description="Select mineral classes to filter by"
-                    isInvalid={isMineralClassInvalid}
-                    label="Select mineral classes"
-                    value={mineralClassVal || ["silicates", "phosphates", "carbonates", "sulfates", "sulfides", "halides", "oxides", "native elements"]}
-                    onValueChange={(value) => {
-                        setIsMineralClassInvalid(value.length < 1);
-                        setMineralClassVal(value);
-                    }}
-                >
-                    <Checkbox value="silicates">Silicates</Checkbox>
-                    <Checkbox value="phosphates">Phosphates</Checkbox>
-                    <Checkbox value="carbonates">Carbonates</Checkbox>
-                    <Checkbox value="sulfates">Sulfates</Checkbox>
-                    <Checkbox value="sulfides">Sulfides</Checkbox>
-                    <Checkbox value="halides">Halides</Checkbox>
-                    <Checkbox value="oxides">Oxides</Checkbox>
-                    <Checkbox value="native elements">Native Elements</Checkbox>
-                </CheckboxGroup>
-            </AccordionItem>
-            <AccordionItem key="4" aria-label="Crystal Systems" title="Crystal Systems">
-                <CheckboxGroup
-                    isRequired
-                    color="default"
-                    description="Select crystal systems to filter by"
-                    isInvalid={isCrystalSystemsInvalid}
-                    label="Select crystal systems"
-                    value={crystalSystemsVal || ["tetragonal", "isometric", "hexagonal", "triclinic", "monoclinic", "trigonal", "orthorhombic"]}
-                    onValueChange={(value) => {
-                        setIsCrystalSystemsInvalid(value.length < 1);
-                        setCrystalSystemsVal(value);
-                    }}
-                >
-                    <Checkbox value="tetragonal">Tetragonal</Checkbox>
-                    <Checkbox value="isometric">Isometric</Checkbox>
-                    <Checkbox value="hexagonal">Hexagonal</Checkbox>
-                    <Checkbox value="triclinic">Triclinic</Checkbox>
-                    <Checkbox value="monoclinic">Monoclinic</Checkbox>
-                    <Checkbox value="trigonal">Trigonal</Checkbox>
-                    <Checkbox value="orthorhombic">Orthorhombic</Checkbox>
-                </CheckboxGroup>
-            </AccordionItem>
-            <AccordionItem key="5" aria-label="Chemistry" title="Chemistry">
-                <Input
-                    type="text"
-                    label="Chemical Formulas"
-                    description='Type an element or formula and hit "enter"'
-                    placeholder={!chemistryVal ? 'Try "Cu" or "SiO2"' : ""}
-                    value={chemistryInput || ""}
-                    labelPlacement="outside"
-                    size="md"
-                    onChange={(e) => { setChemistryInput(e.currentTarget.value) }}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                            let currentChemistry = chemistryVal ? [...chemistryVal] : [];
-                            currentChemistry?.push(e.currentTarget.value);
-                            setChemistryVal(currentChemistry);
-                            setChemistryInput("");
-                        } else if (e.key === "Backspace") {
-                            let currentChemistry = chemistryVal ? [...chemistryVal] : [];
-                            currentChemistry?.pop();
-                            if (currentChemistry.length > 0) {
-                                setChemistryVal(currentChemistry);
-                            } else {
-                                setChemistryVal(undefined);
-                            }
-                        }
-                    }}
-                    startContent={
-                        (chemistryVal?.map((val, index) => {
-                            return (
-                                <Chip className="mr-1"
-                                    onClose={() => {
-                                        const newArray = chemistryVal.filter((chemval) => chemval !== val);
-                                        if (newArray.length === 0) {
-                                            setChemistryVal(undefined);
-                                        } else {
-                                            setChemistryVal(newArray);
-                                        }
-                                    }}
-                                    key={index}
-                                    variant="bordered"
-                                >
-                                    {val}
-                                </Chip>
-                            )
-                        }))
-                    }
-                />
-            </AccordionItem>
-        </Accordion>)
-    }
+    
     return (
         <>
             <div className="'w-full flex-col sm:flex-row">
@@ -403,154 +263,8 @@ export default function MineralPageLayout({
                             }
                         }}
                     >{isMobileFiltersOpen ? "Close Filters" : "Open Filters"}</Button>
-                    {/*
-                    {isMobileFiltersOpen ? (<AccordionContent isMobile={true}/>) : (<></>)
-                    }
-                <AccordionContent isMobile={false}/>*/}
-                <div className="mx-2">
-                    <Accordion
-                        className="hidden sm:contents"
-                    >
-                        <AccordionItem key="hardness" aria-label="Hardness" title="Hardness">
-                            <Slider
-                                label="Mohs Hardness"
-                                step={1}
-                                showTooltip={true}
-                                color="foreground"
-                                minValue={0}
-                                maxValue={10}
-                                value={hardnessVal || [0, 10]}
-                                className="w-full pr-3"
-                                onChangeEnd={value => setHardnessVal(value as number[])}
-                            />
-                        </AccordionItem>
-                        <AccordionItem key="2" aria-label="Lusters" title="Lusters">
-                            <CheckboxGroup
-                                isRequired
-                                color="default"
-                                description="Select lusters to filter by"
-                                isInvalid={isLusterInvalid}
-                                label="Select lusters"
-                                value={lustersVal || ["silky", "vitreous", "waxy", "submetallic", "metallic", "resinous", "pearly", "greasy", "dull", "adamantine"]}
-                                onValueChange={(value) => {
-                                    setIsLusterInvalid(value.length < 1);
-                                    setLustersVal(value);
-                                }}
-                            >
-                                <Checkbox value="silky">Silky</Checkbox>
-                                <Checkbox value="vitreous">Vitreous</Checkbox>
-                                <Checkbox value="waxy">Waxy</Checkbox>
-                                <Checkbox value="submetallic">Submetallic</Checkbox>
-                                <Checkbox value="metallic">Metallic</Checkbox>
-                                <Checkbox value="resinous">Resinous</Checkbox>
-                                <Checkbox value="pearly">Pearly</Checkbox>
-                                <Checkbox value="greasy">Greasy</Checkbox>
-                                <Checkbox value="dull">Dull</Checkbox>
-                                <Checkbox value="adamantine">Adamantine</Checkbox>
-                            </CheckboxGroup>
-                        </AccordionItem>
-                        <AccordionItem key="3" aria-label="Mineral Class" title="Mineral Class">
-                            <CheckboxGroup
-                                isRequired
-                                color="default"
-                                description="Select mineral classes to filter by"
-                                isInvalid={isMineralClassInvalid}
-                                label="Select mineral classes"
-                                value={mineralClassVal || ["silicates", "phosphates", "carbonates", "sulfates", "sulfides", "halides", "oxides", "native elements"]}
-                                onValueChange={(value) => {
-                                    setIsMineralClassInvalid(value.length < 1);
-                                    setMineralClassVal(value);
-                                }}
-                            >
-                                <Checkbox value="silicates">Silicates</Checkbox>
-                                <Checkbox value="phosphates">Phosphates</Checkbox>
-                                <Checkbox value="carbonates">Carbonates</Checkbox>
-                                <Checkbox value="sulfates">Sulfates</Checkbox>
-                                <Checkbox value="sulfides">Sulfides</Checkbox>
-                                <Checkbox value="halides">Halides</Checkbox>
-                                <Checkbox value="oxides">Oxides</Checkbox>
-                                <Checkbox value="native elements">Native Elements</Checkbox>
-                            </CheckboxGroup>
-                        </AccordionItem>
-                        <AccordionItem key="4" aria-label="Crystal Systems" title="Crystal Systems">
-                            <CheckboxGroup
-                                isRequired
-                                color="default"
-                                description="Select crystal systems to filter by"
-                                isInvalid={isCrystalSystemsInvalid}
-                                label="Select crystal systems"
-                                value={crystalSystemsVal || ["tetragonal", "isometric", "hexagonal", "triclinic", "monoclinic", "trigonal", "orthorhombic"]}
-                                onValueChange={(value) => {
-                                    setIsCrystalSystemsInvalid(value.length < 1);
-                                    setCrystalSystemsVal(value);
-                                }}
-                            >
-                                <Checkbox value="tetragonal">Tetragonal</Checkbox>
-                                <Checkbox value="isometric">Isometric</Checkbox>
-                                <Checkbox value="hexagonal">Hexagonal</Checkbox>
-                                <Checkbox value="triclinic">Triclinic</Checkbox>
-                                <Checkbox value="monoclinic">Monoclinic</Checkbox>
-                                <Checkbox value="trigonal">Trigonal</Checkbox>
-                                <Checkbox value="orthorhombic">Orthorhombic</Checkbox>
-                            </CheckboxGroup>
-                        </AccordionItem>
-                        <AccordionItem key="5" aria-label="Chemistry" title="Chemistry">
-                            <Input
-                                type="text"
-                                label="Chemical Formulas"
-                                description='Type an element or formula and hit "enter"'
-                                placeholder={!chemistryVal ? 'Try "Cu" or "SiO2"' : ""}
-                                value={chemistryInput || ""}
-                                labelPlacement="outside"
-                                size="md"
-                                onChange={(e) => { setChemistryInput(e.currentTarget.value) }}
-                                onKeyDown={(e) => {
-                                    if (e.key === "Enter") {
-                                        let currentChemistry = chemistryVal ? [...chemistryVal] : [];
-                                        currentChemistry?.push(e.currentTarget.value);
-                                        setChemistryVal(currentChemistry);
-                                        setChemistryInput("");
-                                    } else if (e.key === "Backspace") {
-                                        let currentChemistry = chemistryVal ? [...chemistryVal] : [];
-                                        currentChemistry?.pop();
-                                        if (currentChemistry.length > 0) {
-                                            setChemistryVal(currentChemistry);
-                                        } else {
-                                            setChemistryVal(undefined);
-                                        }
-                                    }
-                                }}
-                                startContent={
-                                    (chemistryVal?.map((val, index) => {
-                                        return (
-                                            <Chip className="mr-1"
-                                                onClose={() => {
-                                                    const newArray = chemistryVal.filter((chemval) => chemval !== val);
-                                                    if (newArray.length === 0) {
-                                                        setChemistryVal(undefined);
-                                                    } else {
-                                                        setChemistryVal(newArray);
-                                                    }
-                                                }}
-                                                key={index}
-                                                variant="bordered"
-                                            >
-                                                {val}
-                                            </Chip>
-                                        )
-                                    }))
-                                }
-                            />
-                        </AccordionItem>
-                    </Accordion>
-                    </div>
-                    {
-                        isMobileFiltersOpen ? (<div className="mx-2"><Accordion
-                            className="contents sm:hidden"
-                        //className="hidden sm:contents"
-                        //{...(isMobileFiltersOpen ? { className: "contents sm:content" } : { className: "hidden sm:contents" })}
-                        //className={isMobileFiltersOpen ? 'contents sm:contents' : 'hidden sm:contents' }
-                        >
+                    <div className={`${isMobileFiltersOpen ? "contents sm:contents" : "hidden sm:contents"}`}>
+                        <Accordion>
                             <AccordionItem key="hardness" aria-label="Hardness" title="Hardness">
                                 <Slider
                                     label="Mohs Hardness"
@@ -682,13 +396,13 @@ export default function MineralPageLayout({
                                     }
                                 />
                             </AccordionItem>
-                        </Accordion></div>) : (<></>)
-                    }
+                        </Accordion>
+                    </div>
                 </div>
             </div>
             <div className="flex-col items-center w-full">
                 <div className='mb-4 sm:mb-5 flex-row sm:flex sm:gap-x-10 items-center justify-between'>
-                    <div className={`${searchText || hardnessVal || lustersVal ? "pb-4 sm:pb-0" : "pb-0"} sm:basis-2/3 justify-start pt-1 sm:pt-0`}>
+                    <div className={`sm:basis-2/3 justify-start pt-1 sm:pt-0`}>
                         {
                             (searchText) ? (
                                 <Chip className="mr-1 mb-3 sm:mb-1" onClose={() => setSearchText(undefined)} variant="bordered">
@@ -744,7 +458,7 @@ export default function MineralPageLayout({
                             )
                         }
                     </div>
-                    <div className="pb-2 sm:pb-2 sm:pt-0 sm:basis-1/3">
+                    <div className="pb-2 sm:basis-1/3">
                         {sortDropdownElem}
                     </div>
                 </div>
