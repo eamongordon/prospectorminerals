@@ -25,6 +25,8 @@ const Page = async ({
         typeof searchParams.mineralClasses === 'string' ? searchParams.mineralClasses : undefined
     const crystalSystems =
         typeof searchParams.crystalSystems === 'string' ? searchParams.crystalSystems : undefined
+    const chemistry =
+        typeof searchParams.chemistry === 'string' ? searchParams.chemistry : undefined
     const minHardness =
         typeof searchParams.minHardness === 'string' ? searchParams.minHardness : undefined
     const maxHardness =
@@ -33,7 +35,7 @@ const Page = async ({
         typeof searchParams.property === 'string' ? searchParams.property : undefined
     const order =
         typeof searchParams.order === 'string' ? searchParams.order : undefined
-    const filterObj = { name: name, lusters: lusters?.split(','), mineralClasses: mineralClasses?.split(','), crystalSystems: crystalSystems?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }
+    const filterObj = { name: name, lusters: lusters?.split(','), mineralClasses: mineralClasses?.split(','), crystalSystems: crystalSystems?.split(','), chemistry: chemistry?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }
     const photosQuery = await fetchMinerals({ filterObj: filterObj, cursor: undefined, limit: 10, ...(property && order ? { sortObj: { property: property, order: order } } : {}) });
     console.log(typeof searchParams.mineralClasses);
     return (
