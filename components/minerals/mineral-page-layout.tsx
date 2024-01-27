@@ -80,6 +80,7 @@ export default function MineralPageLayout({
     const initialMineralClassRender = useRef(true);
     const initialCrystalSystemsRender = useRef(true);
     const initialHardnessRender = useRef(true);
+    const initialChemistryRender = useRef(true);
     const [searchText, setSearchText] = useState(name);
     /*
     const [initialPhotosState, setInitialPhotosState] = useState(initialPhotos); 
@@ -96,6 +97,8 @@ export default function MineralPageLayout({
     const [crystalSystemsVal, setCrystalSystemsVal] = useState<string[] | undefined>(crystalSystems);
     const [isMineralClassInvalid, setIsMineralClassInvalid] = useState(false);
     const [isCrystalSystemsInvalid, setIsCrystalSystemsInvalid] = useState(false);
+    const [chemistryVal, setChemistryVal] = useState<string[] | undefined>(chemistry);
+    const [chemistryInput, setChemistryInput] = useState("");
     const [isLusterInvalid, setIsLusterInvalid] = useState(false);
     const [searchQuery] = useDebounce(searchText, 500);
     /*
@@ -176,6 +179,24 @@ export default function MineralPageLayout({
     }, [crystalSystemsVal]);
 
     useEffect(() => {
+        if (initialChemistryRender.current) {
+            initialChemistryRender.current = false
+            return
+        }
+        console.log("UseEffectChemistryChange");
+        //TO REMOVE
+        const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+        if (!chemistryVal) {
+            current.delete("chemistry");
+        } else {
+            current.set("chemistry", chemistryVal.join(','));
+        }
+        const search = current.toString();
+        const queryParam = search ? `?${search}` : "";
+        router.push(`${pathname}${queryParam}`);
+    }, [chemistryVal]);
+
+    useEffect(() => {
         if (initialHardnessRender.current) {
             initialHardnessRender.current = false
             return
@@ -199,6 +220,7 @@ export default function MineralPageLayout({
         setHardnessVal(undefined);
         setMineralClassVal(undefined);
         setCrystalSystemsVal(undefined);
+        setChemistryVal(undefined);
     }
 
     const renderChildren = () => {
@@ -308,6 +330,54 @@ export default function MineralPageLayout({
                                 <Checkbox value="orthorhombic">Orthorhombic</Checkbox>
                             </CheckboxGroup>
                         </AccordionItem>
+                        <AccordionItem key="5" aria-label="Chemistry" title="Chemistry">
+                            <Input
+                                type="text"
+                                label="Chemical Formulas"
+                                description='Type an element or formula and hit "enter"'
+                                placeholder={!chemistryVal ? 'Try "Cu" or "SiO2"' : ""}
+                                value={chemistryInput || ""}
+                                labelPlacement="outside"
+                                size="md"
+                                onChange={(e) => { setChemistryInput(e.currentTarget.value) }}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                        let currentChemistry = chemistryVal ? [...chemistryVal] : [];
+                                        currentChemistry?.push(e.currentTarget.value);
+                                        setChemistryVal(currentChemistry);
+                                        setChemistryInput("");
+                                    } else if (e.key === "Backspace") {
+                                        let currentChemistry = chemistryVal ? [...chemistryVal] : [];
+                                        currentChemistry?.pop();
+                                        if (currentChemistry.length > 0) {
+                                            setChemistryVal(currentChemistry);
+                                        } else {
+                                            setChemistryVal(undefined);
+                                        }
+                                    }
+                                }}
+                                startContent={
+                                    (chemistryVal?.map((val, index) => {
+                                        return (
+                                            <Chip className="mr-1"
+                                                onClose={() => {
+                                                    const newArray = chemistryVal.filter((chemval) => chemval !== val);
+                                                    if (newArray.length === 0) {
+                                                        setChemistryVal(undefined);
+                                                    } else {
+                                                        setChemistryVal(newArray);
+                                                    }
+                                                }}
+                                                key={index}
+                                                variant="bordered"
+                                            >
+                                                {val}
+                                            </Chip>
+                                        )
+                                    }))
+                                }
+                            />
+                        </AccordionItem>
                     </Accordion>
                 </div>
             </div>
@@ -354,6 +424,15 @@ export default function MineralPageLayout({
                             (crystalSystemsVal) ? (
                                 <Chip className="mr-1 mb-1" onClose={() => setCrystalSystemsVal(undefined)} variant="bordered">
                                     {`Crystal Systems: ${crystalSystemsVal.length}`}
+                                </Chip>
+                            ) : (
+                                <></>
+                            )
+                        }
+                        {
+                            (chemistryVal) ? (
+                                <Chip className="mr-1 mb-1" onClose={() => setChemistryVal(undefined)} variant="bordered">
+                                    {`Chemistry: ${chemistryVal.join(', ')}`}
                                 </Chip>
                             ) : (
                                 <></>
