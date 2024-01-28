@@ -28,6 +28,18 @@ const galleryData = [
     }
 ];
 
+const htmltest = `<p class=""font_8"">Aurichalcite is commonly associated with:</p>
+<p class=""font_8""><br></p>
+<ul class=""font_8"">
+  <li><p class=""font_8"">Hemimorphite</p></li>
+  <li><p class=""font_8"">Calcite (as Inclusions)</p></li>
+  <li><p class=""font_8"">Azurite</p></li>
+  <li><p class=""font_8"">Malachite</p></li>
+  <li><p class=""font_8"">Cuprite</p></li>
+  <li><p class=""font_8"">Smithsonite</p></li>
+  <li><p class=""font_8"">Rosasite</p></li>
+</ul>`
+
 export default function Page({ params }: { params: { slug: string } }) {
     return (
         <main>
@@ -40,6 +52,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                     height={50}
                     alt="Prospector Minerals Logo"
                 />
+                <div className="product-des" dangerouslySetInnerHTML={{ __html: htmltest }}/>
                 <Gallery data={galleryData} />
                 <Card name="Azurite" id="az" />
                 <RegModal />
