@@ -4,3 +4,9 @@
 .leaflet-popup-content {
     margin: 0px;
 }
+
+.request-popup .leaflet-popup-content-wrapper {
+    padding: 0px;
+} .leaflet-popup-content {
+    margin: 0px;
+}
