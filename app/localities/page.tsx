@@ -21,7 +21,7 @@ export default function Home() {
             loading: () => (<Skeleton className="h-80 w-80" />),
             ssr: false
         }
-    ), [])
+    ), []);
     return (
         <>
             <Header />

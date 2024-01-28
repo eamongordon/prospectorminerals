@@ -5,7 +5,7 @@ import 'leaflet/dist/leaflet.css'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import { useState } from 'react'
 import Link from 'next/link'
-import { Link as UILink, Accordion, AccordionItem } from '@nextui-org/react'
+import { Link as UILink, Accordion, AccordionItem, Button } from '@nextui-org/react'
 import "leaflet-defaulticon-compatibility"
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
 
@@ -13,6 +13,7 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 export default function Map({ markers }: { markers?: any }) {
 
     const [coord, setCoord] = useState([51.505, -0.09])
+    const [stateMarkers, setStateMarkers] = useState(markers);
 
     const SearchLocation = () => {
         return (
@@ -44,6 +45,7 @@ export default function Map({ markers }: { markers?: any }) {
         <div>
             <SearchLocation />
             <GetMyLocation />
+            <Button onClick={() => setStateMarkers([{title: 'New Marker', coords: [10, 10]}])}>More Markers</Button>
             <div className="flex w-full flex-col sm:flex-row">
                 <div className="w-full sm:w-80">
                     <Accordion>
@@ -64,9 +66,9 @@ export default function Map({ markers }: { markers?: any }) {
                     />
 
                     {
-                        markers.map((marker: any) => {
+                        stateMarkers.map((marker: any) => {
                             return (
-                                <Marker position={marker.coords} >
+                                <Marker key={marker.title} position={marker.coords} >
                                     <Popup>
                                         A pretty CSS3 popup. <br /> Easily customizable.
                                     </Popup>
