@@ -1,15 +1,15 @@
 'use client'
 
-//import './popup-style.css'
-//import 'leaflet/dist/leaflet.css'
-//import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import './popup-style.css'
+import 'leaflet/dist/leaflet.css'
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import { useState } from 'react'
 import Link from 'next/link'
 import { Link as UILink, Accordion, AccordionItem, Button } from '@nextui-org/react'
-//import "leaflet-defaulticon-compatibility"
-//import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
+import "leaflet-defaulticon-compatibility"
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
 
-/*
+
 export default function Map({ markers }: { markers?: any }) {
 
     const [coord, setCoord] = useState([51.505, -0.09])
@@ -58,7 +58,7 @@ export default function Map({ markers }: { markers?: any }) {
                 <div className="flex-col items-center w-full">
                 <MapContainer
                     className='w-full max-h-[400px] aspect-[5/3]'
-                    
+                    {/*@ts-expect-error*/}
                     center={coord} zoom={2} scrollWheelZoom={false}>
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -76,7 +76,7 @@ export default function Map({ markers }: { markers?: any }) {
                             )
                         })
                     }
-                    {/*@ts-expect-error}
+                    {/*@ts-expect-error*/}
                     <Marker position={coord} eventHandlers={{
                         click: (e) => {
                             console.log('marker clicked')
@@ -98,9 +98,4 @@ export default function Map({ markers }: { markers?: any }) {
         </div >
     )
     
-}
-*/
-
-export default function Map({ markers }: { markers?: any }) {
-    return null
 }
