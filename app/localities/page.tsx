@@ -15,6 +15,8 @@ const markers = [
 ];
 
 export default function Home() {
+    return null;
+    /*
     const DynamicMap = useMemo(() => dynamic(
         () => import('@/components/localities/map'),
         {
@@ -31,6 +33,7 @@ export default function Home() {
             <Footer />
         </>
     )
+    */
 }
 /*
 'use client';
