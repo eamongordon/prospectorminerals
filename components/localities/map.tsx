@@ -58,7 +58,7 @@ export default function Map({ markers }: { markers?: any }) {
                 <div className="flex-col items-center w-full">
                 <MapContainer
                     className='w-full max-h-[400px] aspect-[5/3]'
-                    //@ts-expect-error
+                    
                     center={coord} zoom={2} scrollWheelZoom={false}>
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
