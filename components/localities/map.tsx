@@ -1,13 +1,13 @@
 'use client'
 
-import './popup-style.css'
-import 'leaflet/dist/leaflet.css'
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+//import './popup-style.css'
+//import 'leaflet/dist/leaflet.css'
+//import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import { useState } from 'react'
 import Link from 'next/link'
 import { Link as UILink, Accordion, AccordionItem, Button } from '@nextui-org/react'
-import "leaflet-defaulticon-compatibility"
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
+//import "leaflet-defaulticon-compatibility"
+//import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
 
 /*
 export default function Map({ markers }: { markers?: any }) {
