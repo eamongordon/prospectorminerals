@@ -1,13 +1,16 @@
 'use client'
 
+import './popup-style.css'
 import 'leaflet/dist/leaflet.css'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import { useState } from 'react'
+import Link from 'next/link'
+import { Link as UILink } from '@nextui-org/react'
 import "leaflet-defaulticon-compatibility"
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
 
 
-const Map = () => {
+export default function Map({ markers }: { markers?: any }) {
 
     const [coord, setCoord] = useState([51.505, -0.09])
 
@@ -45,20 +48,40 @@ const Map = () => {
                 height: '100vh',
                 width: '100vw'
                 //@ts-expect-error
-            }} center={coord} zoom={13} scrollWheelZoom={false}>
+            }} center={coord} zoom={2} scrollWheelZoom={false}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
+
+                {
+                    markers.map((marker: any) => {
+                        return (
+                            <Marker position={marker.coords} >
+                                <Popup>
+                                    A pretty CSS3 popup. <br /> Easily customizable.
+                                </Popup>
+                            </Marker>
+                        )
+                    })
+                }
                 {/*@ts-expect-error*/}
-                <Marker position={coord}>
-                    <Popup>
+                <Marker position={coord} eventHandlers={{
+                    click: (e) => {
+                        console.log('marker clicked')
+                    },
+                    mousedown: (e) => {
+
+                    }
+                }}>
+                    <Popup className=''>
+                        <p className='text-lg'>Large Tezt</p>
+                        <UILink href='/'>This is a link</UILink>
+                        <button className='w-full h-full bg-teal-200'>Large Tezt</button>
                         A pretty CSS3 popup. <br /> Easily customizable.
                     </Popup>
                 </Marker>
             </MapContainer>
-        </div>
+        </div >
     )
 }
-
-export default Map;

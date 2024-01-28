@@ -1,15 +1,36 @@
-import dynamic from 'next/dynamic'
+import dynamic from 'next/dynamic';
+import Header from '@/components/header';
+import Footer from '@/components/footer';
+import { useMemo } from 'react';
+import { Skeleton } from '@nextui-org/react';
 
-const DynamicMap = dynamic(() => import('@/components/localities/map'), {
-  ssr: false
-});
+const markers = [
+    {
+        title: "Marker 1",
+        coords: [35, 35]
+    }, {
+        title: "Marker 2",
+        coords: [50, 50]
+    }
+];
 
 export default function Home() {
-  return (
-    <main>
-     <DynamicMap />
-    </main>
-  )
+    const DynamicMap = useMemo(() => dynamic(
+        () => import('@/components/localities/map'),
+        {
+            loading: () => (<Skeleton className="h-80 w-80" />),
+            ssr: false
+        }
+    ), [])
+    return (
+        <>
+            <Header />
+            <main>
+                <DynamicMap markers={markers} />
+            </main>
+            <Footer />
+        </>
+    )
 }
 /*
 'use client';
