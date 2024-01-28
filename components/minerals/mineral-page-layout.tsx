@@ -233,7 +233,7 @@ export default function MineralPageLayout({
             });
         });
     };
-
+    
     return (
         <>
             <div className="'w-full flex-col sm:flex-row">
@@ -285,22 +285,22 @@ export default function MineralPageLayout({
                                     description="Select lusters to filter by"
                                     isInvalid={isLusterInvalid}
                                     label="Select lusters"
-                                    value={lustersVal || ["Silky", "Vitreous", "Waxy", "Submetallic", "Metallic", "Resinous", "Pearly", "Greasy", "Dull", "Adamantine"]}
+                                    value={lustersVal || ["silky", "vitreous", "waxy", "submetallic", "metallic", "resinous", "pearly", "greasy", "dull", "adamantine"]}
                                     onValueChange={(value) => {
                                         setIsLusterInvalid(value.length < 1);
                                         setLustersVal(value);
                                     }}
                                 >
-                                    <Checkbox value="Silky">Silky</Checkbox>
-                                    <Checkbox value="Vitreous">Vitreous</Checkbox>
-                                    <Checkbox value="Waxy">Waxy</Checkbox>
-                                    <Checkbox value="Submetallic">Submetallic</Checkbox>
-                                    <Checkbox value="Metallic">Metallic</Checkbox>
-                                    <Checkbox value="Resinous">Resinous</Checkbox>
-                                    <Checkbox value="Pearly">Pearly</Checkbox>
-                                    <Checkbox value="Greasy">Greasy</Checkbox>
-                                    <Checkbox value="Dull">Dull</Checkbox>
-                                    <Checkbox value="Adamantine">Adamantine</Checkbox>
+                                    <Checkbox value="silky">Silky</Checkbox>
+                                    <Checkbox value="vitreous">Vitreous</Checkbox>
+                                    <Checkbox value="waxy">Waxy</Checkbox>
+                                    <Checkbox value="submetallic">Submetallic</Checkbox>
+                                    <Checkbox value="metallic">Metallic</Checkbox>
+                                    <Checkbox value="resinous">Resinous</Checkbox>
+                                    <Checkbox value="pearly">Pearly</Checkbox>
+                                    <Checkbox value="greasy">Greasy</Checkbox>
+                                    <Checkbox value="dull">Dull</Checkbox>
+                                    <Checkbox value="adamantine">Adamantine</Checkbox>
                                 </CheckboxGroup>
                             </AccordionItem>
                             <AccordionItem key="3" aria-label="Mineral Class" title="Mineral Class">
@@ -310,20 +310,20 @@ export default function MineralPageLayout({
                                     description="Select mineral classes to filter by"
                                     isInvalid={isMineralClassInvalid}
                                     label="Select mineral classes"
-                                    value={mineralClassVal || ["Silicates", "Phosphates", "Carbonates", "Sulfates", "Sulfides", "Halides", "Oxides", "Native Elements"]}
+                                    value={mineralClassVal || ["silicates", "phosphates", "carbonates", "sulfates", "sulfides", "halides", "oxides", "native elements"]}
                                     onValueChange={(value) => {
                                         setIsMineralClassInvalid(value.length < 1);
                                         setMineralClassVal(value);
                                     }}
                                 >
-                                    <Checkbox value="Silicates">Silicates</Checkbox>
-                                    <Checkbox value="Phosphates">Phosphates</Checkbox>
-                                    <Checkbox value="Carbonates">Carbonates</Checkbox>
-                                    <Checkbox value="Sulfates">Sulfates</Checkbox>
-                                    <Checkbox value="Sulfides">Sulfides</Checkbox>
-                                    <Checkbox value="Halides">Halides</Checkbox>
-                                    <Checkbox value="Oxides">Oxides</Checkbox>
-                                    <Checkbox value="Native Elements">Native Elements</Checkbox>
+                                    <Checkbox value="silicates">Silicates</Checkbox>
+                                    <Checkbox value="phosphates">Phosphates</Checkbox>
+                                    <Checkbox value="carbonates">Carbonates</Checkbox>
+                                    <Checkbox value="sulfates">Sulfates</Checkbox>
+                                    <Checkbox value="sulfides">Sulfides</Checkbox>
+                                    <Checkbox value="halides">Halides</Checkbox>
+                                    <Checkbox value="oxides">Oxides</Checkbox>
+                                    <Checkbox value="native elements">Native Elements</Checkbox>
                                 </CheckboxGroup>
                             </AccordionItem>
                             <AccordionItem key="4" aria-label="Crystal Systems" title="Crystal Systems">
@@ -333,19 +333,19 @@ export default function MineralPageLayout({
                                     description="Select crystal systems to filter by"
                                     isInvalid={isCrystalSystemsInvalid}
                                     label="Select crystal systems"
-                                    value={crystalSystemsVal || ["Tetragonal", "Isometric", "Hexagonal", "Triclinic", "Monoclinic", "Trigonal", "Orthorhombic"]}
+                                    value={crystalSystemsVal || ["tetragonal", "isometric", "hexagonal", "triclinic", "monoclinic", "trigonal", "orthorhombic"]}
                                     onValueChange={(value) => {
                                         setIsCrystalSystemsInvalid(value.length < 1);
                                         setCrystalSystemsVal(value);
                                     }}
                                 >
-                                    <Checkbox value="Tetragonal">Tetragonal</Checkbox>
-                                    <Checkbox value="Isometric">Isometric</Checkbox>
-                                    <Checkbox value="Hexagonal">Hexagonal</Checkbox>
-                                    <Checkbox value="Triclinic">Triclinic</Checkbox>
-                                    <Checkbox value="Monoclinic">Monoclinic</Checkbox>
-                                    <Checkbox value="Trigonal">Trigonal</Checkbox>
-                                    <Checkbox value="Orthorhombic">Orthorhombic</Checkbox>
+                                    <Checkbox value="tetragonal">Tetragonal</Checkbox>
+                                    <Checkbox value="isometric">Isometric</Checkbox>
+                                    <Checkbox value="hexagonal">Hexagonal</Checkbox>
+                                    <Checkbox value="triclinic">Triclinic</Checkbox>
+                                    <Checkbox value="monoclinic">Monoclinic</Checkbox>
+                                    <Checkbox value="trigonal">Trigonal</Checkbox>
+                                    <Checkbox value="orthorhombic">Orthorhombic</Checkbox>
                                 </CheckboxGroup>
                             </AccordionItem>
                             <AccordionItem key="5" aria-label="Chemistry" title="Chemistry">

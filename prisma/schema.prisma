@@ -76,7 +76,6 @@ model Mineral {
   mineral_class          String
   crystal_system         String
   chemical_formula       String
-  varieties              String[]
   luster                 String
   streak                 String
   hardness_min           Decimal?
