@@ -9,7 +9,7 @@ import { Link as UILink, Accordion, AccordionItem, Button } from '@nextui-org/re
 import "leaflet-defaulticon-compatibility"
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
 
-
+/*
 export default function Map({ markers }: { markers?: any }) {
 
     const [coord, setCoord] = useState([51.505, -0.09])
@@ -76,7 +76,7 @@ export default function Map({ markers }: { markers?: any }) {
                             )
                         })
                     }
-                    {/*@ts-expect-error*/}
+                    {/*@ts-expect-error}
                     <Marker position={coord} eventHandlers={{
                         click: (e) => {
                             console.log('marker clicked')
@@ -97,4 +97,10 @@ export default function Map({ markers }: { markers?: any }) {
             </div>
         </div >
     )
+    
+}
+*/
+
+export default function Map({ markers }: { markers?: any }) {
+    return null
 }
