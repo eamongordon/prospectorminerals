@@ -10,7 +10,6 @@ import RegModal from "@/components/next-ui-modal";
 import Image from 'next/image';
 import Gallery from "@/components/mineral-gallery";
 import Card from "@/components/minerals/mineral-card";
-import MineralFilters from '@/components/minerals/mineral-filters';
 import TestServerActions from '@/components/test-server-actions';
 
 const galleryData = [
