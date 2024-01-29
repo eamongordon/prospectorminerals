@@ -3,6 +3,7 @@ import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { useMemo } from 'react';
 import { Skeleton } from '@nextui-org/react';
+import LocalitiesPageLayout from "@/components/localities/localities-page-layout"
 
 const markers = [
     {
@@ -25,18 +26,18 @@ const Page = async ({
         typeof searchParams.property === 'string' ? searchParams.property : undefined
     const order =
         typeof searchParams.order === 'string' ? searchParams.order : undefined
-        const Map = useMemo(() => dynamic(
-            () => import('@/components/localities/map'),
-            { 
-              loading: () => <Skeleton className='h-[200px] w-[200px]'/>,
-              ssr: false
-            }
-          ), [])
+    const Map = useMemo(() => dynamic(
+        () => import('@/components/localities/map'),
+        {
+            loading: () => <Skeleton className='h-[200px] w-[200px]' />,
+            ssr: false
+        }
+    ), [])
     //const photosQuery = await fetchPhotos({ filterObj: { name: search }, cursor: undefined, limit: 10, ...(property && order ? { sortObj: { property: property, order: order } } : {}) });
     return (
         <main>
             <Header />
-            <Map markers={markers}/>
+            <LocalitiesPageLayout markers={markers} />
             <Footer />
         </main >
     )
