@@ -356,7 +356,8 @@ export default function MineralPageLayout({
                                     placeholder={!chemistryVal ? 'Try "Cu" or "SiO2"' : ""}
                                     value={chemistryInput || ""}
                                     classNames={{
-                                        innerWrapper: ['overflow-x-auto', 'overflow-y-clip']
+                                        innerWrapper: ['overflow-x-auto', 'overflow-y-clip'],
+                                        input: ['min-w-8']
                                     }}
                                     labelPlacement="outside"
                                     size="md"
