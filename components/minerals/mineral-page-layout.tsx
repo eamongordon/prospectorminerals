@@ -355,6 +355,9 @@ export default function MineralPageLayout({
                                     description='Type an element or formula and hit "enter"'
                                     placeholder={!chemistryVal ? 'Try "Cu" or "SiO2"' : ""}
                                     value={chemistryInput || ""}
+                                    classNames={{
+                                        innerWrapper: ['overflow-x-auto', 'overflow-y-clip']
+                                    }}
                                     labelPlacement="outside"
                                     size="md"
                                     onChange={(e) => { setChemistryInput(e.currentTarget.value) }}
