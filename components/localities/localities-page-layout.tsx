@@ -15,7 +15,7 @@ export default function LocalitiesPageLayout({ markers }: { markers?: any }) {
 
     const [coord, setCoord] = useState([51.505, -0.09])
     const [stateMarkers, setStateMarkers] = useState(markers);
-    const [chemistryVal, setChemistryVal] = useState<string[] | undefined>(undefined);
+    const [chemistryVal, setChemistryVal] = useState<any[] | undefined>(undefined);
     const [chemistryInput, setChemistryInput] = useState("");
     const [mineralList, setMineralList] = useState<any[]>([])
 
@@ -58,9 +58,9 @@ export default function LocalitiesPageLayout({ markers }: { markers?: any }) {
     }, [mineralList]);
 
 
-   const mineralsQuery = async () => {
+    const mineralsQuery = async () => {
 
-   };
+    };
 
     return (
         <div>
@@ -78,7 +78,7 @@ export default function LocalitiesPageLayout({ markers }: { markers?: any }) {
                                 type="text"
                                 label="Chemical Formulas"
                                 description='Type an element or formula and hit "enter"'
-                                placeholder={!chemistryVal ? 'Try "Cu" or "SiO2"' : ""}
+                                placeholder={!chemistryInput ? 'Try "Cu" or "SiO2"' : ""}
                                 inputValue={chemistryInput || ""}
                                 labelPlacement="outside"
                                 defaultItems={mineralList}
@@ -107,17 +107,23 @@ export default function LocalitiesPageLayout({ markers }: { markers?: any }) {
                                         return (
                                             <Chip className="mr-1"
                                                 onClose={() => {
-                                                    const newArray = chemistryVal.filter((chemval) => chemval !== val);
+                                                    const newArray = chemistryVal.filter((chemval) => chemval.id !== val.id);
                                                     if (newArray.length === 0) {
                                                         setChemistryVal(undefined);
                                                     } else {
                                                         setChemistryVal(newArray);
                                                     }
                                                 }}
+                                                avatar={
+                                                    <Avatar
+                                                        name="JW"
+                                                        src={val.image}
+                                                    />
+                                                }
                                                 key={index}
                                                 variant="bordered"
                                             >
-                                                {val}
+                                                {val.name}
                                             </Chip>
                                         )
                                     }))
@@ -125,7 +131,13 @@ export default function LocalitiesPageLayout({ markers }: { markers?: any }) {
                             >
                                 {(item) =>
                                     <AutocompleteItem
-                                        onPress={() => {setChemistryInput(""); setChemistryVal([item.name])}}
+                                        onPress={() => {
+                                            setChemistryInput("");
+                                            let currentChemistry = chemistryVal ? [...chemistryVal] : [];
+                                            currentChemistry?.push({name: item.name, image: 'https://flagcdn.com/ar.svg', id: item.id});
+                                            setChemistryVal(currentChemistry);
+
+                                        }}
                                         startContent={<Avatar alt="Argentina" className="w-6 h-6" src="https://flagcdn.com/ar.svg" />}
                                         key={item.id}>
                                         {item.name}
