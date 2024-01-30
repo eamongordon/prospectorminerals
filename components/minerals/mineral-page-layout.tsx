@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, Children, cloneElement } from "react";
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
-import { Accordion, AccordionItem, Slider, CheckboxGroup, Checkbox, Input, Chip, Button } from "@nextui-org/react";
+import { Accordion, AccordionItem, Slider, CheckboxGroup, Checkbox, Input, Chip, Button, Textarea } from "@nextui-org/react";
 import { Search as MagnifyingGlassIcon, ChevronDown, ChevronUp, Filter } from 'lucide-react';
 import { useDebounce } from 'use-debounce';
 
@@ -359,6 +359,12 @@ export default function MineralPageLayout({
                                         innerWrapper: ['overflow-x-auto', 'overflow-y-clip'],
                                         input: ['min-w-8']
                                     }}
+                                    
+                                   /*
+                                    classNames={{
+                                        input: ['leading-5']
+                                    }}
+                                    minRows={1}*/
                                     labelPlacement="outside"
                                     size="md"
                                     onChange={(e) => { setChemistryInput(e.currentTarget.value) }}
