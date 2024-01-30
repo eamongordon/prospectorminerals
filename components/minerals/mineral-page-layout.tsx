@@ -349,26 +349,28 @@ export default function MineralPageLayout({
                                 </CheckboxGroup>
                             </AccordionItem>
                             <AccordionItem key="5" aria-label="Chemistry" title="Chemistry">
-                                <Input
+                                <Textarea
                                     type="text"
                                     label="Chemical Formulas"
                                     description='Type an element or formula and hit "enter"'
                                     placeholder={!chemistryVal ? 'Try "Cu" or "SiO2"' : ""}
                                     value={chemistryInput || ""}
+                                    /*
                                     classNames={{
                                         innerWrapper: ['overflow-x-auto', 'overflow-y-clip'],
                                         input: ['min-w-8']
                                     }}
-                                    
-                                   /*
+                                */
                                     classNames={{
-                                        input: ['leading-5']
+                                        innerWrapper: ['flex flex-wrap']
                                     }}
-                                    minRows={1}*/
+                                    //onHeightChange={(h) => console.log('height' + h)}
+                                    minRows={1}
                                     labelPlacement="outside"
                                     size="md"
                                     onChange={(e) => { setChemistryInput(e.currentTarget.value) }}
                                     onKeyDown={(e) => {
+                                        console.log('chemInput' + chemistryInput)
                                         if (e.key === "Enter") {
                                             let currentChemistry = chemistryVal ? [...chemistryVal] : [];
                                             currentChemistry?.push(e.currentTarget.value);
