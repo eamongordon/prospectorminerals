@@ -375,7 +375,10 @@ export default function MineralPageLayout({
                                             currentChemistry?.push(e.currentTarget.value);
                                             setChemistryVal(currentChemistry);
                                             setChemistryInput("");
-                                        } else if (e.key === "Backspace" && !chemistryInput.length) {
+                                        }
+                                    }}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Backspace" && !e.currentTarget.value.length) {
                                             let currentChemistry = chemistryVal ? [...chemistryVal] : [];
                                             currentChemistry?.pop();
                                             if (currentChemistry.length > 0) {
