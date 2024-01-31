@@ -368,14 +368,14 @@ export default function MineralPageLayout({
                                     minRows={1}
                                     labelPlacement="outside"
                                     size="md"
-                                    onValueChange={(value) => { if (value && value.length) { setChemistryInput(value); } console.log("cheminput - " + chemistryInput) }}
+                                    onValueChange={(value) => { setChemistryInput(value);}}
                                     onKeyUp={(e) => {
                                         if (e.key === "Enter") {
                                             let currentChemistry = chemistryVal ? [...chemistryVal] : [];
                                             currentChemistry?.push(e.currentTarget.value);
                                             setChemistryVal(currentChemistry);
                                             setChemistryInput("");
-                                        } else if (e.key === "Backspace") {
+                                        } else if (e.key === "Backspace" && !chemistryInput.length) {
                                             let currentChemistry = chemistryVal ? [...chemistryVal] : [];
                                             currentChemistry?.pop();
                                             if (currentChemistry.length > 0) {
