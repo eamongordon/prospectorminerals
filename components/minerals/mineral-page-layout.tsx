@@ -371,13 +371,17 @@ export default function MineralPageLayout({
                                     onValueChange={(value) => { setChemistryInput(value);}}
                                     onKeyUp={(e) => {
                                         if (e.key === "Enter") {
-                                            let currentChemistry = chemistryVal ? [...chemistryVal] : [];
-                                            currentChemistry?.push(e.currentTarget.value);
-                                            setChemistryVal(currentChemistry);
                                             setChemistryInput("");
                                         }
                                     }}
                                     onKeyDown={(e) => {
+                                        if (e.key === "Enter") {
+                                            let currentChemistry = chemistryVal ? [...chemistryVal] : [];
+                                            currentChemistry?.push(e.currentTarget.value.replace('↵', ''));
+                                            console.log(e.currentTarget.value.toString())
+                                            setChemistryVal(currentChemistry);
+                                            setChemistryInput("");
+                                        }
                                         if (e.key === "Backspace" && !e.currentTarget.value.length) {
                                             let currentChemistry = chemistryVal ? [...chemistryVal] : [];
                                             currentChemistry?.pop();
@@ -391,7 +395,8 @@ export default function MineralPageLayout({
                                     startContent={
                                         (chemistryVal?.map((val:string, index) => {
                                             return (
-                                                <Chip className="mr-1"
+                                                <Chip className="mr-1 min-h-[28px] mb-1"
+                                                size="md"
                                                     onClose={() => {
                                                         const newArray = chemistryVal.filter((chemval) => chemval !== val);
                                                         if (newArray.length === 0) {
