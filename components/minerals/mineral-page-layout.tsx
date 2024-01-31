@@ -194,6 +194,7 @@ export default function MineralPageLayout({
         } else {
             current.set("chemistry", chemistryVal.join(','));
         }
+        //setChemistryInput("");
         const search = current.toString();
         const queryParam = search ? `?${search}` : "";
         router.push(`${pathname}${queryParam}`);
@@ -364,13 +365,11 @@ export default function MineralPageLayout({
                                     classNames={{
                                         innerWrapper: ['flex flex-wrap']
                                     }}
-                                    //onHeightChange={(h) => console.log('height' + h)}
                                     minRows={1}
                                     labelPlacement="outside"
                                     size="md"
-                                    onChange={(e) => { setChemistryInput(e.currentTarget.value) }}
-                                    onKeyDown={(e) => {
-                                        console.log('chemInput' + chemistryInput)
+                                    onValueChange={(value) => { if (value && value.length) { setChemistryInput(value); } }}
+                                    onKeyUp={(e) => {
                                         if (e.key === "Enter") {
                                             let currentChemistry = chemistryVal ? [...chemistryVal] : [];
                                             currentChemistry?.push(e.currentTarget.value);
