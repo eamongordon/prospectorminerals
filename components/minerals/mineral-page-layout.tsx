@@ -364,12 +364,12 @@ export default function MineralPageLayout({
                                 */
                                     classNames={{
                                         innerWrapper: ['flex flex-wrap'],
-                                        //input: ['w-[40px] grow']
+                                        //input: [`${`w-[${chemistryInput.length * 10}px]`} flex-none`]
                                     }}
                                     minRows={1}
                                     labelPlacement="outside"
                                     size="md"
-                                    onValueChange={(value) => { setChemistryInput(value);}}
+                                    onValueChange={(value) => { setChemistryInput(value); }}
                                     onKeyUp={(e) => {
                                         if (e.key === "Enter") {
                                             setChemistryInput("");
@@ -392,12 +392,25 @@ export default function MineralPageLayout({
                                                 setChemistryVal(undefined);
                                             }
                                         }
+
+                                        setTimeout(() => {
+                                            if (e.key === "Backspace" && e.currentTarget.value === chemistryInput) {
+                                                let currentChemistry = chemistryVal ? [...chemistryVal] : [];
+                                                currentChemistry?.pop();
+                                                if (currentChemistry.length > 0) {
+                                                    setChemistryVal(currentChemistry);
+                                                } else {
+                                                    setChemistryVal(undefined);
+                                                }
+                                            }
+                                        }, 0)
+                                        
                                     }}
                                     startContent={
-                                        (chemistryVal?.map((val:string, index) => {
+                                        (chemistryVal?.map((val: string, index) => {
                                             return (
                                                 <Chip className="mr-1 min-h-[28px] mb-1"
-                                                size="md"
+                                                    size="md"
                                                     onClose={() => {
                                                         const newArray = chemistryVal.filter((chemval) => chemval !== val);
                                                         if (newArray.length === 0) {
@@ -406,7 +419,7 @@ export default function MineralPageLayout({
                                                             setChemistryVal(newArray);
                                                         }
                                                         //setTimeout(() => {
-                                                            console.log("cheminput - " + chemistryInput)
+                                                        console.log("cheminput - " + chemistryInput)
                                                         //}, 200)
                                                     }}
                                                     key={index}
