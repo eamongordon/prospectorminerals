@@ -6,27 +6,12 @@ import { fetchMinerals } from '@/lib/actions';
 import MineralCard from './mineral-card';
 import { customAlphabet } from "nanoid";
 import { Spinner, Button} from "@nextui-org/react";
+import { MineralsFilterObj, PhotosSortObj } from '@/types/types';
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
   7,
 ); // 7-character random string
-
-type PhotosSortObj = {
-  property: string
-  order: string
-}
-
-type MineralsFilterObj = {
-  name: string | undefined,
-  minHardness?: number | undefined,
-  maxHardness?: number | undefined,
-  lusters?: string[] | undefined,
-  streaks?: string[] | undefined,
-  mineralClasses?: string[] | undefined,
-  chemistry?: string[] | undefined,
-  associates?: string[] | undefined
-}
 
 export default function InfiniteScrollPhotos({
   filterObj,

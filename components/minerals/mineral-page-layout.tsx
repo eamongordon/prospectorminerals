@@ -5,23 +5,7 @@ import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { Accordion, AccordionItem, Slider, CheckboxGroup, Checkbox, Input, Chip, Button, Textarea } from "@nextui-org/react";
 import { Search as MagnifyingGlassIcon, ChevronDown, ChevronUp, Filter } from 'lucide-react';
 import { useDebounce } from 'use-debounce';
-
-type MineralsFilterObj = {
-    name: string | undefined,
-    minHardness?: number | undefined,
-    maxHardness?: number | undefined,
-    lusters?: string[] | undefined,
-    streaks?: string[] | undefined,
-    mineralClasses?: string[] | undefined,
-    crystalSystems?: string[] | undefined,
-    chemistry?: string[] | undefined,
-    associates?: string[] | undefined
-}
-
-type PhotosSortObj = {
-    property: string
-    order: string
-}
+import { MineralsFilterObj, PhotosSortObj } from "@/types/types";
 
 export default function MineralPageLayout({
     infiniteScrollElem,
