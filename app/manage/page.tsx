@@ -1,7 +1,7 @@
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import Blurhash from "./blurhash";
-import PhotoAdd from "./photoItems";
+import Blurhash from "../../components/manage/blurhash";
+import PhotoAdd from "../../components/manage/photoItems";
 
 export default async function SettingsPage() {
     return (
