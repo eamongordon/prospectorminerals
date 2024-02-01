@@ -363,7 +363,8 @@ export default function MineralPageLayout({
                                     }}
                                 */
                                     classNames={{
-                                        innerWrapper: ['flex flex-wrap']
+                                        innerWrapper: ['flex flex-wrap'],
+                                        //input: ['w-[40px] grow']
                                     }}
                                     minRows={1}
                                     labelPlacement="outside"
