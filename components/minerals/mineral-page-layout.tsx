@@ -403,7 +403,7 @@ export default function MineralPageLayout({
                                                     setChemistryVal(undefined);
                                                 }
                                             }
-                                        }, 0)
+                                        }, 10)
                                         
                                     }}
                                     startContent={
