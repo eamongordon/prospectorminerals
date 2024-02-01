@@ -8,6 +8,7 @@ import { put } from "@vercel/blob";
 import { customAlphabet } from "nanoid";
 import { del } from '@vercel/blob';
 import { getBlurDataURL } from "@/lib/utils";
+import { MineralsFilterObj, PhotosFilterObj, PhotosSortObj } from "@/types/types";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -201,18 +202,6 @@ export const deleteUser = async () => {
   }
 };
 
-type MineralsFilterObj = {
-  name: string | undefined,
-  minHardness?: number | undefined,
-  maxHardness?: number | undefined,
-  lusters?: string[] | undefined,
-  streaks?: string[] | undefined,
-  mineralClasses?: string[] | undefined,
-  crystalSystems?: string[] | undefined,
-  chemistry?: string[] | undefined,
-  associates?: string[] | undefined
-}
-
 export async function fetchMinerals({ filterObj, cursor, limit, sortObj }: { filterObj?: MineralsFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj }) {
   let queryArray = [];
   function pushArrayField(propertyArray: string[], property: string) {
@@ -292,15 +281,6 @@ export async function fetchMinerals({ filterObj, cursor, limit, sortObj }: { fil
     next: results.length === limit ? results[results.length - 1].number : undefined
   };
 };
-
-type PhotosFilterObj = {
-  name: string | undefined
-}
-
-type PhotosSortObj = {
-  property: string
-  order: string
-}
 
 export async function fetchPhotos({ filterObj, cursor, limit, sortObj }: { filterObj: PhotosFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj }) {
   if (!limit) {

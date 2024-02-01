@@ -4,19 +4,9 @@ import { useEffect, useState, useRef } from 'react'
 import { useInView } from 'react-intersection-observer'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { fetchPhotos } from '@/lib/actions';
-import { customAlphabet } from "nanoid";
 import { Spinner, Button } from "@nextui-org/react";
 import BlurImage from '../blur-image';
-
-const nanoid = customAlphabet(
-  "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
-  7,
-); // 7-character random string
-
-type PhotosSortObj = {
-  property: string
-  order: string
-}
+import { PhotosSortObj } from '@/types/types';
 
 export default function InfiniteScrollPhotos({
   search,
