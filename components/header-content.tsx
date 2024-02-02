@@ -36,15 +36,15 @@ export default function HeaderComp({
         >
             <NavbarMenuToggle
                 aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-                className="mr-4 sm:hidden"
+                className="justify-start sm:hidden"
             />
 
-            <NavbarBrand className="flex-none">
+            <NavbarBrand className="flex-none justify-center sm:justify-normal">
                 <Link href="/">
                     <PMLogo />
                 </Link>
             </NavbarBrand>
-            <NavbarContent className="flex-auto gap-[72px]" justify="end">
+            <NavbarContent className="gap-[72px]" justify="center">
                 <NavbarContent className="hidden lg:flex gap-10" justify="end">
                     <NavbarItem>
                         <UILink color="foreground" href="#">
@@ -78,11 +78,11 @@ export default function HeaderComp({
                         className="mr-4 hidden sm:block lg:hidden xl:hidden"
                         onChange={() => console.log('')}
                     />
+                    <Button isIconOnly color="default" variant="faded" aria-label="Search">
+                        <Search />
+                    </Button>
                     {loggedIn ? (
                         <>
-                            <Button isIconOnly color="default" variant="faded" aria-label="Take a photo">
-                                <Search />
-                            </Button>
                             <Dropdown placement="bottom-end">
                                 <DropdownTrigger>
                                     <Avatar
@@ -114,9 +114,6 @@ export default function HeaderComp({
                         </>
                     ) : (
                         <>
-                            <Button isIconOnly color="default" variant="faded" aria-label="Search">
-                                <Search />
-                            </Button>
                             <LoginModalButton><LoginModal /></LoginModalButton>
                         </>
                     )}
