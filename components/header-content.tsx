@@ -9,7 +9,8 @@ import { Search } from 'lucide-react';
 import { signOut } from "next-auth/react";
 import LoginModalButton from './registration/login-modal-button';
 import LoginModal from './modal/login';
-import RegModal from './next-ui-modal';
+import { toast } from "sonner";
+//import RegModal from './next-ui-modal';
 
 export default function HeaderComp({
     loggedIn,
@@ -71,109 +72,120 @@ export default function HeaderComp({
                         </UILink>
                     </NavbarItem>
                 </NavbarContent>
-                {loggedIn ? (
-                    <NavbarContent className="flex gap-5">
-                        <Button isIconOnly color="default" variant="faded" aria-label="Take a photo">
-                            <Search />
-                        </Button>
-                        <Dropdown placement="bottom-end">
-                            <DropdownTrigger>
-                                <Avatar
-                                    isBordered
-                                    as="button"
-                                    className="hidden sm:flex transition-transform"
-                                    color="default"
-                                    name={name ? name : undefined}
-                                    size="sm"
-                                    src={image ? image : undefined}
-                                />
-                            </DropdownTrigger>
-                            <DropdownMenu aria-label="Profile Actions" variant="flat" onAction={(item) => {
-                                if (item === 'logout') {
-                                    signOut({ callbackUrl: pathname.includes('/account') ? '/' : undefined });
-                                }
-                            }}>
-                                <DropdownItem key="profile" className="h-14 gap-2">
-                                    <p className="font-semibold">Signed in as</p>
-                                    <p className="font-semibold">{name ? name : email}</p>
-                                </DropdownItem>
-                                <DropdownItem key="dashboard">Dashboard</DropdownItem>
-                                <DropdownItem key="settings" as={Link} href="/account/settings">Settings</DropdownItem>
-                                <DropdownItem key="logout" color="danger">
-                                    Log Out
-                                </DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
-                    </NavbarContent>
-                ) : (
-                    <NavbarContent className="flex gap-5">
-                        <Button isIconOnly color="default" variant="faded" aria-label="Take a photo">
-                            <Search />
-                        </Button>
-                        <LoginModalButton><LoginModal /></LoginModalButton>
-                    </NavbarContent>
-                )}
+                <NavbarContent className="flex gap-5" justify="end">
+                    <NavbarMenuToggle
+                        aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+                        className="mr-4 hidden sm:block lg:hidden xl:hidden"
+                        onChange={() => console.log('')}
+                    />
+                    {loggedIn ? (
+                        <>
+                            <Button isIconOnly color="default" variant="faded" aria-label="Take a photo">
+                                <Search />
+                            </Button>
+                            <Dropdown placement="bottom-end">
+                                <DropdownTrigger>
+                                    <Avatar
+                                        isBordered
+                                        as="button"
+                                        className="hidden sm:flex transition-transform"
+                                        color="default"
+                                        name={name ? name : undefined}
+                                        size="sm"
+                                        src={image ? image : undefined}
+                                    />
+                                </DropdownTrigger>
+                                <DropdownMenu aria-label="Profile Actions" variant="flat" onAction={(item) => {
+                                    if (item === 'logout') {
+                                        signOut({ callbackUrl: pathname.includes('/account') ? '/' : undefined });
+                                    }
+                                }}>
+                                    <DropdownItem key="profile" className="h-14 gap-2">
+                                        <p className="font-semibold">Signed in as</p>
+                                        <p className="font-semibold">{name ? name : email}</p>
+                                    </DropdownItem>
+                                    <DropdownItem key="dashboard">Dashboard</DropdownItem>
+                                    <DropdownItem key="settings" as={Link} href="/account/settings">Settings</DropdownItem>
+                                    <DropdownItem key="logout" color="danger">
+                                        Log Out
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </Dropdown>
+                        </>
+                    ) : (
+                        <>
+                            <Button isIconOnly color="default" variant="faded" aria-label="Search">
+                                <Search />
+                            </Button>
+                            <LoginModalButton><LoginModal /></LoginModalButton>
+                        </>
+                    )}
+                </NavbarContent>
+                <NavbarMenu>
+                    <NavbarMenuItem key="learn">
+                        <UILink color="foreground" href="#">
+                            Learn
+                        </UILink>
+                    </NavbarMenuItem>
+                    <NavbarMenuItem key="minerals">
+                        <UILink color="foreground" href="#">
+                            Minerals
+                        </UILink>
+                    </NavbarMenuItem>
+                    <NavbarMenuItem key="localities">
+                        <UILink color="foreground" href="#">
+                            Localities
+                        </UILink>
+                    </NavbarMenuItem>
+                    <NavbarMenuItem key="articles">
+                        <UILink color="foreground" href="#">
+                            Articles
+                        </UILink>
+                    </NavbarMenuItem>
+                    <NavbarMenuItem key="photos">
+                        <UILink color="foreground" href="#">
+                            Photos
+                        </UILink>
+                    </NavbarMenuItem>
+                    <Divider className="my-4" />
+                    <div className="flex flex-col">
+                        {loggedIn ? (
+                            <Dropdown placement="bottom-start">
+                                <DropdownTrigger>
+                                    <NavbarContent className="flex items-center">
+                                        <Avatar
+                                            isBordered
+                                            as="button"
+                                            className="transition-transform"
+                                            color="default"
+                                            name={name ? name : undefined}
+                                            size="md"
+                                            src={image ? image : undefined}
+                                        />
+                                        <div className="h-14 gap-2 py-1">
+                                            <p className="text-sm">Signed in as</p>
+                                            <p className="font-semibold">{name ? name : email}</p>
+                                        </div>
+                                    </NavbarContent>
+                                </DropdownTrigger>
+                                <DropdownMenu aria-label="Profile Actions" variant="flat" onAction={(item) => {
+                                    if (item === 'logout') {
+                                        signOut({ callbackUrl: pathname.includes('/account') ? '/' : undefined });
+                                    }
+                                }}>
+                                    <DropdownItem key="dashboard">Dashboard</DropdownItem>
+                                    <DropdownItem key="settings" as={Link} href="/account/settings">Settings</DropdownItem>
+                                    <DropdownItem key="logout" color="danger">
+                                        Log Out
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </Dropdown>
+                        ) : (
+                            <LoginModalButton isMobile={true}><LoginModal /></LoginModalButton>
+                        )}
+                    </div>
+                </NavbarMenu>
             </NavbarContent>
-            <NavbarMenu>
-                <NavbarMenuItem key="learn">
-                    <UILink color="foreground" href="#">
-                        Learn
-                    </UILink>
-                </NavbarMenuItem>
-                <NavbarMenuItem key="minerals">
-                    <UILink color="foreground" href="#">
-                        Minerals
-                    </UILink>
-                </NavbarMenuItem>
-                <NavbarMenuItem key="localities">
-                    <UILink color="foreground" href="#">
-                        Localities
-                    </UILink>
-                </NavbarMenuItem>
-                <NavbarMenuItem key="articles">
-                    <UILink color="foreground" href="#">
-                        Articles
-                    </UILink>
-                </NavbarMenuItem>
-                <NavbarMenuItem key="photos">
-                    <UILink color="foreground" href="#">
-                        Photos
-                    </UILink>
-                </NavbarMenuItem>
-                <Divider className="my-4" />
-                <div className="flex flex-col">
-                    {loggedIn ? (<Dropdown placement="bottom-start">
-                        <DropdownTrigger>
-                            <NavbarContent className="flex items-center">
-                                <Avatar
-                                    isBordered
-                                    as="button"
-                                    className="transition-transform"
-                                    color="default"
-                                    name={name ? name : undefined}
-                                    size="md"
-                                    src={image ? image : undefined}
-                                />
-                                <div className="h-14 gap-2 py-1">
-                                    <p className="text-sm">Signed in as</p>
-                                    <p className="font-semibold">{name ? name : email}</p>
-                                </div>
-                            </NavbarContent>
-                        </DropdownTrigger>
-                        <DropdownMenu aria-label="Profile Actions" variant="flat" onAction={(item) => {
-                            if (item === 'logout') {
-                                signOut({ callbackUrl: pathname.includes('/account') ? '/' : undefined });
-                            }
-                        }}>
-                            <DropdownItem key="dashboard">Dashboard</DropdownItem>
-                            <DropdownItem key="settings" as={Link} href="/account/settings">Settings</DropdownItem>
-                            <DropdownItem key="logout" color="danger">
-                                Log Out
-                            </DropdownItem>
-                        </DropdownMenu>
-                    </Dropdown>) : (<LoginModalButton isMobile={true}><LoginModal /></LoginModalButton>)}
-                </div>
-            </NavbarMenu>
         </Navbar>
     )
 }
