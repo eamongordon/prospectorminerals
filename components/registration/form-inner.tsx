@@ -41,6 +41,7 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
                 if (isModal) {
                   // @ts-expect-error
                   onCloseAction();
+                  toast.success("Logged In Successfully!");
                 }
               }
             });
@@ -84,6 +85,7 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
                   if (isModal) {
                     // @ts-expect-error
                     onCloseAction();
+                    toast.success("Signed Up Successfully. Welcome aboard!");
                   } else {
                     if (redirectUri) {
                       router.push(decodeURIComponent(redirectUri));
