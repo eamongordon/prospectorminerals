@@ -205,7 +205,7 @@ export const deleteUser = async () => {
 export async function fetchMinerals({ filterObj, cursor, limit, sortObj }: { filterObj?: MineralsFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj }) {
   let queryArray = [];
   function pushArrayField(propertyArray: string[], property: string) {
-    let filterArray: { [property: string]: { contains: string, mode?: string} }[] = [];
+    let filterArray: { [property: string]: { contains: string, mode?: string } }[] = [];
     propertyArray.forEach((propertyItem) => {
       let pushObj = { [property]: { contains: propertyItem, mode: 'insensitive' } }
       filterArray.push(pushObj);
@@ -325,7 +325,7 @@ export async function fetchPhotos({ filterObj, cursor, limit, sortObj }: { filte
     results: results,
     next: results.length === limit ? results[results.length - 1].number : undefined
   };
-}; 
+};
 
 // creating a separate function for this because we're not using FormData
 export const updatePost = async (data: Post) => {
@@ -354,6 +354,89 @@ export const updatePost = async (data: Post) => {
         title: data.title,
         description: data.description,
         content: data.content,
+      },
+    });
+    return response;
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
+};
+
+export const updatePostMetadata = async (
+  formData: FormData,
+  post: Post,
+  key: string,
+) => {
+  const value = formData.get(key) as string;
+
+  try {
+    let response;
+    if (key === "image") {
+      const file = formData.get("image") as File;
+      const filename = `${nanoid()}.${file.type.split("/")[1]}`;
+
+      const { url } = await put(filename, file, {
+        access: "public",
+      });
+
+      const blurhash = await getBlurDataURL(url);
+
+      response = await prisma.post.update({
+        where: {
+          id: post.id,
+        },
+        data: {
+          image: url,
+          imageBlurhash: blurhash,
+        },
+      });
+    } else {
+      response = await prisma.post.update({
+        where: {
+          id: post.id,
+        },
+        data: {
+          [key]: key === "published" ? value === "true" : value,
+        },
+      });
+    }
+    return response;
+  } catch (error: any) {
+    if (error.code === "P2002") {
+      return {
+        error: `This slug is already in use`,
+      };
+    } else {
+      return {
+        error: error.message,
+      };
+    }
+  }
+}
+
+export const createPost = async (_: FormData) => {
+  const session = await getSession();
+  if (!session?.user.id) {
+    return {
+      error: "Not authenticated",
+    };
+  }
+  const response = await prisma.post.create({
+    data: {
+      userId: session.user.id,
+    },
+  });
+
+  return response;
+};
+
+export const deletePost = async (_: FormData, post: Post) => {
+  try {
+    const response = await prisma.post.delete({
+      where: {
+        id: post.id,
       },
     });
     return response;
