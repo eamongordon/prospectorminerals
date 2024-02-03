@@ -2,7 +2,7 @@
 
 import { getSession } from "@/lib/auth";
 import prisma from "@/lib/prisma";
-import { PrismaClient, Prisma } from '@prisma/client'
+import { PrismaClient, Prisma, Post } from '@prisma/client'
 import { hash } from "bcrypt";
 import { put } from "@vercel/blob";
 import { customAlphabet } from "nanoid";
@@ -326,3 +326,40 @@ export async function fetchPhotos({ filterObj, cursor, limit, sortObj }: { filte
     next: results.length === limit ? results[results.length - 1].number : undefined
   };
 }; 
+
+// creating a separate function for this because we're not using FormData
+export const updatePost = async (data: Post) => {
+  const session = await getSession();
+  if (!session?.user.id) {
+    return {
+      error: "Not authenticated",
+    };
+  }
+  const post = await prisma.post.findUnique({
+    where: {
+      id: data.id,
+    },
+  });
+  if (!post || post.userId !== session.user.id) {
+    return {
+      error: "Post not found",
+    };
+  }
+  try {
+    const response = await prisma.post.update({
+      where: {
+        id: data.id,
+      },
+      data: {
+        title: data.title,
+        description: data.description,
+        content: data.content,
+      },
+    });
+    return response;
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
+};
