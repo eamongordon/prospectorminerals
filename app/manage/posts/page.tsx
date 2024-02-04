@@ -9,7 +9,7 @@ export default async function SitePosts({
 }: {
   params: { id: string };
 }) {
-    return(<></>)
+    return(<><p>Hey</p></>)
     /*
   const session = await getSession();
   if (!session) {
