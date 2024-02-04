@@ -1,11 +1,11 @@
 "use client";
 
 import { Post } from "@prisma/client";
-//import { MDXRemote, MDXRemoteProps } from "next-mdx-remote";
+import { MDXRemote, MDXRemoteProps } from "next-mdx-remote";
 import { replaceLinks } from "@/lib/remark-plugins";
 import BlurImage from "@/components/blur-image";
 
-export default function MDX({ source }: { source: any }) {
+export default function MDX({ source }: { source: MDXRemoteProps }) {
   const components = {
     a: replaceLinks,
     BlurImage
