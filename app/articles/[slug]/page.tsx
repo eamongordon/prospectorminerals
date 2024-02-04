@@ -16,9 +16,8 @@ export async function generateMetadata({
   const slug = decodeURIComponent(params.slug);
 
   const data = await getPostData(slug);
-  const postData = await getPostData(slug);
   
-  if (!data || !postData) {
+  if (!data) {
     return null;
   }
   const { title, description } = data;
