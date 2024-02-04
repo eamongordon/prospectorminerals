@@ -3,14 +3,14 @@ import prisma from "@/lib/prisma";
 import { notFound, redirect } from "next/navigation";
 import Editor from "@/components/editor";
 
-export default async function PostPage({ params }: { params: { id: string } }) {
+export default async function PostPage({ params }: { params: { slug: string } }) {
   const session = await getSession();
   if (!session) {
     redirect("/login");
   }
   const data = await prisma.post.findUnique({
     where: {
-      id: decodeURIComponent(params.id),
+      slug: decodeURIComponent(params.slug),
     },
   });
   if (!data || data.userId !== session.user.id) {
