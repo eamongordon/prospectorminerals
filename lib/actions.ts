@@ -3,6 +3,7 @@
 import { getSession } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { PrismaClient, Prisma, Post } from '@prisma/client'
+import { revalidateTag } from "next/cache";
 import { hash } from "bcrypt";
 import { put } from "@vercel/blob";
 import { customAlphabet } from "nanoid";
@@ -356,6 +357,9 @@ export const updatePost = async (data: Post) => {
         content: data.content,
       },
     });
+    await revalidateTag(
+      `post-${post.slug}`,
+    );
     return response;
   } catch (error: any) {
     return {
@@ -438,7 +442,7 @@ export const createPost = async (_?: FormData) => {
   return response;
 };
 
-export const deletePost = async (_: FormData, post: Post) => {
+export const deletePost = async (_: FormData, postSlug: string) => {
   try {
     const session = await getSession();
     if (!session?.user.id || session.user.email !== "ekeokigordon@icloud.com") {
@@ -448,7 +452,7 @@ export const deletePost = async (_: FormData, post: Post) => {
     }
     const response = await prisma.post.delete({
       where: {
-        id: post.id,
+        slug: postSlug
       },
     });
     return response;
