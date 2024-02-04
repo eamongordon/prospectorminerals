@@ -369,11 +369,11 @@ export const updatePost = async (data: Post) => {
 };
 
 export const updatePostMetadata = async (
-  formData: FormData,
+  formData: any,
   slug: string,
   key: string,
 ) => {
-  const value = formData.get(key) as string;
+  const value = formData;
 
   try {
     const session = await getSession();
