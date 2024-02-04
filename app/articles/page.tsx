@@ -1,3 +1,3 @@
-export function Articles() {
+export default function Page({}: {}) {
     return null;
 }
