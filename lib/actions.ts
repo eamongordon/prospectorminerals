@@ -370,7 +370,7 @@ export const updatePost = async (data: Post) => {
 
 export const updatePostMetadata = async (
   formData: FormData,
-  post: Post,
+  slug: string,
   key: string,
 ) => {
   const value = formData.get(key) as string;
@@ -395,7 +395,7 @@ export const updatePostMetadata = async (
 
       response = await prisma.post.update({
         where: {
-          id: post.id,
+          slug: slug,
         },
         data: {
           image: url,
@@ -405,7 +405,7 @@ export const updatePostMetadata = async (
     } else {
       response = await prisma.post.update({
         where: {
-          id: post.id,
+          slug: slug,
         },
         data: {
           [key]: key === "published" ? value === "true" : value,
@@ -413,7 +413,7 @@ export const updatePostMetadata = async (
       });
     }
     await revalidateTag(
-      `post-${post.slug}`,
+      `post-${slug}`,
     );
     return response;
   } catch (error: any) {
