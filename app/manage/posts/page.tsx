@@ -1,6 +1,8 @@
 import { getSession } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { notFound, redirect } from "next/navigation";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 import Posts from "@/components/manage/posts/posts";
 import CreatePostButton from "@/components/manage/posts/create-post-button";
 
@@ -19,6 +21,7 @@ export default async function SitePosts({
 
   return (
     <>
+    <Header />
       <div className="flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
         <div className="flex flex-col items-center space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0">
           <h1 className="w-60 truncate font-cal text-xl font-bold dark:text-white sm:w-auto sm:text-3xl">
@@ -42,6 +45,7 @@ export default async function SitePosts({
         <CreatePostButton />
       </div>
       <Posts siteId={decodeURIComponent(params.id)} />
+      <Footer/>
     </>
   );
 }
