@@ -67,7 +67,11 @@ export default function Form({
             value = data;
           }
           await update({ [inputAttrsName]: value });
+          if (inputAttrs.name === "slug") {
+            router.push(`/manage/posts/${res.slug}`);
+          } else {
           router.refresh();
+          }
         }
         toast.success(`Successfully updated ${inputAttrs.name}!`);
       }
