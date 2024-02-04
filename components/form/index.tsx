@@ -28,7 +28,7 @@ export default function Form({
   };
   handleSubmit: any;
 }) {
-  const { id } = useParams() as { id?: string };
+  const { id, slug } = useParams() as { id?: string, slug?: string};
   const router = useRouter();
   const { update } = useSession();
   const [data, setData] = useState<FormData | string | null>(null);
@@ -46,13 +46,13 @@ export default function Form({
 
   function submitForm() {
     setLoading(true);
-    handleSubmit(data, id, inputAttrs.name).then(async (res: any) => {
+    handleSubmit(data, (id) ? id : (slug) ? slug : undefined, inputAttrs.name).then(async (res: any) => {
       setLoading(false);
       if (res.error) {
         toast.error(res.error);
       } else {
         va.track(`Updated ${inputAttrs.name}`, id ? { id } : {});
-        if (id) {
+        if (id || slug) {
           if (inputAttrs.name === "slug") {
             router.push(`/manage/posts/${res.slug}`);
           } else {
