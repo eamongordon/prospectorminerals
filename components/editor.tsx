@@ -58,7 +58,7 @@ export default function Editor({ post }: { post: Post }) {
             console.log(data.published, typeof data.published);
             formData.append("published", String(!data.published));
             startTransitionPublishing(async () => {
-              await updatePostMetadata(formData, post.id, "published").then(
+              await updatePostMetadata(formData, post, "published").then(
                 () => {
                   toast.success(
                     `Successfully ${

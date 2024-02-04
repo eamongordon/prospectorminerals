@@ -13,7 +13,8 @@ export async function generateMetadata({
 }) {
   const slug = decodeURIComponent(params.slug);
 
-  const [data, postData] = await getPostData(slug);
+  const data = await getPostData(slug);
+  const postData = await getPostData(slug);
   
   if (!data || !postData) {
     return null;
@@ -66,9 +67,12 @@ export default async function SitePostPage({
         <a
           // if you are using Github OAuth, you can get rid of the Twitter option
           href={
+            "/"
+            /*
             data.site?.user?.username
               ? `https://twitter.com/${data.site.user.username}`
               : `https://github.com/${data.site?.user?.gh_username}`
+              */
           }
           rel="noreferrer"
           target="_blank"
@@ -89,7 +93,7 @@ export default async function SitePostPage({
               )*/}
             </div>
             <div className="text-md ml-3 inline-block align-middle dark:text-white md:text-lg">
-              by <span className="font-semibold">{data.site?.user?.name}</span>
+              by <span className="font-semibold">{"Name"/*data.site?.user?.name*/}</span>
             </div>
           </div>
         </a>
