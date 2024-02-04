@@ -3,6 +3,8 @@ import prisma from "@/lib/prisma";
 import { getPostData } from "@/lib/fetchers";
 //import BlogCard from "@/components/blog-card"
 import BlurImage from "@/components/blur-image";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 import MDX from "@/components/mdx";
 import { placeholderBlurhash, toDateString } from "@/lib/utils";
 
@@ -52,6 +54,8 @@ export default async function SitePostPage({
 
   return (
     <>
+          <Header />
+          <main>
       <div className="flex flex-col items-center justify-center">
         <div className="m-auto w-full text-center md:w-7/12">
           <p className="m-auto my-5 w-10/12 text-sm font-light text-stone-500 dark:text-stone-400 md:text-base">
@@ -136,6 +140,8 @@ export default async function SitePostPage({
         </div>*/
         <></>
       )}
+      </main>
+      <Footer/>
     </>
   );
 }
