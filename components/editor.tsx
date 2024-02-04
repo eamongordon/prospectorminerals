@@ -55,11 +55,11 @@ export default function Editor({ post }: { post: Post }) {
         </div>
         <button
           onClick={() => {
-            const formData = new FormData();
+            //const formData = new FormData();
             console.log(data.published, typeof data.published);
-            formData.append("published", String(!data.published));
+            //formData.append("published", String(!data.published));
             startTransitionPublishing(async () => {
-              await updatePostMetadata(formData, post.slug, "published").then(
+              await updatePostMetadata(String(!data.published), post.slug, "published").then(
                 () => {
                   toast.success(
                     `Successfully ${

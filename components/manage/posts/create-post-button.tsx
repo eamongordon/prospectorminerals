@@ -20,7 +20,7 @@ export default function CreatePostButton() {
           va.track("Created Post");
           router.refresh();
           //@ts-expect-error
-          router.push(`/post/${post.id}`);
+          router.push(`/manage/posts/${post.slug}`);
         })
       }
       className={cn(

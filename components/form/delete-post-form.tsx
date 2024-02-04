@@ -9,13 +9,13 @@ import { deletePost } from "@/lib/actions";
 import va from "@vercel/analytics";
 
 export default function DeletePostForm({ postName }: { postName: string }) {
-  const { id } = useParams() as { id: string };
+  const { slug } = useParams() as { slug: string };
   const router = useRouter();
   return (
     <form
       action={async (data: FormData) =>
         window.confirm("Are you sure you want to delete your post?") &&
-        deletePost(data, id).then((res) => {
+        deletePost(data, slug).then((res) => {
             va.track("Deleted Post");
             router.refresh();
             router.push(`/manage/posts`);

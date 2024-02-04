@@ -28,7 +28,7 @@ export default function Form({
   };
   handleSubmit: any;
 }) {
-  const { id, slug } = useParams() as { id?: string, slug?: string};
+  const { id, slug } = useParams() as { id?: string, slug?: string };
   const router = useRouter();
   const { update } = useSession();
   const [data, setData] = useState<FormData | string | null>(null);
@@ -40,7 +40,11 @@ export default function Form({
 
   const uploadFormFunction = (file: File) => {
     const formData = new FormData();
-    formData.append("avatar", file)
+    if (inputAttrs.name === "avatar") {
+      formData.append("avatar", file);
+    } else {
+      formData.append("image", file);
+    }
     setData(formData);
   }
 
