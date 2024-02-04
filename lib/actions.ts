@@ -374,7 +374,6 @@ export const updatePostMetadata = async (
   key: string,
 ) => {
   const value = formData;
-
   try {
     const session = await getSession();
     if (!session?.user.id || session.user.email !== "ekeokigordon@icloud.com") {
@@ -460,7 +459,9 @@ export const deletePost = async (_: FormData, postSlug: string) => {
         slug: postSlug
       },
     });
-    
+    await revalidateTag(
+      `posts`,
+    );
     return response;
   } catch (error: any) {
     return {
