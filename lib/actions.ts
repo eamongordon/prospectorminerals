@@ -330,7 +330,7 @@ export async function fetchPhotos({ filterObj, cursor, limit, sortObj }: { filte
 // creating a separate function for this because we're not using FormData
 export const updatePost = async (data: Post) => {
   const session = await getSession();
-  if (!session?.user.id) {
+  if (!session?.user.id || session.user.email !== "ekeokigordon@icloud.com") {
     return {
       error: "Not authenticated",
     };
@@ -372,6 +372,12 @@ export const updatePostMetadata = async (
   const value = formData.get(key) as string;
 
   try {
+    const session = await getSession();
+    if (!session?.user.id || session.user.email !== "ekeokigordon@icloud.com") {
+      return {
+        error: "Not authenticated",
+      };
+    }
     let response;
     if (key === "image") {
       const file = formData.get("image") as File;
@@ -418,7 +424,7 @@ export const updatePostMetadata = async (
 
 export const createPost = async (_: FormData) => {
   const session = await getSession();
-  if (!session?.user.id) {
+  if (!session?.user.id || session.user.email !== "ekeokigordon@icloud.com") {
     return {
       error: "Not authenticated",
     };
@@ -434,6 +440,12 @@ export const createPost = async (_: FormData) => {
 
 export const deletePost = async (_: FormData, post: Post) => {
   try {
+    const session = await getSession();
+    if (!session?.user.id || session.user.email !== "ekeokigordon@icloud.com") {
+      return {
+        error: "Not authenticated",
+      };
+    }
     const response = await prisma.post.delete({
       where: {
         id: post.id,
