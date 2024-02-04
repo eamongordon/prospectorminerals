@@ -56,7 +56,11 @@ export default function Form({
       } else {
         va.track(`Updated ${inputAttrs.name}`, id ? { id } : {});
         if (id) {
-          router.refresh();
+          if (inputAttrs.name === "slug") {
+            router.push(`/manage/posts/${res.slug}`);
+          } else {
+            router.refresh();
+          }
         } else {
           let value;
           let inputAttrsName = inputAttrs.name;
@@ -67,11 +71,7 @@ export default function Form({
             value = data;
           }
           await update({ [inputAttrsName]: value });
-          if (inputAttrs.name === "slug") {
-            router.push(`/manage/posts/${res.slug}`);
-          } else {
           router.refresh();
-          }
         }
         toast.success(`Successfully updated ${inputAttrs.name}!`);
       }
