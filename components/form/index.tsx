@@ -1,11 +1,8 @@
 "use client";
 
-import LoadingDots from "@/components/icons/loading-dots";
-import { cn } from "@/lib/utils";
 import { Input, Button } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
-import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
 import { useState } from "react";
 import Uploader from "./uploader";
