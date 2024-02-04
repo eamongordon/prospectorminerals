@@ -1,5 +1,4 @@
 "use client";
-
 import LoadingDots from "@/components/icons/loading-dots";
 import { cn } from "@/lib/utils";
 import { Input, Button } from "@nextui-org/react";
