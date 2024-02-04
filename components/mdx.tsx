@@ -1,6 +1,7 @@
 "use client";
 
 import { Post } from "@prisma/client";
+//
 import { MDXRemote, MDXRemoteProps } from "next-mdx-remote";
 import { replaceLinks } from "@/lib/remark-plugins";
 import BlurImage from "@/components/blur-image";
