@@ -25,10 +25,10 @@ export async function getPostsForSite(domain: string) {
         ],
       });
     },
-    [`${domain}-posts`],
+    [`posts`],
     {
       revalidate: 900,
-      tags: [`${domain}-posts`],
+      tags: [`posts`],
     },
   )();
 }

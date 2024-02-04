@@ -412,6 +412,9 @@ export const updatePostMetadata = async (
         },
       });
     }
+    await revalidateTag(
+      `post-${post.slug}`,
+    );
     return response;
   } catch (error: any) {
     if (error.code === "P2002") {
@@ -438,7 +441,9 @@ export const createPost = async (_?: FormData) => {
       userId: session.user.id,
     },
   });
-
+  await revalidateTag(
+    `posts`,
+  );
   return response;
 };
 
@@ -455,6 +460,7 @@ export const deletePost = async (_: FormData, postSlug: string) => {
         slug: postSlug
       },
     });
+    
     return response;
   } catch (error: any) {
     return {
