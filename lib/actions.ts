@@ -422,7 +422,7 @@ export const updatePostMetadata = async (
   }
 }
 
-export const createPost = async (_: FormData) => {
+export const createPost = async (_?: FormData) => {
   const session = await getSession();
   if (!session?.user.id || session.user.email !== "ekeokigordon@icloud.com") {
     return {
