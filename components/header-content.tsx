@@ -52,22 +52,22 @@ export default function HeaderComp({
                         </UILink>
                     </NavbarItem>
                     <NavbarItem>
-                        <UILink color="foreground" href="#">
+                        <UILink color="foreground" href="/minerals">
                             Minerals
                         </UILink>
                     </NavbarItem>
                     <NavbarItem>
-                        <UILink color="foreground" href="#">
+                        <UILink color="foreground" href="/localities">
                             Localities
                         </UILink>
                     </NavbarItem>
                     <NavbarItem>
-                        <UILink color="foreground" href="#">
+                        <UILink color="foreground" href="/articles">
                             Articles
                         </UILink>
                     </NavbarItem>
                     <NavbarItem>
-                        <UILink color="foreground" href="#">
+                        <UILink color="foreground" href="/photos">
                             Photos
                         </UILink>
                     </NavbarItem>
@@ -125,22 +125,22 @@ export default function HeaderComp({
                         </UILink>
                     </NavbarMenuItem>
                     <NavbarMenuItem key="minerals">
-                        <UILink color="foreground" href="#">
+                        <UILink color="foreground" href="/minerals">
                             Minerals
                         </UILink>
                     </NavbarMenuItem>
                     <NavbarMenuItem key="localities">
-                        <UILink color="foreground" href="#">
+                        <UILink color="foreground" href="/localities">
                             Localities
                         </UILink>
                     </NavbarMenuItem>
                     <NavbarMenuItem key="articles">
-                        <UILink color="foreground" href="#">
+                        <UILink color="foreground" href="/articles">
                             Articles
                         </UILink>
                     </NavbarMenuItem>
                     <NavbarMenuItem key="photos">
-                        <UILink color="foreground" href="#">
+                        <UILink color="foreground" href="/photos">
                             Photos
                         </UILink>
                     </NavbarMenuItem>
