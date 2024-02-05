@@ -79,12 +79,14 @@ export default function LocalitiesPageLayout({ markers }: { markers?: any }) {
                                 label="Chemical Formulas"
                                 description='Type an element or formula and hit "enter"'
                                 placeholder={!chemistryInput ? 'Try "Cu" or "SiO2"' : ""}
-                                inputValue={chemistryInput || ""}
+                                inputValue={chemistryInput || ""}            
                                 labelPlacement="outside"
                                 defaultItems={mineralList}
                                 size="md"
                                 onInputChange={(e) => { setChemistryInput(e) }}
                                 onKeyDown={(e) => {
+                                    //@ts-expect-error
+                                    e.continuePropagation();
                                     /*
                                     if (e.key === "Enter") {
                                         let currentChemistry = chemistryVal ? [...chemistryVal] : [];
