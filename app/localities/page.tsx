@@ -4,6 +4,8 @@ import Footer from '@/components/footer';
 import { useMemo } from 'react';
 import { Skeleton } from '@nextui-org/react';
 import LocalitiesPageLayout from "@/components/localities/localities-page-layout"
+import MineralSelect from "@/components/localities/mineral-search-inner"
+import { fetchMinerals } from '@/lib/actions';
 
 const markers = [
     {
@@ -26,6 +28,10 @@ const Page = async ({
         typeof searchParams.property === 'string' ? searchParams.property : undefined
     const order =
         typeof searchParams.order === 'string' ? searchParams.order : undefined
+    const chemistry =
+        typeof searchParams.chemistry === 'string' ? searchParams.chemistry : undefined
+    const photosQuery = await fetchMinerals({ filterObj: undefined, cursor: undefined, limit: 10 });
+    /*
     const Map = useMemo(() => dynamic(
         () => import('@/components/localities/map'),
         {
@@ -33,11 +39,19 @@ const Page = async ({
             ssr: false
         }
     ), [])
+    */
     //const photosQuery = await fetchPhotos({ filterObj: { name: search }, cursor: undefined, limit: 10, ...(property && order ? { sortObj: { property: property, order: order } } : {}) });
     return (
         <main>
             <Header />
-            <LocalitiesPageLayout markers={markers} />
+            <LocalitiesPageLayout
+                markers={markers}
+                mineralSearchComp={
+                    <MineralSelect
+                        initialPhotos={photosQuery.results}
+                        initialCursor={photosQuery.next ? photosQuery.next : undefined} {...(property && order ? { sort: { property: property, order: order } } : {})}
+                    />
+                } />
             <Footer />
         </main >
     )
