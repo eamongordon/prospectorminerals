@@ -8,11 +8,9 @@ import Link from 'next/link'
 import { Link as UILink, Accordion, AccordionItem, Button, Chip, Autocomplete, AutocompleteItem, Input, Avatar } from '@nextui-org/react'
 import "leaflet-defaulticon-compatibility"
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
-import { fetchMinerals } from '@/lib/actions'
 
 
-export default function LocalitiesPageLayout({ markers }: { markers?: any }) {
-
+export default function LocalitiesPageLayout({ markers, mineralSearchComp }: { markers?: any, mineralSearchComp: React.ReactElement }) {
     const [coord, setCoord] = useState([51.505, -0.09])
     const [stateMarkers, setStateMarkers] = useState(markers);
     const [chemistryVal, setChemistryVal] = useState<any[] | undefined>(undefined);
@@ -45,23 +43,6 @@ export default function LocalitiesPageLayout({ markers }: { markers?: any }) {
         )
     }
 
-    const initialRender = useRef(true);
-
-    useEffect(() => {
-        if (initialRender.current) {
-            initialRender.current = false
-            return
-        }
-        fetchMinerals({ filterObj: { name: chemistryInput } }).then((res) => {
-            setMineralList(res.results)
-        })
-    }, [mineralList]);
-
-
-    const mineralsQuery = async () => {
-
-    };
-
     return (
         <div>
             <SearchLocation />
@@ -79,7 +60,7 @@ export default function LocalitiesPageLayout({ markers }: { markers?: any }) {
                                 label="Chemical Formulas"
                                 description='Type an element or formula and hit "enter"'
                                 placeholder={!chemistryInput ? 'Try "Cu" or "SiO2"' : ""}
-                                inputValue={chemistryInput || ""}            
+                                inputValue={chemistryInput || ""}
                                 labelPlacement="outside"
                                 defaultItems={mineralList}
                                 size="md"
@@ -136,7 +117,7 @@ export default function LocalitiesPageLayout({ markers }: { markers?: any }) {
                                         onPress={() => {
                                             setChemistryInput("");
                                             let currentChemistry = chemistryVal ? [...chemistryVal] : [];
-                                            currentChemistry?.push({name: item.name, image: 'https://flagcdn.com/ar.svg', id: item.id});
+                                            currentChemistry?.push({ name: item.name, image: 'https://flagcdn.com/ar.svg', id: item.id });
                                             setChemistryVal(currentChemistry);
 
                                         }}
@@ -146,6 +127,9 @@ export default function LocalitiesPageLayout({ markers }: { markers?: any }) {
                                     </AutocompleteItem>
                                 }
                             </Autocomplete>
+                            <AccordionItem key="3" aria-label="Other" title="Other">
+                                {mineralSearchComp}
+                            </AccordionItem>
                         </AccordionItem>
                     </Accordion>
                 </div>
