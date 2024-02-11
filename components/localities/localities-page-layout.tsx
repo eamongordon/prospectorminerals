@@ -127,9 +127,9 @@ export default function LocalitiesPageLayout({ markers, mineralSearchComp }: { m
                                     </AutocompleteItem>
                                 }
                             </Autocomplete>
-                            <AccordionItem key="3" aria-label="Other" title="Other">
-                                {mineralSearchComp}
-                            </AccordionItem>
+                        </AccordionItem>
+                        <AccordionItem key="3" aria-label="Other" title="Other">
+                            {mineralSearchComp}
                         </AccordionItem>
                     </Accordion>
                 </div>
