@@ -362,7 +362,7 @@ export default function MineralPageLayout({
                                     onKeyDown={(e) => {
                                         if (e.key === "Enter") {
                                             let currentChemistry = chemistryVal ? [...chemistryVal] : [];
-                                            currentChemistry?.push(e.currentTarget.value.replace('↵', ''));
+                                            currentChemistry?.push(e.currentTarget.value);
                                             console.log(e.currentTarget.value.toString())
                                             setChemistryVal(currentChemistry);
                                             setChemistryInput("");
