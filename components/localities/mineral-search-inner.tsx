@@ -69,7 +69,7 @@ export default function MineralSelect({
             <Textarea
                 type="text"
                 label="Chemical Formulas"
-                description='Type an element or formula and hit "enter"'
+                //description='Type an element or formula and hit "enter"'
                 placeholder={!chemistryVal ? 'Try "Cu" or "SiO2"' : ""}
                 value={chemistryInput || ""}
                 /*
@@ -142,6 +142,12 @@ export default function MineralSelect({
                                 }}
                                 key={index}
                                 variant="bordered"
+                                avatar={
+                                    <Avatar
+                                      name="JW"
+                                      src="https://i.pravatar.cc/300?u=a042581f4e29026709d"
+                                    />
+                                  }
                             >
                                 {val}
                             </Chip>
@@ -158,8 +164,9 @@ export default function MineralSelect({
                     setChemistryVal(currentChemistry);
                     setChemistryInput("");
                 }}
+                disabledKeys={chemistryVal}
                 classNames={{
-                    base: "max-w-xs max-h-[100px] overflow-scroll",
+                    base: "max-w-xs max-h-[150px] overflow-scroll no-scrollbar",
                     list: "",
                 }}
                 bottomContent={
