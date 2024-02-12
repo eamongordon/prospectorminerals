@@ -135,7 +135,7 @@ export default function LocalitiesPageLayout({ markers, mineralSearchComp }: { m
                 </div>
                 <div className="flex-col items-center w-full">
                     <MapContainer
-                        className='w-full max-h-[400px] aspect-[5/3]'
+                        className='w-full max-h-[400px] aspect-[5/3] z-0'
                         //@ts-expect-error
                         center={coord} zoom={2} scrollWheelZoom={false}>
                         <TileLayer
