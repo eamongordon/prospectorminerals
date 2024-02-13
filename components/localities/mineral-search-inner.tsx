@@ -19,6 +19,7 @@ export default function MineralSelect({
     const [chemistryInput, setChemistryInput] = useState("");
     const [chemistryQuery] = useDebounce(chemistryInput, 500);
     const [chemistryVal, setChemistryVal] = useState<string[] | undefined>(undefined);
+    const [isMineralFocused, setIsMineralFocused] = useState(false);
     const [page, setPage] = useState<number | undefined>(initialCursor || undefined);
 
     async function loadMorePhotos(isInput?: boolean) {
@@ -67,12 +68,19 @@ export default function MineralSelect({
 
     return (
         <>
+        <div
+        //contentEditable="true"
+                        onFocus={() => setIsMineralFocused(true)}
+                onBlur={() => {setIsMineralFocused(false); console.log("blur")}}
+        >
             <Textarea
                 type="text"
                 label="Chemical Formulas"
                 //description='Type an element or formula and hit "enter"'
                 placeholder={!chemistryVal ? 'Try "Cu" or "SiO2"' : ""}
                 value={chemistryInput || ""}
+                //onFocus={() => setIsMineralFocused(true)}
+                //onBlur={() => setIsMineralFocused(false)}
                 /*
                 classNames={{
                     innerWrapper: ['overflow-x-auto', 'overflow-y-clip'],
@@ -81,6 +89,7 @@ export default function MineralSelect({
             */
                 classNames={{
                     innerWrapper: ['flex flex-wrap'],
+                    base: ["pb-1"]
                     //input: [`${`w-[${chemistryInput.length * 10}px]`} flex-none`]
                 }}
                 minRows={1}
@@ -164,7 +173,7 @@ export default function MineralSelect({
                 }}
                 disabledKeys={chemistryVal}
                 classNames={{
-                    base: "max-w-xs max-h-[150px] overflow-scroll no-scrollbar",
+                    base: `${isMineralFocused ? "" : "hidden" } max-h-[150px] overflow-scroll no-scrollbar bg-content1 subpixel-antialiased outline-none box-border text-small bg-content1 rounded-large shadow-medium w-full p-1`,
                     list: "",
                 }}
                 bottomContent={
@@ -191,6 +200,7 @@ export default function MineralSelect({
                 )}
 
             </Listbox>
+            </div>
         </>
     )
 }
