@@ -2,6 +2,7 @@
 
 import { Listbox, ListboxItem, Spinner, Avatar, Chip, Textarea } from "@nextui-org/react";
 import { useState, useEffect, useRef } from 'react';
+import { Check } from "lucide-react";
 import { useInView } from 'react-intersection-observer';
 import { fetchMinerals } from '@/lib/actions';
 import { useDebounce } from "use-debounce";
@@ -17,7 +18,7 @@ export default function MineralSelect({
     const [ref, inView] = useInView();
     const [chemistryInput, setChemistryInput] = useState("");
     const [chemistryQuery] = useDebounce(chemistryInput, 500);
-    const [chemistryVal, setChemistryVal] = useState<string[] | undefined>([]);
+    const [chemistryVal, setChemistryVal] = useState<string[] | undefined>(undefined);
     const [page, setPage] = useState<number | undefined>(initialCursor || undefined);
 
     async function loadMorePhotos(isInput?: boolean) {
@@ -86,11 +87,6 @@ export default function MineralSelect({
                 labelPlacement="outside"
                 size="md"
                 onValueChange={(value) => { setChemistryInput(value); }}
-                onKeyUp={(e) => {
-                    if (e.key === "Enter") {
-                        setChemistryInput("");
-                    }
-                }}
                 onKeyDown={(e) => {
                     /*
                     if (e.key === "Enter") {
@@ -109,6 +105,8 @@ export default function MineralSelect({
                         } else {
                             setChemistryVal(undefined);
                         }
+                    } else if (e.key === "Enter") {
+                        e.preventDefault();
                     }
 
                     setTimeout(() => {
@@ -144,10 +142,10 @@ export default function MineralSelect({
                                 variant="bordered"
                                 avatar={
                                     <Avatar
-                                      name="JW"
-                                      src="https://i.pravatar.cc/300?u=a042581f4e29026709d"
+                                        name="JW"
+                                        src="https://i.pravatar.cc/300?u=a042581f4e29026709d"
                                     />
-                                  }
+                                }
                             >
                                 {val}
                             </Chip>
@@ -182,6 +180,11 @@ export default function MineralSelect({
                     <ListboxItem
                         startContent={<Avatar alt="Argentina" className="w-6 h-6" src="https://flagcdn.com/ar.svg" />}
                         key={item.name}
+                        /*
+                        endContent={chemistryVal?.includes(item.key) ? (
+                            <Check height={12} />
+                        ) : (<></>)}
+                        */
                     >
                         {item.name}
                     </ListboxItem>
