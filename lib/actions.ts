@@ -203,7 +203,7 @@ export const deleteUser = async () => {
   }
 };
 
-export async function fetchMinerals({ filterObj, cursor, limit, sortObj }: { filterObj?: MineralsFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj }) {
+export async function fetchMinerals({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: MineralsFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?:string }) {
   let queryArray = [];
   function pushArrayField(propertyArray: string[], property: string) {
     let filterArray: { [property: string]: { contains: string, mode?: string } }[] = [];
@@ -247,6 +247,23 @@ export async function fetchMinerals({ filterObj, cursor, limit, sortObj }: { fil
     queryArray.push({ associates: { some: { OR: [] } } })
   }
   const cursorObj = !cursor ? undefined : { number: cursor };
+  let selectObj;
+  if (!fieldset || fieldset === "display") {
+    selectObj = {
+      name: true,
+      photos: {
+        select: {
+          photo: {
+            select: {
+              title: true
+            }
+          }
+        }
+      },
+      number: true,
+      id: true
+    }
+  } 
   const results = await prisma.mineral.findMany(
     {
       skip: !cursor ? 0 : 1,
@@ -254,20 +271,7 @@ export async function fetchMinerals({ filterObj, cursor, limit, sortObj }: { fil
       take: limit,
       //@ts-expect-error ERROR Caused by Insensitive "Name" filter
       where: { AND: queryArray },
-      select: {
-        name: true,
-        photos: {
-          select: {
-            photo: {
-              select: {
-                title: true
-              }
-            }
-          }
-        },
-        number: true,
-        id: true
-      },
+      select: selectObj,
       orderBy: [
         sortObj ? { [sortObj.property]: sortObj.order } : {},
         {
@@ -277,6 +281,12 @@ export async function fetchMinerals({ filterObj, cursor, limit, sortObj }: { fil
       ...(limit ? { take: limit } : {}),
     }
   );
+  /*
+  let returnArray;
+  if (fieldset === "display") {
+    returnArray = results.map((result) => {return {name: result.name, number: result.number, id: result.id, photo: result.photos[0].image}});
+  }
+  */
   return {
     results: results,
     next: results.length === limit ? results[results.length - 1].number : undefined
