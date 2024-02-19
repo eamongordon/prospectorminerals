@@ -97,7 +97,7 @@ export default function InfiniteScrollPhotos({
             >
               {photo.image && (
                 <BlurImage
-                  src="/Cavansite-45.jpeg"
+                  src={photo.image}
                   alt=''
                   id={photo.id}
                   className={`${hoverItem === photo.id ? "brightness-50 blur-sm" : ""} rounded-lg`}
