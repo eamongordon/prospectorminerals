@@ -164,6 +164,9 @@ export default function MineralSelect({
             />
             <Listbox
                 items={mineralList}
+                emptyContent={
+                    <>No results found.</>
+                }
                 aria-label="Dynamic Actions"
                 onAction={(key) => {
                     let currentChemistry = chemistryVal ? [...chemistryVal] : [];
@@ -173,7 +176,7 @@ export default function MineralSelect({
                 }}
                 disabledKeys={chemistryVal}
                 classNames={{
-                    base: `${isMineralFocused ? "" : "hidden" } max-h-[150px] overflow-scroll no-scrollbar bg-content1 subpixel-antialiased outline-none box-border text-small bg-content1 rounded-large shadow-medium w-full p-1`,
+                    base: `${isMineralFocused ? "" : "hidden" } max-h-[150px] overflow-scroll no-scrollbar subpixel-antialiased outline-none box-border text-small bg-content1 shadow-md rounded-large w-full p-1`,
                     list: "",
                 }}
                 bottomContent={
