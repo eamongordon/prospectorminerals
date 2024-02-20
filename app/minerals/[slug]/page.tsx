@@ -6,6 +6,7 @@ import { Button } from '@nextui-org/react'
 import { LoginModalProvider } from "@/components/modal/registration/provider";
 //import LoginForm from '@/components/registration/login-form';
 //import Modal from "@/components/next-ui-modal";
+import LoginModalVaul from '@/components/registration/login-vaul-modal';
 import RegModal from "@/components/next-ui-modal";
 import Image from 'next/image';
 import Gallery from "@/components/mineral-gallery";
@@ -56,6 +57,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                 <Card name="Azurite" id="az" />
                 <RegModal />
                 <TestServerActions/>
+                <LoginModalVaul/>
                 <Footer />
             </LoginModalProvider>
         </main>
