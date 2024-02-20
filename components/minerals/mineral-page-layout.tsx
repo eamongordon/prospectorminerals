@@ -242,7 +242,7 @@ export default function MineralPageLayout({
                         className="sm:hidden h-11 w-full mb-2 mt-3 bg-default-100 hover:bg-default-200 justify-between px-3"
                         startContent={<Filter height={18} />}
                         endContent={
-                            isMobileFiltersOpen ? (<ChevronUp height={15} />) : (<svg aria-hidden="true" fill="none" focusable="false" height="1em" role="presentation" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="1em" data-slot="selectorIcon" className="w-unit-4 h-unit-4 transition-transform duration-150 ease motion-reduce:transition-none data-[open=true]:rotate-180"><path d="m6 9 6 6 6-6"></path></svg>)
+                            <svg aria-hidden="true" fill="none" focusable="false" height="1em" role="presentation" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="1em" data-slot="selectorIcon" className="w-unit-4 h-unit-4 transition-transform duration-150 ease motion-reduce:transition-none data-[open=true]:rotate-180" data-open={isMobileFiltersOpen}><path d="m6 9 6 6 6-6"></path></svg>
                         }
                         onPress={() => {
                             if (isMobileFiltersOpen) {
@@ -421,8 +421,8 @@ export default function MineralPageLayout({
                 </div>
             </div>
             <div className="flex-col items-center w-full">
-                <div className='mb-4 sm:mb-5 flex-row sm:flex sm:gap-x-10 items-center justify-between'>
-                    <div className={`sm:basis-2/3 justify-start pt-1 sm:pt-0`}>
+                <div className='mb-4 md:mb-5 flex-row md:flex md:gap-x-10 items-center justify-between'>
+                    <div className={`sm:basis-2/3 justify-start pt-1 sm:pb-2 sm:pt-0`}>
                         {
                             (searchText) ? (
                                 <Chip className="mr-1 mb-3 sm:mb-1" onClose={() => setSearchText(undefined)} variant="bordered">
@@ -478,7 +478,7 @@ export default function MineralPageLayout({
                             )
                         }
                     </div>
-                    <div className="pb-2 sm:basis-1/3">
+                    <div className="pb-2 sm:basis-1/2 md:basis-1/3">
                         {sortDropdownElem}
                     </div>
                 </div>
