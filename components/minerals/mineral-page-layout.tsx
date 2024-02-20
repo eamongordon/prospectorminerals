@@ -228,17 +228,21 @@ export default function MineralPageLayout({
                         placeholder="Search"
                         value={searchText || ""}
                         labelPlacement="outside"
-                        size="md"
+                        /*
+                        classNames={{
+                            inputWrapper: ["h-12 sm:h-auto"]
+                        }}
+                        */
                         onChange={e => setSearchText(e.target.value)}
                         endContent={
                             <MagnifyingGlassIcon />
                         }
                     />
                     <Button
-                        className="sm:hidden h-11 w-full mb-2 mt-3 bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-600 hover:bg-gray-200 justify-between px-3"
+                        className="sm:hidden h-11 w-full mb-2 mt-3 bg-default-100 hover:bg-default-200 justify-between px-3"
                         startContent={<Filter height={18} />}
                         endContent={
-                            isMobileFiltersOpen ? (<ChevronUp />) : (<ChevronDown />)
+                            isMobileFiltersOpen ? (<ChevronUp height={15} />) : (<svg aria-hidden="true" fill="none" focusable="false" height="1em" role="presentation" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="1em" data-slot="selectorIcon" className="w-unit-4 h-unit-4 transition-transform duration-150 ease motion-reduce:transition-none data-[open=true]:rotate-180"><path d="m6 9 6 6 6-6"></path></svg>)
                         }
                         onPress={() => {
                             if (isMobileFiltersOpen) {
@@ -384,7 +388,7 @@ export default function MineralPageLayout({
                                                 }
                                             }
                                         }, 200)
-                                        
+
                                     }}
                                     startContent={
                                         (chemistryVal?.map((val: string, index) => {
