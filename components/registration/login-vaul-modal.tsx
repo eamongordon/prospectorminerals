@@ -1,31 +1,25 @@
-/*
 "use client";
 
-import { Drawer } from 'vaul';
-import { Button } from "@nextui-org/react";
-import LoginModal from '../modal/login';
+import { FC } from "react";
+import { Drawer } from "vaul";
+import LoginModal from "../modal/login";
 
-export default function LoginModalVaul() {
-    return (
-        <Drawer.Root>
-            <Drawer.Trigger>
-                <Button
-                    color="default" variant="flat" className={"px-4"}
-                >
-                    Log In
-    </Button>
-            </Drawer.Trigger>
-            <Drawer.Portal>
-                <Drawer.Content>
-                <LoginModal />
-                </Drawer.Content>
-                <Drawer.Overlay />
-            </Drawer.Portal>
-        </Drawer.Root>
-    );
-}
-*/
+interface DrawerScrollableWithInputsProps {}
 
-export default function LoginModalVaul() {
-    return null;
+const DrawerScrollableWithInputs: FC<DrawerScrollableWithInputsProps> = () => {
+  return (
+    <Drawer.Root shouldScaleBackground>
+      <Drawer.Trigger asChild>
+        <button className="bg-slate-800 text-white py-1 px-3 rounded-md m-2">Drawer</button>
+      </Drawer.Trigger>
+      <Drawer.Portal>
+        <Drawer.Overlay className="fixed inset-0 bg-black/40" />
+        <Drawer.Content className="flex flex-col fixed bottom-0 left-0 right-0 max-h-[85vh] rounded-t-[10px] z-50">
+          <LoginModal/>
+        </Drawer.Content>
+      </Drawer.Portal>
+    </Drawer.Root>
+  );
 };
+
+export default DrawerScrollableWithInputs;
