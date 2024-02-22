@@ -36,7 +36,7 @@ export default function Leaflet({
       <motion.div
         ref={leafletRef}
         key="leaflet"
-        className="group fixed inset-x-0 bottom-0 z-40 w-screen cursor-grab bg-white dark:bg-black pb-5 active:cursor-grabbing max-h-[85vh] overflow-auto sm:hidden"
+        className="group fixed inset-x-0 bottom-0 z-40 w-screen cursor-grab bg-white dark:bg-black pb-5 active:cursor-grabbing max-h-[85vh] sm:hidden"
         initial={{ y: "100%" }}
         animate={controls}
         exit={{ y: "100%" }}
@@ -53,7 +53,9 @@ export default function Leaflet({
           <div className="-mr-1 h-1 w-6 rounded-full bg-gray-300 transition-all group-active:rotate-12" />
           <div className="h-1 w-6 rounded-full bg-gray-300 transition-all group-active:-rotate-12" />
         </div>
-        {children}
+        <div className="overflow-auto">
+          {children}
+        </div>
       </motion.div>
       <motion.div
         key="leaflet-backdrop"
