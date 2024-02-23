@@ -1,7 +1,7 @@
 "use client";
 
 import Modal from ".";
-import { ReactNode, createContext, useContext, useState } from "react";
+import { ReactNode, createContext, useContext, useState, useEffect } from "react";
 
 interface ModalContextProps {
   show: (content: ReactNode) => void;
@@ -14,6 +14,11 @@ export function LoginModalProvider({ children }: { children: ReactNode }) {
   const [modalContent, setModalContent] = useState<ReactNode | null>(null);
   const [showModal, setShowModal] = useState(false);
 
+  useEffect(() => {
+    if (showModal) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "auto";
+  }, [showModal]);
+  
   const show = (content: ReactNode) => {
     setModalContent(content);
     setShowModal(true);
