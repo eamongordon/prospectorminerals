@@ -53,9 +53,7 @@ export default function Leaflet({
           <div className="-mr-1 h-1 w-6 rounded-full bg-gray-300 transition-all group-active:rotate-12" />
           <div className="h-1 w-6 rounded-full bg-gray-300 transition-all group-active:-rotate-12" />
         </div>
-        <div className="overflow-auto">
-          {children}
-        </div>
+        {children}
       </motion.div>
       <motion.div
         key="leaflet-backdrop"
