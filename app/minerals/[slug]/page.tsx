@@ -57,7 +57,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                 <Card name="Azurite" id="az" />
                 <RegModal />
                 <TestServerActions/>
-                <LoginModalVaul/>
+
                 <Footer />
             </LoginModalProvider>
         </main>
