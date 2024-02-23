@@ -121,6 +121,11 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
             id="nametxt"
             name="nametxt"
             placeholder="Name (Optional)"
+            classNames={
+              {
+                base: ['text-base']
+              }
+            }
             size="sm"
             type="text"
           //className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"

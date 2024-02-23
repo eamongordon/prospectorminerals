@@ -15,10 +15,11 @@ export default function ModalNext({ isMobile }: { isMobile?: boolean }) {
                 classNames={{
                     backdrop: "bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20"
                 }}
+                radius="none"
                 hideCloseButton={true}
                 {...(isMobile ? {scrollBehavior:"outside"} : {})}
             >
-                <ModalContent>
+                <ModalContent className="overflow-y-scroll bg-inherit shadow-none">
                     {(onClose) => (
                         <>
                             <LoginForm isModal={true} onCloseAction={onClose} />
