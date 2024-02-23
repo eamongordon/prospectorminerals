@@ -18,9 +18,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
-      </head>
+      {navigator.userAgent.includes('iPhone') ?
+        (<head><meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" /></head>) : (null)
+      }
       <body className={`${inter.className} bg-gradient-to-b from-[rgb(214,219,220)] to-white text-black dark:bg-gradient-to-b dark:from-black dark:to-black dark:text-white`}>
         <Providers>{children}</Providers>
         <Analytics />
