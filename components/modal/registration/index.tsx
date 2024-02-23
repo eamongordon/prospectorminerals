@@ -10,6 +10,7 @@ import {
 import FocusTrap from "focus-trap-react";
 import { AnimatePresence, motion } from "framer-motion";
 import Leaflet from "@/components/modal/leaflet";
+import VaulModal from '@/components/registration/login-vaul-modal';
 import useWindowSize from "@/lib/hooks/use-window-size";
 
 export default function Modal({
@@ -41,7 +42,7 @@ export default function Modal({
     <AnimatePresence>
       {showModal && (
         <>
-          {isMobile && <Leaflet setShow={setShowModal}>{children}</Leaflet>}
+          {isMobile && <VaulModal>{children}</VaulModal>}
           {isDesktop && (
             <>
               <FocusTrap focusTrapOptions={{ initialFocus: false }}>
