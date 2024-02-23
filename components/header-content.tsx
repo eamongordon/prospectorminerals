@@ -29,6 +29,7 @@ export default function HeaderComp({
     return (
         <Navbar
             isBordered
+            isMenuOpen={isMenuOpen}
             maxWidth="xl"
             position="sticky"
             className="flex"
@@ -178,7 +179,7 @@ export default function HeaderComp({
                                 </DropdownMenu>
                             </Dropdown>
                         ) : (
-                            <LoginModalButton isMobile={true}><LoginModal /></LoginModalButton>
+                            <LoginModalButton isMobile={true} closeMenuCallback={setIsMenuOpen}><LoginModal /></LoginModalButton>
                         )}
                     </div>
                 </NavbarMenu>
