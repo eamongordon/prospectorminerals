@@ -123,7 +123,7 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
             placeholder="Name (Optional)"
             classNames={
               {
-                base: ['text-base']
+                input: ['text-base']
               }
             }
             size="sm"
