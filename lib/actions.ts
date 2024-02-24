@@ -269,8 +269,7 @@ export async function fetchMinerals({ filterObj, cursor, limit, sortObj, fieldse
       skip: !cursor ? 0 : 1,
       cursor: cursorObj,
       take: limit,
-      //@ts-expect-error ERROR Caused by Insensitive "Name" filter
-      where: { AND: queryArray },
+      where: { AND: queryArray as Prisma.MineralWhereInput[] },
       select: selectObj,
       orderBy: [
         sortObj ? { [sortObj.property]: sortObj.order } : {},
