@@ -22,6 +22,7 @@ export default function RootLayout({
   const useragent = headersList.get('User-Agent');
   return (
     <html lang="en">
+      {/*Stop Input Autozoom on iPhone*/}
       {useragent?.includes('iPhone') ?
         (<head><meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" /></head>) : (null)
       }
