@@ -252,6 +252,7 @@ export async function fetchMinerals({ filterObj, cursor, limit, sortObj, fieldse
     selectObj = {
       name: true,
       photos: {
+        take: 1,
         select: {
           photo: {
             select: {
@@ -292,12 +293,112 @@ export async function fetchMinerals({ filterObj, cursor, limit, sortObj, fieldse
   };
 };
 
-export async function fetchPhotos({ filterObj, cursor, limit, sortObj }: { filterObj: PhotosFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj }) {
+export async function fetchLocalities({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: MineralsFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?:string }) {
+  let queryArray = [];
+  function pushArrayField(propertyArray: string[], property: string) {
+    let filterArray: { [property: string]: { contains: string, mode?: string } }[] = [];
+    propertyArray.forEach((propertyItem) => {
+      let pushObj = { [property]: { contains: propertyItem, mode: 'insensitive' } }
+      filterArray.push(pushObj);
+    })
+    queryArray.push({ OR: filterArray })
+  }
+  const { name, minHardness, maxHardness, lusters, streaks, mineralClasses, crystalSystems, chemistry, associates } = Object(filterObj)
+  if (name) {
+    queryArray.push({ name: { contains: name, mode: 'insensitive' } });
+  }
+  if (minHardness || minHardness === 0) {
+    queryArray.push({ hardness_min: { lte: maxHardness } })
+  }
+  if (maxHardness || maxHardness === 0) {
+    queryArray.push({ hardness_max: { gte: minHardness } })
+  }
+  if (lusters) {
+    pushArrayField(lusters, "luster");
+  }
+  if (crystalSystems) {
+    pushArrayField(crystalSystems, "crystal_system");
+  }
+  if (streaks) {
+    pushArrayField(streaks, "streak");
+  }
+  if (mineralClasses) {
+    pushArrayField(mineralClasses, "mineral_class");
+  }
+  if (chemistry) {
+    pushArrayField(chemistry, "chemical_formula");
+  }
+  if (associates && associates.length > 0) {
+    let associatesArray: { name: { contains: string } }[] = [];
+    associates.forEach((associate: string) => {
+      let pushObj = { name: { contains: associate } }
+      associatesArray.push(pushObj);
+    })
+    queryArray.push({ associates: { some: { OR: [] } } })
+  }
+  const cursorObj = !cursor ? undefined : { number: cursor };
+  let selectObj;
+  if (!fieldset || fieldset === "display") {
+    selectObj = {
+      name: true,
+      photos: {
+        take: 1,
+        select: {
+          photo: {
+            select: {
+              title: true
+            }
+          }
+        }
+      },
+      number: true,
+      id: true
+    }
+  } 
+  const results = await prisma.mineral.findMany(
+    {
+      skip: !cursor ? 0 : 1,
+      cursor: cursorObj,
+      take: limit,
+      where: { AND: queryArray as Prisma.MineralWhereInput[] },
+      select: selectObj,
+      orderBy: [
+        sortObj ? { [sortObj.property]: sortObj.order } : {},
+        {
+          number: "asc",
+        },
+      ],
+      ...(limit ? { take: limit } : {}),
+    }
+  );
+  /*
+  let returnArray;
+  if (fieldset === "display") {
+    returnArray = results.map((result) => {return {name: result.name, number: result.number, id: result.id, photo: result.photos[0].image}});
+  }
+  */
+  return {
+    results: results,
+    next: results.length === limit ? results[results.length - 1].number : undefined
+  };
+};
+
+export async function fetchPhotos({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj: PhotosFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: string }) {
   if (!limit) {
     limit = 10;
   }
   const cursorObj = !cursor ? undefined : { number: cursor };
-  const { name } = Object(filterObj)
+  const { name } = Object(filterObj);
+  let selectObj;
+  if (!fieldset || fieldset === "display") {
+    selectObj = {
+      title: true,
+      image: true,
+      imageBlurhash: true,
+      number: true,
+      id: true
+    }
+  } 
   const results = await prisma.photo.findMany(
     {
       skip: !cursor ? 0 : 1,
@@ -309,13 +410,7 @@ export async function fetchPhotos({ filterObj, cursor, limit, sortObj }: { filte
           mode: 'insensitive'
         }
       },
-      select: {
-        title: true,
-        image: true,
-        imageBlurhash: true,
-        number: true,
-        id: true
-      },
+      select: selectObj,
       orderBy: [
         sortObj ? { [sortObj.property]: sortObj.order } : {},
         {
