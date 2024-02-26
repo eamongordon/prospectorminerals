@@ -45,22 +45,6 @@ const Page = async ({
             <div className="flex justify-center items-center">
                 <section className='flex-col justify-center items-center py-4 px-6 w-full max-w-screen-xl'>
                     <div className='mb-4 sm:mb-12 flex-row my-5 sm:flex sm:gap-x-10 justify-between'>
-                        {/*<div className="flex">
-                            <MineralFilters filterObj={{ name: name, lusters: lusters?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }}/>
-                        </div>
-                        <div className="flex-col items-center justify-start">
-                            <MineralFilterTags filterObj={{ name: name, lusters: lusters?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }} />
-                            <div>
-                            <ul
-                                key={nanoid()}
-                                role='list'
-                                className='w-full grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-3'
-                            >
-                                <InfiniteScrollMinerals filterObj={{ name: name, lusters: lusters?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }} initialPhotos={photosQuery.results} initialCursor={photosQuery.next ? photosQuery.next : undefined} {...(property && order ? { sort: { property: property, order: order } } : {})} />
-                            </ul>
-                            </div>
-    </div>*/}
-
                         <MineralPageLayout
                             filterObj={filterObj}
                             initialPhotos={photosQuery.results}
