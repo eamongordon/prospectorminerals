@@ -115,7 +115,7 @@ export default function HeaderComp({
                         </>
                     ) : (
                         <>
-                            <LoginModalButton><LoginModal /></LoginModalButton>
+                            <LoginModalButton {...(isMenuOpen ? { closeMenuCallback: setIsMenuOpen } : {})}><LoginModal /></LoginModalButton>
                         </>
                     )}
                 </NavbarContent>
