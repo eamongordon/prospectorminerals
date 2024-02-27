@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 //import LoadingDots from "@/components/icons/loading-dots";
-import { Input, Button, Link } from "@nextui-org/react";
+import { Input, Button } from "@nextui-org/react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from 'next/navigation'
@@ -158,9 +158,9 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
       )
       }
       {type === 'login' ? (
-        <Link className="font-semibold text-sm" color="foreground" {...(resetPasswordFunc ? { onPress: () => resetPasswordFunc(false) } : {})} >
+        <button className="hover:opacity-80 transition-opacity tap-highlight-transparent relative inline-flex items-center font-semibold text-sm" {...(resetPasswordFunc ? { onClick: () => resetPasswordFunc(false) } : {})} >
           Forgot Password?
-        </Link>
+        </button>
       ) : (<></>)}
       <Button
         disabled={loading}
