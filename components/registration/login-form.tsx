@@ -6,8 +6,9 @@ import { useSearchParams } from 'next/navigation'
 import Image from "next/image";
 import LoginButton from "./social-login-button";
 import { Suspense } from "react";
-import { Divider, Tab, Tabs, Link as UILink } from "@nextui-org/react";
+import { Divider, Tab, Tabs } from "@nextui-org/react";
 import React from "react";
+import Link from 'next/link';
 
 export default function FormWrapper(
   {
@@ -46,7 +47,7 @@ export default function FormWrapper(
             tab: "rounded-t-xl rounded-b-none",
           }}
         >
-          <Tab key="/login" title="Login" {...(isModal ? {} : { href: "/login", as:UILink })}>
+          <Tab key="/login" title="Login" {...(isModal ? {} : { href: "/login", as: Link })}>
             <Image
               alt="Prospector Minerals"
               width={100}
@@ -65,9 +66,9 @@ export default function FormWrapper(
                   </p>
                   <Form type="forgotPassword" isModal={isModal} onCloseAction={onCloseAction} resetPasswordFunc={pull_ForgotPassword} />
                   <p className="text-center text-sm pt-8 pb-8 px-16">
-                    <UILink className="font-semibold text-sm" color="foreground" onPress={() => pull_ForgotPassword(true)} >
+                    <button className="hover:opacity-80 transition-opacity tap-highlight-transparent font-semibold text-sm" onClick={() => pull_ForgotPassword(true)} >
                       Back to Login
-                    </UILink>
+                    </button>
                   </p>
                 </>
               ) : (
@@ -78,9 +79,18 @@ export default function FormWrapper(
                   <Form type="login" isModal={isModal} onCloseAction={onCloseAction} resetPasswordFunc={pull_ForgotPassword} />
                   <p className="text-center text-sm pt-8 pb-8 px-16">
                     Don&apos;t have an account?{" "}
-                    <button className="hover:opacity-80 transition-opacity tap-highlight-transparent font-semibold text-sm" color="foreground" {...(isModal ? { onClick: () => setSelected("/signup") } : { href: "/signup" })} >
-                      Sign up
-                    </button>{" "}
+                    {isModal ? (
+                      <button className="hover:opacity-80 transition-opacity tap-highlight-transparent font-semibold text-sm" {...(isModal ? { onClick: () => setSelected("/signup") } : { href: "/signup" })} >
+                        Sign up
+                      </button>
+                    ) : (
+                      <Link href="/signup">
+                        <button className="hover:opacity-80 transition-opacity tap-highlight-transparent font-semibold text-sm" {...(isModal ? { onClick: () => setSelected("/signup") } : { href: "/signup" })} >
+                          Sign up
+                        </button>
+                      </Link>
+                    )}
+                    {" "}
                     for free.
                   </p>
                   <Divider />
@@ -97,7 +107,7 @@ export default function FormWrapper(
               )
             }
           </Tab>
-          <Tab key="/signup" title="Sign Up" {...(isModal ? {} : { href: "/signup", as:UILink })}>
+          <Tab key="/signup" title="Sign Up" {...(isModal ? {} : { href: "/signup", as: Link })}>
             <Image
               alt="Platforms Starter Kit"
               width={100}
@@ -111,9 +121,17 @@ export default function FormWrapper(
             <Form type="register" isModal={isModal} onCloseAction={onCloseAction} />
             <p className="text-center text-sm pt-8 pb-8 px-16">
               Already have an account?{" "}
-              <button className="hover:opacity-80 transition-opacity tap-highlight-transparent font-semibold text-sm" {...(isModal ? { onClick: () => setSelected("/login") } : { href: "/login" })}>
-                Sign in
-              </button>
+              {isModal ? (
+                <button className="hover:opacity-80 transition-opacity tap-highlight-transparent font-semibold text-sm" {...(isModal ? { onClick: () => setSelected("/login") } : { href: "/login" })}>
+                  Sign in
+                </button>
+              ) : (
+                <Link href="/login">
+                  <button className="hover:opacity-80 transition-opacity tap-highlight-transparent font-semibold text-sm" {...(isModal ? { onClick: () => setSelected("/login") } : { href: "/login" })}>
+                    Sign in
+                  </button>
+                </Link>
+              )}
               {" "}
               instead.
             </p>

@@ -126,7 +126,7 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
           //className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
           />
         </div>
-      ) : (<></>)}
+      ) : (null)}
       <div>
         <Input
           id="email"
@@ -153,15 +153,13 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
           //className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
           />
         </div>
-      ) : (
-        <></>
-      )
+      ) : (null)
       }
       {type === 'login' ? (
-        <button className="hover:opacity-80 transition-opacity tap-highlight-transparent relative inline-flex items-center font-semibold text-sm" {...(resetPasswordFunc ? { onClick: () => resetPasswordFunc(false) } : {})} >
+        <button className="hover:opacity-80 transition-opacity tap-highlight-transparent relative inline-flex items-center font-semibold text-sm" color="foreground" {...(resetPasswordFunc ? { onClick: () => resetPasswordFunc(false) } : {})} >
           Forgot Password?
         </button>
-      ) : (<></>)}
+      ) : (null)}
       <Button
         disabled={loading}
         isLoading={loading}
