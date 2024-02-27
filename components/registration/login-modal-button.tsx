@@ -16,7 +16,7 @@ export default function LoginModalButton({
   const modal = useModal();
   return (
     <Button 
-      onClick={() => {if (isMobile && closeMenuCallback) {closeMenuCallback(false);} modal?.show(children);}}
+      onClick={() => {if (closeMenuCallback) {closeMenuCallback(false);} modal?.show(children);}}
       color="default" variant="flat" className={`${isMobile ? "px-4": "hidden sm:flex"}`}
     >
       Log In
