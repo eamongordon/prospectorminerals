@@ -1,11 +1,12 @@
 "use client";
+
 import Form from './form-inner';
 import { useRouter, usePathname } from "next/navigation";
 import { useSearchParams } from 'next/navigation'
 import Image from "next/image";
 import LoginButton from "./social-login-button";
 import { Suspense } from "react";
-import { Divider, Tab, Tabs, Link as UILink, Spacer } from "@nextui-org/react";
+import { Divider, Tab, Tabs, Link as UILink } from "@nextui-org/react";
 import React from "react";
 
 export default function FormWrapper(
@@ -77,9 +78,9 @@ export default function FormWrapper(
                   <Form type="login" isModal={isModal} onCloseAction={onCloseAction} resetPasswordFunc={pull_ForgotPassword} />
                   <p className="text-center text-sm pt-8 pb-8 px-16">
                     Don&apos;t have an account?{" "}
-                    <UILink className="font-semibold text-sm" color="foreground" {...(isModal ? { onPress: () => setSelected("/signup") } : { href: "/signup" })} >
+                    <button className="hover:opacity-80 transition-opacity tap-highlight-transparent font-semibold text-sm" color="foreground" {...(isModal ? { onClick: () => setSelected("/signup") } : { href: "/signup" })} >
                       Sign up
-                    </UILink>{" "}
+                    </button>{" "}
                     for free.
                   </p>
                   <Divider />
@@ -110,9 +111,9 @@ export default function FormWrapper(
             <Form type="register" isModal={isModal} onCloseAction={onCloseAction} />
             <p className="text-center text-sm pt-8 pb-8 px-16">
               Already have an account?{" "}
-              <UILink className="font-semibold text-sm" color="foreground" {...(isModal ? { onPress: () => setSelected("/login") } : { href: "/login" })}>
+              <button className="hover:opacity-80 transition-opacity tap-highlight-transparent font-semibold text-sm" {...(isModal ? { onClick: () => setSelected("/login") } : { href: "/login" })}>
                 Sign in
-              </UILink>
+              </button>
               {" "}
               instead.
             </p>
