@@ -51,10 +51,10 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
               email: e.currentTarget.email.value,
               password: e.currentTarget.password.value,
               // @ts-ignore
-            }).then(({ error }) => {
-              if (error) {
+            }).then((res) => {
+              if (res?.error) {
                 setLoading(false);
-                toast.error(error);
+                toast.error(res.error);
               }
             });
           }
@@ -76,10 +76,10 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
                 email: data.email,
                 password: data.password,
                 // @ts-ignore
-              }).then(({ error }) => {
-                if (error) {
+              }).then((signInRes) => {
+                if (signInRes?.error) {
                   setLoading(false);
-                  toast.error(error);
+                  toast.error(signInRes.error);
                 } else {
                   router.refresh();
                   if (isModal) {
