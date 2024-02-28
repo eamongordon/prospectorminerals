@@ -58,7 +58,7 @@ export default function Modal({
                     }
                   }}
                 >
-                  <div className="sm:mx-auto w-full sm:max-w-md">
+                  <div className="sm:mx-auto w-full sm:max-w-md overflow-scroll max-h-screen mt-10 mb-10 rounded-xl">
                   {children}
                   </div>
                 </motion.div>
