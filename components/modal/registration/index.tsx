@@ -58,7 +58,7 @@ export default function Modal({
                     }
                   }}
                 >
-                  <div className="sm:mx-auto w-full sm:max-w-md overflow-scroll max-h-[calc(100%_-_7.5rem)] rounded-xl">
+                  <div className="sm:mx-auto w-full sm:max-w-md overflow-auto max-h-[calc(100%_-_7.5rem)] rounded-xl">
                   {children}
                   </div>
                 </motion.div>
