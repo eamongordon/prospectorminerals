@@ -176,7 +176,7 @@ export default function MineralSelect({
                 }}
                 disabledKeys={chemistryVal}
                 classNames={{
-                    base: `${isMineralFocused ? "" : "hidden" } max-h-[150px] overflow-scroll no-scrollbar subpixel-antialiased outline-none box-border text-small bg-content1 shadow-md rounded-large w-full p-1`,
+                    base: `${isMineralFocused ? "" : "hidden" } max-h-[150px] overflow-auto no-scrollbar subpixel-antialiased outline-none box-border text-small bg-content1 shadow-md rounded-large w-full p-1`,
                     list: "",
                 }}
                 bottomContent={

@@ -35,7 +35,7 @@ export default async function mineralSelectWraper() {
             onAction={(key) => alert(key)}
             classNames={{
                 base: "max-w-xs",
-                list: "max-h-[300px] overflow-scroll",
+                list: "max-h-[300px] overflow-auto",
             }}
             bottomContent={
                 <div
