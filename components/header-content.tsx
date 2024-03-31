@@ -81,7 +81,7 @@ export default function HeaderComp({
                         onChange={() => console.log('')}
                     />
                         <>
-                            <SearchModalButton {...(isMenuOpen ? { closeMenuCallback: setIsMenuOpen } : {})}><LoginModal /></SearchModalButton>
+                            <SearchModalButton {...(isMenuOpen ? { closeMenuCallback: setIsMenuOpen } : {})}><div className="w-[96px] h-[96px]"><button>Hey</button></div></SearchModalButton>
                         </>
                     {loggedIn ? (
                         <>

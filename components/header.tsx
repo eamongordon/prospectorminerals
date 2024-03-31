@@ -1,6 +1,7 @@
 import HeaderContent from './header-content'
 import { getSession } from "@/lib/auth";
 import { LoginModalProvider } from './modal/registration/provider';
+import { SearchModalProvider } from './modal/search/provider';
 //
 export default async function Header() {
   const session = await getSession();
@@ -18,9 +19,11 @@ export default async function Header() {
     />
   ) : (
     <LoginModalProvider>
+      <SearchModalProvider>
       <HeaderContent
         loggedIn={false}
       />
+      </SearchModalProvider>
     </LoginModalProvider>
   )
 }
