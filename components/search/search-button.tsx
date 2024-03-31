@@ -1,6 +1,6 @@
 "use client";
 
-import { useModal } from "@/components/modal/provider";
+import { useModal } from "@/components/modal/search/provider";
 import { ReactNode, Dispatch, SetStateAction } from "react";
 import { Button } from "@nextui-org/react";
 import { Search } from 'lucide-react';
