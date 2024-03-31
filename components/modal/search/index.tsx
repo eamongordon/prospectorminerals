@@ -48,7 +48,7 @@ export default function Modal({
                 <motion.div
                   ref={desktopModalRef}
                   key="desktop-modal"
-                  className="fixed inset-0 z-50 hidden min-h-screen items-center justify-center md:flex"
+                  className="fixed inset-0 z-50 hidden min-h-screen items-top justify-center md:flex"
                   initial={{ scale: 0.95 }}
                   animate={{ scale: 1 }}
                   exit={{ scale: 0.95 }}
@@ -58,7 +58,7 @@ export default function Modal({
                     }
                   }}
                 >
-                  <div className="sm:mx-auto w-full sm:max-w-md overflow-auto max-h-[calc(100%_-_7.5rem)] rounded-xl">
+                  <div className="flex w-full h-[96px] bg-white flex items-center justify-center">
                   {children}
                   </div>
                 </motion.div>
