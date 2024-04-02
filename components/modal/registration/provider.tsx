@@ -1,5 +1,6 @@
 "use client";
 
+//Import Works on modal/registration but not on modal/search
 import Modal from ".";
 import { ReactNode, createContext, useContext, useState, useEffect } from "react";
 
