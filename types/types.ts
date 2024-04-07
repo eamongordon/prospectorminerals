@@ -5,20 +5,23 @@ export type MineralClassesList = "Silicates" | "Phosphates" | "Carbonates" | "Su
 export type CrystalSystemsList = "Tetragonal" | "Isometric" | "Hexagonal" | "Triclinic" | "Monoclinic" | "Trigonal" | "Orthorhombic";
 
 export type MineralsFilterObj = {
-    name: string | undefined,
-    minHardness?: number | undefined,
-    maxHardness?: number | undefined,
-    lusters?: LustersList[] | undefined,
-    streaks?: string[] | undefined,
-    mineralClasses?: MineralClassesList[] | undefined,
-    crystalSystems?: CrystalSystemsList[] | undefined,
-    chemistry?: string[] | undefined,
-    associates?: string[] | undefined
+    name?: string,
+    minHardness?: number,
+    maxHardness?: number,
+    lusters?: LustersList[],
+    streaks?: string[],
+    mineralClasses?: MineralClassesList[],
+    crystalSystems?: CrystalSystemsList[],
+    chemistry?: string[],
+    associates?: string[]
 }
 
 export type LocalitiesFilterObj = {
-    name: string | undefined,
-    associates?: string[] | undefined
+    name?: string,
+    type_code?: string,
+    latitude?: number,
+    longitude?: number,
+    minerals?: string[]
 }
 
 
