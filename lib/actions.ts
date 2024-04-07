@@ -9,7 +9,7 @@ import { put } from "@vercel/blob";
 import { customAlphabet } from "nanoid";
 import { del } from '@vercel/blob';
 import { getBlurDataURL } from "@/lib/utils";
-import { MineralsFilterObj, PhotosFilterObj, PhotosSortObj } from "@/types/types";
+import { MineralsFilterObj, PhotosFilterObj, PhotosSortObj, LocalitiesFilterObj } from "@/types/types";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -293,74 +293,49 @@ export async function fetchMinerals({ filterObj, cursor, limit, sortObj, fieldse
   };
 };
 
-export async function fetchLocalities({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: MineralsFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?:string }) {
+export async function fetchLocalities({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: LocalitiesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?:string }) {
   let queryArray = [];
-  function pushArrayField(propertyArray: string[], property: string) {
-    let filterArray: { [property: string]: { contains: string, mode?: string } }[] = [];
-    propertyArray.forEach((propertyItem) => {
-      let pushObj = { [property]: { contains: propertyItem, mode: 'insensitive' } }
-      filterArray.push(pushObj);
-    })
-    queryArray.push({ OR: filterArray })
-  }
-  const { name, minHardness, maxHardness, lusters, streaks, mineralClasses, crystalSystems, chemistry, associates } = Object(filterObj)
+  const { name, minerals, type_code } = Object(filterObj)
   if (name) {
     queryArray.push({ name: { contains: name, mode: 'insensitive' } });
   }
-  if (minHardness || minHardness === 0) {
-    queryArray.push({ hardness_min: { lte: maxHardness } })
+  if (type_code) {
+    queryArray.push({ name: { equals: type_code} });
   }
-  if (maxHardness || maxHardness === 0) {
-    queryArray.push({ hardness_max: { gte: minHardness } })
-  }
-  if (lusters) {
-    pushArrayField(lusters, "luster");
-  }
-  if (crystalSystems) {
-    pushArrayField(crystalSystems, "crystal_system");
-  }
-  if (streaks) {
-    pushArrayField(streaks, "streak");
-  }
-  if (mineralClasses) {
-    pushArrayField(mineralClasses, "mineral_class");
-  }
-  if (chemistry) {
-    pushArrayField(chemistry, "chemical_formula");
-  }
-  if (associates && associates.length > 0) {
-    let associatesArray: { name: { contains: string } }[] = [];
-    associates.forEach((associate: string) => {
+  if (minerals && minerals.length > 0) {
+    let mineralsArray: { name: { contains: string } }[] = [];
+    minerals.forEach((associate: string) => {
       let pushObj = { name: { contains: associate } }
-      associatesArray.push(pushObj);
+      mineralsArray.push(pushObj);
     })
-    queryArray.push({ associates: { some: { OR: [] } } })
+    queryArray.push({ minerals: { some: { OR: [] } } })
   }
   const cursorObj = !cursor ? undefined : { number: cursor };
   let selectObj;
   if (!fieldset || fieldset === "display") {
     selectObj = {
       name: true,
-      photos: {
-        take: 1,
+      latitude: true,
+      longitude: true,
+      type_code: true,
+      id: true,
+      minerals: {
         select: {
-          photo: {
+          mineral: {
             select: {
-              title: true
+              name: true
             }
           }
         }
       },
-      number: true,
-      id: true
     }
   } 
-  const results = await prisma.mineral.findMany(
+  const results = await prisma.locality.findMany(
     {
       skip: !cursor ? 0 : 1,
       cursor: cursorObj,
       take: limit,
-      where: { AND: queryArray as Prisma.MineralWhereInput[] },
+      where: { AND: queryArray as Prisma.LocalityWhereInput[] },
       select: selectObj,
       orderBy: [
         sortObj ? { [sortObj.property]: sortObj.order } : {},

@@ -131,10 +131,12 @@ model Photo {
 
 model Locality {
   id          String              @id @default(cuid())
+  name        String
   type_code   String
   description String
   latitude    String
   longitude   String
+  number      Int                 @unique @default(autoincrement())
   minerals    MineralOnLocality[]
 
   @@index([id])
