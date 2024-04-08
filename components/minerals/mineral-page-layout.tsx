@@ -228,14 +228,15 @@ export default function MineralPageLayout({
                         placeholder="Search"
                         value={searchText || ""}
                         labelPlacement="outside"
+                        isClearable={searchText ? true : false}
                         /*
                         classNames={{
                             inputWrapper: ["h-12 sm:h-auto"]
                         }}
                         */
-                        onChange={e => setSearchText(e.target.value)}
+                        onValueChange={setSearchText}
                         endContent={
-                            <MagnifyingGlassIcon />
+                            searchText ? (null): (<MagnifyingGlassIcon />)
                         }
                     />
                     <Button
