@@ -71,9 +71,10 @@ export default function PhotosLayout({
                             type="text"
                             value={text || ""}
                             placeholder="Search"
-                            onChange={e => setText(e.target.value)}
+                            isClearable={text ? true : false}
+                            onValueChange={setText}
                             endContent={
-                                <MagnifyingGlassIcon />
+                                text ? (null): (<MagnifyingGlassIcon />)
                             }
                         />
                     </div>
