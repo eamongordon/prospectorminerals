@@ -8,7 +8,6 @@ const nanoid = customAlphabet(
 import { fetchPhotos } from '@/lib/actions'
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import Search from '@/components/photos/photo-search';
 import SortDropdown from '@/components/photos/sort-dropdown';
 import InfiniteScrollPhotos from '@/components/photos/infinite-scroll-photos';
 import PhotosLayout from "@/components/photos/photos-layout";
