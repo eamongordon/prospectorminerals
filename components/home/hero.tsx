@@ -21,9 +21,9 @@ export default function Hero() {
             />
             <div className="flex flex-col justify-center items-center px-3">
                 <h1 className=" text-center text-3xl md:text-5xl text-white font-bold drop-shadow-lg">WELCOME TO <br />
-                    <span className="text-primary">MY COMPANY</span>
+                    <span className="text-primary">PROSPECTOR MINERALS</span>
                 </h1>
-                <p className="mt-5 text-center text-lg text-white opacity-90">Making tomorrows widgets today...</p>
+                <p className="mt-5 text-center text-lg text-white opacity-90">Welcome to Prospector Minerals, a comprehensive mineralogy resource.</p>
             </div>
         </div>
     )
