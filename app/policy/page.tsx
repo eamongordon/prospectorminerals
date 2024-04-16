@@ -36,7 +36,7 @@ const Page = async ({
                                 </div>
                                 <div>
                                     <h4 className="text-xl font-medium">Third-Party Login Services</h4>
-                                    <p>By using third-party login services (i.e. Google or Facebook) we may collect data including your email address, name, and phone number. See the Data Use section for information regarding the use of your data. Please note that the respective provider's terms of service and privacy policy apply.</p>
+                                    <p>By using third-party login services (i.e. Google or Facebook) we may collect data including your email address, name, and phone number. See the Data Use section for information regarding the use of your data. Please note that the respective provider&apos;s terms of service and privacy policy apply.</p>
                                 </div>
                                 <div>
                                     <h4 className="text-xl font-medium">Browser Cookies</h4>
