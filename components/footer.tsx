@@ -236,23 +236,23 @@ export default function Footer() {
 
                             <ul className="mt-6 space-y-4 text-sm">
                                 <li>
-                                    <a href="#" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> About </a>
+                                    <Link href="#" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> About </Link>
                                 </li>
 
                                 <li>
-                                    <a href="/policy#copyright" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Copyright Policy </a>
+                                    <Link href="/policy#copyright" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Copyright Policy </Link>
                                 </li>
 
                                 <li>
-                                    <a href="/policy#termsofuse" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Terms of Use </a>
+                                    <Link href="/policy#termsofuse" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Terms of Use </Link>
                                 </li>
 
                                 <li>
-                                    <a href="/policy#privacy" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Privacy Policy </a>
+                                    <Link href="/policy#privacy" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Privacy Policy </Link>
                                 </li>
 
                                 <li>
-                                    <a href="/policy#contact" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Contact Us </a>
+                                    <Link href="/policy#contact" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Contact Us </Link>
                                 </li>
                             </ul>
                         </div>
