@@ -14,6 +14,7 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
   const router = useRouter();
   const searchParams = useSearchParams()
   const redirectUri = searchParams.get('redirect');
+  const callbackUrl = searchParams.get('callbackUrl');
   const [sentForgotPasswordEmail, setSentForgotPasswordEmail] = useState(false);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
@@ -47,7 +48,7 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
             });
           } else {
             signIn("credentials", {
-              callbackUrl: decodeURIComponent(redirectUri || "/"),
+              callbackUrl: decodeURIComponent(callbackUrl || "/"),
               email: e.currentTarget.email.value,
               password: e.currentTarget.password.value,
               // @ts-ignore
