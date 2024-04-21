@@ -51,7 +51,6 @@ export default function SortDropdown({ sort }: { sort?: string }) {
         <div className='relative'>
             <Select
                 isRequired
-                size="sm"
                 radius='lg'
                 placeholder="Sort By"
                 aria-label="Sort By"
