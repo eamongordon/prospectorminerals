@@ -22,13 +22,13 @@ export default function InfiniteScrollPhotos({
   limit,
   clearFilters
 }: {
-  filterObj: MineralsFilterObj | undefined
-  initialPhotos: any[] | undefined
-  initialCursor: number | undefined
-  sort?: PhotosSortObj | undefined,
-  key?: string | undefined,
-  limit?: number | undefined,
-  clearFilters?: Function | undefined
+  filterObj?: MineralsFilterObj
+  initialPhotos?: any[],
+  initialCursor?: number,
+  sort?: PhotosSortObj,
+  key?: string,
+  limit?: number,
+  clearFilters?: Function
 }) {
 
   const [photos, setPhotos] = useState(initialPhotos);

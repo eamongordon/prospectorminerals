@@ -16,12 +16,12 @@ export default function InfiniteScrollPhotos({
   key,
   clearFilters
 }: {
-  search: string | undefined
-  initialPhotos: any[] | undefined,
-  initialCursor: number | undefined
-  sort?: PhotosSortObj | undefined,
-  key: string | undefined,
-  clearFilters?: Function | undefined
+  search: string
+  initialPhotos: any[],
+  initialCursor: number,
+  sort?: PhotosSortObj,
+  key?: string,
+  clearFilters?: Function
 }) {
   const router = useRouter();
   const pathname = usePathname();
