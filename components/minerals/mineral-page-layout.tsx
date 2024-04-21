@@ -10,17 +10,11 @@ import { MineralsFilterObj, PhotosSortObj } from "@/types/types";
 export default function MineralPageLayout({
     infiniteScrollElem,
     sortDropdownElem,
-    filterObj,
-    initialPhotos,
-    initialCursor,
-    sort
+    filterObj
 }: {
     infiniteScrollElem: React.ReactElement,
     sortDropdownElem: React.ReactElement,
-    filterObj: MineralsFilterObj | undefined,
-    initialPhotos: any[] | undefined,
-    initialCursor: number | undefined
-    sort?: PhotosSortObj | undefined
+    filterObj?: MineralsFilterObj
 }) {
     /*
         const mapAccordionItems = (label: string, value: string, optionsArray: [], stateName: string) => {
