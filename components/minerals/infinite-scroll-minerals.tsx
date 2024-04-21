@@ -19,6 +19,7 @@ export default function InfiniteScrollPhotos({
   initialCursor,
   sort,
   key,
+  limit,
   clearFilters
 }: {
   filterObj: MineralsFilterObj | undefined
@@ -26,6 +27,7 @@ export default function InfiniteScrollPhotos({
   initialCursor: number | undefined
   sort?: PhotosSortObj | undefined,
   key?: string | undefined,
+  limit?: number | undefined,
   clearFilters?: Function | undefined
 }) {
 
@@ -37,7 +39,7 @@ export default function InfiniteScrollPhotos({
   async function loadMorePhotos() {
     if (page) {
       console.log("loadMoreMin")
-      const photosQuery = await fetchMinerals({ ...(filterObj ? { filterObj: filterObj } : {}) || {}, cursor: page, limit: 10, ...(sort ? { sortObj: sort } : {}), });
+      const photosQuery = await fetchMinerals({ ...(filterObj ? { filterObj: filterObj } : {}) || {}, cursor: page, limit: limit ? limit : 10, ...(sort ? { sortObj: sort } : {}), });
       if (photosQuery.results?.length) {
         setPage(photosQuery.next ? photosQuery.next : undefined)
         setPhotos((prev: any[] | undefined) => [
