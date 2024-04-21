@@ -71,6 +71,12 @@ export default function PhotosLayout({
                             type="text"
                             value={text || ""}
                             placeholder="Search"
+                            /*
+                            Increase height of input
+                            classNames={{
+                                inputWrapper: "h-12"
+                            }}
+                            */
                             isClearable={text ? true : false}
                             onValueChange={setText}
                             endContent={
