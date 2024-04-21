@@ -47,8 +47,6 @@ const Page = async ({
                     <div className='mb-4 sm:mb-12 flex-row my-5 sm:flex sm:gap-x-10 justify-between'>
                         <MineralPageLayout
                             filterObj={filterObj}
-                            initialPhotos={photosQuery.results}
-                            initialCursor={photosQuery.next ? photosQuery.next : undefined} {...(property && order ? { sort: { property: property, order: order } } : {})}
                             infiniteScrollElem={<InfiniteScrollMinerals filterObj={filterObj} initialPhotos={photosQuery.results} initialCursor={photosQuery.next ? photosQuery.next : undefined} {...(property && order ? { sort: { property: property, order: order } } : {})} key={nanoid()} />}
                             sortDropdownElem={<SortDropdown {...(property && order ? { sort: `${property},${order}` } : {})} />}
                         />
