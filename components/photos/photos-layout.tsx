@@ -70,7 +70,8 @@ export default function PhotosLayout({
                         <Input
                             type="text"
                             value={text || ""}
-                            placeholder="Search"
+                            label="Search"
+                            size="sm"
                             /*
                             Increase height of input
                             classNames={{
@@ -80,7 +81,7 @@ export default function PhotosLayout({
                             isClearable={text ? true : false}
                             onValueChange={setText}
                             endContent={
-                                text ? (null): (<MagnifyingGlassIcon />)
+                                text ? (null): (<><div className='h-full flex items-center'><MagnifyingGlassIcon /></div></>)
                             }
                         />
                     </div>

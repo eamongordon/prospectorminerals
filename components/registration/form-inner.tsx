@@ -121,7 +121,7 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
           <Input
             id="nametxt"
             name="nametxt"
-            placeholder="Name (Optional)"
+            label="Name (Optional)"
             size="sm"
             type="text"
           //className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
@@ -134,7 +134,7 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
           name="email"
           size="sm"
           type="email"
-          placeholder="Email"
+          label="Email"
           autoComplete="email"
           onChange={(e) => setData({ ...data, email: e.target.value })}
           required
@@ -146,7 +146,7 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
           <Input
             id="password"
             name="password"
-            placeholder="Password"
+            label="Password"
             size="sm"
             type="password"
             onChange={(e) => setData({ ...data, password: e.target.value })}

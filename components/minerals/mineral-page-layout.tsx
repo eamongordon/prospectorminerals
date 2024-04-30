@@ -219,9 +219,10 @@ export default function MineralPageLayout({
                 <div className="w-full sm:w-80">
                     <Input
                         type="text"
-                        placeholder="Search"
+                        label="Search"
+                        size="sm"
+                        //radius="md"
                         value={searchText || ""}
-                        labelPlacement="outside"
                         isClearable={searchText ? true : false}
                         /*
                         classNames={{
@@ -230,7 +231,7 @@ export default function MineralPageLayout({
                         */
                         onValueChange={setSearchText}
                         endContent={
-                            searchText ? (null): (<MagnifyingGlassIcon />)
+                            searchText ? (null): (<><div className='h-full flex items-center'><MagnifyingGlassIcon /></div></>)
                         }
                     />
                     <Button
