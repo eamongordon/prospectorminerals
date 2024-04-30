@@ -50,8 +50,8 @@ export default function SortDropdown({ sort }: { sort?: string }) {
     return (
         <div className='relative'>
             <Select
-                isRequired
-                placeholder="Sort By"
+                label="Sort By"
+                size="sm"
                 aria-label="Sort By"
                 defaultSelectedKeys={query ? [query] : undefined}
                 onChange={(event) => {
