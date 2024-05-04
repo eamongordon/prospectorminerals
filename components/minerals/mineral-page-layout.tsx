@@ -221,7 +221,7 @@ export default function MineralPageLayout({
                         type="text"
                         label="Search"
                         size="sm"
-                        //radius="md"
+                        radius="md"
                         value={searchText || ""}
                         isClearable={searchText ? true : false}
                         /*

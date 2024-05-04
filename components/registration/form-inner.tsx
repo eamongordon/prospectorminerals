@@ -123,6 +123,7 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
             name="nametxt"
             label="Name (Optional)"
             size="sm"
+            radius="md"
             type="text"
           //className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
           />
@@ -133,6 +134,7 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
           id="email"
           name="email"
           size="sm"
+          radius="md"
           type="email"
           label="Email"
           autoComplete="email"
@@ -148,6 +150,7 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
             name="password"
             label="Password"
             size="sm"
+            radius="md"
             type="password"
             onChange={(e) => setData({ ...data, password: e.target.value })}
             required

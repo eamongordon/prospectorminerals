@@ -52,6 +52,7 @@ export default function SortDropdown({ sort }: { sort?: string }) {
             <Select
                 label="Sort By"
                 size="sm"
+                radius='md'
                 aria-label="Sort By"
                 defaultSelectedKeys={query ? [query] : undefined}
                 onChange={(event) => {
