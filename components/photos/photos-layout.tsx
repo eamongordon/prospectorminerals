@@ -72,6 +72,7 @@ export default function PhotosLayout({
                             value={text || ""}
                             label="Search"
                             size="sm"
+                            radius='md'
                             /*
                             Increase height of input
                             classNames={{
