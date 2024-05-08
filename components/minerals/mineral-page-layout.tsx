@@ -348,6 +348,8 @@ export default function MineralPageLayout({
                                 */
                                     classNames={{
                                         innerWrapper: ['flex flex-wrap'],
+                                        //display chips below input, add margin
+                                        input: [chemistryVal? 'mb-1': null]
                                         //input: [`${`w-[${chemistryInput.length * 10}px]`} flex-none`]
                                     }}
                                     minRows={1}
@@ -386,7 +388,8 @@ export default function MineralPageLayout({
                                         }, 200)
 
                                     }}
-                                    startContent={
+                                    //display chips below input, change to endContent
+                                    endContent={
                                         (chemistryVal?.map((val: string, index) => {
                                             return (
                                                 <Chip className="mr-1 min-h-[28px] mb-1"
