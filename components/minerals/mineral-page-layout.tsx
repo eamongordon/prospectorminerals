@@ -349,11 +349,10 @@ export default function MineralPageLayout({
                                     classNames={{
                                         innerWrapper: ['flex flex-wrap'],
                                         //display chips below input, add margin
-                                        input: [chemistryVal? 'my-1': null]
+                                        input: [chemistryVal? 'mb-1': null]
                                         //input: [`${`w-[${chemistryInput.length * 10}px]`} flex-none`]
                                     }}
                                     minRows={1}
-                                    labelPlacement="outside"
                                     size="md"
                                     onValueChange={(value) => { setChemistryInput(value); }}
                                     onKeyDown={(e) => {
