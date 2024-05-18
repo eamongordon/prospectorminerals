@@ -1,3 +1,5 @@
+//Move into main locality component. Place chemistryVal (The selected minerals) as query param with object containing mineral name and image
+
 "use client";
 
 import { Listbox, ListboxItem, Spinner, Avatar, Chip, Textarea } from "@nextui-org/react";
