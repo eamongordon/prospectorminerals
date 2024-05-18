@@ -9,11 +9,12 @@ import { useDebounce } from "use-debounce";
 import { useInView } from 'react-intersection-observer';
 import { fetchMinerals } from '@/lib/actions';
 import { Link as UILink, Accordion, AccordionItem, Button, Chip, Listbox, ListboxItem, Spinner, Textarea, Avatar } from '@nextui-org/react'
+import { LocalitiesQueryParams, mineralListItem } from '@/types/types'
 import "leaflet-defaulticon-compatibility"
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
 
 
-export default function LocalitiesPageLayout({ markers, filterObj, mineralSearchComp }: { markers?: any, filterObj: any, mineralSearchComp: React.ReactElement }) {
+export default function LocalitiesPageLayout({ markers, filterObj, mineralSearchComp }: { markers?: any, filterObj: LocalitiesQueryParams, mineralSearchComp: React.ReactElement }) {
     const [coord, setCoord] = useState([51.505, -0.09])
     const [stateMarkers, setStateMarkers] = useState(markers);
 
@@ -62,7 +63,7 @@ export default function LocalitiesPageLayout({ markers, filterObj, mineralSearch
     const searchParams = useSearchParams();
 
     console.log(chemistryVal);
-    
+
     useEffect(() => {
         if (initialChemistryRender.current) {
             initialChemistryRender.current = false
@@ -81,11 +82,6 @@ export default function LocalitiesPageLayout({ markers, filterObj, mineralSearch
         const queryParam = search ? `?${search}` : "";
         router.push(`${pathname}${queryParam}`);
     }, [chemistryVal]);
-
-    type mineralListItem = {
-        name: string,
-        image?: string
-    }
 
     async function loadMorePhotos(isInput?: boolean) {
         if (isInput) {
@@ -146,7 +142,7 @@ export default function LocalitiesPageLayout({ markers, filterObj, mineralSearch
                         <AccordionItem key="1" aria-label="Hardness" title="Hardness">
                             <p>Some text</p>
                         </AccordionItem>
-                        <AccordionItem key="2" aria-label="Minerals" title="Minerals">       
+                        <AccordionItem key="2" aria-label="Minerals" title="Minerals">
                         </AccordionItem>
                         <AccordionItem key="3" aria-label="Other" title="Other">
                             <div
