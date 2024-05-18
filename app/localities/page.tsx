@@ -29,7 +29,7 @@ const Page = async ({
     const order =
         typeof searchParams.order === 'string' ? searchParams.order : undefined
     const chemistry =
-        typeof searchParams.chemistry === 'string' ? searchParams.chemistry : undefined
+        typeof searchParams.chemistry === 'string' ? JSON.parse(searchParams.chemistry) : undefined
     const photosQuery = await fetchMinerals({ filterObj: undefined, cursor: undefined, limit: 5 });
     /*
     const Map = useMemo(() => dynamic(
@@ -41,11 +41,13 @@ const Page = async ({
     ), [])
     */
     //const photosQuery = await fetchPhotos({ filterObj: { name: search }, cursor: undefined, limit: 10, ...(property && order ? { sortObj: { property: property, order: order } } : {}) });
+    const filterObj = { chemistry: chemistry };
     return (
         <main>
             <Header />
             <LocalitiesPageLayout
                 markers={markers}
+                filterObj={filterObj}
                 mineralSearchComp={
                     <MineralSelect
                         initialPhotos={photosQuery.results}
