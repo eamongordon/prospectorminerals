@@ -24,6 +24,19 @@ export type LocalitiesFilterObj = {
     minerals?: string[]
 }
 
+export type LocalitiesQueryParams = {
+    name?: string,
+    type_code?: string,
+    latitude?: number,
+    longitude?: number,
+    minerals?: {name: string, image: string}[]
+}
+
+export type mineralListItem = {
+    name: string,
+    image?: string
+}
+
 
 export type PhotosFilterObj = {
     name: string | undefined
