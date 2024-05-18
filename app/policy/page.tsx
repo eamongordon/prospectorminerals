@@ -20,7 +20,7 @@ const Page = async ({
                             <p>Thank you for reviewing our site policy. We seek to provide an understandable and transparent site policy and if there are any clarifications or inquries necessary, please <a className="font-medium text-cyan-500" href="#contact">contact us</a>.</p>
                         </div>
                     </section>
-                    <section className='flex-col space-y-8 justify-center items-center py-4 px-6 w-full max-w-screen-xl'>
+                    <section className='flex-col space-y-10 justify-center items-center py-4 px-6 w-full max-w-screen-xl'>
                         <div className="flex-col space-y-3">
                             <h2 className="text-3xl font-medium scroll-mt-16" id="copyright">Copyright Policy</h2>
                             <p>No portion of this site can be reproduced, distributed, replicated, modified or used as a source of derivative works without the written permission of the owner. To receive permission for the use of website content and images, please <a className="font-medium text-cyan-500" href="#contact">contact us</a>. After contacting us, we may allow the use of Images from this site for educational, non-commercial purposes only, provided appropriate credit and a link to this website is given when applicable. Preferably, our website name should be contained as a watermark (contact us for examples). The Prospector Minerals logo may be used solely and only for promoting this website.</p>
@@ -32,7 +32,7 @@ const Page = async ({
                         <div className="flex-col">
                             <h2 className="text-3xl font-medium scroll-mt-16" id="privacy">Privacy Policy</h2>
                             <h3 className="text-2xl font-medium my-2">Collected Data</h3>
-                            <div className="flex-col space-y-4">
+                            <div className="flex-col space-y-6">
                                 <div>
                                     <h4 className="text-xl font-medium">Account</h4>
                                     <p>When creating an account (&quot;signing up&quot; for a membership), we, Prospector Minerals, collect your email address, which may then be used for email updates or campaigns. If you would like to remove this information, please delete your account by visiting the <a className="font-medium text-cyan-500" href="/account/settings#new-password">account settings page</a>.</p>
@@ -51,9 +51,9 @@ const Page = async ({
                                     </p>
                                 </div>
                             </div>
-                            <h3 className="text-2xl font-medium pt-4">Data Use</h3>
+                            <h3 className="text-2xl font-medium pt-6">Data Use</h3>
                             <p>We may use your data for numerous legitimate purposes, including, but not limited to, the following:</p>
-                            <div className="flex-col space-y-4 pt-4">
+                            <div className="flex-col space-y-6 pt-4">
                                 <div>
                                     <h4 className="text-xl font-medium">Account Management</h4>
                                     <p>Your email address, phone number, and other provided information may be used to assist with the management and login of your account.</p>
