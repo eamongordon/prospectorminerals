@@ -6,6 +6,7 @@ import { Skeleton } from '@nextui-org/react';
 import LocalitiesPageLayout from "@/components/localities/localities-page-layout"
 import MineralSelect from "@/components/localities/mineral-search-inner"
 import { fetchMinerals } from '@/lib/actions';
+import { LocalitiesQueryParams } from '@/types/types';
 
 const markers = [
     {
@@ -41,7 +42,7 @@ const Page = async ({
     ), [])
     */
     //const photosQuery = await fetchPhotos({ filterObj: { name: search }, cursor: undefined, limit: 10, ...(property && order ? { sortObj: { property: property, order: order } } : {}) });
-    const filterObj = { chemistry: chemistry };
+    const filterObj = { chemistry: chemistry } as LocalitiesQueryParams;
     return (
         <main>
             <Header />
