@@ -391,7 +391,7 @@ export default function MineralPageLayout({
                                     endContent={
                                         (chemistryVal?.map((val: string, index) => {
                                             return (
-                                                <Chip className="mr-1 min-h-[28px] mb-1"
+                                                <Chip className="mr-1 min-h-[28px]"
                                                     size="md"
                                                     onClose={() => {
                                                         const newArray = chemistryVal.filter((chemval) => chemval !== val);
