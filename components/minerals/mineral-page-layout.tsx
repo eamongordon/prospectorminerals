@@ -231,7 +231,7 @@ export default function MineralPageLayout({
                         */
                         onValueChange={setSearchText}
                         endContent={
-                            searchText ? (null): (<><div className='h-full flex items-center'><MagnifyingGlassIcon /></div></>)
+                            searchText ? (null) : (<><div className='h-full flex items-center'><MagnifyingGlassIcon /></div></>)
                         }
                     />
                     <Button
@@ -349,7 +349,7 @@ export default function MineralPageLayout({
                                     classNames={{
                                         innerWrapper: ['flex flex-wrap'],
                                         //display chips below input, add margin
-                                        input: [chemistryVal? 'mb-1': null]
+                                        input: [chemistryVal ? 'mb-1' : null]
                                         //input: [`${`w-[${chemistryInput.length * 10}px]`} flex-none`]
                                     }}
                                     minRows={1}
@@ -357,11 +357,13 @@ export default function MineralPageLayout({
                                     onValueChange={(value) => { setChemistryInput(value); }}
                                     onKeyDown={(e) => {
                                         if (e.key === "Enter") {
-                                            let currentChemistry = chemistryVal ? [...chemistryVal] : [];
-                                            currentChemistry?.push(e.currentTarget.value);
-                                            console.log(e.currentTarget.value.toString())
-                                            setChemistryVal(currentChemistry);
-                                            setChemistryInput("");
+                                            if (e.currentTarget.value.length) {
+                                                let currentChemistry = chemistryVal ? [...chemistryVal] : [];
+                                                currentChemistry?.push(e.currentTarget.value);
+                                                console.log(e.currentTarget.value.toString())
+                                                setChemistryVal(currentChemistry);
+                                                setChemistryInput("");
+                                            }
                                             e.preventDefault();
                                         }
                                         if (e.key === "Backspace" && !e.currentTarget.value.length) {
