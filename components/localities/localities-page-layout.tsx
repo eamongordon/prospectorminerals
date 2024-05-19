@@ -62,7 +62,7 @@ export default function LocalitiesPageLayout({ markers, filterObj, mineralSearch
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
-    console.log(chemistryVal);
+    //console.log(chemistryVal);
 
     useEffect(() => {
         if (initialChemistryRender.current) {
