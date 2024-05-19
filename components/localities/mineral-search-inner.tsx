@@ -37,7 +37,7 @@ export default function MineralSelect({
             setMineralList(photosQuery.results);
         } else {
             if (page) {
-                console.log("loadMoreMin")
+                console.log("loadMoreLocalities")
                 const photosQuery = await fetchMinerals({ filterObj: { name: chemistryInput }, cursor: page, limit: 5 });
                 if (photosQuery.results?.length) {
                     setPage(photosQuery.next ? photosQuery.next : undefined)
@@ -47,7 +47,7 @@ export default function MineralSelect({
                     ]);
                 };
             } else {
-                console.log("noMoreMin")
+                console.log("noMoreLocalities")
             }
         }
     }
