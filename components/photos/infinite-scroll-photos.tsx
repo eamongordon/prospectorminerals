@@ -96,7 +96,7 @@ export default function InfiniteScrollPhotos({
               onMouseLeave={(e) => handleHoverOut(e.currentTarget.id)}
             >
               <Skeleton
-                className='h-full w-full' />
+                className='h-full w-full absolute' />
               {photo.image && (
                 <BlurImage
                   src={photo.image}//"/Cavansite-45.jpeg"
