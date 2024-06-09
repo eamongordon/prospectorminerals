@@ -358,6 +358,54 @@ export async function fetchLocalities({ filterObj, cursor, limit, sortObj, field
   };
 };
 
+export async function fetchPosts({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: LocalitiesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?:string }) {
+  const { name } = Object(filterObj)
+  const cursorObj = !cursor ? undefined : { number: cursor };
+  let selectObj;
+  if (!fieldset || fieldset === "display") {
+    selectObj = {
+      name: true,
+      image: true,
+      imageBlurhash: true,
+      createdAt: true,
+      number: true,
+      description: true
+    }
+  } 
+  const results = await prisma.post.findMany(
+    {
+      skip: !cursor ? 0 : 1,
+      cursor: cursorObj,
+      take: limit,
+      where: {
+        published: true,
+        title: {
+          contains: name,
+          mode: 'insensitive'
+        }
+      },
+      select: selectObj,
+      orderBy: [
+        sortObj ? { [sortObj.property]: sortObj.order } : {},
+        {
+          number: "asc",
+        },
+      ],
+      ...(limit ? { take: limit } : {}),
+    }
+  );
+  /*
+  let returnArray;
+  if (fieldset === "display") {
+    returnArray = results.map((result) => {return {name: result.name, number: result.number, id: result.id, photo: result.photos[0].image}});
+  }
+  */
+  return {
+    results: results,
+    next: results.length === limit ? results[results.length - 1].number : undefined
+  };
+};
+
 export async function fetchPhotos({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj: PhotosFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: string }) {
   if (!limit) {
     limit = 10;
