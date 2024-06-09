@@ -359,12 +359,12 @@ export async function fetchLocalities({ filterObj, cursor, limit, sortObj, field
 };
 
 export async function fetchPosts({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: LocalitiesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?:string }) {
-  const { name } = Object(filterObj)
+  const { title } = Object(filterObj)
   const cursorObj = !cursor ? undefined : { number: cursor };
   let selectObj;
   if (!fieldset || fieldset === "display") {
     selectObj = {
-      name: true,
+      title: true,
       image: true,
       imageBlurhash: true,
       createdAt: true,
@@ -380,7 +380,7 @@ export async function fetchPosts({ filterObj, cursor, limit, sortObj, fieldset }
       where: {
         published: true,
         title: {
-          contains: name,
+          contains: title,
           mode: 'insensitive'
         }
       },
