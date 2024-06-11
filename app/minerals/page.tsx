@@ -7,8 +7,6 @@ const nanoid = customAlphabet(
 
 import { fetchMinerals } from '@/lib/actions'
 import { LustersList, MineralClassesList, CrystalSystemsList } from '@/types/types'
-import Header from "@/components/header";
-import Footer from "@/components/footer";
 import InfiniteScrollMinerals from '@/components/minerals/infinite-scroll-minerals';
 import MineralPageLayout from "@/components/minerals/mineral-page-layout";
 import SortDropdown from "@/components/minerals/sort-dropdown";
@@ -41,7 +39,6 @@ const Page = async ({
     console.log(typeof searchParams.mineralClasses);
     return (
         <main>
-            <Header />
             <div className="flex justify-center items-center">
                 <section className='flex-col justify-center items-center py-4 px-6 w-full max-w-screen-xl'>
                     <div className='mb-4 sm:mb-12 flex-row my-5 sm:flex sm:gap-x-10 justify-between'>
@@ -53,7 +50,6 @@ const Page = async ({
                     </div>
                 </section>
             </div>
-            <Footer />
         </main >
     )
 }
