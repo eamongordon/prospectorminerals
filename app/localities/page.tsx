@@ -1,6 +1,4 @@
 import dynamic from 'next/dynamic';
-import Header from '@/components/header';
-import Footer from '@/components/footer';
 import { useMemo } from 'react';
 import { Skeleton } from '@nextui-org/react';
 import LocalitiesPageLayout from "@/components/localities/localities-page-layout"
@@ -45,7 +43,6 @@ const Page = async ({
     const filterObj = { chemistry: chemistry } as LocalitiesQueryParams;
     return (
         <main>
-            <Header />
             <LocalitiesPageLayout
                 markers={markers}
                 filterObj={filterObj}
@@ -55,7 +52,6 @@ const Page = async ({
                         initialCursor={photosQuery.next ? photosQuery.next : undefined}
                     />
                 } />
-            <Footer />
         </main >
     )
 }

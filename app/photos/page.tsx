@@ -6,8 +6,6 @@ const nanoid = customAlphabet(
 ); // 7-character random string
 
 import { fetchPhotos } from '@/lib/actions'
-import Header from "@/components/header";
-import Footer from "@/components/footer";
 import SortDropdown from '@/components/photos/sort-dropdown';
 import InfiniteScrollPhotos from '@/components/photos/infinite-scroll-photos';
 import PhotosLayout from "@/components/photos/photos-layout";
@@ -26,7 +24,6 @@ const Page = async ({
     const photosQuery = await fetchPhotos({ filterObj: { name: search }, cursor: undefined, limit: 10, ...(property && order ? { sortObj: { property: property, order: order } } : {}) });
     return (
         <main>
-            <Header />
             <div className="flex justify-center items-center">
                 <section className='flex-col justify-center items-center py-4 px-6 w-full max-w-screen-xl'>
                     {/*
@@ -54,7 +51,6 @@ const Page = async ({
                     />
                 </section>
             </div>
-            <Footer />
         </main >
     )
 }

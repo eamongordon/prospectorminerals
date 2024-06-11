@@ -4,7 +4,8 @@ import './globals.css';
 import { Providers } from './providers';
 import { Analytics } from "@vercel/analytics/react";
 import { headers } from 'next/headers'
-import { user } from '@nextui-org/react';
+import Header from '@/components/header';
+import Footer from '@/components/footer';
 
 const inter = Work_Sans({ subsets: ['latin'] })
 
@@ -27,8 +28,10 @@ export default function RootLayout({
         (<head><meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" /></head>) : (null)
       }
       <body className={`${inter.className} bg-gradient-to-b from-[rgb(214,219,220)] to-white text-black dark:bg-gradient-to-b dark:from-black dark:to-black dark:text-white`}>
+      <Header/>
         <Providers>{children}</Providers>
         <Analytics />
+        <Footer/>
       </body>
     </html>
   )
