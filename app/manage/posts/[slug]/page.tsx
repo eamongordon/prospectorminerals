@@ -3,9 +3,7 @@ import prisma from "@/lib/prisma";
 import { notFound, redirect } from "next/navigation";
 import { updatePostMetadata } from "@/lib/actions";
 import Editor from "@/components/editor";
-import Header from "@/components/header";
 import DeletePostForm from "@/components/form/delete-post-form";
-import Footer from "@/components/footer";
 import Form from '@/components/form';
 import PostPageLayout from "@/components/manage/posts/post-page-layout";
 
@@ -25,7 +23,6 @@ export default async function PostPage({ params }: { params: { slug: string } })
 
   return (
     <>
-      <Header />
       <div className="flex flex-col space-y-6 sm:p-10 justify-items-center items-center">
         <PostPageLayout
           editorElem={
@@ -68,7 +65,6 @@ export default async function PostPage({ params }: { params: { slug: string } })
           }
         />
       </div>
-      <Footer />
     </>
   );
 }
