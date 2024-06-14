@@ -24,6 +24,11 @@ export type LocalitiesFilterObj = {
     minerals?: string[]
 }
 
+export type ArticlesFilterObj = {
+    title?: string
+}
+
+
 export type LocalitiesQueryParams = {
     name?: string,
     type_code?: string,

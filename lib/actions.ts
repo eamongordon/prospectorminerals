@@ -9,7 +9,7 @@ import { put } from "@vercel/blob";
 import { customAlphabet } from "nanoid";
 import { del } from '@vercel/blob';
 import { getBlurDataURL } from "@/lib/utils";
-import { MineralsFilterObj, PhotosFilterObj, PhotosSortObj, LocalitiesFilterObj } from "@/types/types";
+import { MineralsFilterObj, PhotosFilterObj, PhotosSortObj, LocalitiesFilterObj, ArticlesFilterObj } from "@/types/types";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -358,7 +358,7 @@ export async function fetchLocalities({ filterObj, cursor, limit, sortObj, field
   };
 };
 
-export async function fetchPosts({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: LocalitiesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?:string }) {
+export async function fetchPosts({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: ArticlesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?:string }) {
   const { title } = Object(filterObj)
   const cursorObj = !cursor ? undefined : { number: cursor };
   let selectObj;
