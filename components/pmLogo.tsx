@@ -1,5 +1,3 @@
-"use client"
-
 export default function PMLogo() {
     return (
         <svg data-bbox="0 0 58.561 11.289" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 58.561 11.289" height="42.667" width="221.333" data-type="color">
