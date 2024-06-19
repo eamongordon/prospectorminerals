@@ -42,7 +42,6 @@ export type mineralListItem = {
     image?: string
 }
 
-
 export type PhotosFilterObj = {
     name: string | undefined
 }

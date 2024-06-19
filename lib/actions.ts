@@ -9,7 +9,7 @@ import { put } from "@vercel/blob";
 import { customAlphabet } from "nanoid";
 import { del } from '@vercel/blob';
 import { getBlurDataURL } from "@/lib/utils";
-import { MineralsFilterObj, PhotosFilterObj, PhotosSortObj, LocalitiesFilterObj, ArticlesFilterObj } from "@/types/types";
+import type { MineralsFilterObj, PhotosFilterObj, PhotosSortObj, LocalitiesFilterObj, ArticlesFilterObj } from "@/types/types";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",

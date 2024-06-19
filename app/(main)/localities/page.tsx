@@ -4,7 +4,7 @@ import { Skeleton } from '@nextui-org/react';
 import LocalitiesPageLayout from "@/components/localities/localities-page-layout"
 import MineralSelect from "@/components/localities/mineral-search-inner"
 import { fetchLocalities, fetchMinerals } from '@/lib/actions';
-import { LocalitiesQueryParams } from '@/types/types';
+import type { LocalitiesQueryParams } from '@/types/types';
 
 const markers = [
     {

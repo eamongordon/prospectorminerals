@@ -6,7 +6,8 @@ import { fetchMinerals } from '@/lib/actions';
 import MineralCard from './mineral-card';
 import { customAlphabet } from "nanoid";
 import { Spinner, Button} from "@nextui-org/react";
-import { MineralsFilterObj, PhotosSortObj } from '@/types/types';
+import type { MineralsFilterObj, PhotosSortObj } from '@/types/types';
+import type { Mineral } from '@prisma/client';
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -23,7 +24,7 @@ export default function InfiniteScrollPhotos({
   clearFilters
 }: {
   filterObj?: MineralsFilterObj
-  initialPhotos?: any[],
+  initialPhotos?: Mineral[],
   initialCursor?: number,
   sort?: PhotosSortObj,
   key?: string,
@@ -42,7 +43,7 @@ export default function InfiniteScrollPhotos({
       const photosQuery = await fetchMinerals({ ...(filterObj ? { filterObj: filterObj } : {}) || {}, cursor: page, limit: limit ? limit : 10, ...(sort ? { sortObj: sort } : {}), });
       if (photosQuery.results?.length) {
         setPage(photosQuery.next ? photosQuery.next : undefined)
-        setPhotos((prev: any[] | undefined) => [
+        setPhotos((prev: Mineral[] | undefined) => [
           ...(prev?.length ? prev : []),
           ...photosQuery.results
         ]);

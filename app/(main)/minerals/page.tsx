@@ -6,7 +6,7 @@ const nanoid = customAlphabet(
 ); // 7-character random string
 
 import { fetchMinerals } from '@/lib/actions'
-import { LustersList, MineralClassesList, CrystalSystemsList } from '@/types/types'
+import type { LustersList, MineralClassesList, CrystalSystemsList } from '@/types/types'
 import InfiniteScrollMinerals from '@/components/minerals/infinite-scroll-minerals';
 import MineralPageLayout from "@/components/minerals/mineral-page-layout";
 import SortDropdown from "@/components/minerals/sort-dropdown";
