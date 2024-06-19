@@ -5,7 +5,7 @@ import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { Accordion, AccordionItem, Slider, CheckboxGroup, Checkbox, Input, Chip, Button, Textarea } from "@nextui-org/react";
 import { Search as MagnifyingGlassIcon, ChevronDown, ChevronUp, Filter } from 'lucide-react';
 import { useDebounce } from 'use-debounce';
-import { MineralsFilterObj, PhotosSortObj } from "@/types/types";
+import type { MineralsFilterObj, PhotosSortObj } from "@/types/types";
 
 export default function MineralPageLayout({
     infiniteScrollElem,

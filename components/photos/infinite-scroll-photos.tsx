@@ -6,7 +6,8 @@ import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { fetchPhotos } from '@/lib/actions';
 import { Spinner, Button, Skeleton } from "@nextui-org/react";
 import BlurImage from '../blur-image';
-import { PhotosSortObj } from '@/types/types';
+import type { PhotosSortObj } from '@/types/types';
+import type { Photo } from '@prisma/client';
 
 export default function InfiniteScrollPhotos({
   search,
@@ -17,7 +18,7 @@ export default function InfiniteScrollPhotos({
   clearFilters
 }: {
   search?: string,
-  initialPhotos?: any[],
+  initialPhotos?: Photo[],
   initialCursor?: number,
   sort?: PhotosSortObj,
   key?: string,
@@ -64,7 +65,7 @@ export default function InfiniteScrollPhotos({
       const photosQuery = await fetchPhotos({ filterObj: { name: search }, cursor: page, limit: 10, ...(sort ? { sortObj: sort } : {}), });
       if (photosQuery.results?.length) {
         setPage(photosQuery.next ? photosQuery.next : undefined)
-        setPhotos((prev: any[] | undefined) => [
+        setPhotos((prev: Photo[] | undefined) => [
           ...(prev?.length ? prev : []),
           ...photosQuery.results
         ]);
@@ -105,7 +106,7 @@ export default function InfiniteScrollPhotos({
                   className={`${hoverItem === photo.id ? "brightness-50 blur-sm" : ""} rounded-lg`}
                   fill={true}
                   objectFit='cover'
-                  blurDataURL={photo.blurDataURL}
+                  blurDataURL={photo.imageBlurhash || undefined}
                 />
               )}
               {hoverItem === photo.id ? (

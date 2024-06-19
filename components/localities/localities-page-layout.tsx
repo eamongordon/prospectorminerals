@@ -9,12 +9,13 @@ import { useDebounce } from "use-debounce";
 import { useInView } from 'react-intersection-observer';
 import { fetchMinerals } from '@/lib/actions';
 import { Link as UILink, Accordion, AccordionItem, Button, Chip, Listbox, ListboxItem, Spinner, Textarea, Avatar } from '@nextui-org/react'
-import { LocalitiesQueryParams, mineralListItem } from '@/types/types'
+import type { LocalitiesQueryParams, mineralListItem } from '@/types/types'
+import type { Locality } from '@prisma/client'
 import "leaflet-defaulticon-compatibility"
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
 
 //chore: update any definition for localities
-export default function LocalitiesPageLayout({ markers, filterObj, localities }: { markers?: any, filterObj: LocalitiesQueryParams, localities: any[] }) {
+export default function LocalitiesPageLayout({ markers, filterObj, localities }: { markers?: any, filterObj: LocalitiesQueryParams, localities: Locality[] }) {
     const [coord, setCoord] = useState([51.505, -0.09])
     const [stateMarkers, setStateMarkers] = useState(markers);
 
@@ -95,7 +96,7 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities }:
                 const photosQuery = await fetchMinerals({ filterObj: { name: chemistryInput }, cursor: page, limit: 5 });
                 if (photosQuery.results?.length) {
                     setPage(photosQuery.next ? photosQuery.next : undefined)
-                    setMineralList((prev: any[] | undefined) => [
+                    setMineralList((prev: mineralListItem[] | undefined) => [
                         ...(prev?.length ? prev : []),
                         ...photosQuery.results
                     ]);
