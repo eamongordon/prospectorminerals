@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { Skeleton } from '@nextui-org/react';
 import LocalitiesPageLayout from "@/components/localities/localities-page-layout"
 import MineralSelect from "@/components/localities/mineral-search-inner"
-import { fetchMinerals } from '@/lib/actions';
+import { fetchLocalities, fetchMinerals } from '@/lib/actions';
 import { LocalitiesQueryParams } from '@/types/types';
 
 const markers = [
@@ -21,8 +21,8 @@ const Page = async ({
 }: {
     searchParams: { [key: string]: string | string[] | undefined }
 }) => {
-    const search =
-        typeof searchParams.search === 'string' ? searchParams.search : undefined
+    const name =
+        typeof searchParams.name === 'string' ? searchParams.name : undefined
     const property =
         typeof searchParams.property === 'string' ? searchParams.property : undefined
     const order =
@@ -39,19 +39,15 @@ const Page = async ({
         }
     ), [])
     */
-    //const photosQuery = await fetchPhotos({ filterObj: { name: search }, cursor: undefined, limit: 10, ...(property && order ? { sortObj: { property: property, order: order } } : {}) });
-    const filterObj = { chemistry: chemistry } as LocalitiesQueryParams;
+    const filterObj = { name: name };
+    const localities = await fetchLocalities({ filterObj: filterObj, cursor: undefined, limit: 100, ...(property && order ? { sortObj: { property: property, order: order } } : {}) });
     return (
         <main>
             <LocalitiesPageLayout
                 markers={markers}
                 filterObj={filterObj}
-                mineralSearchComp={
-                    <MineralSelect
-                        initialPhotos={photosQuery.results}
-                        initialCursor={photosQuery.next ? photosQuery.next : undefined}
-                    />
-                } />
+                localities={localities.results}
+            />
         </main >
     )
 }

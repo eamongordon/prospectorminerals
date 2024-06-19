@@ -13,8 +13,8 @@ import { LocalitiesQueryParams, mineralListItem } from '@/types/types'
 import "leaflet-defaulticon-compatibility"
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
 
-
-export default function LocalitiesPageLayout({ markers, filterObj, mineralSearchComp }: { markers?: any, filterObj: LocalitiesQueryParams, mineralSearchComp: React.ReactElement }) {
+//chore: update any definition for localities
+export default function LocalitiesPageLayout({ markers, filterObj, localities }: { markers?: any, filterObj: LocalitiesQueryParams, localities: any[] }) {
     const [coord, setCoord] = useState([51.505, -0.09])
     const [stateMarkers, setStateMarkers] = useState(markers);
 
