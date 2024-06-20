@@ -135,8 +135,8 @@ model Locality {
   name        String
   type_code   String
   description String
-  latitude    String
-  longitude   String
+  latitude    Decimal
+  longitude   Decimal
   number      Int                 @unique @default(autoincrement())
   minerals    MineralOnLocality[]
 

@@ -309,6 +309,18 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities }:
                                 )
                             })
                         }
+                        {
+                            localities.map((locality: Locality) => {
+                                return (
+                                    <Marker key={locality.id} position={[locality.longitude, locality.latitude]} >
+                                        <Popup>
+                                            A pretty CSS3 popup. <br /> Easily customizable.
+                                        </Popup>
+                                    </Marker>
+                                )
+                            })
+                        }
+
                         {/*@ts-expect-error*/}
                         <Marker position={coord} eventHandlers={{
                             click: (e) => {
