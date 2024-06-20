@@ -4,7 +4,6 @@
 
 import { Listbox, ListboxItem, Spinner, Avatar, Chip, Textarea } from "@nextui-org/react";
 import { useState, useEffect, useRef } from 'react';
-import { Check } from "lucide-react";
 import { useInView } from 'react-intersection-observer';
 import { fetchMinerals } from '@/lib/actions';
 import { useDebounce } from "use-debounce";
