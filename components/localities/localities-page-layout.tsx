@@ -312,7 +312,7 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities }:
                         {
                             localities.map((locality: Locality) => {
                                 return (
-                                    <Marker key={locality.id} position={[locality.longitude, locality.latitude]} >
+                                    <Marker key={locality.id} position={[Number(locality.longitude), Number(locality.latitude)]} >
                                         <Popup>
                                             A pretty CSS3 popup. <br /> Easily customizable.
                                         </Popup>
