@@ -1,6 +1,3 @@
-import Header from "@/components/header";
-import Footer from "@/components/footer";
-
 const Page = async ({
     searchParams
 }: {
@@ -9,7 +6,6 @@ const Page = async ({
     const query = typeof searchParams.q === 'string' ? searchParams.q : undefined
     return (
         <main>
-            <Header />
             <div className="flex justify-center items-center">
                 <div className="flex w-full max-w-screen-xl flex-col p-8">
                 <section className='flex-col justify-center items-center pb-4 w-full'>
@@ -87,7 +83,6 @@ const Page = async ({
                     </section>
                 </div>
             </div>
-            <Footer />
         </main >
     )
 }
