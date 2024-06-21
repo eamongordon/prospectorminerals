@@ -11,11 +11,14 @@ import { fetchMinerals } from '@/lib/actions';
 import { Link as UILink, Accordion, AccordionItem, Button, Chip, Listbox, ListboxItem, Spinner, Textarea, Avatar } from '@nextui-org/react'
 import type { LocalitiesQueryParams, mineralListItem } from '@/types/types'
 import type { Locality } from '@prisma/client'
+import { Input } from '@nextui-org/react';
+import { Search as MagnifyingGlassIcon, Filter } from 'lucide-react';
 import "leaflet-defaulticon-compatibility"
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
 
 //chore: update any definition for localities
 export default function LocalitiesPageLayout({ markers, filterObj, localities }: { markers?: any, filterObj: LocalitiesQueryParams, localities: Locality[] }) {
+
     const [coord, setCoord] = useState([51.505, -0.09])
     const [stateMarkers, setStateMarkers] = useState(markers);
 
@@ -50,7 +53,7 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities }:
     const { name, minerals } = Object(filterObj);
 
     const initialChemistryRender = useRef(true);
-
+    const [searchText, setSearchText] = useState(name);
     const [mineralList, setMineralList] = useState<mineralListItem[]>([])
     const [ref, inView] = useInView();
     const [chemistryInput, setChemistryInput] = useState("");
@@ -58,10 +61,27 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities }:
     const [mineralsVal, setMineralsVal] = useState<any[] | undefined>(minerals);
     const [isMineralFocused, setIsMineralFocused] = useState(false);
     const [page, setPage] = useState<number | undefined>(undefined);
-
+    const [isMobileFiltersOpen, setIsisMobileFiltersOpen] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
+    const [searchQuery] = useDebounce(searchText, 500);
+    
+    useEffect(() => {
+        if (initialRender.current) {
+            initialRender.current = false
+            return
+        }
+        const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+        if (!searchQuery) {
+            current.delete("name");
+        } else {
+            current.set("name", searchQuery);
+        }
+        const search = current.toString();
+        const queryParam = search ? `?${search}` : "";
+        router.push(`${pathname}${queryParam}`);
+    }, [searchQuery]);
 
     //console.log(chemistryVal);
 
@@ -135,6 +155,37 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities }:
             <Button onClick={() => setStateMarkers([{ title: 'New Marker', coords: [10, 10] }])}>More Markers</Button>
             <div className="flex w-full flex-col sm:flex-row">
                 <div className="w-full sm:w-80">
+                    <Input
+                        type="text"
+                        label="Search"
+                        size="sm"
+                        radius="md"
+                        value={searchText || ""}
+                        isClearable={searchText ? true : false}
+                        /*
+                        classNames={{
+                            inputWrapper: ["h-12 sm:h-auto"]
+                        }}
+                        */
+                        onValueChange={setSearchText}
+                        endContent={
+                            searchText ? (null) : (<><div className='h-full flex items-center'><MagnifyingGlassIcon /></div></>)
+                        }
+                    />
+                    <Button
+                        className="sm:hidden h-11 w-full mb-2 mt-3 bg-default-100 hover:bg-default-200 justify-between px-3"
+                        startContent={<Filter height={18} />}
+                        endContent={
+                            <svg aria-hidden="true" fill="none" focusable="false" height="1em" role="presentation" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="1em" data-slot="selectorIcon" className="w-unit-4 h-unit-4 transition-transform duration-150 ease motion-reduce:transition-none data-[open=true]:rotate-180" data-open={isMobileFiltersOpen}><path d="m6 9 6 6 6-6"></path></svg>
+                        }
+                        onPress={() => {
+                            if (isMobileFiltersOpen) {
+                                setIsisMobileFiltersOpen(false);
+                            } else {
+                                setIsisMobileFiltersOpen(true);
+                            }
+                        }}
+                    >{isMobileFiltersOpen ? "Close Filters" : "Open Filters"}</Button>
                     <Accordion>
                         <AccordionItem key="minerals" aria-label="Minerals" title="Minerals">
                             <div
