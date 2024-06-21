@@ -27,9 +27,8 @@ const Page = async ({
         typeof searchParams.property === 'string' ? searchParams.property : undefined
     const order =
         typeof searchParams.order === 'string' ? searchParams.order : undefined
-    const chemistry =
-        typeof searchParams.chemistry === 'string' ? JSON.parse(searchParams.chemistry) : undefined
-    const photosQuery = await fetchMinerals({ filterObj: undefined, cursor: undefined, limit: 5 });
+    const minerals =
+        typeof searchParams.minerals === 'string' ? JSON.parse(searchParams.minerals) : undefined
     /*
     const Map = useMemo(() => dynamic(
         () => import('@/components/localities/map'),
@@ -40,12 +39,12 @@ const Page = async ({
     ), [])
     */
     const filterObj = { name: name };
-    const localities = await fetchLocalities({ filterObj: filterObj, cursor: undefined, limit: 100, ...(property && order ? { sortObj: { property: property, order: order } } : {}) });
+    const localities = await fetchLocalities({ filterObj: {...filterObj, minerals: minerals.map((obj : {name: string, image: string}) => obj.name)}, cursor: undefined, limit: 100, ...(property && order ? { sortObj: { property: property, order: order } } : {}) });
     return (
         <main>
             <LocalitiesPageLayout
                 markers={markers}
-                filterObj={filterObj}
+                filterObj={{...filterObj, minerals: minerals}}
                 localities={localities.results}
             />
         </main >
