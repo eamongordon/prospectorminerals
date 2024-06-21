@@ -4,7 +4,7 @@ import { Skeleton } from '@nextui-org/react';
 import LocalitiesPageLayout from "@/components/localities/localities-page-layout"
 import MineralSelect from "@/components/localities/mineral-search-inner"
 import { fetchLocalities, fetchMinerals } from '@/lib/actions';
-import type { LocalitiesQueryParams } from '@/types/types';
+import type { mineralListItem } from '@/types/types';
 
 const markers = [
     {
@@ -39,7 +39,7 @@ const Page = async ({
     ), [])
     */
     const filterObj = { name: name };
-    const localities = await fetchLocalities({ filterObj: {...filterObj, minerals: minerals.map((obj : {name: string, image: string}) => obj.name)}, cursor: undefined, limit: 100, ...(property && order ? { sortObj: { property: property, order: order } } : {}) });
+    const localities = await fetchLocalities({ filterObj: {...filterObj, minerals: minerals ? minerals.map((obj : mineralListItem) => obj.name) : undefined}, cursor: undefined, limit: 100, ...(property && order ? { sortObj: { property: property, order: order } } : {}) });
     return (
         <main>
             <LocalitiesPageLayout
