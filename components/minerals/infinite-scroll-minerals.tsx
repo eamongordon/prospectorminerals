@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, Fragment } from 'react'
+import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 import { fetchMinerals } from '@/lib/actions';
 import MineralCard from './mineral-card';
