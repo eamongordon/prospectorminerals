@@ -19,7 +19,6 @@ export default function InfiniteScrollPhotos({
   initialPhotos,
   initialCursor,
   sort,
-  key,
   limit,
   clearFilters
 }: {
@@ -27,7 +26,6 @@ export default function InfiniteScrollPhotos({
   initialPhotos?: Mineral[],
   initialCursor?: number,
   sort?: PhotosSortObj,
-  key?: string,
   limit?: number,
   clearFilters?: Function
 }) {
@@ -66,7 +64,6 @@ export default function InfiniteScrollPhotos({
 
   return (
     <ul
-      key={key}
       role='list'
       className='w-full grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'
     >
