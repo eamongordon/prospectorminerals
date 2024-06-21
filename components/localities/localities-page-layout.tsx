@@ -136,12 +136,7 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities }:
             <div className="flex w-full flex-col sm:flex-row">
                 <div className="w-full sm:w-80">
                     <Accordion>
-                        <AccordionItem key="1" aria-label="Hardness" title="Hardness">
-                            <p>Some text</p>
-                        </AccordionItem>
-                        <AccordionItem key="2" aria-label="Minerals" title="Minerals">
-                        </AccordionItem>
-                        <AccordionItem key="3" aria-label="Other" title="Other">
+                        <AccordionItem key="minerals" aria-label="Minerals" title="Minerals">
                             <div
                                 //contentEditable="true"
                                 onFocus={() => setIsMineralFocused(true)}
@@ -150,7 +145,6 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities }:
                                 <Textarea
                                     type="text"
                                     label="Chemical Formulas"
-                                    description='Type an element or formula and hit "enter"'
                                     placeholder={!mineralsVal ? 'Try "Malachite' : ""}
                                     value={chemistryInput || ""}
                                     /*
