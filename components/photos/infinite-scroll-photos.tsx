@@ -14,14 +14,12 @@ export default function InfiniteScrollPhotos({
   initialPhotos,
   initialCursor,
   sort,
-  key,
   clearFilters
 }: {
   search?: string,
   initialPhotos?: Photo[],
   initialCursor?: number,
   sort?: PhotosSortObj,
-  key?: string,
   clearFilters?: Function | undefined
 }) {
   const router = useRouter();
@@ -83,7 +81,6 @@ export default function InfiniteScrollPhotos({
 
   return (
     <ul
-      key={key}
       role='list'
       className='w-full grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-5'
     >
