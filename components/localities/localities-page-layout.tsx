@@ -47,7 +47,7 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities }:
 
     //OLD CODE TO MERGE
 
-    const { chemistry } = Object(filterObj);
+    const { name, minerals } = Object(filterObj);
 
     const initialChemistryRender = useRef(true);
 
@@ -55,7 +55,7 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities }:
     const [ref, inView] = useInView();
     const [chemistryInput, setChemistryInput] = useState("");
     const [chemistryQuery] = useDebounce(chemistryInput, 500);
-    const [chemistryVal, setChemistryVal] = useState<any[] | undefined>(chemistry);
+    const [mineralsVal, setMineralsVal] = useState<any[] | undefined>(minerals);
     const [isMineralFocused, setIsMineralFocused] = useState(false);
     const [page, setPage] = useState<number | undefined>(undefined);
 
@@ -73,16 +73,16 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities }:
         console.log("UseEffectChemistryChange");
         //TO REMOVE
         const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
-        if (!chemistryVal) {
-            current.delete("chemistry");
+        if (!mineralsVal) {
+            current.delete("minerals");
         } else {
-            current.set("chemistry", JSON.stringify(chemistryVal));
+            current.set("minerals", JSON.stringify(mineralsVal));
         }
         //setChemistryInput("");
         const search = current.toString();
         const queryParam = search ? `?${search}` : "";
         router.push(`${pathname}${queryParam}`);
-    }, [chemistryVal]);
+    }, [mineralsVal]);
 
     async function loadMorePhotos(isInput?: boolean) {
         if (isInput) {
@@ -128,10 +128,6 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities }:
         }
     }, [inView])
 
-    useEffect(() => {
-        console.log(chemistryVal);
-    }, [chemistryVal])
-
     return (
         <div>
             <SearchLocation />
@@ -155,7 +151,7 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities }:
                                     type="text"
                                     label="Chemical Formulas"
                                     description='Type an element or formula and hit "enter"'
-                                    placeholder={!chemistryVal ? 'Try "Cu" or "SiO2"' : ""}
+                                    placeholder={!mineralsVal ? 'Try "Malachite' : ""}
                                     value={chemistryInput || ""}
                                     /*
                                     classNames={{
@@ -166,7 +162,7 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities }:
                                     classNames={{
                                         innerWrapper: ['flex flex-wrap'],
                                         //display chips below input, add margin
-                                        input: [chemistryVal ? 'mb-1' : null]
+                                        input: [mineralsVal ? 'mb-1' : null]
                                         //input: [`${`w-[${chemistryInput.length * 10}px]`} flex-none`]
                                     }}
                                     minRows={1}
@@ -184,23 +180,23 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities }:
                                         }
                                         */
                                         if (e.key === "Backspace" && !e.currentTarget.value.length) {
-                                            let currentChemistry = chemistryVal ? [...chemistryVal] : [];
+                                            let currentChemistry = mineralsVal ? [...mineralsVal] : [];
                                             currentChemistry?.pop();
                                             if (currentChemistry.length > 0) {
-                                                setChemistryVal(currentChemistry);
+                                                setMineralsVal(currentChemistry);
                                             } else {
-                                                setChemistryVal(undefined);
+                                                setMineralsVal(undefined);
                                             }
                                         }
 
                                         setTimeout(() => {
                                             if (e.key === "Backspace" && e.currentTarget.value === chemistryInput) {
-                                                let currentChemistry = chemistryVal ? [...chemistryVal] : [];
+                                                let currentChemistry = mineralsVal ? [...mineralsVal] : [];
                                                 currentChemistry?.pop();
                                                 if (currentChemistry.length > 0) {
-                                                    setChemistryVal(currentChemistry);
+                                                    setMineralsVal(currentChemistry);
                                                 } else {
-                                                    setChemistryVal(undefined);
+                                                    setMineralsVal(undefined);
                                                 }
                                             }
                                         }, 200)
@@ -208,16 +204,16 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities }:
                                     }}
                                     //display chips below input, change to endContent
                                     endContent={
-                                        (chemistryVal?.map((obj: mineralListItem, index) => {
+                                        (mineralsVal?.map((obj: mineralListItem, index) => {
                                             return (
                                                 <Chip className="mr-1 min-h-[28px]"
                                                     size="md"
                                                     onClose={() => {
-                                                        const newArray = chemistryVal.filter((val) => val.name !== obj.name);
+                                                        const newArray = mineralsVal.filter((val) => val.name !== obj.name);
                                                         if (newArray.length === 0) {
-                                                            setChemistryVal(undefined);
+                                                            setMineralsVal(undefined);
                                                         } else {
-                                                            setChemistryVal(newArray);
+                                                            setMineralsVal(newArray);
                                                         }
                                                         //setTimeout(() => {
                                                         console.log("cheminput - " + chemistryInput)
@@ -250,12 +246,12 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities }:
                                             name: mineralListItem.name,
                                             image: 'https://i.pravatar.cc/300?u=a042581f4e29026709d',
                                         }
-                                        let currentChemistry = chemistryVal ? [...chemistryVal] : [];
+                                        let currentChemistry = mineralsVal ? [...mineralsVal] : [];
                                         currentChemistry?.push(newObject);
-                                        setChemistryVal(currentChemistry);
+                                        setMineralsVal(currentChemistry);
                                         setChemistryInput("");
                                     }}
-                                    disabledKeys={chemistryVal?.map((val) => val.name)}
+                                    disabledKeys={mineralsVal?.map((val) => val.name)}
                                     classNames={{
                                         base: `${isMineralFocused ? "" : "hidden"} max-h-[150px] overflow-auto no-scrollbar subpixel-antialiased outline-none box-border text-small bg-content1 shadow-md rounded-large w-full p-1`,
                                         list: "",
