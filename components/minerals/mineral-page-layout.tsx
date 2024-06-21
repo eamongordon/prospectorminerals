@@ -53,7 +53,6 @@ export default function MineralPageLayout({
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
-
     const [isMobileFiltersOpen, setIsisMobileFiltersOpen] = useState(false);
 
     const initialRender = useRef(true);
@@ -63,10 +62,6 @@ export default function MineralPageLayout({
     const initialHardnessRender = useRef(true);
     const initialChemistryRender = useRef(true);
     const [searchText, setSearchText] = useState(name);
-    /*
-    const [initialPhotosState, setInitialPhotosState] = useState(initialPhotos); 
-    const [initialCursorState, setInitialCursorState] = useState(initialCursor); 
-    */
     const [lustersVal, setLustersVal] = useState<string[] | undefined>(lusters);
     let hardnessNewState = [];
     if (minHardness && maxHardness) {
@@ -82,12 +77,6 @@ export default function MineralPageLayout({
     const [chemistryInput, setChemistryInput] = useState("");
     const [isLusterInvalid, setIsLusterInvalid] = useState(false);
     const [searchQuery] = useDebounce(searchText, 500);
-    /*
-    const property =
-        typeof searchParams.get("property") === 'string' ? searchParams.get("property") : undefined
-    const order =
-        typeof searchParams.get("order") === 'string' ? searchParams.get("order") : undefined
-        */
 
     useEffect(() => {
         if (initialRender.current) {
@@ -250,7 +239,7 @@ export default function MineralPageLayout({
                     >{isMobileFiltersOpen ? "Close Filters" : "Open Filters"}</Button>
                     <div className={`${isMobileFiltersOpen ? "contents sm:contents" : "hidden sm:contents"}`}>
                         <Accordion>
-                            <AccordionItem key="hardness" aria-label="Hardness" title="Hardness">
+                            <AccordionItem key="hardness" aria-label="Hardness" title="Hardness" subtitle={hardnessVal ? `${hardnessVal[0].toString()} - ${hardnessVal[1].toString()}` : null}>
                                 <Slider
                                     label="Mohs Hardness"
                                     step={1}
@@ -263,7 +252,7 @@ export default function MineralPageLayout({
                                     onChangeEnd={value => setHardnessVal(value as number[])}
                                 />
                             </AccordionItem>
-                            <AccordionItem key="2" aria-label="Lusters" title="Lusters">
+                            <AccordionItem key="lusters" aria-label="Lusters" title="Lusters" subtitle={lustersVal ? `${lustersVal.length} Selected` : null}>
                                 <CheckboxGroup
                                     isRequired
                                     color="default"
@@ -288,7 +277,7 @@ export default function MineralPageLayout({
                                     <Checkbox value="Adamantine">Adamantine</Checkbox>
                                 </CheckboxGroup>
                             </AccordionItem>
-                            <AccordionItem key="3" aria-label="Mineral Class" title="Mineral Class">
+                            <AccordionItem key="mineralClasses" aria-label="Mineral Class" title="Mineral Class" subtitle={mineralClassVal ? `${mineralClassVal.length} Selected` : null}>
                                 <CheckboxGroup
                                     isRequired
                                     color="default"
@@ -311,7 +300,7 @@ export default function MineralPageLayout({
                                     <Checkbox value="Native Elements">Native Elements</Checkbox>
                                 </CheckboxGroup>
                             </AccordionItem>
-                            <AccordionItem key="4" aria-label="Crystal Systems" title="Crystal Systems">
+                            <AccordionItem key="crystalSystems" aria-label="Crystal Systems" title="Crystal Systems" subtitle={crystalSystemsVal ? `${crystalSystemsVal.length} Selected` : null}>
                                 <CheckboxGroup
                                     isRequired
                                     color="default"
@@ -333,7 +322,7 @@ export default function MineralPageLayout({
                                     <Checkbox value="Orthorhombic">Orthorhombic</Checkbox>
                                 </CheckboxGroup>
                             </AccordionItem>
-                            <AccordionItem key="5" aria-label="Chemistry" title="Chemistry">
+                            <AccordionItem key="chemistry" aria-label="Chemistry" title="Chemistry" subtitle={chemistryVal ? `${chemistryVal.join(', ')}` : null}>
                                 <Textarea
                                     type="text"
                                     label="Chemical Formulas"
