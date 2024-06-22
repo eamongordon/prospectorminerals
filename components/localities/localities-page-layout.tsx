@@ -200,6 +200,7 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities, c
                             }
                         }}
                     >{isMobileFiltersOpen ? "Close Filters" : "Open Filters"}</Button>
+                                        <div className={`${isMobileFiltersOpen ? "contents sm:contents" : "hidden sm:contents"}`}>
                     <Accordion>
                         <AccordionItem key="minerals" aria-label="Minerals" title="Minerals">
                             <div
@@ -347,6 +348,7 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities, c
                             <Button onClick={() => setStateMarkers([{ title: 'New Marker', coords: [10, 10] }])}>More Markers</Button>
                         </AccordionItem>
                     </Accordion>
+                    </div>
                 </div>
                 <div className="flex-col items-center w-full">
                     <Tabs aria-label="Localities" classNames={
