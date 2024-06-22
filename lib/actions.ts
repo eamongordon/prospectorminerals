@@ -295,12 +295,9 @@ export async function fetchMinerals({ filterObj, cursor, limit, sortObj, fieldse
 
 export async function fetchLocalities({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: LocalitiesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?:string }) {
   let queryArray = [];
-  const { name, minerals, type_code } = Object(filterObj)
+  const { name, minerals } = Object(filterObj)
   if (name) {
     queryArray.push({ name: { contains: name, mode: 'insensitive' } });
-  }
-  if (type_code) {
-    queryArray.push({ name: { equals: type_code} });
   }
   if (minerals && minerals.length > 0) {
     let mineralsArray: { name: { contains: string } }[] = [];
@@ -317,7 +314,8 @@ export async function fetchLocalities({ filterObj, cursor, limit, sortObj, field
       name: true,
       latitude: true,
       longitude: true,
-      type_code: true,
+      type: true,
+      coordinates_known: true,
       id: true,
       minerals: {
         select: {
