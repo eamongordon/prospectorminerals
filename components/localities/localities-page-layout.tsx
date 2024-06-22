@@ -421,10 +421,10 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities, c
                         }>
                             <ul
                                 role='list'
-                                className='w-full sm:flex sm:flex-wrap sm:flex-auto mt-16'
+                                className='w-full flex flex-wrap sm:flex-auto mt-16 gap-4 p-2 sm:p-0'
                             >
                                 {localities.map((locality: Locality) => (
-                                    <li key={locality.id} className='relative flex flex-col items-center justify-center text-center group w-full overflow-hidden rounded-xl sm:max-w-72 p-2 gap-4 sm:gap-0'>
+                                    <li key={locality.id} className='relative flex flex-col items-center justify-center text-center group w-full overflow-hidden rounded-xl sm:max-w-72'>
                                         <LocalityCard name={locality.name} id={locality.id} />
                                     </li>
                                 )
