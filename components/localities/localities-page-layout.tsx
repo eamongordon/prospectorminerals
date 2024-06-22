@@ -3,6 +3,7 @@
 import './popup-style.css'
 import 'leaflet/dist/leaflet.css'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import { Tabs, Tab } from "@nextui-org/react";
 import { useState, useEffect, useRef } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useDebounce } from "use-debounce";
@@ -15,9 +16,11 @@ import { Input } from '@nextui-org/react';
 import { Search as MagnifyingGlassIcon, Filter } from 'lucide-react';
 import "leaflet-defaulticon-compatibility"
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
+import LocalityCard from './locality-card';
+import { Children, cloneElement } from "react";
 
 //chore: update any definition for localities
-export default function LocalitiesPageLayout({ markers, filterObj, localities }: { markers?: any, filterObj: LocalitiesQueryParams, localities: Locality[] }) {
+export default function LocalitiesPageLayout({ markers, filterObj, localities, clearButton }: { markers?: any, filterObj: LocalitiesQueryParams, localities: Locality[], clearButton?: React.ReactElement }) {
 
     const [coord, setCoord] = useState([51.505, -0.09])
     const [stateMarkers, setStateMarkers] = useState(markers);
@@ -49,7 +52,6 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities }:
     }
 
     //OLD CODE TO MERGE
-
     const { name, minerals } = Object(filterObj);
 
     const initialChemistryRender = useRef(true);
@@ -66,7 +68,8 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities }:
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const [searchQuery] = useDebounce(searchText, 500);
-    
+    const [noResultsLoading, setNoResultsLoading] = useState(false);
+
     useEffect(() => {
         if (initialRender.current) {
             initialRender.current = false
@@ -148,13 +151,24 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities }:
         }
     }, [inView])
 
+    const clearFilters = () => {
+        setNoResultsLoading(true);
+        setSearchText(undefined);
+        setNoResultsLoading(false);
+    }
+
+    const renderChildren = () => {
+        return Children.map(clearButton, (child) => {
+            return cloneElement(child as React.ReactElement<any>, {
+                clearFilters: () => {clearFilters(); setNoResultsLoading(true)}
+            });
+        });
+    };
+
     return (
         <div>
-            <SearchLocation />
-            <GetMyLocation />
-            <Button onClick={() => setStateMarkers([{ title: 'New Marker', coords: [10, 10] }])}>More Markers</Button>
             <div className="flex w-full flex-col sm:flex-row">
-                <div className="w-full sm:w-80">
+                <div className="w-full sm:w-80 m-2">
                     <Input
                         type="text"
                         label="Search"
@@ -327,58 +341,94 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities }:
                                 </Listbox>
                             </div>
                         </AccordionItem>
+                        <AccordionItem key="Extra dev" aria-label="Extra dev" title="Extra dev">
+                            <SearchLocation />
+                            <GetMyLocation />
+                            <Button onClick={() => setStateMarkers([{ title: 'New Marker', coords: [10, 10] }])}>More Markers</Button>
+                        </AccordionItem>
                     </Accordion>
                 </div>
                 <div className="flex-col items-center w-full">
-                    <MapContainer
-                        className='w-full max-h-[400px] aspect-[5/3] z-0'
-                        //@ts-expect-error
-                        center={coord} zoom={2} scrollWheelZoom={false}>
-                        <TileLayer
-                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        />
+                    <Tabs aria-label="Localities" classNames={
+                        { base: 'flex justify-end', tabList: "w-48 absolute z-10 m-2", panel: "py-0 px-0" }
+                    }>
+                        <Tab key="map" title="Map">
+                            <MapContainer
+                                className='w-full max-h-[400px] aspect-[5/3] z-0 py-0'
+                                //@ts-expect-error
+                                center={coord} zoom={2} scrollWheelZoom={false}>
+                                <TileLayer
+                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                />
 
-                        {
-                            stateMarkers.map((marker: any) => {
-                                return (
-                                    <Marker key={marker.title} position={marker.coords} >
-                                        <Popup>
-                                            A pretty CSS3 popup. <br /> Easily customizable.
-                                        </Popup>
-                                    </Marker>
+                                {
+                                    stateMarkers.map((marker: any) => {
+                                        return (
+                                            <Marker key={marker.title} position={marker.coords} >
+                                                <Popup>
+                                                    A pretty CSS3 popup. <br /> Easily customizable.
+                                                </Popup>
+                                            </Marker>
+                                        )
+                                    })
+                                }
+                                {
+                                    localities.map((locality: Locality) => {
+                                        return (
+                                            <Marker key={locality.id} position={[Number(locality.longitude), Number(locality.latitude)]} >
+                                                <Popup>
+                                                    A pretty CSS3 popup. <br /> Easily customizable.
+                                                </Popup>
+                                            </Marker>
+                                        )
+                                    })
+                                }
+
+                                {/*@ts-expect-error*/}
+                                <Marker position={coord} eventHandlers={{
+                                    click: (e) => {
+                                        console.log('marker clicked')
+                                    },
+                                    mousedown: (e) => {
+
+                                    }
+                                }}>
+                                    <Popup className='request-popup'>
+                                        <p className='text-lg'>Large Tezt</p>
+                                        <UILink href='/'>This is a link</UILink>
+                                        <button className='w-full h-full bg-teal-200'>Large Tezt</button>
+                                        A pretty CSS3 popup. <br /> Easily customizable.
+                                    </Popup>
+                                </Marker>
+                            </MapContainer>
+                        </Tab>
+                        <Tab key="list" title="List">
+                            <ul
+                                role='list'
+                                className='w-full flex flex-auto mt-16'
+                            >
+                                {localities.map((locality: Locality) => (
+                                    <li key={locality.id} className='relative flex flex-col items-center justify-center text-center group w-full overflow-hidden rounded-xl max-w-72 min-w-48 m-2'>
+                                        <LocalityCard name={locality.name} id={locality.id} />
+                                    </li>
                                 )
-                            })
-                        }
-                        {
-                            localities.map((locality: Locality) => {
-                                return (
-                                    <Marker key={locality.id} position={[Number(locality.longitude), Number(locality.latitude)]} >
-                                        <Popup>
-                                            A pretty CSS3 popup. <br /> Easily customizable.
-                                        </Popup>
-                                    </Marker>
-                                )
-                            })
-                        }
-
-                        {/*@ts-expect-error*/}
-                        <Marker position={coord} eventHandlers={{
-                            click: (e) => {
-                                console.log('marker clicked')
-                            },
-                            mousedown: (e) => {
-
-                            }
-                        }}>
-                            <Popup className='request-popup'>
-                                <p className='text-lg'>Large Tezt</p>
-                                <UILink href='/'>This is a link</UILink>
-                                <button className='w-full h-full bg-teal-200'>Large Tezt</button>
-                                A pretty CSS3 popup. <br /> Easily customizable.
-                            </Popup>
-                        </Marker>
-                    </MapContainer>
+                                )}
+                                {
+                                    localities?.length && localities.length > 0 ? (
+                                        null
+                                    ) : (
+                                        <div className='flex-col items-center justify-center w-full'>
+                                            <p className='w-full text-center'>No Minerals Found. Try adjusting your filters.</p>
+                                            <div className='flex items-center justify-center py-4'>
+                                                {renderChildren()}
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                            </ul >
+                        </Tab>
+                    </Tabs>
                 </div>
             </div>
         </div >
