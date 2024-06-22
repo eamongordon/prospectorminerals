@@ -19,6 +19,7 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import LocalityCard from './locality-card';
 import { Children, cloneElement } from "react";
 import { Map, Rows } from 'lucide-react';
+import L from 'leaflet';
 
 //chore: update any definition for localities
 export default function LocalitiesPageLayout({ markers, filterObj, localities, clearButton }: { markers?: any, filterObj: LocalitiesQueryParams, localities: Locality[], clearButton?: React.ReactElement }) {
@@ -51,6 +52,32 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities, c
             </div>
         )
     }
+
+    const singleLocalityKnownIcon = L.icon({
+        iconUrl: '/localities/PM-Single-Locality-Pin_Light.png', // Replace with your icon's path
+        iconSize: [35, 35], // Adjust based on your icon's dimensions
+        iconAnchor: [17.5, 35], // Adjust to ensure the icon is centered on its coordinates
+    });
+
+    const singleLocalityEstimatedIcon = L.icon({
+        iconUrl: '/localities/PM-Single-Locality-Pin-Dark.png', // Replace with your icon's path
+        iconSize: [35, 35], // Adjust based on your icon's dimensions
+        iconAnchor: [17.5, 35], // Adjust to ensure the icon is centered on its coordinates
+    });
+
+    const groupLocalityKnownIcon = L.icon({
+        iconUrl: '/localities/PM-Group-Locality-Pin_Light.png', // Replace with your icon's path
+        iconSize: [35, 35], // Adjust based on your icon's dimensions
+        iconAnchor: [17.5, 35], // Adjust to ensure the icon is centered on its coordinates
+    });
+
+    const groupLocalityEstimatedIcon = L.icon({
+        iconUrl: '/localities/PM-Group-Locality-Pin_Dark.png', // Replace with your icon's path
+        iconSize: [35, 35], // Adjust based on your icon's dimensions
+        iconAnchor: [17.5, 35], // Adjust to ensure the icon is centered on its coordinates
+    });
+
+
 
     //OLD CODE TO MERGE
     const { name, minerals } = Object(filterObj);
@@ -155,6 +182,7 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities, c
     const clearFilters = () => {
         setNoResultsLoading(true);
         setSearchText(undefined);
+        setMineralsVal(undefined);
         setNoResultsLoading(false);
     }
 
@@ -386,7 +414,7 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities, c
                                 {
                                     localities.map((locality: Locality) => {
                                         return (
-                                            <Marker key={locality.id} position={[Number(locality.longitude), Number(locality.latitude)]} >
+                                            <Marker key={locality.id} position={[Number(locality.longitude), Number(locality.latitude)]} icon={locality.type === 'Single' ? locality.coordinates_known ? singleLocalityKnownIcon : singleLocalityEstimatedIcon : locality.coordinates_known ? groupLocalityKnownIcon : groupLocalityEstimatedIcon} >
                                                 <Popup>
                                                     A pretty CSS3 popup. <br /> Easily customizable.
                                                 </Popup>
