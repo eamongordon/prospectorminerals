@@ -168,7 +168,7 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities, c
     return (
         <div>
             <div className="flex w-full flex-col sm:flex-row">
-                <div className="w-full sm:w-80 m-2">
+                <div className="w-full sm:w-96 p-2">
                     <Input
                         type="text"
                         label="Search"
@@ -408,10 +408,10 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities, c
                         <Tab key="list" title="List">
                             <ul
                                 role='list'
-                                className='w-full flex flex-auto mt-16'
+                                className='w-full sm:flex sm:flex-wrap sm:flex-auto mt-16'
                             >
                                 {localities.map((locality: Locality) => (
-                                    <li key={locality.id} className='relative flex flex-col items-center justify-center text-center group w-full overflow-hidden rounded-xl max-w-72 min-w-48 m-2'>
+                                    <li key={locality.id} className='relative flex flex-col items-center justify-center text-center group w-full overflow-hidden rounded-xl sm:max-w-72 p-2 gap-4 sm:gap-0'>
                                         <LocalityCard name={locality.name} id={locality.id} />
                                     </li>
                                 )
