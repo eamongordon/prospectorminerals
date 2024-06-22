@@ -18,6 +18,7 @@ import "leaflet-defaulticon-compatibility"
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
 import LocalityCard from './locality-card';
 import { Children, cloneElement } from "react";
+import { Map, Rows } from 'lucide-react';
 
 //chore: update any definition for localities
 export default function LocalitiesPageLayout({ markers, filterObj, localities, clearButton }: { markers?: any, filterObj: LocalitiesQueryParams, localities: Locality[], clearButton?: React.ReactElement }) {
@@ -160,7 +161,7 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities, c
     const renderChildren = () => {
         return Children.map(clearButton, (child) => {
             return cloneElement(child as React.ReactElement<any>, {
-                clearFilters: () => {clearFilters(); setNoResultsLoading(true)}
+                clearFilters: () => { clearFilters(); setNoResultsLoading(true) }
             });
         });
     };
@@ -200,57 +201,46 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities, c
                             }
                         }}
                     >{isMobileFiltersOpen ? "Close Filters" : "Open Filters"}</Button>
-                                        <div className={`${isMobileFiltersOpen ? "contents sm:contents" : "hidden sm:contents"}`}>
-                    <Accordion>
-                        <AccordionItem key="minerals" aria-label="Minerals" title="Minerals">
-                            <div
-                                //contentEditable="true"
-                                onFocus={() => setIsMineralFocused(true)}
-                                onBlur={() => { setIsMineralFocused(false); console.log("blur") }}
-                            >
-                                <Textarea
-                                    type="text"
-                                    label="Chemical Formulas"
-                                    placeholder={!mineralsVal ? 'Try "Malachite' : ""}
-                                    value={chemistryInput || ""}
-                                    /*
-                                    classNames={{
-                                        innerWrapper: ['overflow-x-auto', 'overflow-y-clip'],
-                                        input: ['min-w-8']
-                                    }}
-                                */
-                                    classNames={{
-                                        innerWrapper: ['flex flex-wrap'],
-                                        //display chips below input, add margin
-                                        input: [mineralsVal ? 'mb-1' : null]
-                                        //input: [`${`w-[${chemistryInput.length * 10}px]`} flex-none`]
-                                    }}
-                                    minRows={1}
-                                    size="md"
-                                    onValueChange={(value) => { setChemistryInput(value); }}
-                                    onKeyDown={(e) => {
+                    <div className={`${isMobileFiltersOpen ? "contents sm:contents" : "hidden sm:contents"}`}>
+                        <Accordion>
+                            <AccordionItem key="minerals" aria-label="Minerals" title="Minerals">
+                                <div
+                                    //contentEditable="true"
+                                    onFocus={() => setIsMineralFocused(true)}
+                                    onBlur={() => { setIsMineralFocused(false); console.log("blur") }}
+                                >
+                                    <Textarea
+                                        type="text"
+                                        label="Chemical Formulas"
+                                        placeholder={!mineralsVal ? 'Try "Malachite' : ""}
+                                        value={chemistryInput || ""}
                                         /*
-                                        if (e.key === "Enter") {
-                                            let currentChemistry = chemistryVal ? [...chemistryVal] : [];
-                                            currentChemistry?.push(e.currentTarget.value);
-                                            console.log(e.currentTarget.value.toString())
-                                            setChemistryVal(currentChemistry);
-                                            setChemistryInput("");
-                                            e.preventDefault();
-                                        }
-                                        */
-                                        if (e.key === "Backspace" && !e.currentTarget.value.length) {
-                                            let currentChemistry = mineralsVal ? [...mineralsVal] : [];
-                                            currentChemistry?.pop();
-                                            if (currentChemistry.length > 0) {
-                                                setMineralsVal(currentChemistry);
-                                            } else {
-                                                setMineralsVal(undefined);
+                                        classNames={{
+                                            innerWrapper: ['overflow-x-auto', 'overflow-y-clip'],
+                                            input: ['min-w-8']
+                                        }}
+                                    */
+                                        classNames={{
+                                            innerWrapper: ['flex flex-wrap'],
+                                            //display chips below input, add margin
+                                            input: [mineralsVal ? 'mb-1' : null]
+                                            //input: [`${`w-[${chemistryInput.length * 10}px]`} flex-none`]
+                                        }}
+                                        minRows={1}
+                                        size="md"
+                                        onValueChange={(value) => { setChemistryInput(value); }}
+                                        onKeyDown={(e) => {
+                                            /*
+                                            if (e.key === "Enter") {
+                                                let currentChemistry = chemistryVal ? [...chemistryVal] : [];
+                                                currentChemistry?.push(e.currentTarget.value);
+                                                console.log(e.currentTarget.value.toString())
+                                                setChemistryVal(currentChemistry);
+                                                setChemistryInput("");
+                                                e.preventDefault();
                                             }
-                                        }
-
-                                        setTimeout(() => {
-                                            if (e.key === "Backspace" && e.currentTarget.value === chemistryInput) {
+                                            */
+                                            if (e.key === "Backspace" && !e.currentTarget.value.length) {
                                                 let currentChemistry = mineralsVal ? [...mineralsVal] : [];
                                                 currentChemistry?.pop();
                                                 if (currentChemistry.length > 0) {
@@ -259,102 +249,120 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities, c
                                                     setMineralsVal(undefined);
                                                 }
                                             }
-                                        }, 200)
 
-                                    }}
-                                    //display chips below input, change to endContent
-                                    endContent={
-                                        (mineralsVal?.map((obj: mineralListItem, index) => {
-                                            return (
-                                                <Chip className="mr-1 min-h-[28px]"
-                                                    size="md"
-                                                    onClose={() => {
-                                                        const newArray = mineralsVal.filter((val) => val.name !== obj.name);
-                                                        if (newArray.length === 0) {
-                                                            setMineralsVal(undefined);
-                                                        } else {
-                                                            setMineralsVal(newArray);
-                                                        }
-                                                        //setTimeout(() => {
-                                                        console.log("cheminput - " + chemistryInput)
-                                                        //}, 200)
-                                                    }}
-                                                    key={index}
-                                                    variant="bordered"
-                                                    avatar={
-                                                        <Avatar
-                                                            name="JW"
-                                                            src="https://i.pravatar.cc/300?u=a042581f4e29026709d"
-                                                        />
+                                            setTimeout(() => {
+                                                if (e.key === "Backspace" && e.currentTarget.value === chemistryInput) {
+                                                    let currentChemistry = mineralsVal ? [...mineralsVal] : [];
+                                                    currentChemistry?.pop();
+                                                    if (currentChemistry.length > 0) {
+                                                        setMineralsVal(currentChemistry);
+                                                    } else {
+                                                        setMineralsVal(undefined);
                                                     }
-                                                >
-                                                    {obj.name}
-                                                </Chip>
-                                            )
-                                        }))
-                                    }
-                                />
-                                <Listbox
-                                    items={mineralList}
-                                    emptyContent={
-                                        <>No results found.</>
-                                    }
-                                    aria-label="Dynamic Actions"
-                                    onAction={(key) => {
-                                        const mineralListItem = mineralList.find((mineral) => mineral.name === key) as mineralListItem;
-                                        const newObject = {
-                                            name: mineralListItem.name,
-                                            image: 'https://i.pravatar.cc/300?u=a042581f4e29026709d',
-                                        }
-                                        let currentChemistry = mineralsVal ? [...mineralsVal] : [];
-                                        currentChemistry?.push(newObject);
-                                        setMineralsVal(currentChemistry);
-                                        setChemistryInput("");
-                                    }}
-                                    disabledKeys={mineralsVal?.map((val) => val.name)}
-                                    classNames={{
-                                        base: `${isMineralFocused ? "" : "hidden"} max-h-[150px] overflow-auto no-scrollbar subpixel-antialiased outline-none box-border text-small bg-content1 shadow-md rounded-large w-full p-1`,
-                                        list: "",
-                                    }}
-                                    bottomContent={
-                                        <div
-                                            ref={ref}
-                                            className={`${!page ? "hidden" : ""} my-2 flex items-center justify-center col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-3`}
-                                        >
-                                            <Spinner />
-                                        </div>
-                                    }
-                                >
-                                    {(item) => (
-                                        <ListboxItem
-                                            startContent={<Avatar alt="Argentina" className="w-6 h-6" src="https://flagcdn.com/ar.svg" />}
-                                            key={item.name}
-                                        /*
-                                        endContent={chemistryVal?.includes(item.key) ? (
-                                            <Check height={12} />
-                                        ) : (<></>)}
-                                        */
-                                        >
-                                            {item.name}
-                                        </ListboxItem>
-                                    )}
+                                                }
+                                            }, 200)
 
-                                </Listbox>
-                            </div>
-                        </AccordionItem>
-                        <AccordionItem key="Extra dev" aria-label="Extra dev" title="Extra dev">
-                            <SearchLocation />
-                            <GetMyLocation />
-                            <Button onClick={() => setStateMarkers([{ title: 'New Marker', coords: [10, 10] }])}>More Markers</Button>
-                        </AccordionItem>
-                    </Accordion>
+                                        }}
+                                        //display chips below input, change to endContent
+                                        endContent={
+                                            (mineralsVal?.map((obj: mineralListItem, index) => {
+                                                return (
+                                                    <Chip className="mr-1 min-h-[28px]"
+                                                        size="md"
+                                                        onClose={() => {
+                                                            const newArray = mineralsVal.filter((val) => val.name !== obj.name);
+                                                            if (newArray.length === 0) {
+                                                                setMineralsVal(undefined);
+                                                            } else {
+                                                                setMineralsVal(newArray);
+                                                            }
+                                                            //setTimeout(() => {
+                                                            console.log("cheminput - " + chemistryInput)
+                                                            //}, 200)
+                                                        }}
+                                                        key={index}
+                                                        variant="bordered"
+                                                        avatar={
+                                                            <Avatar
+                                                                name="JW"
+                                                                src="https://i.pravatar.cc/300?u=a042581f4e29026709d"
+                                                            />
+                                                        }
+                                                    >
+                                                        {obj.name}
+                                                    </Chip>
+                                                )
+                                            }))
+                                        }
+                                    />
+                                    <Listbox
+                                        items={mineralList}
+                                        emptyContent={
+                                            <>No results found.</>
+                                        }
+                                        aria-label="Dynamic Actions"
+                                        onAction={(key) => {
+                                            const mineralListItem = mineralList.find((mineral) => mineral.name === key) as mineralListItem;
+                                            const newObject = {
+                                                name: mineralListItem.name,
+                                                image: 'https://i.pravatar.cc/300?u=a042581f4e29026709d',
+                                            }
+                                            let currentChemistry = mineralsVal ? [...mineralsVal] : [];
+                                            currentChemistry?.push(newObject);
+                                            setMineralsVal(currentChemistry);
+                                            setChemistryInput("");
+                                        }}
+                                        disabledKeys={mineralsVal?.map((val) => val.name)}
+                                        classNames={{
+                                            base: `${isMineralFocused ? "" : "hidden"} max-h-[150px] overflow-auto no-scrollbar subpixel-antialiased outline-none box-border text-small bg-content1 shadow-md rounded-large w-full p-1`,
+                                            list: "",
+                                        }}
+                                        bottomContent={
+                                            <div
+                                                ref={ref}
+                                                className={`${!page ? "hidden" : ""} my-2 flex items-center justify-center col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-3`}
+                                            >
+                                                <Spinner />
+                                            </div>
+                                        }
+                                    >
+                                        {(item) => (
+                                            <ListboxItem
+                                                startContent={<Avatar alt="Argentina" className="w-6 h-6" src="https://flagcdn.com/ar.svg" />}
+                                                key={item.name}
+                                            /*
+                                            endContent={chemistryVal?.includes(item.key) ? (
+                                                <Check height={12} />
+                                            ) : (<></>)}
+                                            */
+                                            >
+                                                {item.name}
+                                            </ListboxItem>
+                                        )}
+
+                                    </Listbox>
+                                </div>
+                            </AccordionItem>
+                            <AccordionItem key="Extra dev" aria-label="Extra dev" title="Extra dev">
+                                <SearchLocation />
+                                <GetMyLocation />
+                                <Button onClick={() => setStateMarkers([{ title: 'New Marker', coords: [10, 10] }])}>More Markers</Button>
+                            </AccordionItem>
+                        </Accordion>
                     </div>
                 </div>
                 <div className="flex-col items-center w-full">
                     <Tabs aria-label="Localities" classNames={
                         { base: 'flex justify-end', tabList: "w-48 absolute z-10 m-2", panel: "py-0 px-0" }
                     }>
-                        <Tab key="map" title="Map">
+                        <Tab key="map"
+                            title={
+                                <div className="flex items-center space-x-2">
+                                    <Map height={20} />
+                                    <span>Map</span>
+                                </div>
+                            }
+                        >
                             <MapContainer
                                 className='w-full max-h-[400px] aspect-[5/3] z-0 py-0'
                                 //@ts-expect-error
@@ -405,7 +413,12 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities, c
                                 </Marker>
                             </MapContainer>
                         </Tab>
-                        <Tab key="list" title="List">
+                        <Tab key="list" title={
+                            <div className="flex items-center space-x-2">
+                                <Rows height={20} />
+                                <span>List</span>
+                            </div>
+                        }>
                             <ul
                                 role='list'
                                 className='w-full sm:flex sm:flex-wrap sm:flex-auto mt-16'
