@@ -197,7 +197,7 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities, c
     return (
         <div>
             <div className="flex w-full flex-col sm:flex-row">
-                <div className="w-full sm:w-96 px-6 py-4 sm:p-2">
+                <div className="w-full sm:w-96 py-4 px-4 sm:p-2">
                     <Input
                         type="text"
                         label="Search"
@@ -381,7 +381,7 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities, c
                 </div>
                 <div className="flex-col items-center w-full">
                     <Tabs aria-label="Localities" classNames={
-                        { base: 'flex justify-end', tabList: "w-48 absolute z-10 mt-2 mr-6 sm:m-2", panel: "py-0 px-0" }
+                        { base: 'flex justify-end', tabList: "w-48 absolute z-10 mt-2 mr-4 sm:m-2", panel: "py-0 px-0" }
                     }>
                         <Tab key="map"
                             title={
@@ -449,7 +449,7 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities, c
                         }>
                             <ul
                                 role='list'
-                                className='w-full flex flex-wrap mt-16 gap-4 sm:grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:flex xl:flex-wrap xl:flex-auto xl:grid-cols-none px-6 sm:p-2'
+                                className='w-full flex flex-wrap mt-16 gap-4 sm:grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:flex xl:flex-wrap xl:flex-auto xl:grid-cols-none px-4 sm:p-2'
                             >
                                 {localities.map((locality: Locality) => (
                                     <li key={locality.id} className='relative flex flex-col items-center justify-center text-center group w-full overflow-hidden rounded-xl xl:w-[311px]'>
