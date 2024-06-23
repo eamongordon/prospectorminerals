@@ -1,7 +1,8 @@
 'use client'
 
-import './popup-style.css'
 import 'leaflet/dist/leaflet.css'
+import './popup-styles.css';
+import { Work_Sans } from 'next/font/google'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import { Tabs, Tab } from "@nextui-org/react";
 import { useState, useEffect, useRef } from 'react'
@@ -20,12 +21,15 @@ import LocalityCard from './locality-card';
 import { Children, cloneElement } from "react";
 import { Map, Rows } from 'lucide-react';
 import L from 'leaflet';
+import { Card, CardHeader, CardBody, CardFooter, Image as UIImage } from "@nextui-org/react";
+import Link from 'next/link';
+
+const inter = Work_Sans({ subsets: ['latin'] })
 
 //chore: update any definition for localities
 export default function LocalitiesPageLayout({ markers, filterObj, localities, clearButton }: { markers?: any, filterObj: LocalitiesQueryParams, localities: Locality[], clearButton?: React.ReactElement }) {
 
     const [coord, setCoord] = useState([51.505, -0.09])
-    const [stateMarkers, setStateMarkers] = useState(markers);
 
     const SearchLocation = () => {
         return (
@@ -193,6 +197,16 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities, c
             });
         });
     };
+
+    /*
+    const cloneAndAddClassName = (element: React.ReactElement, additionalClassName: string): ReactElement => {
+        return cloneElement(element, {
+            className: `${element.props.className || ''} ${additionalClassName}`
+        });
+    };
+
+    const updatedLocalityCard = cloneAndAddClassName(<LocalityCard name={locality.name} id={locality.id} />, 'locality-card-text');
+*/
 
     return (
         <div>
@@ -374,7 +388,6 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities, c
                             <AccordionItem key="Extra dev" aria-label="Extra dev" title="Extra dev">
                                 <SearchLocation />
                                 <GetMyLocation />
-                                <Button onClick={() => setStateMarkers([{ title: 'New Marker', coords: [10, 10] }])}>More Markers</Button>
                             </AccordionItem>
                         </Accordion>
                     </div>
@@ -399,24 +412,27 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities, c
                                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 />
-
-                                {
-                                    stateMarkers.map((marker: any) => {
-                                        return (
-                                            <Marker key={marker.title} position={marker.coords} >
-                                                <Popup>
-                                                    A pretty CSS3 popup. <br /> Easily customizable.
-                                                </Popup>
-                                            </Marker>
-                                        )
-                                    })
-                                }
                                 {
                                     localities.map((locality: Locality) => {
                                         return (
                                             <Marker key={locality.id} position={[Number(locality.longitude), Number(locality.latitude)]} icon={locality.type === 'Single' ? locality.coordinates_known ? singleLocalityKnownIcon : singleLocalityEstimatedIcon : locality.coordinates_known ? groupLocalityKnownIcon : groupLocalityEstimatedIcon} >
-                                                <Popup>
-                                                    A pretty CSS3 popup. <br /> Easily customizable.
+                                                <Popup className={`${inter.className} w-[200px]`} offset={[0, -21]}>
+                                                    <div key={locality.id} className='flex items-center justify-center text-center w-full overflow-hidden rounded-xl'>
+                                                        <Link href={`/minerals/`}>
+                                                            <Card isFooterBlurred className="w-full">
+                                                                <UIImage
+                                                                    removeWrapper
+                                                                    alt="Card example background"
+                                                                    className="z-0 w-full h-full scale-125 -translate-y-6 object-cover"
+                                                                    src="/Amazonite-106_horiz.jpeg"
+                                                                    fallbackSrc="data:image/png;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAoADIDASIAAhEBAxEB/8QAGwAAAwADAQEAAAAAAAAAAAAAAAYHBAUIAwL/xAAmEAACAgICAQMEAwAAAAAAAAABAgADBREEBiESEyIHMUGRFHGh/8QAGQEAAwEBAQAAAAAAAAAAAAAAAQIDBQAE/8QAGxEAAgIDAQAAAAAAAAAAAAAAAAIBEQMhMQT/2gAMAwEAAhEDEQA/AOWEqdz4EzeNjLbSNKYzYHDDkFfEoGI6snxJSGiLZlXpOsf1e24A+gzM5HULlTYrP6l3wnXqFCgqIwW9Zotq0EEm00UxvD8OR+fg7qCdqZqLaWrOiJ0t2vqCIjsqf5In2jF/xbX+OtTlaykrQnwn0V8mEcUqHUeXWpTZEp/AyFK1Loic+YfINQw8xv4vYCqAeuUWTL9OFmnRZ+JmlVwAY24rJ+6o87nPXC7Bu0fOPvXuxIAu3k8lSP5cbpOyoZiheTxm+O9iQj6g4YhrGCyvUdgpenRcfaIvduZRfW+iJ511JsdggT49g7ePzCMdnt+439mEtZKhHSwr9p7DluPzCEYSok96cg6HfqM3XA7DZTr5GEIJDGjeU9wsVde4f3MDJdmfkKQXJhCChrkXzkmJJ3CEIaBZ/9k="
+                                                                />
+                                                                <CardFooter className="absolute bg-white/30 bottom-0 z-10 flex justify-center items-center">
+                                                                    <p className="mx-auto text-white text-lg font-semibold locality-card-text">{locality.name}</p>
+                                                                </CardFooter>
+                                                            </Card >
+                                                        </Link>
+                                                    </div>
                                                 </Popup>
                                             </Marker>
                                         )
@@ -433,10 +449,7 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities, c
                                     }
                                 }}>
                                     <Popup className='request-popup'>
-                                        <p className='text-lg'>Large Tezt</p>
-                                        <UILink href='/'>This is a link</UILink>
-                                        <button className='w-full h-full bg-teal-200'>Large Tezt</button>
-                                        A pretty CSS3 popup. <br /> Easily customizable.
+                                        <p className={`${inter.className}`}></p>
                                     </Popup>
                                 </Marker>
                             </MapContainer>
