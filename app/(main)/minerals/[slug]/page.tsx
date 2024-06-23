@@ -1,17 +1,6 @@
-import Header from '@/components/header';
-import Footer from '@/components/footer';
-import LoginModalButton from '@/components/registration/login-modal-button';
-import LoginModal from '@/components/modal/login';
-import { Button } from '@nextui-org/react'
-import { LoginModalProvider } from "@/components/modal/registration/provider";
-//import LoginForm from '@/components/registration/login-form';
-//import Modal from "@/components/next-ui-modal";
-import LoginModalVaul from '@/components/registration/login-vaul-modal';
-import RegModal from "@/components/next-ui-modal";
-import Image from 'next/image';
-import Gallery from "@/components/mineral-gallery";
-import Card from "@/components/minerals/mineral-card";
-import TestServerActions from '@/components/test-server-actions';
+import { fetchMinerals } from "@/lib/actions";
+import Gallery from "@/components/minerals/mineral-gallery";
+import { notFound } from "next/navigation";
 
 const galleryData = [
     {
@@ -40,26 +29,25 @@ const htmltest = `<p class=""font_8"">Aurichalcite is commonly associated with:<
   <li><p class=""font_8"">Rosasite</p></li>
 </ul>`
 
-export default function Page({ params }: { params: { slug: string } }) {
+export default async function Page({ params }: { params: { slug: string } }) {
+    const mineralResult = await fetchMinerals({ filterObj: { id: params.slug }, cursor: undefined, limit: 1 });
+    let mineral;
+    if (mineralResult.results.length === 0) {
+        return notFound();
+    } else {
+        mineral = mineralResult.results[0];
+    }
     return (
         <main>
-            <LoginModalProvider>
-                <Header />
-                <div>My Post: {params.slug}</div>
-                <Image
-                    src="/PM-Favicon-New-Square.png"
-                    width={50}
-                    height={50}
-                    alt="Prospector Minerals Logo"
-                />
-                <div className="product-des" dangerouslySetInnerHTML={{ __html: htmltest }}/>
-                <Gallery data={galleryData} />
-                <Card name="Azurite" id="az" />
-                <RegModal />
-                <TestServerActions/>
-
-                <Footer />
-            </LoginModalProvider>
-        </main>
+            <div className="flex justify-center items-center">
+                <section className='flex-col justify-center items-center py-4 px-6 w-full max-w-screen-xl'>
+                    <div className='mb-4 sm:mb-12 flex-row my-5 sm:flex sm:gap-x-10 justify-between'></div>
+                    <div>My Post: {params.slug}</div>
+                    <h1 className='font-semibold text-4xl sm:text-6xl py-4'>{mineral.name}</h1>
+                    <Gallery data={galleryData} />
+                    <div></div>
+                </section>
+            </div>
+        </main >
     )
 }
