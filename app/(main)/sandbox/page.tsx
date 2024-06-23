@@ -9,7 +9,7 @@ import { LoginModalProvider } from "@/components/modal/registration/provider";
 import LoginModalVaul from '@/components/registration/login-vaul-modal';
 import RegModal from "@/components/next-ui-modal";
 import Image from 'next/image';
-import Gallery from "@/components/mineral-gallery";
+import Gallery from "@/components/minerals/mineral-gallery";
 import Card from "@/components/minerals/mineral-card";
 import TestServerActions from '@/components/test-server-actions';
 
