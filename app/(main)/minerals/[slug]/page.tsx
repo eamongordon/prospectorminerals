@@ -1,6 +1,7 @@
 import { fetchMinerals } from "@/lib/actions";
 import Gallery from "@/components/minerals/mineral-gallery";
 import { notFound } from "next/navigation";
+import PropertyTable from "@/components/minerals/property-table";
 
 const galleryData = [
     {
@@ -30,7 +31,7 @@ const htmltest = `<p class=""font_8"">Aurichalcite is commonly associated with:<
 </ul>`
 
 export default async function Page({ params }: { params: { slug: string } }) {
-    const mineralResult = await fetchMinerals({ filterObj: { id: params.slug }, cursor: undefined, limit: 1 });
+    const mineralResult = await fetchMinerals({ filterObj: { id: params.slug }, cursor: undefined, limit: 1, fieldset: 'full' });
     let mineral;
     if (mineralResult.results.length === 0) {
         return notFound();
@@ -45,7 +46,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     <div>My Post: {params.slug}</div>
                     <h1 className='font-semibold text-4xl sm:text-6xl py-4'>{mineral.name}</h1>
                     <Gallery data={galleryData} />
-                    <div></div>
+                    <div className="flex w-full flex-col sm:flex-row my-10">
+                        <div className="flex w-full">
+                            <p>Test</p>
+                        </div>
+                        <div className="w-full my-4 sm:my-0 sm:w-[40%] sm:min-w-80">
+                            <PropertyTable mineral={mineral} />
+                        </div>
+                    </div>
                 </section>
             </div>
         </main >
