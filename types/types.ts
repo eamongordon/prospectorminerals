@@ -40,7 +40,8 @@ export type LocalitiesQueryParams = {
 
 export type mineralListItem = {
     name: string,
-    image?: string
+    image?: string,
+    id?: string
 }
 
 export type PhotosFilterObj = {
