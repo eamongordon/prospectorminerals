@@ -2,7 +2,7 @@
 
 import { getSession } from "@/lib/auth";
 import prisma from "@/lib/prisma";
-import { PrismaClient, Prisma, Post } from '@prisma/client'
+import { Prisma, Post } from '@prisma/client'
 import { revalidateTag } from "next/cache";
 import { hash } from "bcrypt";
 import { put } from "@vercel/blob";
@@ -203,7 +203,7 @@ export const deleteUser = async () => {
   }
 };
 
-export async function fetchMinerals({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: MineralsFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?:string }) {
+export async function fetchMinerals({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: MineralsFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: string }) {
   let queryArray = [];
   function pushArrayField(propertyArray: string[], property: string) {
     let filterArray: { [property: string]: { contains: string, mode?: string } }[] = [];
@@ -213,7 +213,10 @@ export async function fetchMinerals({ filterObj, cursor, limit, sortObj, fieldse
     })
     queryArray.push({ OR: filterArray })
   }
-  const { name, minHardness, maxHardness, lusters, streaks, mineralClasses, crystalSystems, chemistry, associates } = Object(filterObj)
+  const { name, minHardness, maxHardness, lusters, streaks, mineralClasses, crystalSystems, chemistry, associates, id } = Object(filterObj);
+  if (id) {
+    queryArray.push({ id: { equals: id } });
+  }
   if (name) {
     queryArray.push({ name: { contains: name, mode: 'insensitive' } });
   }
@@ -264,7 +267,7 @@ export async function fetchMinerals({ filterObj, cursor, limit, sortObj, fieldse
       number: true,
       id: true
     }
-  } 
+  }
   const results = await prisma.mineral.findMany(
     {
       skip: !cursor ? 0 : 1,
@@ -293,7 +296,7 @@ export async function fetchMinerals({ filterObj, cursor, limit, sortObj, fieldse
   };
 };
 
-export async function fetchLocalities({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: LocalitiesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?:string }) {
+export async function fetchLocalities({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: LocalitiesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: string }) {
   let queryArray = [];
   const { name, minerals } = Object(filterObj)
   if (name) {
@@ -327,7 +330,7 @@ export async function fetchLocalities({ filterObj, cursor, limit, sortObj, field
         }
       },
     }
-  } 
+  }
   const results = await prisma.locality.findMany(
     {
       skip: !cursor ? 0 : 1,
@@ -356,7 +359,7 @@ export async function fetchLocalities({ filterObj, cursor, limit, sortObj, field
   };
 };
 
-export async function fetchPosts({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: ArticlesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?:string }) {
+export async function fetchPosts({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: ArticlesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: string }) {
   const { title } = Object(filterObj)
   const cursorObj = !cursor ? undefined : { number: cursor };
   let selectObj;
@@ -369,7 +372,7 @@ export async function fetchPosts({ filterObj, cursor, limit, sortObj, fieldset }
       number: true,
       description: true
     }
-  } 
+  }
   const results = await prisma.post.findMany(
     {
       skip: !cursor ? 0 : 1,
@@ -419,7 +422,7 @@ export async function fetchPhotos({ filterObj, cursor, limit, sortObj, fieldset 
       number: true,
       id: true
     }
-  } 
+  }
   const results = await prisma.photo.findMany(
     {
       skip: !cursor ? 0 : 1,
