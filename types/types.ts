@@ -13,7 +13,8 @@ export type MineralsFilterObj = {
     mineralClasses?: MineralClassesList[],
     crystalSystems?: CrystalSystemsList[],
     chemistry?: string[],
-    associates?: string[]
+    associates?: string[],
+    id?: string
 }
 
 export type LocalitiesFilterObj = {
