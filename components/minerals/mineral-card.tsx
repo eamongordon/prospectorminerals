@@ -2,9 +2,9 @@ import { Card, CardHeader, CardBody, CardFooter, Image as UIImage, Button } from
 import Link from 'next/link';
 //import BlurImage from './blur-ui-image';
 
-export default function MineralCard({ name, slug, image, blurDataURL }: { name: string, slug: string, image?: string, blurDataURL?: string }) {
+export default function MineralCard({ name, id, image, blurDataURL }: { name: string, id: string, image?: string, blurDataURL?: string }) {
     return (
-        <Link href={`/minerals/${slug}`}>
+        <Link href={`/minerals/${id}`}>
             <Card isFooterBlurred className="w-full">
                 <UIImage
                     removeWrapper
