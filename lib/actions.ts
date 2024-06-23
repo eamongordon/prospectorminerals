@@ -267,6 +267,8 @@ export async function fetchMinerals({ filterObj, cursor, limit, sortObj, fieldse
       number: true,
       id: true
     }
+  } else if (fieldset === "full") {
+    selectObj = undefined;
   }
   const results = await prisma.mineral.findMany(
     {
