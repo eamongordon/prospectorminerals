@@ -51,9 +51,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
             <div className="flex w-full flex-col sm:flex-row my-10">
                 <div className="w-full sm:pr-12">
                     {mineral.description ? (<p>{mineral.description}</p>) : (<></>)}
-                    {descriptionFields.map((obj) => {
+                    {descriptionFields.map((obj, index) => {
                         return (
-                            <div className="space-y-2 my-6">
+                            <div className="space-y-2 my-6" key={index}>
                                 <h2 className="font-semibold text-3xl sm:text-4xl mb-4">{obj.property}</h2>
                                 <p>{obj.value}</p>
                             </div>
