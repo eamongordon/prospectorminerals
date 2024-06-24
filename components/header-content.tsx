@@ -1,15 +1,13 @@
 "use client"
 
-import React from "react";
+import React, {useEffect} from "react";
 import { Navbar, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, NavbarBrand, NavbarContent, NavbarItem, Link as UILink, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Divider, Avatar, Button } from "@nextui-org/react";
 import PMLogo from "./pmLogo";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
-import { Search } from 'lucide-react';
 import { signOut } from "next-auth/react";
 import LoginModalButton from './registration/login-modal-button';
 import LoginModal from './modal/login';
-import { toast } from "sonner";
 import SearchModalButton from "./search/search-button";
 //import RegModal from './next-ui-modal';
 
@@ -27,6 +25,13 @@ export default function HeaderComp({
     const { name, image, email } = userData || {};
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const pathname = usePathname();
+
+    useEffect(() => {
+        if (isMenuOpen) {
+            setIsMenuOpen(false);
+        }
+    }, [pathname]);
+
     return (
         <Navbar
             isBordered
