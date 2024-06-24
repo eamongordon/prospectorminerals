@@ -45,33 +45,28 @@ export default async function Page({ params }: { params: { slug: string } }) {
         descriptionFields.push({ property: "Notable Localities", value: mineral.localities_description });
     }
     return (
-        <main>
-            <div className="flex justify-center items-center">
-                <section className='flex-col justify-center items-center py-4 px-6 w-full max-w-screen-xl'>
-                    <div className='flex-row sm:flex sm:gap-x-10 justify-between'></div>
-                    <h1 className='font-semibold text-4xl sm:text-6xl py-4'>{mineral.name}</h1>
-                    <Gallery data={galleryData} />
-                    <div className="flex w-full flex-col sm:flex-row my-10">
-                        <div className="w-full sm:pr-12">
-                            {mineral.description ? (<p>{mineral.description}</p>) : (<></>)}
-                            {descriptionFields.map((obj) => {
-                                return (
-                                    <div className="space-y-2 my-6">
-                                        <h2 className="font-semibold text-3xl sm:text-4xl mb-4">{obj.property}</h2>
-                                        <p>{obj.value}</p>
-                                    </div>
-                                )
-                            })}
-                            <div className="space-y-2">
-                                <h2 className="font-semibold text-3xl sm:text-4xl mb-4">Associates</h2>
-                                <MineralTags tags={mineralTagsTest} />
+        <main className="px-6 max-w-screen-xl mx-auto">
+            <h1 className='font-semibold text-4xl sm:text-6xl py-4'>{mineral.name}</h1>
+            <Gallery data={galleryData} />
+            <div className="flex w-full flex-col sm:flex-row my-10">
+                <div className="w-full sm:pr-12">
+                    {mineral.description ? (<p>{mineral.description}</p>) : (<></>)}
+                    {descriptionFields.map((obj) => {
+                        return (
+                            <div className="space-y-2 my-6">
+                                <h2 className="font-semibold text-3xl sm:text-4xl mb-4">{obj.property}</h2>
+                                <p>{obj.value}</p>
                             </div>
-                        </div>
-                        <div className="w-full my-4 sm:my-0 sm:w-[40%] sm:min-w-80">
-                            <PropertyTable mineral={mineral} />
-                        </div>
+                        )
+                    })}
+                    <div className="space-y-2">
+                        <h2 className="font-semibold text-3xl sm:text-4xl mb-4">Associates</h2>
+                        <MineralTags tags={mineralTagsTest} />
                     </div>
-                </section>
+                </div>
+                <div className="w-full my-4 sm:my-0 sm:w-[40%] sm:min-w-80">
+                    <PropertyTable mineral={mineral} />
+                </div>
             </div>
         </main >
     )
