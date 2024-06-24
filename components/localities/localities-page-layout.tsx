@@ -470,19 +470,19 @@ export default function LocalitiesPageLayout({ markers, filterObj, localities, c
                                     </li>
                                 )
                                 )}
-                                {
-                                    localities?.length && localities.length > 0 ? (
-                                        null
-                                    ) : (
-                                        <div className='flex-col items-center justify-center w-full'>
-                                            <p className='w-full text-center'>No Minerals Found. Try adjusting your filters.</p>
-                                            <div className='flex items-center justify-center py-4'>
-                                                {renderChildren()}
-                                            </div>
-                                        </div>
-                                    )
-                                }
                             </ul >
+                            {
+                                localities?.length && localities.length > 0 ? (
+                                    null
+                                ) : (
+                                    <div className='flex-col items-center justify-center w-full'>
+                                        <p className='w-full text-center'>No Minerals Found. Try adjusting your filters.</p>
+                                        <div className='flex items-center justify-center py-4'>
+                                            {renderChildren()}
+                                        </div>
+                                    </div>
+                                )
+                            }
                         </Tab>
                     </Tabs>
                 </div>
