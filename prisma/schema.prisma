@@ -82,6 +82,7 @@ model Mineral {
   streak                 String
   hardness_min           Decimal?
   hardness_max           Decimal?
+  description            String?
   uses                   String
   localities_description String
   associatedWith         Mineral[]           @relation("MineralAssociates")
@@ -131,17 +132,15 @@ model Photo {
 }
 
 model Locality {
-  id                 String              @id @default(cuid())
-  name               String
-  type               String
-  coordinates_known  Boolean
-  description        String?
-  uses               String?
-  notable_localities String?     
-  latitude           Decimal
-  longitude          Decimal
-  number             Int                 @unique @default(autoincrement())
-  minerals           MineralOnLocality[]
+  id                String              @id @default(cuid())
+  name              String
+  type              String
+  coordinates_known Boolean
+  description       String?
+  latitude          Decimal
+  longitude         Decimal
+  number            Int                 @unique @default(autoincrement())
+  minerals          MineralOnLocality[]
 
   @@index([id])
 }
