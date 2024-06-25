@@ -1,6 +1,12 @@
 import prisma from "@/lib/prisma";
 import { notFound } from 'next/navigation';
 import BlurImage from '@/components/blur-image';
+import ExpandPhotoButton from "@/components/photos/expand-photo-button";
+import PhotoModal from "@/components/modal/photo";
+//import { useModal } from "@/components/modal//provider";
+import ModalPhotos from "@/components/photos/photo-modal";
+import { LoginModalProvider } from "@/components/modal/photo/provider";
+import LoginForm from "@/components/modal/login";
 
 const galleryData = [
     {
@@ -42,10 +48,33 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     </div>
                 </div>
                 <div className='flex-col items-center justify-start px-8 text-left space-y-3'>
-                        <p className='text-4xl font-semibold'>{photo.title ? photo.title : ""}</p>
-                        <p className='text-lg font-semibold'>{"Smoky Hawk Claim, Lake George Co., Colorado"}</p>
-                        <p className='text-md'>{"6.0 x 4.3 x 2.5 cm"}</p>
-                        <p className='text-md'>{photo.description ? photo.description : ""}</p>
+                    <p className='text-4xl font-semibold'>{photo.title ? photo.title : ""}</p>
+                    <p className='text-lg font-semibold'>{"Smoky Hawk Claim, Lake George Co., Colorado"}</p>
+                    <p className='text-md'>{"6.0 x 4.3 x 2.5 cm"}</p>
+                    <p className='text-md'>{photo.description ? photo.description : ""}</p>
+                    <LoginModalProvider>
+                        <ExpandPhotoButton>
+                            <PhotoModal>
+                                <div className="h-full w-full flex items-center justify-center">
+                                    <div>
+                                        <div className="bg-green-200 w-[300px] h-[300px]"/>
+                                    </div>
+                                </div>
+                            </PhotoModal>
+                        </ExpandPhotoButton>
+                    </LoginModalProvider>
+                    <ModalPhotos>
+                        <BlurImage
+                            tabIndex={1}
+                            className={`rounded-xl z-0 h-full w-full`}
+                            fill
+                            src={photo.image ? photo.image : '/Cavansite-45.jpeg'}
+                            objectFit='cover'
+                            blurDataURL={photo.imageBlurhash || undefined}
+                            alt={photo.title ? photo.title : ""}
+
+                        />
+                    </ModalPhotos>
                 </div>
             </div>
         </main>
