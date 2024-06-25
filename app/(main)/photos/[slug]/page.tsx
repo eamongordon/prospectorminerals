@@ -30,19 +30,17 @@ export default async function Page({ params }: { params: { slug: string } }) {
         <main>
             <div className='flex-col space-y-5 max-w-screen-md mx-auto py-5'>
                 <div className='mx-auto px-8'>
-                    <div className='relative rounded-md row-span-1 col-span-1 flex flex-col items-center justify-center aspect-video max-w-screen-md'>
-                        <PhotoSlugImage
-                            src={photo.image || undefined}
-                            alt={photo.title || undefined}
-                            blurDataURL={photo.imageBlurhash || undefined}
-                        />
-                    </div>
+                    <PhotoSlugImage
+                        src={photo.image || undefined}
+                        alt={photo.title || undefined}
+                        blurDataURL={photo.imageBlurhash || undefined}
+                    />
                 </div>
                 <div className='flex-col items-center justify-start px-8 text-left space-y-3'>
-                        <p className='text-4xl font-semibold'>{photo.title ? photo.title : ""}</p>
-                        <p className='text-lg font-semibold'>{"Smoky Hawk Claim, Lake George Co., Colorado"}</p>
-                        <p className='text-md'>{"6.0 x 4.3 x 2.5 cm"}</p>
-                        <p className='text-md'>{photo.description ? photo.description : ""}</p>
+                    <p className='text-4xl font-semibold'>{photo.title ? photo.title : ""}</p>
+                    <p className='text-lg font-semibold'>{"Smoky Hawk Claim, Lake George Co., Colorado"}</p>
+                    <p className='text-md'>{"6.0 x 4.3 x 2.5 cm"}</p>
+                    <p className='text-md'>{photo.description ? photo.description : ""}</p>
                 </div>
             </div>
         </main>
