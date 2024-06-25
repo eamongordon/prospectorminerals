@@ -29,7 +29,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
     return (
         <main>
             <div className='flex-col space-y-5 max-w-screen-md mx-auto py-5'>
-                <div className='grid grid-rows-1 grid-cols-1 gap-2 sm:gap-4 max-w-screen-md px-8 mx-auto'>
+                <div className='mx-auto px-8'>
                     <div className='relative rounded-md row-span-1 col-span-1 flex flex-col items-center justify-center aspect-video max-w-screen-md'>
                         <BlurImage
                             className={`rounded-xl z-0`}
