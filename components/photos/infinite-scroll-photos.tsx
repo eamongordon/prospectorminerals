@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react'
 import { useInView } from 'react-intersection-observer'
+import Link from 'next/link'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { fetchPhotos } from '@/lib/actions';
 import { Spinner, Button, Skeleton } from "@nextui-org/react";
@@ -87,34 +88,36 @@ export default function InfiniteScrollPhotos({
       <>
         {photos?.map(photo => (
           <li key={photo.id} className='relative'>
-            <div
-              className='relative flex flex-col items-center justify-center text-center group aspect-square w-full overflow-hidden rounded-lg'
-              id={photo.id}
-              onMouseEnter={(e) => handleHoverIn(e.currentTarget.id)}
-              onMouseLeave={(e) => handleHoverOut(e.currentTarget.id)}
-            >
-              <Skeleton
-                className='h-full w-full absolute' />
-              {photo.image && (
-                <BlurImage
-                  src={photo.image}//"/Cavansite-45.jpeg"
-                  alt=''
-                  id={photo.id}
-                  className={`${hoverItem === photo.id ? "brightness-50 blur-sm" : ""} rounded-lg`}
-                  fill={true}
-                  objectFit='cover'
-                  blurDataURL={photo.imageBlurhash || undefined}
-                />
-              )}
-              {hoverItem === photo.id ? (
-                <>
-                  <h3 className="text-sm sm:text-xl z-10 font-medium text-white px-2">{photo?.title}</h3>
-                  <p className="text-sm sm:text-md z-10 text-white px-2">{photo?.number}</p>
-                </>
-              ) : (
-                <></>
-              )}
-            </div>
+            <Link href={`/photos/${photo.id}`}>
+              <div
+                className='relative flex flex-col items-center justify-center text-center group aspect-square w-full overflow-hidden rounded-lg'
+                id={photo.id}
+                onMouseEnter={(e) => handleHoverIn(e.currentTarget.id)}
+                onMouseLeave={(e) => handleHoverOut(e.currentTarget.id)}
+              >
+                <Skeleton
+                  className='h-full w-full absolute' />
+                {photo.image && (
+                  <BlurImage
+                    src={photo.image}//"/Cavansite-45.jpeg"
+                    alt=''
+                    id={photo.id}
+                    className={`${hoverItem === photo.id ? "brightness-50 blur-sm" : ""} rounded-lg`}
+                    fill={true}
+                    objectFit='cover'
+                    blurDataURL={photo.imageBlurhash || undefined}
+                  />
+                )}
+                {hoverItem === photo.id ? (
+                  <>
+                    <h3 className="text-sm sm:text-xl z-10 font-medium text-white px-2">{photo?.title}</h3>
+                    <p className="text-sm sm:text-md z-10 text-white px-2">{photo?.number}</p>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </div>
+            </Link>
           </li>
         ))}
         {
