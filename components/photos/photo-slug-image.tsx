@@ -18,6 +18,5 @@ export default function PhotoSlugImage({ src, blurDataURL, alt }: { src?: string
                 height: 'auto', // Allow the height to adjust automatically
             }} : {fill: true}}
         />
-
     )
 }
