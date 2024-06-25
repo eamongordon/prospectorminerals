@@ -21,7 +21,7 @@ export default function PhotoSlugImage({ src, blurDataURL, alt }: { src?: string
                     }
                 } : { fill: true }}
             />
-            <div className="absolute text-white inset-0 flex gap-2 justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out bg-black bg-opacity-50">
+            <div className="absolute text-white inset-0 flex gap-2 justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
                 {expanded ? (<Minimize />) : (<Expand />)}
                 <h3 className="text-sm sm:text-xl font-medium">Click to {expanded ? "Collapse" : "Expand"}</h3>
             </div>
