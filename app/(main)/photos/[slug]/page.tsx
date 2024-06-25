@@ -1,6 +1,3 @@
-import Header from '@/components/header';
-import Footer from '@/components/footer';
-import Image from 'next/image';
 import prisma from "@/lib/prisma";
 import { notFound } from 'next/navigation';
 import BlurImage from '@/components/blur-image';
@@ -31,7 +28,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
     }
     return (
         <main>
-            <Header />
             <div className='flex-col space-y-5 max-w-screen-md mx-auto py-5'>
                 <div className='grid grid-rows-1 grid-cols-1 gap-2 sm:gap-4 max-w-screen-md px-8 mx-auto'>
                     <div className='relative rounded-md row-span-1 col-span-1 flex flex-col items-center justify-center aspect-video max-w-screen-md'>
@@ -52,7 +48,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
                         <p className='text-md'>{photo.description ? photo.description : ""}</p>
                 </div>
             </div>
-            <Footer />
         </main>
     )
 }
