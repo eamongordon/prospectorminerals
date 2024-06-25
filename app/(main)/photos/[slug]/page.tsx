@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 import { notFound } from 'next/navigation';
-import BlurImage from '@/components/blur-image';
+import PhotoSlugImage from '@/components/photos/photo-slug-image';
 
 const galleryData = [
     {
@@ -31,13 +31,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
             <div className='flex-col space-y-5 max-w-screen-md mx-auto py-5'>
                 <div className='mx-auto px-8'>
                     <div className='relative rounded-md row-span-1 col-span-1 flex flex-col items-center justify-center aspect-video max-w-screen-md'>
-                        <BlurImage
-                            className={`rounded-xl z-0`}
-                            fill
-                            src={photo.image ? photo.image : '/Cavansite-45.jpeg'}
-                            objectFit='cover'
+                        <PhotoSlugImage
+                            src={photo.image || undefined}
+                            alt={photo.title || undefined}
                             blurDataURL={photo.imageBlurhash || undefined}
-                            alt={photo.title ? photo.title : ""}
                         />
                     </div>
                 </div>
