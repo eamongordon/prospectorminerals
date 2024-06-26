@@ -1,10 +1,6 @@
-import { ReactNode } from "react";
 import Form from "@/components/form";
 import { getSession } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import { editUser } from "@/lib/actions";
-import Header from '@/components/header';
-import Footer from '@/components/footer';
 import DeleteUserForm from "@/components/form/delete-user-form";
 
 export default async function SettingsPage() {
