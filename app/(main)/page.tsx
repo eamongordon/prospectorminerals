@@ -1,7 +1,9 @@
 import Hero from '@/components/home/hero';
 import Card from '@/components/home/card';
+import { getSession } from "@/lib/auth";
 
 export default async function Home() {
+  const session = await getSession();
   const cardItemList = [
     {
       title: 'Learn',
@@ -42,6 +44,14 @@ export default async function Home() {
       image: '/Amazonite-106_horiz.jpeg',
       blurDataURL: "data:image/png;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAoADIDASIAAhEBAxEB/8QAGwAAAwADAQEAAAAAAAAAAAAAAAYHBAUIAwL/xAAmEAACAgICAQMEAwAAAAAAAAABAgADBREEBiESEyIHMUGRFHGh/8QAGQEAAwEBAQAAAAAAAAAAAAAAAQIDBQAE/8QAGxEAAgIDAQAAAAAAAAAAAAAAAAIBEQMhMQT/2gAMAwEAAhEDEQA/AOWEqdz4EzeNjLbSNKYzYHDDkFfEoGI6snxJSGiLZlXpOsf1e24A+gzM5HULlTYrP6l3wnXqFCgqIwW9Zotq0EEm00UxvD8OR+fg7qCdqZqLaWrOiJ0t2vqCIjsqf5In2jF/xbX+OtTlaykrQnwn0V8mEcUqHUeXWpTZEp/AyFK1Loic+YfINQw8xv4vYCqAeuUWTL9OFmnRZ+JmlVwAY24rJ+6o87nPXC7Bu0fOPvXuxIAu3k8lSP5cbpOyoZiheTxm+O9iQj6g4YhrGCyvUdgpenRcfaIvduZRfW+iJ511JsdggT49g7ePzCMdnt+439mEtZKhHSwr9p7DluPzCEYSok96cg6HfqM3XA7DZTr5GEIJDGjeU9wsVde4f3MDJdmfkKQXJhCChrkXzkmJJ3CEIaBZ/9k=",
       link: "/photos"
+    },
+    {
+      title: 'Members',
+      description: session ? 'Manage your Account details and preferences.' : 'Join and gain access to all we have to offer. For Free.',
+      cta: 'Go to Settings',
+      image: '/AluminoAdamite-Smithsonite_horiz.jpeg',
+      blurDataURL: "data:image/png;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAgADIDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAABQcAAwYECP/EACEQAAEDBQEAAwEAAAAAAAAAAAEAAgMEBQYREjJCcaEi/8QAFgEBAQEAAAAAAAAAAAAAAAAAAgED/8QAGBEAAwEBAAAAAAAAAAAAAAAAAAECERL/2gAMAwEAAhEDEQA/APMEFG6UjQROmssj9fyUcx63tlLdhMG12Nha08hZVYsFpFjshHn8Ukx54+BToZZoms8hUy2mInyEe2FtCSnsMjQTyUHq6J8JOwV6ClsEUkRIaFgMrsbYeiGpzWhVaK/kqIm6l04/aiYjVY9XNi52VvaC+RtY0dBJSmrXRa0UQjvT2jXSDkTY6JMhZz6/VxvyFvXpKV17eR7Kpfd5D8ipwDB1QZJHwQXBZrJ7pHOx2iEu23mQD0VTUXR8o0XKqcCpxnU+VvbvtRBzUHaiYz//2Q==",
+      link: "/account/settings"
     },
   ];
   return (
