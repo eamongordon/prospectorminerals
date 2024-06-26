@@ -7,7 +7,7 @@ import { Expand, Minimize } from "lucide-react";
 export default function PhotoSlugImage({ src, blurDataURL, alt }: { src?: string, blurDataURL?: string, alt?: string }) {
     const [expanded, setExpanded] = useState(false);
     return (
-        <div className='group relative rounded-md flex flex-col items-center justify-center aspect-video max-w-screen-md' onClick={() => setExpanded(!expanded)}>
+        <div className='group relative flex items-center justify-center aspect-video' onClick={() => setExpanded(!expanded)}>
             <BlurImage
                 className={`rounded-xl z-0 group-hover:brightness-50 group-hover:blur-sm`}
                 src={src ? src : '/Cavansite-45.jpeg'}
