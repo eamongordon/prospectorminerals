@@ -1,9 +1,7 @@
 import Hero from '@/components/home/hero';
 import Card from '@/components/home/card';
-import { getSession } from "@/lib/auth";
 
 export default async function Home() {
-  const session = await getSession();
   const cardItemList = [
     {
       title: 'Learn',
