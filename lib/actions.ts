@@ -300,7 +300,10 @@ export async function fetchMinerals({ filterObj, cursor, limit, sortObj, fieldse
 
 export async function fetchLocalities({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: LocalitiesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: string }) {
   let queryArray = [];
-  const { name, minerals } = Object(filterObj)
+  const { name, minerals, id } = Object(filterObj);
+  if (id) {
+    queryArray.push({ id: { equals: id } });
+  }
   if (name) {
     queryArray.push({ name: { contains: name, mode: 'insensitive' } });
   }
@@ -332,6 +335,8 @@ export async function fetchLocalities({ filterObj, cursor, limit, sortObj, field
         }
       },
     }
+  } else if (fieldset === "full") {
+    selectObj = undefined;
   }
   const results = await prisma.locality.findMany(
     {
