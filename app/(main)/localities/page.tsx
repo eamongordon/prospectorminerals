@@ -6,6 +6,7 @@ import MineralSelect from "@/components/localities/mineral-search-inner"
 import { fetchLocalities, fetchMinerals } from '@/lib/actions';
 import type { mineralListItem } from '@/types/types';
 import ClearFilters from '@/components/localities/clear-filters';
+import LocalityMap from '@/components/localities/locality-map';
 
 const Page = async ({
     searchParams
@@ -38,8 +39,9 @@ const Page = async ({
             <LocalitiesPageLayout
                 filterObj={{ ...filterObj, minerals: minerals }}
                 localities={localities.results}
+                mapElement={<LocalityMap localities={localities.results} center={[25, 0]} zoom={2} />}
                 clearButton={
-                    <ClearFilters key={serializedKey}/>
+                    <ClearFilters key={serializedKey} />
                 }
             />
         </main >
