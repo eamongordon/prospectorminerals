@@ -8,8 +8,9 @@ import { Work_Sans } from 'next/font/google'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import L from 'leaflet';
 import Link from 'next/link';
-import { Card, CardFooter, Image as UIImage } from "@nextui-org/react";
+import { Card, CardFooter, Skeleton, Image as UIImage } from "@nextui-org/react";
 import { Locality } from '@prisma/client';
+import { Suspense } from 'react';
 
 const inter = Work_Sans({ subsets: ['latin'] })
 
@@ -38,6 +39,7 @@ export default function LocalityMap({ localities, center, zoom }: { localities: 
         iconAnchor: [17.5, 35], // Adjust to ensure the icon is centered on its coordinates
     });
     return (
+        <Suspense fallback={<Skeleton className='h-[400px] w-full'></Skeleton>}>
         <MapContainer
             className='w-full max-h-[400px] aspect-[5/3] z-0 py-0'
             center={center} zoom={zoom} scrollWheelZoom={false}>
@@ -68,5 +70,6 @@ export default function LocalityMap({ localities, center, zoom }: { localities: 
                 </Marker>)
             })}
         </MapContainer>
+        </Suspense>
     )
 }

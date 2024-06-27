@@ -7,7 +7,8 @@ import { fetchLocalities, fetchMinerals } from '@/lib/actions';
 import type { mineralListItem } from '@/types/types';
 import ClearFilters from '@/components/localities/clear-filters';
 import LocalityMap from '@/components/localities/locality-map';
-
+import { Skeleton } from '@nextui-org/react';
+import { Suspense } from 'react'
 const Page = async ({
     searchParams
 }: {
@@ -39,7 +40,7 @@ const Page = async ({
             <LocalitiesPageLayout
                 filterObj={{ ...filterObj, minerals: minerals }}
                 localities={localities.results}
-                mapElement={<LocalityMap localities={localities.results} center={[25, 0]} zoom={2} />}
+                mapElement={<Suspense fallback={<Skeleton className='h-[400px] w-full' />}><LocalityMap localities={localities.results} center={[25, 0]} zoom={2} /></Suspense>}
                 clearButton={
                     <ClearFilters key={serializedKey} />
                 }
