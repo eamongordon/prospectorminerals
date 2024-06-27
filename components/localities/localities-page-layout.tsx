@@ -27,7 +27,7 @@ import Link from 'next/link';
 const inter = Work_Sans({ subsets: ['latin'] })
 
 //chore: update any definition for localities
-export default function LocalitiesPageLayout({ markers, filterObj, localities, clearButton }: { markers?: any, filterObj: LocalitiesQueryParams, localities: Locality[], clearButton?: React.ReactElement }) {
+export default function LocalitiesPageLayout({ filterObj, localities, clearButton }: { filterObj: LocalitiesQueryParams, localities: Locality[], clearButton?: React.ReactElement }) {
 
     const [coord, setCoord] = useState([51.505, -0.09])
 
