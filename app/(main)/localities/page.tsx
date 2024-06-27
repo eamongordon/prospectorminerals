@@ -7,16 +7,6 @@ import { fetchLocalities, fetchMinerals } from '@/lib/actions';
 import type { mineralListItem } from '@/types/types';
 import ClearFilters from '@/components/localities/clear-filters';
 
-const markers = [
-    {
-        title: "Marker 1",
-        coords: [35, 35]
-    }, {
-        title: "Marker 2",
-        coords: [50, 50]
-    }
-];
-
 const Page = async ({
     searchParams
 }: {
@@ -46,7 +36,6 @@ const Page = async ({
     return (
         <main>
             <LocalitiesPageLayout
-                markers={markers}
                 filterObj={{ ...filterObj, minerals: minerals }}
                 localities={localities.results}
                 clearButton={
