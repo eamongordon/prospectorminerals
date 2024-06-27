@@ -1,8 +1,8 @@
-import { fetchMinerals } from "@/lib/actions";
 import Gallery from "@/components/minerals/mineral-gallery";
-import { notFound } from "next/navigation";
-import PropertyTable from "@/components/minerals/property-table";
 import MineralTags from "@/components/minerals/mineral-tags";
+import PropertyTable from "@/components/minerals/property-table";
+import { fetchMinerals } from "@/lib/actions";
+import { notFound } from "next/navigation";
 
 const galleryData = [
     {

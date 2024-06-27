@@ -1,11 +1,11 @@
 "use client";
 
-import { useTransition } from "react";
+import LoadingDots from "@/components/icons/loading-dots";
 import { createPost } from "@/lib/actions";
 import { cn } from "@/lib/utils";
-import { useParams, useRouter } from "next/navigation";
-import LoadingDots from "@/components/icons/loading-dots";
 import va from "@vercel/analytics";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 
 export default function CreatePostButton() {
   const router = useRouter();

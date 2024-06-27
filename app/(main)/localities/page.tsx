@@ -1,14 +1,11 @@
-import dynamic from 'next/dynamic';
-import { useMemo } from 'react';
-import { Button } from '@nextui-org/react';
 import LocalitiesPageLayout from "@/components/localities/localities-page-layout"
-import MineralSelect from "@/components/localities/mineral-search-inner"
-import { fetchLocalities, fetchMinerals } from '@/lib/actions';
+import { fetchLocalities } from '@/lib/actions';
 import type { mineralListItem } from '@/types/types';
 import ClearFilters from '@/components/localities/clear-filters';
 import LocalityMap from '@/components/localities/locality-map';
 import { Skeleton } from '@nextui-org/react';
 import { Suspense } from 'react'
+
 const Page = async ({
     searchParams
 }: {

@@ -1,14 +1,14 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
-import { useInView } from 'react-intersection-observer'
+import { fetchPhotos } from '@/lib/actions'
+import type { PhotosSortObj } from '@/types/types'
+import { Button, Skeleton, Spinner } from "@nextui-org/react"
+import type { Photo } from '@prisma/client'
 import Link from 'next/link'
-import { useRouter, usePathname, useSearchParams } from 'next/navigation'
-import { fetchPhotos } from '@/lib/actions';
-import { Spinner, Button, Skeleton } from "@nextui-org/react";
-import BlurImage from '../blur-image';
-import type { PhotosSortObj } from '@/types/types';
-import type { Photo } from '@prisma/client';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useEffect, useRef, useState } from 'react'
+import { useInView } from 'react-intersection-observer'
+import BlurImage from '../blur-image'
 
 export default function InfiniteScrollPhotos({
   search,

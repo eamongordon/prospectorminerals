@@ -1,17 +1,13 @@
-import Header from '@/components/header';
 import Footer from '@/components/footer';
-import LoginModalButton from '@/components/registration/login-modal-button';
-import LoginModal from '@/components/modal/login';
-import { Button } from '@nextui-org/react'
+import Header from '@/components/header';
 import { LoginModalProvider } from "@/components/modal/registration/provider";
 //import LoginForm from '@/components/registration/login-form';
 //import Modal from "@/components/next-ui-modal";
-import LoginModalVaul from '@/components/registration/login-vaul-modal';
-import RegModal from "@/components/next-ui-modal";
-import Image from 'next/image';
-import Gallery from "@/components/minerals/mineral-gallery";
 import Card from "@/components/minerals/mineral-card";
+import Gallery from "@/components/minerals/mineral-gallery";
+import RegModal from "@/components/next-ui-modal";
 import TestServerActions from '@/components/test-server-actions';
+import Image from 'next/image';
 
 const galleryData = [
     {

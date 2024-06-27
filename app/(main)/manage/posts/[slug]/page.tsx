@@ -1,11 +1,11 @@
+import Editor from "@/components/editor";
+import Form from '@/components/form';
+import DeletePostForm from "@/components/form/delete-post-form";
+import PostPageLayout from "@/components/manage/posts/post-page-layout";
+import { updatePostMetadata } from "@/lib/actions";
 import { getSession } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { notFound, redirect } from "next/navigation";
-import { updatePostMetadata } from "@/lib/actions";
-import Editor from "@/components/editor";
-import DeletePostForm from "@/components/form/delete-post-form";
-import Form from '@/components/form';
-import PostPageLayout from "@/components/manage/posts/post-page-layout";
 
 export default async function PostPage({ params }: { params: { slug: string } }) {
   const session = await getSession();

@@ -1,8 +1,8 @@
 "use client";
 
+import { Image as UIImage } from "@nextui-org/react";
 import cn from "clsx";
 import Image from "next/image";
-import { Image as UIImage } from "@nextui-org/react";
 import { useState } from "react";
 
 import type { ComponentProps } from "react";
