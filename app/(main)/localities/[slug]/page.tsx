@@ -1,6 +1,6 @@
 import { fetchLocalities } from '@/lib/actions';
 import { notFound } from "next/navigation";
-import LocalitySlugMap from '@/components/localities/locality-map-slug';
+import LocalityMap from '@/components/localities/locality-map';
 
 export default async function Page({ params }: { params: { slug: string } }) {
     const localityResult = await fetchLocalities({ filterObj: { id: params.slug }, cursor: undefined, limit: 1, fieldset: 'full' });
@@ -11,8 +11,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
         locality = localityResult.results[0];
     }
     return (
-        <>
-            <LocalitySlugMap locality={locality} />
-        </>
+        <LocalityMap localities={[locality]} center={[locality.latitude as unknown as number, locality.longitude as unknown as number]} zoom={6} />
     );
 };
