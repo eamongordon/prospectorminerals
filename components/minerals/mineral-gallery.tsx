@@ -17,7 +17,7 @@ export default function Gallery({ data }: { data: galleryItem[] }) {
                 <Image
                     className={"group-hover:brightness-50 group-hover:blur-sm rounded-xl z-0"}
                     src="/Amazonite-106_horiz.jpeg"
-                    alt="Picture of the author"
+                    alt="Sample Image"
                     objectFit='cover'
                     fill={true}
                 />
@@ -35,7 +35,7 @@ export default function Gallery({ data }: { data: galleryItem[] }) {
                     src="/Cavansite-45.jpeg"
                     fill={true}
                     objectFit='cover'
-                    alt="Picture of the author"
+                    alt="Sample Image"
                 />
 
                 <>
@@ -50,7 +50,7 @@ export default function Gallery({ data }: { data: galleryItem[] }) {
                 <Image
                     className={"group-hover:brightness-50 group-hover:blur-sm rounded-xl z-0"}
                     src="/Krohnkite-110_horiz.jpeg"
-                    alt="Picture of the author"
+                    alt="Sample Image"
                     fill={true}
                     objectFit='cover'
                 />
