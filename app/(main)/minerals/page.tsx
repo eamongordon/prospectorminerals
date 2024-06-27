@@ -1,8 +1,8 @@
-import { fetchMinerals } from '@/lib/actions'
-import type { LustersList, MineralClassesList, CrystalSystemsList } from '@/types/types'
 import InfiniteScrollMinerals from '@/components/minerals/infinite-scroll-minerals';
 import MineralPageLayout from "@/components/minerals/mineral-page-layout";
 import SortDropdown from "@/components/minerals/sort-dropdown";
+import { fetchMinerals } from '@/lib/actions';
+import type { CrystalSystemsList, LustersList, MineralClassesList } from '@/types/types';
 
 const Page = async ({
     searchParams

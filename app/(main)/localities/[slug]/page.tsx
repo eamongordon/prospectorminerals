@@ -1,8 +1,8 @@
-import { Suspense } from 'react'
-import { fetchLocalities } from '@/lib/actions';
-import { notFound } from "next/navigation";
 import LocalityMap from '@/components/localities/locality-map';
+import { fetchLocalities } from '@/lib/actions';
 import { Skeleton } from '@nextui-org/react';
+import { notFound } from "next/navigation";
+import { Suspense } from 'react';
 
 export default async function Page({ params }: { params: { slug: string } }) {
     const localityResult = await fetchLocalities({ filterObj: { id: params.slug }, cursor: undefined, limit: 1, fieldset: 'full' });

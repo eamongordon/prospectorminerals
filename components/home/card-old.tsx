@@ -1,5 +1,4 @@
-import React from "react";
-import { Card, CardHeader, CardBody, CardFooter, Button, Link, Image } from "@nextui-org/react";
+import { Button, Card, CardBody, CardFooter, CardHeader, Image, Link } from "@nextui-org/react";
 
 export default function NavCard({
     title,

@@ -2,8 +2,8 @@
 "use client"
 
 import { getBlurDataURL } from "@/lib/utils";
-import { useState } from "react";
 import { Button, Input } from "@nextui-org/react";
+import { useState } from "react";
 
 export default function Blurhash() {
     const [loading, setLoading] = useState(false);

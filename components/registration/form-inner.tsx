@@ -1,13 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import { signIn } from "next-auth/react";
+import { useState } from "react";
 //import LoadingDots from "@/components/icons/loading-dots";
-import { Input, Button } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { useSearchParams } from 'next/navigation'
-import React from "react";
 
 
 export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }: { type: "login" | "register" | "forgotPassword", isModal?: boolean, onCloseAction?: Function, resetPasswordFunc?: Function }) {

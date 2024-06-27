@@ -1,7 +1,7 @@
-import { fetchPhotos } from '@/lib/actions'
-import SortDropdown from '@/components/photos/sort-dropdown';
 import InfiniteScrollPhotos from '@/components/photos/infinite-scroll-photos';
 import PhotosLayout from "@/components/photos/photos-layout";
+import SortDropdown from '@/components/photos/sort-dropdown';
+import { fetchPhotos } from '@/lib/actions';
 
 const Page = async ({
     searchParams

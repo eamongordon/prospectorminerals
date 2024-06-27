@@ -1,6 +1,6 @@
+import PhotoSlugImage from '@/components/photos/photo-slug-image';
 import prisma from "@/lib/prisma";
 import { notFound } from 'next/navigation';
-import PhotoSlugImage from '@/components/photos/photo-slug-image';
 
 const galleryData = [
     {
