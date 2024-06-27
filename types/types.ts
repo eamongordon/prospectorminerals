@@ -22,7 +22,8 @@ export type LocalitiesFilterObj = {
     type_code?: string,
     latitude?: number,
     longitude?: number,
-    minerals?: string[]
+    minerals?: string[],
+    id?: string
 }
 
 export type ArticlesFilterObj = {
