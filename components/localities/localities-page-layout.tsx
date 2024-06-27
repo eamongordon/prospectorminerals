@@ -1,7 +1,7 @@
 'use client'
 
-import { Tabs, Tab } from "@nextui-org/react";
-import { useState, useEffect, useRef } from 'react'
+import { Tabs, Tab, Skeleton } from "@nextui-org/react";
+import { useState, useEffect, useRef, Suspense } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useDebounce } from "use-debounce";
 import { useInView } from 'react-intersection-observer';
@@ -17,7 +17,7 @@ import { Map, Rows } from 'lucide-react';
 import LocalityMap from './locality-map';
 
 //chore: update any definition for localities
-export default function LocalitiesPageLayout({ filterObj, localities, mapElement, clearButton }: { filterObj: LocalitiesQueryParams, localities: Locality[], mapElement:React.ReactElement, clearButton?: React.ReactElement }) {
+export default function LocalitiesPageLayout({ filterObj, localities, clearButton }: { filterObj: LocalitiesQueryParams, localities: Locality[], clearButton?: React.ReactElement }) {
 
     const [coord, setCoord] = useState([51.505, -0.09])
 
@@ -368,7 +368,7 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                                 </div>
                             }
                         >
-                            {mapElement}
+                            <Suspense fallback={<Skeleton className='h-[400px] w-full' />}><LocalityMap localities={localities} center={[25, 0]} zoom={2} /></Suspense>
                         </Tab>
                         <Tab key="list" title={
                             <div className="flex items-center space-x-2">

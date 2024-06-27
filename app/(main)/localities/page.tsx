@@ -40,7 +40,6 @@ const Page = async ({
             <LocalitiesPageLayout
                 filterObj={{ ...filterObj, minerals: minerals }}
                 localities={localities.results}
-                mapElement={<Suspense fallback={<Skeleton className='h-[400px] w-full' />}><LocalityMap localities={localities.results} center={[25, 0]} zoom={2} /></Suspense>}
                 clearButton={
                     <ClearFilters key={serializedKey} />
                 }
