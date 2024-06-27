@@ -203,7 +203,7 @@ export default function MineralSelect({
                 >
                     {(item) => (
                         <ListboxItem
-                            startContent={<Avatar alt="Argentina" className="w-6 h-6" src="https://flagcdn.com/ar.svg" />}
+                            startContent={<Avatar alt={item.name} className="w-6 h-6" src="https://flagcdn.com/ar.svg" />}
                             key={item.name}
                         /*
                         endContent={chemistryVal?.includes(item.key) ? (
