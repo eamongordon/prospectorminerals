@@ -14,7 +14,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
     }
     return (
         <Suspense fallback={<Skeleton className='h-[400px] w-full'/>}>
-            <LocalityMap localities={[locality]} center={[locality.latitude as unknown as number, locality.longitude as unknown as number]} zoom={6} />
+            <LocalityMap localities={[locality]} center={[locality.latitude as unknown as number, locality.longitude as unknown as number]} zoom={5} />
         </Suspense>
     );
 };

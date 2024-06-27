@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { Card, CardFooter, Skeleton, Image as UIImage } from "@nextui-org/react";
 import { Locality } from '@prisma/client';
 import { Suspense } from 'react';
+import dynamic from "next/dynamic";
 
 const inter = Work_Sans({ subsets: ['latin'] })
 
