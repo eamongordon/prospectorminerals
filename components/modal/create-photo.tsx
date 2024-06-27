@@ -1,16 +1,14 @@
 "use client";
 
-import { toast } from "sonner";
 //import { createContact } from "@/lib/functions/contacts/contacts";
-import { useRouter } from "next/navigation";
-import { useFormStatus } from "react-dom";
-import { cn } from "@/lib/utils";
-import LoadingDots from "@/components/icons/loading-dots";
-import { useModal } from "./provider";
-import va from "@vercel/analytics";
-import { useEffect, useState } from "react";
 import Form from '@/components/form';
+import LoadingDots from "@/components/icons/loading-dots";
 import { createPhoto } from "@/lib/actions";
+import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useFormStatus } from "react-dom";
+import { useModal } from "./provider";
 
 export default function CreateContactModal({ organizationId }: { organizationId: string }) {
   const router = useRouter();

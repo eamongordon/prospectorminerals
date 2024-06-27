@@ -1,8 +1,7 @@
-import { getSession } from "@/lib/auth";
-import prisma from "@/lib/prisma";
-import { notFound, redirect } from "next/navigation";
-import Posts from "@/components/manage/posts/posts";
 import CreatePostButton from "@/components/manage/posts/create-post-button";
+import Posts from "@/components/manage/posts/posts";
+import { getSession } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export default async function SitePosts({
   params,

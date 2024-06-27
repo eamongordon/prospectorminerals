@@ -1,11 +1,11 @@
 "use client";
 
-import { SessionProvider } from "next-auth/react";
-import { Toaster } from "sonner";
-import { NextUIProvider } from '@nextui-org/react';
-import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ModalProvider } from "@/components/modal/provider";
+import { NextUIProvider } from '@nextui-org/react';
+import { SessionProvider } from "next-auth/react";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { useRouter } from 'next/navigation';
+import { Toaster } from "sonner";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter();

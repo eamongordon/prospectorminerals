@@ -1,10 +1,9 @@
 "use client";
 
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, Skeleton } from "@nextui-org/react";
-import { Sun, Moon, Laptop2 } from "lucide-react";
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Skeleton } from "@nextui-org/react";
+import { Laptop2, Moon, Sun } from "lucide-react";
 import { useTheme } from 'next-themes';
-import { useRouter } from 'next/navigation';
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function ThemeSwitch() {
     const [mounted, setMounted] = useState(false);
