@@ -1,6 +1,6 @@
 import Gallery from "@/components/minerals/mineral-gallery";
 import MineralTags from "@/components/minerals/mineral-tags";
-import PropertyTable from "@/components/minerals/property-table";
+import PropertyTable from "@/components/property-table";
 import { fetchMinerals } from "@/lib/actions";
 import { notFound } from "next/navigation";
 
@@ -44,6 +44,19 @@ export default async function Page({ params }: { params: { slug: string } }) {
     if (mineral.localities_description) {
         descriptionFields.push({ property: "Notable Localities", value: mineral.localities_description });
     }
+    let tableData = [];
+    if (mineral.chemical_formula) {
+        tableData.push({ property: "Chemical Formula", value: mineral.chemical_formula });
+    }
+    if (mineral.hardness_min && mineral.hardness_max) {
+        tableData.push({ property: "Hardness", value: mineral.hardness_min === mineral.hardness_max ? mineral.hardness_min.toString() : mineral.hardness_min.toString() + '-' + mineral.hardness_max.toString() });
+    }
+    if (mineral.crystal_system) {
+        tableData.push({ property: "Crystal System", value: mineral.crystal_system });
+    }
+    if (mineral.mineral_class) {
+        tableData.push({ property: "Mineral Class", value: mineral.mineral_class });
+    }
     return (
         <main className="px-6 max-w-screen-xl mx-auto">
             <h1 className='font-semibold text-4xl sm:text-6xl py-4'>{mineral.name}</h1>
@@ -65,7 +78,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     </div>
                 </div>
                 <div className="w-full my-4 sm:my-0 sm:w-[40%] sm:min-w-80">
-                    <PropertyTable mineral={mineral} />
+                    <PropertyTable data={tableData} />
                 </div>
             </div>
         </main >
