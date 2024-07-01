@@ -89,7 +89,7 @@ model Mineral {
   associates             Mineral[]           @relation("MineralAssociates")
   localities             MineralOnLocality[]
   number                 Int                 @unique @default(autoincrement())
-  photos                 PhotosOnMineral[]
+  photos                 PhotoOnMineral[]
 
   @@index([id])
 }
@@ -114,19 +114,19 @@ model Post {
 }
 
 model Photo {
-  id              String            @id @default(cuid())
+  id              String           @id @default(cuid())
   title           String?
   description     String?
   image           String?
-  imageBlurhash   String?           @default("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAhCAYAAACbffiEAAAACXBIWXMAABYlAAAWJQFJUiTwAAABfUlEQVR4nN3XyZLDIAwE0Pz/v3q3r55JDlSBplsIEI49h76k4opexCK/juP4eXjOT149f2Tf9ySPgcjCc7kdpBTgDPKByKK2bTPFEdMO0RDrusJ0wLRBGCIuelmWJAjkgPGDSIQEMBDCfA2CEPM80+Qwl0JkNxBimiaYGOTUlXYI60YoehzHJDEm7kxjV3whOQTD3AaCuhGKHoYhyb+CBMwjIAFz647kTqyapdV4enGINuDJMSScPmijSwjCaHeLcT77C7EC0C1ugaCTi2HYfAZANgj6Z9A8xY5eiYghDMNQBJNCWhASot0jGsSCUiHWZcSGQjaWWCDaGMOWnsCcn2QhVkRuxqqNxMSdUSElCDbp1hbNOsa6Ugxh7xXauF4DyM1m5BLtCylBXgaxvPXVwEoOBjeIFVODtW74oj1yBQah3E8tyz3SkpolKS9Geo9YMD1QJR1Go4oJkgO1pgbNZq0AOUPChyjvh7vlXaQa+X1UXwKxgHokB2XPxbX+AnijwIU4ahazAAAAAElFTkSuQmCC") @db.Text
+  imageBlurhash   String?          @default("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAhCAYAAACbffiEAAAACXBIWXMAABYlAAAWJQFJUiTwAAABfUlEQVR4nN3XyZLDIAwE0Pz/v3q3r55JDlSBplsIEI49h76k4opexCK/juP4eXjOT149f2Tf9ySPgcjCc7kdpBTgDPKByKK2bTPFEdMO0RDrusJ0wLRBGCIuelmWJAjkgPGDSIQEMBDCfA2CEPM80+Qwl0JkNxBimiaYGOTUlXYI60YoehzHJDEm7kxjV3whOQTD3AaCuhGKHoYhyb+CBMwjIAFz647kTqyapdV4enGINuDJMSScPmijSwjCaHeLcT77C7EC0C1ugaCTi2HYfAZANgj6Z9A8xY5eiYghDMNQBJNCWhASot0jGsSCUiHWZcSGQjaWWCDaGMOWnsCcn2QhVkRuxqqNxMSdUSElCDbp1hbNOsa6Ugxh7xXauF4DyM1m5BLtCylBXgaxvPXVwEoOBjeIFVODtW74oj1yBQah3E8tyz3SkpolKS9Geo9YMD1QJR1Go4oJkgO1pgbNZq0AOUPChyjvh7vlXaQa+X1UXwKxgHokB2XPxbX+AnijwIU4ahazAAAAAElFTkSuQmCC") @db.Text
   specimen_length Decimal?
   specimen_width  Decimal?
   specimen_height Decimal?
   specimen_size   String?
   specimen_number Int?
-  number          Int               @unique @default(autoincrement())
+  number          Int              @unique @default(autoincrement())
   mineral_names   String[]
-  minerals        PhotosOnMineral[]
+  minerals        PhotoOnMineral[]
 
   @@index([id])
 }
@@ -156,11 +156,12 @@ model MineralOnLocality {
   @@id([localityId, mineralId])
 }
 
-model PhotosOnMineral {
+model PhotoOnMineral {
   mineral    Mineral  @relation(fields: [mineralId], references: [id])
   mineralId  String // relation scalar field (used in the `@relation` attribute above)
   photo      Photo    @relation(fields: [photoId], references: [id])
   photoId    String // relation scalar field (used in the `@relation` attribute above)
+  featured   Boolean  @default(false)
   assignedAt DateTime @default(now())
   assignedBy String
 
