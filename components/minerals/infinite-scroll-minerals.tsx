@@ -7,8 +7,7 @@ import MineralCard from './mineral-card';
 import { customAlphabet } from "nanoid";
 import { Spinner, Button } from "@nextui-org/react";
 import type { MineralsFilterObj, PhotosSortObj } from '@/types/types';
-
-type ResultType = Awaited<ReturnType<typeof fetchMinerals>>['results'];
+import type { MineralDisplayFieldset } from '@/types/prisma';
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -24,7 +23,7 @@ export default function InfiniteScrollPhotos({
   clearFilters
 }: {
   filterObj?: MineralsFilterObj
-  initialPhotos?: ResultType,
+  initialPhotos?: MineralDisplayFieldset[],
   initialCursor?: number,
   sort?: PhotosSortObj,
   limit?: number,
@@ -42,7 +41,7 @@ export default function InfiniteScrollPhotos({
       const photosQuery = await fetchMinerals({ ...(filterObj ? { filterObj: filterObj } : {}) || {}, cursor: page, limit: limit ? limit : 10, ...(sort ? { sortObj: sort } : {}), fieldset: "display" });
       if (photosQuery.results?.length) {
         setPage(photosQuery.next ? photosQuery.next : undefined)
-        setPhotos((prev: ResultType | undefined) => [
+        setPhotos((prev: MineralDisplayFieldset[] | undefined) => [
           ...(prev?.length ? prev : []),
           ...photosQuery.results
         ]);
@@ -71,8 +70,7 @@ export default function InfiniteScrollPhotos({
         {
           photos?.map(mineral => (
             <li key={mineral.id} className='relative flex flex-col items-center justify-center text-center group w-full overflow-hidden rounded-xl'>
-              {/*@ts-expect-error*/}
-              <MineralCard name={mineral.name} id={mineral.id} image={mineral.photos.length > 0 ? mineral.photos[0].photo.image : undefined} />
+              <MineralCard name={mineral.name} id={mineral.id} blurDataURL={mineral.photos.length > 0 && mineral.photos[0].photo.imageBlurhash ? mineral.photos[0].photo.imageBlurhash : undefined} image={mineral.photos.length > 0 && mineral.photos[0].photo.image ? mineral.photos[0].photo.image : undefined} />
             </li>
           ))
         }

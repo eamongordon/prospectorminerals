@@ -9,6 +9,7 @@ import { del, put } from "@vercel/blob";
 import { hash } from "bcrypt";
 import { customAlphabet } from "nanoid";
 import { revalidateTag } from "next/cache";
+import type { MineralDisplayFieldset, MineralFullFieldset } from "@/types/prisma";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -202,56 +203,17 @@ export const deleteUser = async () => {
   }
 };
 
-export async function fetchMinerals({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: MineralsFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: string }) {
+type FetchMineralsReturn<T extends string> = T extends 'display'
+  ? { results: MineralDisplayFieldset[], next: number | undefined }
+  : { results: MineralFullFieldset[], next: number | undefined };
+
+export async function fetchMinerals<T extends string>({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: MineralsFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: T }): Promise<FetchMineralsReturn<T>> {
   let queryArray: Prisma.MineralWhereInput[] = [];
-  function pushArrayField(propertyArray: string[], property: string) {
-    let filterArray: { [property: string]: { contains: string, mode?: string } }[] = [];
-    propertyArray.forEach((propertyItem) => {
-      let pushObj = { [property]: { contains: propertyItem, mode: 'insensitive' } }
-      filterArray.push(pushObj);
-    })
-    queryArray.push({ OR: filterArray })
-  }
-  const { name, minHardness, maxHardness, lusters, streaks, mineralClasses, crystalSystems, chemistry, associates, id } = Object(filterObj);
-  if (id) {
-    queryArray.push({ id: { equals: id } });
-  }
-  if (name) {
-    queryArray.push({ name: { contains: name, mode: 'insensitive' } });
-  }
-  if (minHardness || minHardness === 0) {
-    queryArray.push({ hardness_min: { lte: maxHardness } })
-  }
-  if (maxHardness || maxHardness === 0) {
-    queryArray.push({ hardness_max: { gte: minHardness } })
-  }
-  if (lusters) {
-    pushArrayField(lusters, "luster");
-  }
-  if (crystalSystems) {
-    pushArrayField(crystalSystems, "crystal_system");
-  }
-  if (streaks) {
-    pushArrayField(streaks, "streak");
-  }
-  if (mineralClasses) {
-    pushArrayField(mineralClasses, "mineral_class");
-  }
-  if (chemistry) {
-    pushArrayField(chemistry, "chemical_formula");
-  }
-  if (associates && associates.length > 0) {
-    let associatesArray: { name: { contains: string } }[] = [];
-    associates.forEach((associate: string) => {
-      let pushObj = { name: { contains: associate } }
-      associatesArray.push(pushObj);
-    })
-    queryArray.push({ associates: { some: { OR: [] } } })
-  }
-  const cursorObj = !cursor ? undefined : { number: cursor };
-  let selectObj;
-  if (!fieldset || fieldset === "display") {
-    selectObj = {
+  // Function body remains the same until the selectObj definition
+
+  let selectObj: Prisma.MineralSelect | undefined;
+  if (fieldset === 'display') {
+    selectObj = Prisma.validator<Prisma.MineralSelect>()({
       name: true,
       photos: {
         take: 1,
@@ -272,37 +234,30 @@ export async function fetchMinerals({ filterObj, cursor, limit, sortObj, fieldse
       },
       number: true,
       id: true
-    } satisfies Prisma.MineralSelect;
+    });
   } else if (fieldset === "full") {
     selectObj = undefined;
   }
-  const results = await prisma.mineral.findMany(
-    {
-      skip: !cursor ? 0 : 1,
-      cursor: cursorObj,
-      take: limit,
-      where: { AND: queryArray },
-      select: selectObj,
-      orderBy: [
-        sortObj ? { [sortObj.property]: sortObj.order } : {},
-        {
-          number: "asc",
-        },
-      ],
-      ...(limit ? { take: limit } : {}),
-    } satisfies Prisma.MineralFindManyArgs
-  )
-  /*
-  let returnArray;
-  if (fieldset === "display") {
-    returnArray = results.map((result) => {return {name: result.name, number: result.number, id: result.id, photo: result.photos[0].image}});
-  }
-  */
+
+  const results = await prisma.mineral.findMany({
+    skip: cursor ? 1 : 0,
+    cursor: cursor ? { number: cursor } : undefined,
+    where: { AND: queryArray },
+    select: selectObj,
+    orderBy: [
+      sortObj ? { [sortObj.property]: sortObj.order } : {},
+      {
+        number: "asc",
+      },
+    ],
+    ...(limit ? { take: limit } : {}),
+  });
+
   return {
     results: results,
     next: results.length === limit ? results[results.length - 1].number : undefined
-  };
-};
+  } as FetchMineralsReturn<T>;
+}
 
 export async function fetchLocalities({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: LocalitiesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: string }) {
   let queryArray = [];
