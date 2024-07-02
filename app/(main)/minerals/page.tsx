@@ -28,7 +28,7 @@ const Page = async ({
     const order =
         typeof searchParams.order === 'string' ? searchParams.order : undefined
     const filterObj = { name: name, lusters: lusters, mineralClasses: mineralClasses, crystalSystems: crystalSystems, chemistry: chemistry?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness) }
-    const photosQuery = await fetchMinerals({ filterObj: filterObj, cursor: undefined, limit: 10, ...(property && order ? { sortObj: { property: property, order: order } } : {}) });
+    const photosQuery = await fetchMinerals({ filterObj: filterObj, cursor: undefined, limit: 10, ...(property && order ? { sortObj: { property: property, order: order } } : {}), fieldset: 'display' });
     const serializedKey = JSON.stringify({ filterObj, property, order });
     return (
         <main>
