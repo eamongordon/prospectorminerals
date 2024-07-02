@@ -5,9 +5,10 @@ import { useInView } from 'react-intersection-observer'
 import { fetchMinerals } from '@/lib/actions';
 import MineralCard from './mineral-card';
 import { customAlphabet } from "nanoid";
-import { Spinner, Button} from "@nextui-org/react";
+import { Spinner, Button } from "@nextui-org/react";
 import type { MineralsFilterObj, PhotosSortObj } from '@/types/types';
-import type { Mineral } from '@prisma/client';
+
+type ResultType = Awaited<ReturnType<typeof fetchMinerals>>['results'];
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -23,7 +24,7 @@ export default function InfiniteScrollPhotos({
   clearFilters
 }: {
   filterObj?: MineralsFilterObj
-  initialPhotos?: Mineral[],
+  initialPhotos?: ResultType,
   initialCursor?: number,
   sort?: PhotosSortObj,
   limit?: number,
@@ -38,10 +39,10 @@ export default function InfiniteScrollPhotos({
   async function loadMorePhotos() {
     if (page) {
       console.log("loadMoreMin")
-      const photosQuery = await fetchMinerals({ ...(filterObj ? { filterObj: filterObj } : {}) || {}, cursor: page, limit: limit ? limit : 10, ...(sort ? { sortObj: sort } : {}), });
+      const photosQuery = await fetchMinerals({ ...(filterObj ? { filterObj: filterObj } : {}) || {}, cursor: page, limit: limit ? limit : 10, ...(sort ? { sortObj: sort } : {}), fieldset: "display" });
       if (photosQuery.results?.length) {
         setPage(photosQuery.next ? photosQuery.next : undefined)
-        setPhotos((prev: Mineral[] | undefined) => [
+        setPhotos((prev: ResultType | undefined) => [
           ...(prev?.length ? prev : []),
           ...photosQuery.results
         ]);
@@ -61,7 +62,6 @@ export default function InfiniteScrollPhotos({
       loadMorePhotos()
     }
   }, [inView])
-
   return (
     <ul
       role='list'
@@ -71,7 +71,8 @@ export default function InfiniteScrollPhotos({
         {
           photos?.map(mineral => (
             <li key={mineral.id} className='relative flex flex-col items-center justify-center text-center group w-full overflow-hidden rounded-xl'>
-                <MineralCard name={mineral.name} id={mineral.id}/>
+              {/*@ts-expect-error*/}
+              <MineralCard name={mineral.name} id={mineral.id} image={mineral.photos.length > 0 ? mineral.photos[0].photo.image : undefined} />
             </li>
           ))
         }
@@ -82,7 +83,7 @@ export default function InfiniteScrollPhotos({
             <div className='flex-col items-center justify-center col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-3'>
               <p className='w-full text-center'>No Minerals Found. Try adjusting your filters.</p>
               <div className='flex items-center justify-center py-4'>
-                <Button className="flex" isLoading={noPhotosLoading} onClick={() => {if (clearFilters) {setNoPhotosLoading(true); clearFilters();}}}>
+                <Button className="flex" isLoading={noPhotosLoading} onClick={() => { if (clearFilters) { setNoPhotosLoading(true); clearFilters(); } }}>
                   Clear Filters
                 </Button>
               </div>
