@@ -203,7 +203,7 @@ export const deleteUser = async () => {
 };
 
 export async function fetchMinerals({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: MineralsFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: string }) {
-  let queryArray = [];
+  let queryArray: Prisma.MineralWhereInput[] = [];
   function pushArrayField(propertyArray: string[], property: string) {
     let filterArray: { [property: string]: { contains: string, mode?: string } }[] = [];
     propertyArray.forEach((propertyItem) => {
@@ -258,14 +258,21 @@ export async function fetchMinerals({ filterObj, cursor, limit, sortObj, fieldse
         select: {
           photo: {
             select: {
-              title: true
+              title: true,
+              image: true,
+              imageBlurhash: true,
             }
+          }
+        },
+        orderBy: {
+          photo: {
+            number: "asc"
           }
         }
       },
       number: true,
       id: true
-    }
+    } satisfies Prisma.MineralSelect;
   } else if (fieldset === "full") {
     selectObj = undefined;
   }
@@ -274,7 +281,7 @@ export async function fetchMinerals({ filterObj, cursor, limit, sortObj, fieldse
       skip: !cursor ? 0 : 1,
       cursor: cursorObj,
       take: limit,
-      where: { AND: queryArray as Prisma.MineralWhereInput[] },
+      where: { AND: queryArray },
       select: selectObj,
       orderBy: [
         sortObj ? { [sortObj.property]: sortObj.order } : {},
@@ -283,8 +290,8 @@ export async function fetchMinerals({ filterObj, cursor, limit, sortObj, fieldse
         },
       ],
       ...(limit ? { take: limit } : {}),
-    }
-  );
+    } satisfies Prisma.MineralFindManyArgs
+  )
   /*
   let returnArray;
   if (fieldset === "display") {
