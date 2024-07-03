@@ -254,7 +254,6 @@ export async function fetchMinerals<T extends string>({ filterObj, cursor, limit
     })
     queryArray.push({ associates: { some: { OR: [] } } })
   }
-  const cursorObj = !cursor ? undefined : { number: cursor };
   let selectObj: Prisma.MineralSelect | undefined;
   if (!fieldset || fieldset === 'display') {
     selectObj = Prisma.validator<Prisma.MineralSelect>()({
