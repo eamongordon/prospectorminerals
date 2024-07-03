@@ -208,11 +208,55 @@ type FetchMineralsReturn<T extends string> = T extends 'display'
   : { results: MineralFullFieldset[], next: number | undefined };
 
 export async function fetchMinerals<T extends string>({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: MineralsFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: T }): Promise<FetchMineralsReturn<T>> {
-  let queryArray: Prisma.MineralWhereInput[] = [];
   // Function body remains the same until the selectObj definition
-
+  let queryArray: Prisma.MineralWhereInput[] = [];
+  function pushArrayField(propertyArray: string[], property: string) {
+    let filterArray: { [property: string]: { contains: string, mode?: string } }[] = [];
+    propertyArray.forEach((propertyItem) => {
+      let pushObj = { [property]: { contains: propertyItem, mode: 'insensitive' } }
+      filterArray.push(pushObj);
+    })
+    queryArray.push({ OR: filterArray })
+  }
+  const { name, minHardness, maxHardness, lusters, streaks, mineralClasses, crystalSystems, chemistry, associates, id } = Object(filterObj);
+  if (id) {
+    queryArray.push({ id: { equals: id } });
+  }
+  if (name) {
+    queryArray.push({ name: { contains: name, mode: 'insensitive' } });
+  }
+  if (minHardness || minHardness === 0) {
+    queryArray.push({ hardness_min: { lte: maxHardness } })
+  }
+  if (maxHardness || maxHardness === 0) {
+    queryArray.push({ hardness_max: { gte: minHardness } })
+  }
+  if (lusters) {
+    pushArrayField(lusters, "luster");
+  }
+  if (crystalSystems) {
+    pushArrayField(crystalSystems, "crystal_system");
+  }
+  if (streaks) {
+    pushArrayField(streaks, "streak");
+  }
+  if (mineralClasses) {
+    pushArrayField(mineralClasses, "mineral_class");
+  }
+  if (chemistry) {
+    pushArrayField(chemistry, "chemical_formula");
+  }
+  if (associates && associates.length > 0) {
+    let associatesArray: { name: { contains: string } }[] = [];
+    associates.forEach((associate: string) => {
+      let pushObj = { name: { contains: associate } }
+      associatesArray.push(pushObj);
+    })
+    queryArray.push({ associates: { some: { OR: [] } } })
+  }
+  const cursorObj = !cursor ? undefined : { number: cursor };
   let selectObj: Prisma.MineralSelect | undefined;
-  if (fieldset === 'display') {
+  if (!fieldset || fieldset === 'display') {
     selectObj = Prisma.validator<Prisma.MineralSelect>()({
       name: true,
       photos: {
@@ -236,7 +280,38 @@ export async function fetchMinerals<T extends string>({ filterObj, cursor, limit
       id: true
     });
   } else if (fieldset === "full") {
-    selectObj = undefined;
+    selectObj = Prisma.validator<Prisma.MineralSelect>()({
+      name: true,
+      hardness_max: true,
+      hardness_min: true,
+      crystal_system: true,
+      mineral_class: true,
+      chemical_formula: true,
+      streak: true,
+      luster: true,
+      description: true,
+      uses: true,
+      localities_description: true,
+      photos: {
+        take: 3,
+        select: {
+          photo: {
+            select: {
+              title: true,
+              image: true,
+              imageBlurhash: true,
+            }
+          }
+        },
+        orderBy: {
+          photo: {
+            number: "asc"
+          }
+        }
+      },
+      number: true,
+      id: true
+    });
   }
 
   const results = await prisma.mineral.findMany({
