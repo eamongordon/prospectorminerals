@@ -4,21 +4,18 @@ import { Tabs, Tab } from "@nextui-org/react";
 import { useState, useEffect, useRef } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useDebounce } from "use-debounce";
-import { useInView } from 'react-intersection-observer';
-import { fetchMinerals } from '@/lib/actions';
-import { Accordion, AccordionItem, Button, Chip, Listbox, ListboxItem, Spinner, Textarea, Avatar } from '@nextui-org/react'
-import type { LocalitiesQueryParams, mineralListItem } from '@/types/types'
+import { Accordion, AccordionItem, Button } from '@nextui-org/react'
+import type { LocalitiesQueryParams } from '@/types/types'
 import type { Locality } from '@prisma/client'
 import { Input } from '@nextui-org/react';
 import { Search as MagnifyingGlassIcon, Filter } from 'lucide-react';
 import LocalityCard from './locality-card';
 import { Children, cloneElement } from "react";
 import { Map, Rows } from 'lucide-react';
-import type { MineralDisplayFieldset } from "@/types/prisma";
-import LocalityMap from './locality-map';
+import { MineralAssociatesSearch } from "../minerals/mineral-associates-search";
 
 //chore: update any definition for localities
-export default function LocalitiesPageLayout({ filterObj, localities, mapElement, clearButton }: { filterObj: LocalitiesQueryParams, localities: Locality[], mapElement:React.ReactElement, clearButton?: React.ReactElement }) {
+export default function LocalitiesPageLayout({ filterObj, localities, mapElement, clearButton }: { filterObj: LocalitiesQueryParams, localities: Locality[], mapElement: React.ReactElement, clearButton?: React.ReactElement }) {
 
     const [coord, setCoord] = useState([51.505, -0.09])
 
@@ -53,19 +50,39 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
 
     const initialChemistryRender = useRef(true);
     const [searchText, setSearchText] = useState(name);
-    const [mineralList, setMineralList] = useState<MineralDisplayFieldset[]>([])
-    const [ref, inView] = useInView();
-    const [chemistryInput, setChemistryInput] = useState("");
-    const [chemistryQuery] = useDebounce(chemistryInput, 500);
-    const [mineralsVal, setMineralsVal] = useState<any[] | undefined>(minerals);
-    const [isMineralFocused, setIsMineralFocused] = useState(false);
-    const [page, setPage] = useState<number | undefined>(undefined);
     const [isMobileFiltersOpen, setIsisMobileFiltersOpen] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const [searchQuery] = useDebounce(searchText, 500);
     const [noResultsLoading, setNoResultsLoading] = useState(false);
+
+    function handleMineralsChange(mineralsValReturn: any) {
+        console.log("CHANGED ASSOCIATES");
+        console.log(mineralsValReturn);
+        setMineralAssociatesSearchVal(mineralsValReturn);
+    }
+
+    const [MineralAssociatesSearchVal, setMineralAssociatesSearchVal] = useState<any>(minerals);
+
+    useEffect(() => {
+        if (initialChemistryRender.current) {
+            initialChemistryRender.current = false
+            return
+        }
+        console.log("UseEffectChemistryChange");
+        //TO REMOVE
+        const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+        if (!MineralAssociatesSearchVal) {
+            current.delete("minerals");
+        } else {
+            current.set("minerals", JSON.stringify(MineralAssociatesSearchVal));
+        }
+        //setChemistryInput("");
+        const search = current.toString();
+        const queryParam = search ? `?${search}` : "";
+        router.push(`${pathname}${queryParam}`);
+    }, [MineralAssociatesSearchVal]);
 
     useEffect(() => {
         if (initialRender.current) {
@@ -85,73 +102,11 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
 
     //console.log(chemistryVal);
 
-    useEffect(() => {
-        if (initialChemistryRender.current) {
-            initialChemistryRender.current = false
-            return
-        }
-        console.log("UseEffectChemistryChange");
-        //TO REMOVE
-        const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
-        if (!mineralsVal) {
-            current.delete("minerals");
-        } else {
-            current.set("minerals", JSON.stringify(mineralsVal));
-        }
-        //setChemistryInput("");
-        const search = current.toString();
-        const queryParam = search ? `?${search}` : "";
-        router.push(`${pathname}${queryParam}`);
-    }, [mineralsVal]);
-
-    async function loadMorePhotos(isInput?: boolean) {
-        if (isInput) {
-            console.log("inputNum" + chemistryInput)
-            const photosQuery = await fetchMinerals({ filterObj: { name: chemistryInput }, cursor: undefined, limit: 5 });
-            setPage(photosQuery.next ? photosQuery.next : undefined)
-            setMineralList(photosQuery.results);
-        } else {
-            if (page) {
-                console.log("loadMoreMin")
-                const photosQuery = await fetchMinerals({ filterObj: { name: chemistryInput }, cursor: page, limit: 5 });
-                if (photosQuery.results?.length) {
-                    setPage(photosQuery.next ? photosQuery.next : undefined)
-                    setMineralList((prev: any[] | undefined) => [
-                        ...(prev?.length ? prev : []),
-                        ...photosQuery.results
-                    ]);
-                };
-            } else {
-                console.log("noMoreMin")
-            }
-        }
-    }
-
     const initialRender = useRef(true);
-
-    useEffect(() => {
-        if (initialRender.current) {
-            initialRender.current = false;
-            return;
-        }
-        console.log("chemistryKey");
-        loadMorePhotos(true);
-    }, [chemistryQuery]);
-
-    useEffect(() => {
-        console.log("ref");
-        console.log(ref);
-        console.log("inView");
-        console.log(inView);
-        if (inView && page) {
-            loadMorePhotos()
-        }
-    }, [inView])
 
     const clearFilters = () => {
         setNoResultsLoading(true);
         setSearchText(undefined);
-        setMineralsVal(undefined);
         setNoResultsLoading(false);
     }
 
@@ -211,143 +166,7 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                     <div className={`${isMobileFiltersOpen ? "contents sm:contents" : "hidden sm:contents"}`}>
                         <Accordion>
                             <AccordionItem key="minerals" aria-label="Minerals" title="Minerals">
-                                <div
-                                    //contentEditable="true"
-                                    onFocus={() => setIsMineralFocused(true)}
-                                    onBlur={() => { setIsMineralFocused(false); console.log("blur") }}
-                                >
-                                    <Textarea
-                                        type="text"
-                                        label="Chemical Formulas"
-                                        placeholder={!mineralsVal ? 'Try "Malachite' : ""}
-                                        value={chemistryInput || ""}
-                                        /*
-                                        classNames={{
-                                            innerWrapper: ['overflow-x-auto', 'overflow-y-clip'],
-                                            input: ['min-w-8']
-                                        }}
-                                    */
-                                        classNames={{
-                                            innerWrapper: ['flex flex-wrap'],
-                                            //display chips below input, add margin
-                                            input: [mineralsVal ? 'mb-1' : null]
-                                            //input: [`${`w-[${chemistryInput.length * 10}px]`} flex-none`]
-                                        }}
-                                        minRows={1}
-                                        size="md"
-                                        onValueChange={(value) => { setChemistryInput(value); }}
-                                        onKeyDown={(e) => {
-                                            /*
-                                            if (e.key === "Enter") {
-                                                let currentChemistry = chemistryVal ? [...chemistryVal] : [];
-                                                currentChemistry?.push(e.currentTarget.value);
-                                                console.log(e.currentTarget.value.toString())
-                                                setChemistryVal(currentChemistry);
-                                                setChemistryInput("");
-                                                e.preventDefault();
-                                            }
-                                            */
-                                            if (e.key === "Backspace" && !e.currentTarget.value.length) {
-                                                let currentChemistry = mineralsVal ? [...mineralsVal] : [];
-                                                currentChemistry?.pop();
-                                                if (currentChemistry.length > 0) {
-                                                    setMineralsVal(currentChemistry);
-                                                } else {
-                                                    setMineralsVal(undefined);
-                                                }
-                                            }
-
-                                            setTimeout(() => {
-                                                if (e.key === "Backspace" && e.currentTarget.value === chemistryInput) {
-                                                    let currentChemistry = mineralsVal ? [...mineralsVal] : [];
-                                                    currentChemistry?.pop();
-                                                    if (currentChemistry.length > 0) {
-                                                        setMineralsVal(currentChemistry);
-                                                    } else {
-                                                        setMineralsVal(undefined);
-                                                    }
-                                                }
-                                            }, 200)
-
-                                        }}
-                                        //display chips below input, change to endContent
-                                        endContent={
-                                            (mineralsVal?.map((obj: any, index) => {
-                                                return (
-                                                    <Chip className="mr-1 min-h-[28px]"
-                                                        size="md"
-                                                        onClose={() => {
-                                                            const newArray = mineralsVal.filter((val) => val.name !== obj.name);
-                                                            if (newArray.length === 0) {
-                                                                setMineralsVal(undefined);
-                                                            } else {
-                                                                setMineralsVal(newArray);
-                                                            }
-                                                            //setTimeout(() => {
-                                                            console.log("cheminput - " + chemistryInput)
-                                                            //}, 200)
-                                                        }}
-                                                        key={index}
-                                                        variant="bordered"
-                                                        avatar={
-                                                            <Avatar
-                                                                src={obj.image}
-                                                            />
-                                                        }
-                                                    >
-                                                        {obj.name}
-                                                    </Chip>
-                                                )
-                                            }))
-                                        }
-                                    />
-                                    <Listbox
-                                        items={mineralList}
-                                        emptyContent={
-                                            <>No results found.</>
-                                        }
-                                        aria-label="Dynamic Actions"
-                                        onAction={(key) => {
-                                            const mineralListItem = mineralList.find((mineral) => mineral.name === key) as MineralDisplayFieldset;
-                                            const newObject = {
-                                                name: mineralListItem.name,
-                                                image: mineralListItem.photos.length > 0 && mineralListItem.photos[0].photo.image ? mineralListItem.photos[0].photo.image : undefined,
-                                            }
-                                            let currentChemistry = mineralsVal ? [...mineralsVal] : [];
-                                            currentChemistry?.push(newObject);
-                                            setMineralsVal(currentChemistry);
-                                            setChemistryInput("");
-                                        }}
-                                        disabledKeys={mineralsVal?.map((val) => val.name)}
-                                        classNames={{
-                                            base: `${isMineralFocused ? "" : "hidden"} max-h-[150px] overflow-auto no-scrollbar subpixel-antialiased outline-none box-border text-small bg-content1 shadow-md rounded-large w-full p-1`,
-                                            list: "",
-                                        }}
-                                        bottomContent={
-                                            <div
-                                                ref={ref}
-                                                className={`${!page ? "hidden" : ""} my-2 flex items-center justify-center col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-3`}
-                                            >
-                                                <Spinner />
-                                            </div>
-                                        }
-                                    >
-                                        {(item) => (
-                                            <ListboxItem
-                                                startContent={<Avatar alt={item.name} className="w-6 h-6" src={item.photos.length > 0 && item.photos[0].photo.image ? item.photos[0].photo.image : undefined} />}
-                                                key={item.name}
-                                            /*
-                                            endContent={chemistryVal?.includes(item.key) ? (
-                                                <Check height={12} />
-                                            ) : (<></>)}
-                                            */
-                                            >
-                                                {item.name}
-                                            </ListboxItem>
-                                        )}
-
-                                    </Listbox>
-                                </div>
+                                <MineralAssociatesSearch minerals={MineralAssociatesSearchVal} onChange={handleMineralsChange} />
                             </AccordionItem>
                             <AccordionItem key="Extra dev" aria-label="Extra dev" title="Extra dev">
                                 <SearchLocation />
