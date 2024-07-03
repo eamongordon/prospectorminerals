@@ -19,6 +19,12 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals: any[
     useEffect(() => {
         onChange(mineralsVal);
     }, [mineralsVal]);
+    
+    useEffect(() => {
+       if (minerals) {
+            setIsMineralFocused(false)
+       }
+    }, [minerals]);
 
     const initialRender = useRef(true);
     const initialLoad = useRef(false);
@@ -77,7 +83,7 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals: any[
         <Textarea
             type="text"
             label="Minerals"
-            placeholder={!mineralsVal ? 'Try "Malachite"' : ""}
+            placeholder={!minerals ? 'Try "Malachite"' : ""}
             value={chemistryInput || ""}
             /*
             classNames={{
@@ -88,7 +94,7 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals: any[
             classNames={{
                 innerWrapper: ['flex flex-wrap'],
                 //display chips below input, add margin
-                input: [mineralsVal ? 'mb-1' : null]
+                input: [minerals ? 'mb-1' : null]
                 //input: [`${`w-[${chemistryInput.length * 10}px]`} flex-none`]
             }}
             minRows={1}
@@ -106,7 +112,7 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals: any[
                 }
                 */
                 if (e.key === "Backspace" && !e.currentTarget.value.length) {
-                    let currentChemistry = mineralsVal ? [...mineralsVal] : [];
+                    let currentChemistry = minerals ? [...minerals] : [];
                     currentChemistry?.pop();
                     if (currentChemistry.length > 0) {
                         setMineralsVal(currentChemistry);
@@ -117,7 +123,7 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals: any[
 
                 setTimeout(() => {
                     if (e.key === "Backspace" && e.currentTarget.value === chemistryInput) {
-                        let currentChemistry = mineralsVal ? [...mineralsVal] : [];
+                        let currentChemistry = minerals ? [...minerals] : [];
                         currentChemistry?.pop();
                         if (currentChemistry.length > 0) {
                             setMineralsVal(currentChemistry);
@@ -130,12 +136,12 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals: any[
             }}
             //display chips below input, change to endContent
             endContent={
-                (mineralsVal?.map((obj: any, index) => {
+                (minerals?.map((obj: any, index) => {
                     return (
                         <Chip className="mr-1 min-h-[28px]"
                             size="md"
                             onClose={() => {
-                                const newArray = mineralsVal.filter((val) => val.name !== obj.name);
+                                const newArray = minerals.filter((val) => val.name !== obj.name);
                                 if (newArray.length === 0) {
                                     setMineralsVal(undefined);
                                 } else {
@@ -168,12 +174,12 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals: any[
                     name: mineralListItem.name,
                     image: mineralListItem.photos.length > 0 && mineralListItem.photos[0].photo.image ? mineralListItem.photos[0].photo.image : undefined,
                 }
-                let currentChemistry = mineralsVal ? [...mineralsVal] : [];
+                let currentChemistry = minerals ? [...minerals] : [];
                 currentChemistry?.push(newObject);
                 setMineralsVal(currentChemistry);
                 setChemistryInput("");
             }}
-            disabledKeys={mineralsVal?.map((val) => val.name)}
+            disabledKeys={minerals?.map((val) => val.name)}
             classNames={{
                 base: `${isMineralFocused ? "" : "hidden"} max-h-[150px] overflow-auto no-scrollbar subpixel-antialiased outline-none box-border text-small bg-content1 shadow-md rounded-large w-full p-1`,
                 list: initialLoad.current ? "" : "hidden"
