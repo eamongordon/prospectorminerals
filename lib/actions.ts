@@ -207,6 +207,89 @@ type FetchMineralsReturn<T extends string> = T extends 'display'
   ? { results: MineralDisplayFieldset[], next: number | undefined }
   : { results: MineralFullFieldset[], next: number | undefined };
 
+const mineralDisplaySelectObj = {
+  name: true,
+  photos: {
+    take: 1,
+    select: {
+      photo: {
+        select: {
+          title: true,
+          image: true,
+          imageBlurhash: true,
+        } satisfies Prisma.PhotoSelect
+      }
+    } satisfies Prisma.PhotoOnMineralSelect,
+    orderBy: {
+      photo: {
+        number: "asc"
+      }
+    }
+  },
+  number: true,
+  id: true
+} as Prisma.MineralSelect;
+
+const mineralFullSelectObj = {
+  ...mineralDisplaySelectObj,
+  hardness_max: true,
+  hardness_min: true,
+  crystal_system: true,
+  mineral_class: true,
+  chemical_formula: true,
+  streak: true,
+  luster: true,
+  description: true,
+  uses: true,
+  localities_description: true,
+  associates: {
+    select: {
+      name: true,
+      id: true,
+      photos: {
+        take: 1,
+        select: {
+          photo: {
+            select: {
+              title: true,
+              image: true,
+              imageBlurhash: true,
+            }
+          }
+        },
+        orderBy: {
+          photo: {
+            number: "asc"
+          }
+        }
+      },
+    }
+  },
+  associatedWith: {
+    select: {
+      name: true,
+      id: true,
+      photos: {
+        take: 1,
+        select: {
+          photo: {
+            select: {
+              title: true,
+              image: true,
+              imageBlurhash: true,
+            }
+          }
+        },
+        orderBy: {
+          photo: {
+            number: "asc"
+          }
+        }
+      },
+    }
+  }
+} as Prisma.MineralSelect;
+
 export async function fetchMinerals<T extends string>({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: MineralsFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: T }): Promise<FetchMineralsReturn<T>> {
   // Function body remains the same until the selectObj definition
   let queryArray: Prisma.MineralWhereInput[] = [];
@@ -256,107 +339,9 @@ export async function fetchMinerals<T extends string>({ filterObj, cursor, limit
   }
   let selectObj: Prisma.MineralSelect | undefined;
   if (!fieldset || fieldset === 'display') {
-    selectObj = Prisma.validator<Prisma.MineralSelect>()({
-      name: true,
-      photos: {
-        take: 1,
-        select: {
-          photo: {
-            select: {
-              title: true,
-              image: true,
-              imageBlurhash: true,
-            }
-          }
-        },
-        orderBy: {
-          photo: {
-            number: "asc"
-          }
-        }
-      },
-      number: true,
-      id: true
-    });
+    selectObj = mineralDisplaySelectObj satisfies Prisma.MineralSelect;
   } else if (fieldset === "full") {
-    selectObj = Prisma.validator<Prisma.MineralSelect>()({
-      name: true,
-      hardness_max: true,
-      hardness_min: true,
-      crystal_system: true,
-      mineral_class: true,
-      chemical_formula: true,
-      streak: true,
-      luster: true,
-      description: true,
-      uses: true,
-      localities_description: true,
-      photos: {
-        take: 3,
-        select: {
-          photo: {
-            select: {
-              title: true,
-              image: true,
-              imageBlurhash: true,
-            }
-          }
-        },
-        orderBy: {
-          photo: {
-            number: "asc"
-          }
-        }
-      },
-      associates: {
-        select: {
-          name: true,
-          id: true,
-          photos: {
-            take: 1,
-            select: {
-              photo: {
-                select: {
-                  title: true,
-                  image: true,
-                  imageBlurhash: true,
-                }
-              }
-            },
-            orderBy: {
-              photo: {
-                number: "asc"
-              }
-            }
-          },
-        }
-      },
-      associatedWith: {
-        select: {
-          name: true,
-          id: true,
-          photos: {
-            take: 1,
-            select: {
-              photo: {
-                select: {
-                  title: true,
-                  image: true,
-                  imageBlurhash: true,
-                }
-              }
-            },
-            orderBy: {
-              photo: {
-                number: "asc"
-              }
-            }
-          },
-        }
-      },
-      number: true,
-      id: true
-    });
+    selectObj = mineralFullSelectObj satisfies Prisma.MineralSelect;
   }
 
   const results = await prisma.mineral.findMany({
