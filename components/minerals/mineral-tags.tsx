@@ -4,19 +4,18 @@ import Link from "next/link";
 
 export default function MineralTags({ tags }: { tags: mineralListItem[] }) {
     return (
-        <>
+        <div className="flex flex-row flex-wrap gap-2">
             {(tags?.map((obj: mineralListItem, index) => {
                 return (
                     <Link href={`/minerals/${obj.id}`} key={index}>
-                        <Chip className="mr-1 min-h-[28px]"
+                        <Chip className="min-h-[28px]"
                             size="lg"
                             key={index}
                             variant="bordered"
-                            avatar={
+                            avatar={ obj.image ?
                                 <Avatar
-                                    name="JW"
                                     src={obj.image}
-                                />
+                                /> : undefined
                             }
                         >
                             {obj.name}
@@ -24,6 +23,6 @@ export default function MineralTags({ tags }: { tags: mineralListItem[] }) {
                     </Link>
                 )
             }))}
-        </>
+        </div>
     )
 }
