@@ -14,6 +14,7 @@ import { Search as MagnifyingGlassIcon, Filter } from 'lucide-react';
 import LocalityCard from './locality-card';
 import { Children, cloneElement } from "react";
 import { Map, Rows } from 'lucide-react';
+import type { MineralDisplayFieldset } from "@/types/prisma";
 import LocalityMap from './locality-map';
 
 //chore: update any definition for localities
@@ -52,7 +53,7 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
 
     const initialChemistryRender = useRef(true);
     const [searchText, setSearchText] = useState(name);
-    const [mineralList, setMineralList] = useState<mineralListItem[]>([])
+    const [mineralList, setMineralList] = useState<MineralDisplayFieldset[]>([])
     const [ref, inView] = useInView();
     const [chemistryInput, setChemistryInput] = useState("");
     const [chemistryQuery] = useDebounce(chemistryInput, 500);
@@ -115,7 +116,7 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                 const photosQuery = await fetchMinerals({ filterObj: { name: chemistryInput }, cursor: page, limit: 5 });
                 if (photosQuery.results?.length) {
                     setPage(photosQuery.next ? photosQuery.next : undefined)
-                    setMineralList((prev: mineralListItem[] | undefined) => [
+                    setMineralList((prev: any[] | undefined) => [
                         ...(prev?.length ? prev : []),
                         ...photosQuery.results
                     ]);
@@ -271,7 +272,7 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                                         }}
                                         //display chips below input, change to endContent
                                         endContent={
-                                            (mineralsVal?.map((obj: mineralListItem, index) => {
+                                            (mineralsVal?.map((obj: any, index) => {
                                                 return (
                                                     <Chip className="mr-1 min-h-[28px]"
                                                         size="md"
@@ -290,8 +291,7 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                                                         variant="bordered"
                                                         avatar={
                                                             <Avatar
-                                                                name="JW"
-                                                                src="https://i.pravatar.cc/300?u=a042581f4e29026709d"
+                                                                src={obj.image}
                                                             />
                                                         }
                                                     >
@@ -308,10 +308,10 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                                         }
                                         aria-label="Dynamic Actions"
                                         onAction={(key) => {
-                                            const mineralListItem = mineralList.find((mineral) => mineral.name === key) as mineralListItem;
+                                            const mineralListItem = mineralList.find((mineral) => mineral.name === key) as MineralDisplayFieldset;
                                             const newObject = {
                                                 name: mineralListItem.name,
-                                                image: 'https://i.pravatar.cc/300?u=a042581f4e29026709d',
+                                                image: mineralListItem.photos.length > 0 && mineralListItem.photos[0].photo.image ? mineralListItem.photos[0].photo.image : undefined,
                                             }
                                             let currentChemistry = mineralsVal ? [...mineralsVal] : [];
                                             currentChemistry?.push(newObject);
@@ -334,7 +334,7 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                                     >
                                         {(item) => (
                                             <ListboxItem
-                                                startContent={<Avatar alt={item.name} className="w-6 h-6" src="https://flagcdn.com/ar.svg" />}
+                                                startContent={<Avatar alt={item.name} className="w-6 h-6" src={item.photos.length > 0 && item.photos[0].photo.image ? item.photos[0].photo.image : undefined} />}
                                                 key={item.name}
                                             /*
                                             endContent={chemistryVal?.includes(item.key) ? (
