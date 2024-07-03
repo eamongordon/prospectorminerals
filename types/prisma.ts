@@ -19,6 +19,52 @@ export type MineralFullFieldset = Prisma.MineralGetPayload<{
                 }
             }
         },
+        associates: {
+            select: {
+                name: true,
+                id: true,
+                photos: {
+                    take: 1,
+                    select: {
+                        photo: {
+                            select: {
+                                title: true,
+                                image: true,
+                                imageBlurhash: true,
+                            }
+                        }
+                    },
+                    orderBy: {
+                        photo: {
+                            number: "asc"
+                        }
+                    }
+                },
+            }
+        },
+        associatedWith: {
+            select: {
+                name: true,
+                id: true,
+                photos: {
+                    take: 1,
+                    select: {
+                        photo: {
+                            select: {
+                                title: true,
+                                image: true,
+                                imageBlurhash: true,
+                            }
+                        }
+                    },
+                    orderBy: {
+                        photo: {
+                            number: "asc"
+                        }
+                    }
+                },
+            }
+        }
     }
 }>
 
