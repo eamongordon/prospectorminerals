@@ -57,6 +57,13 @@ export default async function Page({ params }: { params: { slug: string } }) {
     if (mineral.mineral_class) {
         tableData.push({ property: "Mineral Class", value: mineral.mineral_class });
     }
+    const mineralAssociatesArray = mineral.associates.concat(mineral.associatedWith).map((associate) => {
+        return {
+            name: associate.name,
+            image: associate.photos.length > 0 && associate.photos[0].photo.image ? associate.photos[0].photo.image : undefined,
+            id: associate.id
+        }
+    })
     return (
         <main className="px-6 max-w-screen-xl mx-auto">
             <h1 className='font-semibold text-4xl sm:text-6xl py-4'>{mineral.name}</h1>
@@ -74,7 +81,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     })}
                     <div className="space-y-2">
                         <h2 className="font-semibold text-3xl sm:text-4xl mb-4">Associates</h2>
-                        <MineralTags tags={mineralTagsTest} />
+                        <MineralTags tags={mineralAssociatesArray} />
                     </div>
                 </div>
                 <div className="w-full my-4 sm:my-0 sm:w-[40%] sm:min-w-80">

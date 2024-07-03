@@ -15,7 +15,7 @@ export default function MineralTags({ tags }: { tags: mineralListItem[] }) {
                             avatar={
                                 <Avatar
                                     name="JW"
-                                    src="https://i.pravatar.cc/300?u=a042581f4e29026709d"
+                                    src={obj.image}
                                 />
                             }
                         >
