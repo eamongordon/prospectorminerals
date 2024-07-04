@@ -302,6 +302,7 @@ export async function fetchMinerals<T extends string>({ filterObj, cursor, limit
     queryArray.push({ OR: filterArray })
   }
   const { name, minHardness, maxHardness, lusters, streaks, mineralClasses, crystalSystems, chemistry, associates, id } = Object(filterObj);
+  console.log(associates)
   if (id) {
     queryArray.push({ id: { equals: id } });
   }
@@ -335,7 +336,12 @@ export async function fetchMinerals<T extends string>({ filterObj, cursor, limit
       let pushObj = { name: { contains: associate } }
       associatesArray.push(pushObj);
     })
-    queryArray.push({ associates: { some: { OR: [] } } })
+    queryArray.push({
+      OR: [
+        { associates: { some: { OR: associatesArray } } },
+        { associatedWith: { some: { OR: associatesArray } } } // Add this line for associatedWith
+      ]
+    });
   }
   let selectObj: Prisma.MineralSelect | undefined;
   if (!fieldset || fieldset === 'display') {
