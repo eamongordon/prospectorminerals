@@ -5,7 +5,8 @@ import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { Accordion, AccordionItem, Slider, CheckboxGroup, Checkbox, Input, Chip, Button, Textarea } from "@nextui-org/react";
 import { Search as MagnifyingGlassIcon, Filter } from 'lucide-react';
 import { useDebounce } from 'use-debounce';
-import type { MineralsFilterObj } from "@/types/types";
+import type { MineralsFilterObj, MineralListItem } from "@/types/types";
+import { MineralAssociatesSearch } from "./mineral-associates-search";
 
 export default function MineralPageLayout({
     infiniteScrollElem,
@@ -61,6 +62,7 @@ export default function MineralPageLayout({
     const initialCrystalSystemsRender = useRef(true);
     const initialHardnessRender = useRef(true);
     const initialChemistryRender = useRef(true);
+    const initialAssociatesRender = useRef(true);
     const [searchText, setSearchText] = useState(name);
     const [lustersVal, setLustersVal] = useState<string[] | undefined>(lusters);
     let hardnessNewState = [];
@@ -75,6 +77,7 @@ export default function MineralPageLayout({
     const [isCrystalSystemsInvalid, setIsCrystalSystemsInvalid] = useState(false);
     const [chemistryVal, setChemistryVal] = useState<string[] | undefined>(chemistry);
     const [chemistryInput, setChemistryInput] = useState("");
+    const [associatesVal, setAssociatesVal] = useState<MineralListItem[] | undefined>(associates);
     const [isLusterInvalid, setIsLusterInvalid] = useState(false);
     const [searchQuery] = useDebounce(searchText, 500);
 
@@ -192,6 +195,7 @@ export default function MineralPageLayout({
         setMineralClassVal(undefined);
         setCrystalSystemsVal(undefined);
         setChemistryVal(undefined);
+        setAssociatesVal(undefined);
     }
 
     const renderChildren = () => {
@@ -201,6 +205,31 @@ export default function MineralPageLayout({
             });
         });
     };
+
+    useEffect(() => {
+        if (initialAssociatesRender.current) {
+            initialAssociatesRender.current = false
+            return
+        }
+        console.log("UseEffectChemistryChange");
+        //TO REMOVE
+        const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+        if (!associatesVal) {
+            current.delete("associates");
+        } else {
+            current.set("associates", JSON.stringify(associatesVal));
+        }
+        //setChemistryInput("");
+        const search = current.toString();
+        const queryParam = search ? `?${search}` : "";
+        router.push(`${pathname}${queryParam}`);
+    }, [associatesVal]);
+
+    function handleMineralsChange(mineralsValReturn: MineralListItem[]) {
+        console.log("CHANGED ASSOCIATES");
+        console.log(mineralsValReturn);
+        setAssociatesVal(mineralsValReturn);
+    }
 
     return (
         <>
@@ -405,6 +434,9 @@ export default function MineralPageLayout({
                                     }
                                 />
                             </AccordionItem>
+                            <AccordionItem key="associates" aria-label="Associates" title="Associates" subtitle={associatesVal ? associatesVal.map((associate: MineralListItem) => associate.name).join(", ") : null}>
+                                <MineralAssociatesSearch minerals={associatesVal} onChange={handleMineralsChange} />
+                            </AccordionItem>
                         </Accordion>
                     </div>
                 </div>
@@ -464,6 +496,16 @@ export default function MineralPageLayout({
                                 </Chip>
                             ) : (
                                 <></>
+                            )
+                        }
+                        {
+                            (associatesVal) ? (
+                                <Chip className="mr-1 mb-3 sm:mb-1" onClose={() => setAssociatesVal(undefined)} variant="bordered">
+                                    {`Associates: ${associatesVal.map((associate: MineralListItem) => associate.name).join(", ")}`}
+                                </Chip>
+                            ) : (
+                                <></>
+
                             )
                         }
                     </div>
