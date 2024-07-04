@@ -6,7 +6,7 @@ import { fetchMinerals } from '@/lib/actions';
 import MineralCard from './mineral-card';
 import { customAlphabet } from "nanoid";
 import { Spinner, Button } from "@nextui-org/react";
-import type { MineralsFilterObj, PhotosSortObj } from '@/types/types';
+import type { MineralsFilterObj, PhotosSortObj, MineralListItem } from '@/types/types';
 import type { MineralDisplayFieldset } from '@/types/prisma';
 
 const nanoid = customAlphabet(
@@ -38,7 +38,7 @@ export default function InfiniteScrollPhotos({
   async function loadMorePhotos() {
     if (page) {
       console.log("loadMoreMin")
-      const photosQuery = await fetchMinerals({ ...(filterObj ? { filterObj: filterObj } : {}) || {}, cursor: page, limit: limit ? limit : 10, ...(sort ? { sortObj: sort } : {}), fieldset: "display" });
+      const photosQuery = await fetchMinerals({ ...(filterObj ? { filterObj: filterObj.associates ? {...filterObj, associates: filterObj.associates?.map((associateObj) => (associateObj as MineralListItem).name)} : filterObj } : {}) || {}, cursor: page, limit: limit ? limit : 10, ...(sort ? { sortObj: sort } : {}), fieldset: "display" });
       if (photosQuery.results?.length) {
         setPage(photosQuery.next ? photosQuery.next : undefined)
         setPhotos((prev: MineralDisplayFieldset[] | undefined) => [
