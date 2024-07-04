@@ -9,7 +9,7 @@ import { del, put } from "@vercel/blob";
 import { hash } from "bcrypt";
 import { customAlphabet } from "nanoid";
 import { revalidateTag } from "next/cache";
-import type { LocalityDisplayFieldset, LocalityFullFieldset, MineralDisplayFieldset, MineralFullFieldset } from "@/types/prisma";
+import type { MineralDisplayFieldset, MineralFullFieldset } from "@/types/prisma";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -370,10 +370,6 @@ export async function fetchMinerals<T extends string>({ filterObj, cursor, limit
   } as FetchMineralsReturn<T>;
 }
 
-type FetchLocalitiesReturn<T extends string> = T extends 'display'
-  ? { results: LocalityDisplayFieldset[], next: number | undefined }
-  : { results: LocalityFullFieldset[], next: number | undefined };
-
 const localityDisplaySelectObj = {
   name: true,
   number: true,
@@ -385,11 +381,10 @@ const localityFullSelectObj = {
   latitude: true,
   longitude: true,
   type: true,
-  coordinates_known: true,
-  minerals: mineralDisplaySelectObj,
+  coordinates_known: true
 }
 
-export async function fetchLocalities<T extends string>({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: LocalitiesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: string }): Promise<FetchLocalitiesReturn<T>> {
+export async function fetchLocalities({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: LocalitiesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: string }) {
   let queryArray = [];
   const { name, minerals, id } = Object(filterObj);
   if (id) {
