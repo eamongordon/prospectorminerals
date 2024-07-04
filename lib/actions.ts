@@ -234,6 +234,10 @@ const mineralDisplaySelectObj = {
 
 const mineralFullSelectObj = {
   ...mineralDisplaySelectObj,
+  photos: {
+    ...photoExplicitSelectObject,
+    take: 3
+  },
   hardness_max: true,
   hardness_min: true,
   crystal_system: true,
@@ -348,7 +352,7 @@ const localityDisplaySelectObj = {
   longitude: true,
   type: true,
   coordinates_known: true,
-  photos: photoSelectObject
+  photos: {...photoSelectObject, take: 3}
 }
 
 const localityFullSelectObj = {
