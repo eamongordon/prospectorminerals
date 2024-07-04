@@ -374,14 +374,14 @@ const localityDisplaySelectObj = {
   name: true,
   number: true,
   id: true,
-}
-
-const localityFullSelectObj = {
-  ...localityDisplaySelectObj,
   latitude: true,
   longitude: true,
   type: true,
   coordinates_known: true
+}
+
+const localityFullSelectObj = {
+  ...localityDisplaySelectObj,
 }
 
 export async function fetchLocalities({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: LocalitiesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: string }) {
