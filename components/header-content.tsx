@@ -1,6 +1,6 @@
 "use client"
 
-import React, {useEffect} from "react";
+import { useState, useEffect } from "react";
 import { Navbar, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, NavbarBrand, NavbarContent, NavbarItem, Link as UILink, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Divider, Avatar, Button } from "@nextui-org/react";
 import PMLogo from "./pmLogo";
 import Link from "next/link";
@@ -23,7 +23,7 @@ export default function HeaderComp({
     }
 }) {
     const { name, image, email } = userData || {};
-    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const pathname = usePathname();
 
     useEffect(() => {
@@ -85,9 +85,9 @@ export default function HeaderComp({
                         className="mr-4 hidden sm:block lg:hidden xl:hidden"
                         onChange={() => console.log('')}
                     />
-                        <>
-                            <SearchModalButton {...(isMenuOpen ? { closeMenuCallback: setIsMenuOpen } : {})}><div className="w-[96px] h-[96px]"><button>Hey</button></div></SearchModalButton>
-                        </>
+                    <>
+                        <SearchModalButton {...(isMenuOpen ? { closeMenuCallback: setIsMenuOpen } : {})}><div className="w-[96px] h-[96px]"><button>Hey</button></div></SearchModalButton>
+                    </>
                     {loggedIn ? (
                         <>
                             <Dropdown placement="bottom-end">
