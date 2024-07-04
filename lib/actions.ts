@@ -207,25 +207,27 @@ type FetchMineralsReturn<T extends string> = T extends 'display'
   ? { results: MineralDisplayFieldset[], next: number | undefined }
   : { results: MineralFullFieldset[], next: number | undefined };
 
+const photoSelectObject = {
+  take: 1,
+  select: {
+    photo: {
+      select: {
+        title: true,
+        image: true,
+        imageBlurhash: true,
+      } satisfies Prisma.PhotoSelect
+    }
+  } satisfies Prisma.PhotoOnMineralSelect,
+  orderBy: {
+    photo: {
+      number: "asc"
+    }
+  }
+};
+
 const mineralDisplaySelectObj = {
   name: true,
-  photos: {
-    take: 1,
-    select: {
-      photo: {
-        select: {
-          title: true,
-          image: true,
-          imageBlurhash: true,
-        } satisfies Prisma.PhotoSelect
-      }
-    } satisfies Prisma.PhotoOnMineralSelect,
-    orderBy: {
-      photo: {
-        number: "asc"
-      }
-    }
-  },
+  photos: photoSelectObject,
   number: true,
   id: true
 } as Prisma.MineralSelect;
@@ -246,46 +248,14 @@ const mineralFullSelectObj = {
     select: {
       name: true,
       id: true,
-      photos: {
-        take: 1,
-        select: {
-          photo: {
-            select: {
-              title: true,
-              image: true,
-              imageBlurhash: true,
-            }
-          }
-        },
-        orderBy: {
-          photo: {
-            number: "asc"
-          }
-        }
-      },
+      photos: photoSelectObject
     }
   },
   associatedWith: {
     select: {
       name: true,
       id: true,
-      photos: {
-        take: 1,
-        select: {
-          photo: {
-            select: {
-              title: true,
-              image: true,
-              imageBlurhash: true,
-            }
-          }
-        },
-        orderBy: {
-          photo: {
-            number: "asc"
-          }
-        }
-      },
+      photos: photoSelectObject
     }
   }
 } as Prisma.MineralSelect;
@@ -377,7 +347,7 @@ const localityDisplaySelectObj = {
   latitude: true,
   longitude: true,
   type: true,
-  coordinates_known: true
+  coordinates_known: true,
 }
 
 const localityFullSelectObj = {
