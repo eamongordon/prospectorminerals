@@ -103,16 +103,9 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: Min
             size="md"
             onValueChange={(value) => { setChemistryInput(value); }}
             onKeyDown={(e) => {
-                /*
                 if (e.key === "Enter") {
-                    let currentChemistry = chemistryVal ? [...chemistryVal] : [];
-                    currentChemistry?.push(e.currentTarget.value);
-                    console.log(e.currentTarget.value.toString())
-                    setChemistryVal(currentChemistry);
-                    setChemistryInput("");
                     e.preventDefault();
                 }
-                */
                 if (e.key === "Backspace" && !e.currentTarget.value.length) {
                     let currentChemistry = minerals ? [...minerals] : [];
                     currentChemistry?.pop();
