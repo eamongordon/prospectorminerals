@@ -13,7 +13,7 @@ export type MineralsFilterObj = {
     mineralClasses?: MineralClassesList[],
     crystalSystems?: CrystalSystemsList[],
     chemistry?: string[],
-    associates?: string[],
+    associates?: string[] | MineralListItem[],
     id?: string
 }
 
@@ -39,10 +39,10 @@ export type LocalitiesQueryParams = {
     minerals?: {name: string, image: string}[]
 }
 
-export type mineralListItem = {
+export type MineralListItem = {
     name: string,
     image?: string,
-    id?: string
+    id?: string,
 }
 
 export type PhotosFilterObj = {
