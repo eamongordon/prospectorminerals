@@ -68,7 +68,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         <main className="px-6 max-w-screen-xl mx-auto">
             <h1 className='font-semibold text-4xl sm:text-6xl py-4'>{mineral.name}</h1>
             <Gallery data={mineral.photos ? mineral.photos.map((obj) => {return {title: obj.photo.title ? obj.photo.title : undefined, caption: "Test Caption", image: obj.photo.image ? obj.photo.image : undefined}} ) : galleryData} />
-            <div className="flex w-full flex-col sm:flex-row my-10">
+            <div className="flex w-full flex-col sm:flex-row my-5 sm:my-10">
                 <div className="w-full sm:pr-12">
                     {mineral.description ? (<p>{mineral.description}</p>) : (<></>)}
                     {descriptionFields.map((obj, index) => {
