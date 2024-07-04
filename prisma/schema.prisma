@@ -127,6 +127,8 @@ model Photo {
   number          Int              @unique @default(autoincrement())
   mineral_names   String[]
   minerals        PhotoOnMineral[]
+  locality        Locality?        @relation(fields: [localityId], references: [id])
+  localityId      String?
 
   @@index([id])
 }
@@ -141,6 +143,7 @@ model Locality {
   longitude         Decimal
   number            Int       @unique @default(autoincrement())
   minerals          Mineral[]
+  Photo             Photo[]
 
   @@index([id])
 }
