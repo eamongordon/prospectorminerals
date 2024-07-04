@@ -72,7 +72,7 @@ model VerificationToken {
 }
 
 model Mineral {
-  id                     String              @id @default(cuid())
+  id                     String           @id @default(cuid())
   name                   String
   mineral_class          String
   crystal_system         String
@@ -85,10 +85,10 @@ model Mineral {
   description            String?
   uses                   String
   localities_description String
-  associatedWith         Mineral[]           @relation("MineralAssociates")
-  associates             Mineral[]           @relation("MineralAssociates")
-  localities             MineralOnLocality[]
-  number                 Int                 @unique @default(autoincrement())
+  associatedWith         Mineral[]        @relation("MineralAssociates")
+  associates             Mineral[]        @relation("MineralAssociates")
+  localities             Locality[]
+  number                 Int              @unique @default(autoincrement())
   photos                 PhotoOnMineral[]
 
   @@index([id])
@@ -132,28 +132,17 @@ model Photo {
 }
 
 model Locality {
-  id                String              @id @default(cuid())
+  id                String    @id @default(cuid())
   name              String
   type              String
   coordinates_known Boolean
   description       String?
   latitude          Decimal
   longitude         Decimal
-  number            Int                 @unique @default(autoincrement())
-  minerals          MineralOnLocality[]
+  number            Int       @unique @default(autoincrement())
+  minerals          Mineral[]
 
   @@index([id])
-}
-
-model MineralOnLocality {
-  locality   Locality @relation(fields: [localityId], references: [id])
-  localityId String // relation scalar field (used in the `@relation` attribute above)
-  mineral    Mineral  @relation(fields: [mineralId], references: [id])
-  mineralId  String // relation scalar field (used in the `@relation` attribute above)
-  assignedAt DateTime @default(now())
-  assignedBy String
-
-  @@id([localityId, mineralId])
 }
 
 model PhotoOnMineral {
