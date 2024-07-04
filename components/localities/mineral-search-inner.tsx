@@ -15,7 +15,7 @@ export default function MineralSelect({
     initialPhotos: any[] | undefined
     initialCursor: number | undefined
 }) {
-    const [mineralList, setMineralList] = useState<mineralListItem[]>(initialPhotos || [])
+    const [mineralList, setMineralList] = useState<MineralListItem[]>(initialPhotos || [])
     const [ref, inView] = useInView();
     const [chemistryInput, setChemistryInput] = useState("");
     const [chemistryQuery] = useDebounce(chemistryInput, 500);
@@ -23,7 +23,7 @@ export default function MineralSelect({
     const [isMineralFocused, setIsMineralFocused] = useState(false);
     const [page, setPage] = useState<number | undefined>(initialCursor || undefined);
 
-    type mineralListItem = {
+    type MineralListItem = {
         name: string,
         image?: string
     }
@@ -140,7 +140,7 @@ export default function MineralSelect({
                     }}
                     //display chips below input, change to endContent
                     endContent={
-                        (chemistryVal?.map((obj: mineralListItem, index) => {
+                        (chemistryVal?.map((obj: MineralListItem, index) => {
                             return (
                                 <Chip className="mr-1 min-h-[28px]"
                                     size="md"
@@ -177,9 +177,9 @@ export default function MineralSelect({
                     }
                     aria-label="Dynamic Actions"
                     onAction={(key) => {
-                        const mineralListItem = mineralList.find((mineral) => mineral.name === key) as mineralListItem;
+                        const MineralListItem = mineralList.find((mineral) => mineral.name === key) as MineralListItem;
                         const newObject = {
-                            name: mineralListItem.name,
+                            name: MineralListItem.name,
                             image: 'https://i.pravatar.cc/300?u=a042581f4e29026709d',
                         }
                         let currentChemistry = chemistryVal ? [...chemistryVal] : [];

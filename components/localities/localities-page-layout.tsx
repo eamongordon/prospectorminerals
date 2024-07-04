@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useDebounce } from "use-debounce";
 import { Accordion, AccordionItem, Button } from '@nextui-org/react'
-import type { LocalitiesQueryParams } from '@/types/types'
+import type { LocalitiesQueryParams, MineralListItem } from '@/types/types'
 import type { Locality } from '@prisma/client'
 import { Input } from '@nextui-org/react';
 import { Search as MagnifyingGlassIcon, Filter } from 'lucide-react';
@@ -57,13 +57,13 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
     const [searchQuery] = useDebounce(searchText, 500);
     const [noResultsLoading, setNoResultsLoading] = useState(false);
 
-    function handleMineralsChange(mineralsValReturn: any) {
+    function handleMineralsChange(mineralsValReturn: MineralListItem[]) {
         console.log("CHANGED ASSOCIATES");
         console.log(mineralsValReturn);
-        setMineralAssociatesSearchVal(mineralsValReturn);
+        setAssociatesVal(mineralsValReturn);
     }
 
-    const [MineralAssociatesSearchVal, setMineralAssociatesSearchVal] = useState<any>(minerals);
+    const [associatesVal, setAssociatesVal] = useState<any>(minerals);
 
     useEffect(() => {
         if (initialChemistryRender.current) {
@@ -73,16 +73,16 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
         console.log("UseEffectChemistryChange");
         //TO REMOVE
         const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
-        if (!MineralAssociatesSearchVal) {
+        if (!associatesVal) {
             current.delete("minerals");
         } else {
-            current.set("minerals", JSON.stringify(MineralAssociatesSearchVal));
+            current.set("minerals", JSON.stringify(associatesVal));
         }
         //setChemistryInput("");
         const search = current.toString();
         const queryParam = search ? `?${search}` : "";
         router.push(`${pathname}${queryParam}`);
-    }, [MineralAssociatesSearchVal]);
+    }, [associatesVal]);
 
     useEffect(() => {
         if (initialRender.current) {
@@ -166,7 +166,7 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                     <div className={`${isMobileFiltersOpen ? "contents sm:contents" : "hidden sm:contents"}`}>
                         <Accordion>
                             <AccordionItem key="minerals" aria-label="Minerals" title="Minerals">
-                                <MineralAssociatesSearch minerals={MineralAssociatesSearchVal} onChange={handleMineralsChange} />
+                                <MineralAssociatesSearch minerals={associatesVal} onChange={handleMineralsChange} />
                             </AccordionItem>
                             <AccordionItem key="Extra dev" aria-label="Extra dev" title="Extra dev">
                                 <SearchLocation />
