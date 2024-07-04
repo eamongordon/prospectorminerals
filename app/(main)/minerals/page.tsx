@@ -36,7 +36,7 @@ const Page = async ({
         <main>
             <div className="flex justify-center items-center">
                 <section className='flex-col justify-center items-center py-4 px-6 w-full max-w-screen-xl'>
-                    <div className='mb-4 sm:mb-12 flex-row my-5 sm:flex sm:gap-x-10 justify-between'>
+                    <div className='mb-4 sm:mb-12 flex-row sm:my-5 sm:flex sm:gap-x-10 justify-between'>
                         <MineralPageLayout
                             filterObj={filterObj}
                             infiniteScrollElem={
