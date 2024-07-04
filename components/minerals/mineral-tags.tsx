@@ -12,7 +12,8 @@ export default function MineralTags({ tags }: { tags: MineralListItem[] }) {
                             size="lg"
                             key={index}
                             variant="bordered"
-                            avatar={ obj.image ?
+                            classNames={{ base: 'hover:opacity-80' }}
+                            avatar={obj.image ?
                                 <Avatar
                                     src={obj.image}
                                 /> : undefined
