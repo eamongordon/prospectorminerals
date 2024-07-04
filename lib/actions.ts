@@ -208,26 +208,26 @@ type FetchMineralsReturn<T extends string> = T extends 'display'
   : { results: MineralFullFieldset[], next: number | undefined };
 
 const photoSelectObject = {
-  take: 1,
   select: {
-    photo: {
-      select: {
-        title: true,
-        image: true,
-        imageBlurhash: true,
-      } satisfies Prisma.PhotoSelect
-    }
-  } satisfies Prisma.PhotoOnMineralSelect,
+    title: true,
+    image: true,
+    imageBlurhash: true,
+  } satisfies Prisma.PhotoSelect
+};
+
+const photoExplicitSelectObject = {
+  take: 1,
+  select: { photo: photoSelectObject },
   orderBy: {
     photo: {
       number: "asc"
     }
   }
-};
+}
 
 const mineralDisplaySelectObj = {
   name: true,
-  photos: photoSelectObject,
+  photos: photoExplicitSelectObject,
   number: true,
   id: true
 } as Prisma.MineralSelect;
@@ -248,14 +248,14 @@ const mineralFullSelectObj = {
     select: {
       name: true,
       id: true,
-      photos: photoSelectObject
+      photos: photoExplicitSelectObject
     }
   },
   associatedWith: {
     select: {
       name: true,
       id: true,
-      photos: photoSelectObject
+      photos: photoExplicitSelectObject
     }
   }
 } as Prisma.MineralSelect;
