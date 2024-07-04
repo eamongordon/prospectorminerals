@@ -9,7 +9,7 @@ import { del, put } from "@vercel/blob";
 import { hash } from "bcrypt";
 import { customAlphabet } from "nanoid";
 import { revalidateTag } from "next/cache";
-import type { MineralDisplayFieldset, MineralFullFieldset } from "@/types/prisma";
+import type { LocalityDisplayFieldset, LocalityFullFieldset, MineralDisplayFieldset, MineralFullFieldset } from "@/types/prisma";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -370,7 +370,26 @@ export async function fetchMinerals<T extends string>({ filterObj, cursor, limit
   } as FetchMineralsReturn<T>;
 }
 
-export async function fetchLocalities({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: LocalitiesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: string }) {
+type FetchLocalitiesReturn<T extends string> = T extends 'display'
+  ? { results: LocalityDisplayFieldset[], next: number | undefined }
+  : { results: LocalityFullFieldset[], next: number | undefined };
+
+const localityDisplaySelectObj = {
+  name: true,
+  number: true,
+  id: true,
+}
+
+const localityFullSelectObj = {
+  ...localityDisplaySelectObj,
+  latitude: true,
+  longitude: true,
+  type: true,
+  coordinates_known: true,
+  minerals: mineralDisplaySelectObj,
+}
+
+export async function fetchLocalities<T extends string>({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: LocalitiesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: string }): Promise<FetchLocalitiesReturn<T>> {
   let queryArray = [];
   const { name, minerals, id } = Object(filterObj);
   if (id) {
@@ -385,30 +404,14 @@ export async function fetchLocalities({ filterObj, cursor, limit, sortObj, field
       let pushObj = { name: { contains: associate } }
       mineralsArray.push(pushObj);
     })
-    queryArray.push({ minerals: { some: { OR: [] } } })
+    queryArray.push({ minerals: { some: { OR: mineralsArray } } })
   }
   const cursorObj = !cursor ? undefined : { number: cursor };
   let selectObj;
   if (!fieldset || fieldset === "display") {
-    selectObj = {
-      name: true,
-      latitude: true,
-      longitude: true,
-      type: true,
-      coordinates_known: true,
-      id: true,
-      minerals: {
-        select: {
-          mineral: {
-            select: {
-              name: true
-            }
-          }
-        }
-      },
-    }
+    selectObj = localityDisplaySelectObj satisfies Prisma.LocalitySelect;
   } else if (fieldset === "full") {
-    selectObj = undefined;
+    selectObj = localityFullSelectObj satisfies Prisma.LocalitySelect;
   }
   const results = await prisma.locality.findMany(
     {
@@ -426,12 +429,6 @@ export async function fetchLocalities({ filterObj, cursor, limit, sortObj, field
       ...(limit ? { take: limit } : {}),
     }
   );
-  /*
-  let returnArray;
-  if (fieldset === "display") {
-    returnArray = results.map((result) => {return {name: result.name, number: result.number, id: result.id, photo: result.photos[0].image}});
-  }
-  */
   return {
     results: results,
     next: results.length === limit ? results[results.length - 1].number : undefined
