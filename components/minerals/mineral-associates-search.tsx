@@ -2,13 +2,14 @@
 
 import { fetchMinerals } from '@/lib/actions';
 import type { MineralDisplayFieldset } from "@/types/prisma";
+import { MineralListItem } from '@/types/types';
 import { Avatar, Chip, Listbox, ListboxItem, Spinner, Textarea } from '@nextui-org/react';
 import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useDebounce } from "use-debounce";
 
-export function MineralAssociatesSearch({ minerals, onChange }: { minerals: any[], onChange: any }) {
-    const [mineralsVal, setMineralsVal] = useState<any[] | undefined>(minerals);
+export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: MineralListItem[], onChange: any }) {
+    const [mineralsVal, setMineralsVal] = useState<MineralListItem[] | undefined>(minerals);
     const [mineralList, setMineralList] = useState<MineralDisplayFieldset[]>([])
     const [ref, inView] = useInView();
     const [chemistryInput, setChemistryInput] = useState<string | undefined>(undefined);
@@ -169,10 +170,10 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals: any[
             items={mineralList}
             aria-label="Dynamic Actions"
             onAction={(key) => {
-                const mineralListItem = mineralList.find((mineral) => mineral.name === key) as MineralDisplayFieldset;
+                const MineralListItem = mineralList.find((mineral) => mineral.name === key) as MineralDisplayFieldset;
                 const newObject = {
-                    name: mineralListItem.name,
-                    image: mineralListItem.photos.length > 0 && mineralListItem.photos[0].photo.image ? mineralListItem.photos[0].photo.image : undefined,
+                    name: MineralListItem.name,
+                    image: MineralListItem.photos.length > 0 && MineralListItem.photos[0].photo.image ? MineralListItem.photos[0].photo.image : undefined,
                 }
                 let currentChemistry = minerals ? [...minerals] : [];
                 currentChemistry?.push(newObject);

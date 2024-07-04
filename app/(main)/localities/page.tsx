@@ -1,6 +1,6 @@
 import LocalitiesPageLayout from "@/components/localities/localities-page-layout"
 import { fetchLocalities } from '@/lib/actions';
-import type { mineralListItem } from '@/types/types';
+import type { MineralListItem } from '@/types/types';
 import ClearFilters from '@/components/localities/clear-filters';
 import LocalityMap from '@/components/localities/locality-map';
 import { Skeleton } from '@nextui-org/react';
@@ -29,7 +29,7 @@ const Page = async ({
     ), [])
     */
     const filterObj = { name: name };
-    const localities = await fetchLocalities({ filterObj: { ...filterObj, minerals: minerals ? minerals.map((obj: mineralListItem) => obj.name) : undefined }, cursor: undefined, limit: 100, ...(property && order ? { sortObj: { property: property, order: order } } : {}) });
+    const localities = await fetchLocalities({ filterObj: { ...filterObj, minerals: minerals ? minerals.map((obj: MineralListItem) => obj.name) : undefined }, cursor: undefined, limit: 100, ...(property && order ? { sortObj: { property: property, order: order } } : {}) });
     //TODO: make Button re-render with new key
     const serializedKey = JSON.stringify({ filterObj, property, order });
     return (
