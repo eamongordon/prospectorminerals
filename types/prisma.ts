@@ -3,7 +3,7 @@ import { Prisma } from '@prisma/client';
 export type MineralFullFieldset = Prisma.MineralGetPayload<{
     include: {
         photos: {
-            take: 1,
+            take: 3,
             select: {
                 photo: {
                     take: 1,
