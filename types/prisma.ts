@@ -92,3 +92,44 @@ export type MineralDisplayFieldset = Prisma.MineralGetPayload<{
         id: true
     }
 }>
+
+export type LocalityDisplayFieldset = Prisma.LocalityGetPayload<{
+    select: {
+        name: true,
+        number: true,
+        id: true,
+        latitude: true,
+        longitude: true,
+        type: true,
+        coordinates_known: true
+    }
+}>
+
+export type LocalityFullFieldset = Prisma.LocalityGetPayload<{
+    include: {
+        minerals: {
+            select: {
+                name: true,
+                photos: {
+                    take: 1,
+                    select: {
+                        photo: {
+                            select: {
+                                title: true,
+                                image: true,
+                                imageBlurhash: true,
+                            }
+                        }
+                    },
+                    orderBy: {
+                        photo: {
+                            number: "asc"
+                        }
+                    }
+                },
+                number: true,
+                id: true
+            }
+        }
+    }
+}>
