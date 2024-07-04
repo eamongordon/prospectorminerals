@@ -36,8 +36,7 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: Min
             return;
         }
         console.log("CHEMISTRYQUERYCHANGE");
-        console.log(chemistryQuery ? chemistryQuery : "NOQUERY")
-        loadMorePhotos(true);
+        console.log(chemistryQuery ? chemistryQuery : "NOQUERY");
     }, [chemistryQuery]);
 
     useEffect(() => {
@@ -46,6 +45,8 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: Min
         console.log(page ? "HASPAGE" : "NOPAGE")
         if (inView && page) {
             loadMorePhotos();
+        } else if (inView && !page && !initialLoad.current) {
+            loadMorePhotos(true);
         }
     }, [inView])
 
