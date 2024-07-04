@@ -6,16 +6,7 @@ import { fetchLocalities } from '@/lib/actions';
 import { Skeleton } from '@nextui-org/react';
 import { notFound } from "next/navigation";
 import { Suspense } from 'react';
-
-const mineralTagsTest = [{
-    name: "Test1",
-    image: 'https://i.pravatar.cc/300?u=a042581f4e29026709d',
-    id: 'test1'
-}, {
-    name: "Test2",
-    image: 'https://i.pravatar.cc/300?u=a042581f4e29026709d',
-    id: 'test2'
-}];
+import { MineralListItem } from '@/types/types';
 
 const galleryData = [
     {
@@ -34,12 +25,10 @@ const galleryData = [
 
 export default async function Page({ params }: { params: { slug: string } }) {
     const localityResult = await fetchLocalities({ filterObj: { id: params.slug }, cursor: undefined, limit: 1, fieldset: 'full' });
-    let locality;
     if (localityResult.results.length === 0) {
         return notFound();
-    } else {
-        locality = localityResult.results[0];
     }
+    const locality = localityResult.results[0];
     let tableData = [];
     if (locality.longitude) {
         tableData.push({ property: "Longitude", value: locality.longitude.toString() });
@@ -70,7 +59,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 </div>
                 <div className="space-y-2">
                     <h2 className="font-semibold text-3xl sm:text-4xl mb-4">Minerals</h2>
-                    <MineralTags tags={mineralTagsTest} />
+                    <MineralTags tags={locality.minerals.map((mineral) => { return { id: mineral.id, name: mineral.name, image: mineral.photos.length > 0 && mineral.photos[0].photo.image ? mineral.photos[0].photo.image : undefined } as MineralListItem })} />
                 </div>
             </div>
         </main>
