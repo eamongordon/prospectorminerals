@@ -348,6 +348,7 @@ const localityDisplaySelectObj = {
   longitude: true,
   type: true,
   coordinates_known: true,
+  photos: photoSelectObject
 }
 
 const localityFullSelectObj = {

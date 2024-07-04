@@ -101,7 +101,24 @@ export type LocalityDisplayFieldset = Prisma.LocalityGetPayload<{
         latitude: true,
         longitude: true,
         type: true,
-        coordinates_known: true
+        coordinates_known: true,
+        photos: {
+            take: 1,
+            select: {
+                photo: {
+                    select: {
+                        title: true,
+                        image: true,
+                        imageBlurhash: true,
+                    }
+                }
+            },
+            orderBy: {
+                photo: {
+                    number: "asc"
+                }
+            }
+        },
     }
 }>
 
@@ -130,6 +147,23 @@ export type LocalityFullFieldset = Prisma.LocalityGetPayload<{
                 number: true,
                 id: true
             }
-        }
+        },
+        photos: {
+            take: 1,
+            select: {
+                photo: {
+                    select: {
+                        title: true,
+                        image: true,
+                        imageBlurhash: true,
+                    }
+                }
+            },
+            orderBy: {
+                photo: {
+                    number: "asc"
+                }
+            }
+        },
     }
 }>
