@@ -46,7 +46,8 @@ export type MineralListItem = {
 }
 
 export type PhotosFilterObj = {
-    name: string | undefined
+    name?: string,
+    id?: string
 }
 
 export type PhotosSortObj = {
