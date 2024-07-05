@@ -9,7 +9,7 @@ import { del, put } from "@vercel/blob";
 import { hash } from "bcrypt";
 import { customAlphabet } from "nanoid";
 import { revalidateTag } from "next/cache";
-import type { LocalityDisplayFieldset, LocalityFullFieldset, MineralDisplayFieldset, MineralFullFieldset, PhotoDisplayFieldset } from "@/types/prisma";
+import type { LocalityDisplayFieldset, LocalityFullFieldset, MineralDisplayFieldset, MineralFullFieldset, PhotoDisplayFieldset, PhotoFullFieldset } from "@/types/prisma";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -463,7 +463,7 @@ export async function fetchPosts({ filterObj, cursor, limit, sortObj, fieldset }
 
 type FetchPhotosReturn<T extends string> = T extends 'display'
   ? { results: PhotoDisplayFieldset[], next: number | undefined }
-  : { results: PhotoDisplayFieldset[], next: number | undefined };
+  : { results: PhotoFullFieldset[], next: number | undefined };
 
 const photoDisplaySelectObject = {
     title: true,
@@ -478,29 +478,36 @@ const photoDisplaySelectObject = {
     }
 } satisfies Prisma.PhotoSelect;
 
+const photoFullSelectObject = {
+  ...photoDisplaySelectObject,
+  description: true,
+} satisfies Prisma.PhotoSelect;
+
 export async function fetchPhotos<T extends string>({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj: PhotosFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: string }): Promise<FetchPhotosReturn<T>> {
   if (!limit) {
     limit = 10;
   }
+  let queryArray = [];
+  const { name, id } = Object(filterObj);
+  if (id) {
+    queryArray.push({ id: { equals: id } });
+  }
+  if (name) {
+    queryArray.push({ name: { contains: name, mode: 'insensitive' } });
+  }
   const cursorObj = !cursor ? undefined : { number: cursor };
-  const { name } = Object(filterObj);
   let selectObj;
   if (!fieldset || fieldset === "display") {
     selectObj = photoDisplaySelectObject satisfies Prisma.PhotoSelect;
   } else {
-    selectObj = photoDisplaySelectObject satisfies Prisma.PhotoSelect;
+    selectObj = photoFullSelectObject satisfies Prisma.PhotoSelect;
   }
   const results = await prisma.photo.findMany(
     {
       skip: !cursor ? 0 : 1,
       cursor: cursorObj,
       take: limit,
-      where: {
-        title: {
-          contains: name,
-          mode: 'insensitive'
-        }
-      },
+      where: { AND: queryArray as Prisma.PhotoWhereInput[] },
       select: selectObj,
       orderBy: [
         sortObj ? { [sortObj.property]: sortObj.order } : {},

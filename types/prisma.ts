@@ -165,3 +165,13 @@ export type PhotoDisplayFieldset = Prisma.PhotoGetPayload<{
         },
     }
 }>
+
+export type PhotoFullFieldset = Prisma.PhotoGetPayload<{
+    include: {
+        locality: {
+          select: {
+            name: true
+          }
+        },
+    }
+}>

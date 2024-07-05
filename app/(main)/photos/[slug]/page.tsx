@@ -1,4 +1,5 @@
 import PhotoSlugImage from '@/components/photos/photo-slug-image';
+import { fetchPhotos } from '@/lib/actions';
 import prisma from "@/lib/prisma";
 import { notFound } from 'next/navigation';
 
@@ -18,13 +19,12 @@ const galleryData = [
 ];
 
 export default async function Page({ params }: { params: { slug: string } }) {
-    const photo = await prisma.photo.findUnique({
-        where: {
-            id: params.slug
-        }
-    })
-    if (!photo) {
-        return notFound()
+    const photoResult = await fetchPhotos({ filterObj: { id: params.slug }, cursor: undefined, limit: 1, fieldset: 'full' });
+    let photo;
+    if (photoResult.results.length === 0) {
+        return notFound();
+    } else {
+        photo = photoResult.results[0];
     }
     return (
         <main>
