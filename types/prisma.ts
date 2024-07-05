@@ -150,3 +150,18 @@ export type LocalityFullFieldset = Prisma.LocalityGetPayload<{
         }
     },
 }>
+
+export type PhotoDisplayFieldset = Prisma.PhotoGetPayload<{
+    select: {
+        title: true,
+        image: true,
+        imageBlurhash: true,
+        number: true,
+        id: true,
+        locality: {
+          select: {
+            name: true
+          }
+        },
+    }
+}>

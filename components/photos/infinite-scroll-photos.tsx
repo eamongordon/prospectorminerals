@@ -9,6 +9,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 import BlurImage from '../blur-image'
+import { PhotoDisplayFieldset } from '@/types/prisma'
 
 export default function InfiniteScrollPhotos({
   search,
@@ -18,7 +19,7 @@ export default function InfiniteScrollPhotos({
   clearFilters
 }: {
   search?: string,
-  initialPhotos?: Photo[],
+  initialPhotos?: PhotoDisplayFieldset[],
   initialCursor?: number,
   sort?: PhotosSortObj,
   clearFilters?: Function | undefined
@@ -64,7 +65,7 @@ export default function InfiniteScrollPhotos({
       const photosQuery = await fetchPhotos({ filterObj: { name: search }, cursor: page, limit: 10, ...(sort ? { sortObj: sort } : {}), });
       if (photosQuery.results?.length) {
         setPage(photosQuery.next ? photosQuery.next : undefined)
-        setPhotos((prev: Photo[] | undefined) => [
+        setPhotos((prev: PhotoDisplayFieldset[] | undefined) => [
           ...(prev?.length ? prev : []),
           ...photosQuery.results
         ]);
@@ -111,7 +112,7 @@ export default function InfiniteScrollPhotos({
                 {hoverItem === photo.id ? (
                   <>
                     <h3 className="text-sm sm:text-xl z-10 font-medium text-white px-2">{photo?.title}</h3>
-                    <p className="text-sm sm:text-md z-10 text-white px-2">{photo?.number}</p>
+                    <p className="text-sm sm:text-md z-10 text-white px-2">{photo?.locality?.name}</p>
                   </>
                 ) : (
                   <></>
