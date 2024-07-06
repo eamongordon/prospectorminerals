@@ -83,8 +83,8 @@ model Mineral {
   hardness_min           Decimal?
   hardness_max           Decimal?
   description            String?
-  uses                   String
-  localities_description String
+  uses                   String?
+  localities_description String?
   associatedWith         Mineral[]        @relation("MineralAssociates")
   associates             Mineral[]        @relation("MineralAssociates")
   localities             Locality[]
