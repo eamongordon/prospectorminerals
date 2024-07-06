@@ -122,6 +122,29 @@ export const createPhotoBulk = async (
 };
 
 
+export const createMineralBulk = async (
+  input: string
+) => {
+  const session = await getSession();
+  if (!session?.user.id || session.user.email !== process.env.ADMIN_EMAIL) {
+    return {
+      error: "Not authenticated",
+    };
+  }
+
+  try {
+    console.log("itemsArray");
+    const itemArray = JSON.parse(input);
+    const newItems = itemArray;
+    const response = prisma.mineral.createMany({ data: newItems });
+    return response;
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
+};
+
 export const createPhoto = async (
   formData: any,
   _id: unknown,
