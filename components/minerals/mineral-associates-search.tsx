@@ -147,7 +147,7 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: Min
                                 //}, 200)
                             }}
                             key={index}
-                            variant="bordered"
+                            variant="flat"
                             avatar={ obj.image ? 
                                 <Avatar
                                     src={obj.image}
