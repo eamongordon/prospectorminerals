@@ -244,7 +244,7 @@ const mineralFullSelectObj = {
   mineral_class: true,
   chemical_formula: true,
   streak: true,
-  luster: true,
+  lusters: true,
   description: true,
   uses: true,
   localities_description: true,
@@ -290,7 +290,11 @@ export async function fetchMinerals<T extends string>({ filterObj, cursor, limit
     queryArray.push({ hardness_max: { gte: minHardness } })
   }
   if (lusters) {
-    pushArrayField(lusters, "luster");
+    queryArray.push({
+      lusters: {
+        hasSome: lusters
+      }
+    })
   }
   if (crystalSystems) {
     pushArrayField(crystalSystems, "crystal_system");
@@ -466,16 +470,16 @@ type FetchPhotosReturn<T extends string> = T extends 'display'
   : { results: PhotoFullFieldset[], next: number | undefined };
 
 const photoDisplaySelectObject = {
-    name: true,
-    image: true,
-    imageBlurhash: true,
-    number: true,
-    id: true,
-    locality: {
-      select: {
-        name: true
-      }
+  name: true,
+  image: true,
+  imageBlurhash: true,
+  number: true,
+  id: true,
+  locality: {
+    select: {
+      name: true
     }
+  }
 } satisfies Prisma.PhotoSelect;
 
 const photoFullSelectObject = {
