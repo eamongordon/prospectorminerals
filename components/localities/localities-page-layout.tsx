@@ -6,16 +6,16 @@ import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useDebounce } from "use-debounce";
 import { Accordion, AccordionItem, Button } from '@nextui-org/react'
 import type { LocalitiesQueryParams, MineralListItem } from '@/types/types'
-import type { Locality } from '@prisma/client'
 import { Input } from '@nextui-org/react';
 import { Search as MagnifyingGlassIcon, Filter } from 'lucide-react';
 import LocalityCard from './locality-card';
 import { Children, cloneElement } from "react";
 import { Map, Rows } from 'lucide-react';
 import { MineralAssociatesSearch } from "../minerals/mineral-associates-search";
+import { LocalityDisplayFieldset } from "@/types/prisma";
 
 //chore: update any definition for localities
-export default function LocalitiesPageLayout({ filterObj, localities, mapElement, clearButton }: { filterObj: LocalitiesQueryParams, localities: Locality[], mapElement: React.ReactElement, clearButton?: React.ReactElement }) {
+export default function LocalitiesPageLayout({ filterObj, localities, mapElement, clearButton }: { filterObj: LocalitiesQueryParams, localities: LocalityDisplayFieldset[], mapElement: React.ReactElement, clearButton?: React.ReactElement }) {
 
     const [coord, setCoord] = useState([51.505, -0.09])
 
@@ -199,9 +199,9 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                                 role='list'
                                 className='w-full flex flex-wrap mt-16 gap-4 sm:grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:flex xl:flex-wrap xl:flex-auto xl:grid-cols-none px-4 sm:p-2'
                             >
-                                {localities.map((locality: Locality) => (
+                                {localities.map((locality) => (
                                     <li key={locality.id} className='relative flex flex-col items-center justify-center text-center group w-full overflow-hidden rounded-xl xl:w-[311px]'>
-                                        <LocalityCard name={locality.name} id={locality.id} />
+                                        <LocalityCard name={locality.name} id={locality.id} blurDataURL={locality.photos.length > 0 && locality.photos[0].imageBlurhash ? locality.photos[0].imageBlurhash : undefined} image={locality.photos.length > 0 && locality.photos[0].image ? locality.photos[0].image : undefined} />
                                     </li>
                                 )
                                 )}
