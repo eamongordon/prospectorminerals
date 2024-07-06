@@ -481,6 +481,11 @@ const photoDisplaySelectObject = {
 const photoFullSelectObject = {
   ...photoDisplaySelectObject,
   description: true,
+  minerals: {
+    select: {
+      mineral: { select: mineralDisplaySelectObj }
+    }
+  }
 } satisfies Prisma.PhotoSelect;
 
 export async function fetchPhotos<T extends string>({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj: PhotosFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: string }): Promise<FetchPhotosReturn<T>> {
@@ -493,7 +498,7 @@ export async function fetchPhotos<T extends string>({ filterObj, cursor, limit, 
     queryArray.push({ id: { equals: id } });
   }
   if (name) {
-    queryArray.push({ name: { contains: name, mode: 'insensitive' } });
+    queryArray.push({ title: { contains: name, mode: 'insensitive' } });
   }
   const cursorObj = !cursor ? undefined : { number: cursor };
   let selectObj;
