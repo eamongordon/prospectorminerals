@@ -10,6 +10,7 @@ import { hash } from "bcrypt";
 import { customAlphabet } from "nanoid";
 import { revalidateTag } from "next/cache";
 import type { LocalityDisplayFieldset, LocalityFullFieldset, MineralDisplayFieldset, MineralFullFieldset, PhotoDisplayFieldset, PhotoFullFieldset } from "@/types/prisma";
+import { connect } from "http2";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -137,6 +138,46 @@ export const createMineralBulk = async (
     const itemArray = JSON.parse(input);
     const newItems = itemArray;
     const response = prisma.mineral.createMany({ data: newItems });
+    return response;
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
+};
+
+export const createLocalityBulk = async (
+  input: string
+) => {
+  const session = await getSession();
+  if (!session?.user.id || session.user.email !== process.env.ADMIN_EMAIL) {
+    return {
+      error: "Not authenticated",
+    };
+  }
+
+  try {
+    const itemArray = JSON.parse(input);
+    const newItems = itemArray.map((item: any) => {
+      return {
+        id: item.id,
+        name: item.name,
+        type: item.type,
+        coordinates_known: item.coordinates_known,
+        description: item.description,
+        latitude: new Prisma.Decimal(item.latitude),
+        longitude: new Prisma.Decimal(item.longitude),
+        /*
+        minerals: {
+          connect: item.minerals.map((mineral: any) => {return {id: mineral._id}})
+        },
+        photos: {
+          connect: item.photos.map((photo: any) => {return {id: photo._id}})
+        }
+          */
+      }
+    })
+    const response = prisma.locality.createMany({ data: newItems });
     return response;
   } catch (error: any) {
     return {
