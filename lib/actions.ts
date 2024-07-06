@@ -159,10 +159,10 @@ export const createRelationsBulk = async (
     console.log("itemsArray");
     const itemArray = JSON.parse(input);
     const newItems = itemArray.map((obj: any) => {
-        return {
-          mineralId: obj.mineral,
-          photoId: obj.photo
-        }
+      return {
+        mineralId: obj.mineral,
+        photoId: obj.photo
+      }
     });
     const response = prisma.photoOnMineral.createMany({ data: newItems });
     return response;
@@ -270,9 +270,7 @@ const photoExplicitSelectObject = {
   take: 1,
   select: { photo: photoSelectObject },
   orderBy: {
-    photo: {
-      number: "asc"
-    }
+    featured: "desc"
   }
 }
 
