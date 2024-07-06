@@ -15,9 +15,7 @@ export type MineralFullFieldset = Prisma.MineralGetPayload<{
                 }
             },
             orderBy: {
-                photo: {
-                    number: "asc"
-                }
+                featured: "desc"
             }
         },
         associates: {
@@ -84,9 +82,7 @@ export type MineralDisplayFieldset = Prisma.MineralGetPayload<{
                 }
             },
             orderBy: {
-                photo: {
-                    number: "asc"
-                }
+                featured: "desc"
             }
         },
         number: true,
