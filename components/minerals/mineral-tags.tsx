@@ -11,7 +11,7 @@ export default function MineralTags({ tags }: { tags: MineralListItem[] }) {
                         <Chip className="min-h-[28px]"
                             size="lg"
                             key={index}
-                            variant="bordered"
+                            variant="solid"
                             classNames={{ base: 'hover:opacity-80' }}
                             avatar={obj.image ?
                                 <Avatar
