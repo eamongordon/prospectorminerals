@@ -23,7 +23,7 @@ export default function Gallery({ data }: { data: GalleryItem[] }) {
                     fill={true}
                 />
                 <>
-                    <h3 className="text-center group-hover:block hidden text-sm sm:text-xl z-10 font-medium text-white">{data[0]?.title}</h3>
+                    <h3 className="text-center group-hover:block hidden text-md sm:text-xl z-10 font-medium text-white">{data[0]?.title}</h3>
                     <p className="text-center group-hover:block hidden text-sm sm:text-md z-10 text-white">{data[0]?.caption}</p>
                 </>
             </div>
@@ -40,7 +40,7 @@ export default function Gallery({ data }: { data: GalleryItem[] }) {
                 />
 
                 <>
-                    <h3 className="text-center group-hover:block hidden text-sm sm:text-xl z-10 font-medium text-white">{data[1]?.title}</h3>
+                    <h3 className="text-center group-hover:block hidden text-md sm:text-xl z-10 font-medium text-white">{data[1]?.title}</h3>
                     <p className="text-center group-hover:block hidden text-sm sm:text-md z-10 text-white">{data[1]?.caption}</p>
                 </>
             </div>
@@ -56,7 +56,7 @@ export default function Gallery({ data }: { data: GalleryItem[] }) {
                     objectFit='cover'
                 />
                 <>
-                    <h3 className="text-center group-hover:block hidden text-sm sm:text-xl z-10 font-medium text-white">{data[2]?.title}</h3>
+                    <h3 className="text-center group-hover:block hidden text-md sm:text-xl z-10 font-medium text-white">{data[2]?.title}</h3>
                     <p className="text-center group-hover:block hidden text-sm sm:text-md z-10 text-white">{data[2]?.caption}</p>
                 </>
             </div>
