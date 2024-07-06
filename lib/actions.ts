@@ -498,7 +498,7 @@ export async function fetchPhotos<T extends string>({ filterObj, cursor, limit, 
     queryArray.push({ id: { equals: id } });
   }
   if (name) {
-    queryArray.push({ title: { contains: name, mode: 'insensitive' } });
+    queryArray.push({ name: { contains: name, mode: 'insensitive' } });
   }
   const cursorObj = !cursor ? undefined : { number: cursor };
   let selectObj;
