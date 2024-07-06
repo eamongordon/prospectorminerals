@@ -48,7 +48,7 @@ export default function LocalityMap({ localities, center, zoom }: { localities: 
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             {localities.map((locality: Locality) => {
-                return (<Marker key={locality.id} position={[Number(locality.longitude), Number(locality.latitude)]} icon={locality.type === 'Single' ? locality.coordinates_known ? singleLocalityKnownIcon : singleLocalityEstimatedIcon : locality.coordinates_known ? groupLocalityKnownIcon : groupLocalityEstimatedIcon} >
+                return (<Marker key={locality.id} position={[Number(locality.latitude), Number(locality.longitude)]} icon={locality.type === 'Single' ? locality.coordinates_known ? singleLocalityKnownIcon : singleLocalityEstimatedIcon : locality.coordinates_known ? groupLocalityKnownIcon : groupLocalityEstimatedIcon} >
                     <Popup className={`${inter.className} w-[200px]`} offset={[0, -21]}>
                         <div key={locality.id} className='flex items-center justify-center text-center w-full overflow-hidden rounded-xl'>
                             <Link href={`/localities/${locality.id}`}>
