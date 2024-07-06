@@ -57,6 +57,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
     if (mineral.mineral_class) {
         tableData.push({ property: "Mineral Class", value: mineral.mineral_class });
     }
+    if (mineral.lusters) {
+        tableData.push({ property: "Luster", value: mineral.lusters.join(', ') });
+    }
     const mineralAssociatesArray = mineral.associates.concat(mineral.associatedWith).map((associate) => {
         return {
             name: associate.name,
