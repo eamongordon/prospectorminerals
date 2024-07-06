@@ -155,7 +155,7 @@ model PhotoOnMineral {
   photoId    String // relation scalar field (used in the `@relation` attribute above)
   featured   Boolean  @default(false)
   assignedAt DateTime @default(now())
-  assignedBy String
+  assignedBy String?
 
   @@id([mineralId, photoId])
 }
