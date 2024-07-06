@@ -45,7 +45,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 <h1 className='font-semibold text-4xl sm:text-6xl py-4'>{locality.name}</h1>
             </div>
             <Suspense fallback={<Skeleton className='h-[400px] w-full' />}>
-                <LocalityMap localities={[locality]} center={[locality.longitude as unknown as number, locality.latitude as unknown as number]} zoom={6} />
+                <LocalityMap localities={[locality]} center={[locality.latitude as unknown as number, locality.longitude as unknown as number]} zoom={6} />
             </Suspense>
             <div className='px-6 max-w-screen-xl mx-auto space-y-6 my-6 sm:space-y-10 sm:my-10'>
                 <p>{locality.description}</p>
