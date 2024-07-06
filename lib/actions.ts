@@ -10,7 +10,6 @@ import { hash } from "bcrypt";
 import { customAlphabet } from "nanoid";
 import { revalidateTag } from "next/cache";
 import type { LocalityDisplayFieldset, LocalityFullFieldset, MineralDisplayFieldset, MineralFullFieldset, PhotoDisplayFieldset, PhotoFullFieldset } from "@/types/prisma";
-import { connect } from "http2";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -213,6 +212,58 @@ export const createRelationsBulk = async (
     };
   }
 };
+/*
+export const addPhotoFallbackLocality = async(
+  input: string
+) => {
+  const session = await getSession();
+  if (!session?.user.id || session.user.email !== process.env.ADMIN_EMAIL) {
+    return {
+      error: "Not authenticated",
+    };
+  }
+  const prismaAllPhotos = await prisma.photo.findMany();
+  const itemArray = JSON.parse(input);
+  try {
+    prismaAllPhotos.forEach(async (photo) => {
+      await prisma.photo.update({
+        where: {
+          id: photo.id,
+        },
+        data: {
+          locality_fallback: itemArray.find((item: any) => item._id === photo.id).locality,
+        },
+      });
+    });
+    return { success: true, message: "Migration completed successfully." };
+  } catch (error) {
+    console.error("Migration failed:", error);
+    return { success: false, message: "Migration failed." };
+  }
+}
+
+export async function addPhotoLocalityRelations() {
+  const prismaAllPhotos = await prisma.photo.findMany();
+  const prismaAllLocalities = await prisma.locality.findMany();
+  try {
+    prismaAllPhotos.forEach(async (photo) => {
+      const localityId = prismaAllLocalities.find((locality: any) => locality.name.includes(photo.locality_fallback?.slice(0, 5)))?.id
+      await prisma.photo.update({
+        where: {
+          id: photo.id,
+        },
+        data: {
+          localityId: localityId
+        },
+      });
+    });
+    return { success: true, message: "Migration completed successfully." };
+  } catch (error) {
+    console.error("Migration failed:", error);
+    return { success: false, message: "Migration failed." };
+  }
+}
+  */
 
 export const createPhoto = async (
   formData: any,
