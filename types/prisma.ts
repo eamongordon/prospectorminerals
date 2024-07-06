@@ -11,6 +11,12 @@ export type MineralFullFieldset = Prisma.MineralGetPayload<{
                         name: true,
                         image: true,
                         imageBlurhash: true,
+                        locality: {
+                            select: {
+                                name: true
+                            }
+                        },
+                        locality_fallback: true,
                     }
                 }
             },
@@ -142,6 +148,12 @@ export type LocalityFullFieldset = Prisma.LocalityGetPayload<{
                 name: true,
                 image: true,
                 imageBlurhash: true,
+                locality: {
+                    select: {
+                        name: true
+                    }
+                },
+                locality_fallback: true,
             }
         }
     },
@@ -159,6 +171,7 @@ export type PhotoDisplayFieldset = Prisma.PhotoGetPayload<{
                 name: true
             }
         },
+        locality_fallback: true,
     }
 }>
 

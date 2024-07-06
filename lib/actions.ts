@@ -366,6 +366,28 @@ const photoExplicitSelectObject = {
   }
 }
 
+const photoSelectObjectWithLocality = {
+  select: {
+    name: true,
+    image: true,
+    imageBlurhash: true,
+    locality: {
+      select: {
+        name: true
+      }
+    },
+    locality_fallback: true
+  } satisfies Prisma.PhotoSelect
+};
+
+const photoExplicitSelectObjectWithLocality = {
+  take: 1,
+  select: { photo: photoSelectObjectWithLocality },
+  orderBy: {
+    featured: "desc"
+  }
+}
+
 const mineralDisplaySelectObj = {
   name: true,
   photos: photoExplicitSelectObject,
@@ -376,7 +398,7 @@ const mineralDisplaySelectObj = {
 const mineralFullSelectObj = {
   ...mineralDisplaySelectObj,
   photos: {
-    ...photoExplicitSelectObject,
+    ...photoExplicitSelectObjectWithLocality,
     take: 3
   },
   hardness_max: true,
@@ -497,11 +519,12 @@ const localityDisplaySelectObj = {
   longitude: true,
   type: true,
   coordinates_known: true,
-  photos: { ...photoSelectObject, take: 3 }
+  photos: photoSelectObject
 }
 
 const localityFullSelectObj = {
   ...localityDisplaySelectObj,
+  photos: photoSelectObjectWithLocality,
   minerals: { select: mineralDisplaySelectObj }
 }
 
@@ -620,7 +643,8 @@ const photoDisplaySelectObject = {
     select: {
       name: true
     }
-  }
+  },
+  locality_fallback: true
 } satisfies Prisma.PhotoSelect;
 
 const photoFullSelectObject = {
