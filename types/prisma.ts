@@ -159,9 +159,9 @@ export type PhotoDisplayFieldset = Prisma.PhotoGetPayload<{
         number: true,
         id: true,
         locality: {
-          select: {
-            name: true
-          }
+            select: {
+                name: true
+            }
         },
     }
 }>
@@ -169,9 +169,37 @@ export type PhotoDisplayFieldset = Prisma.PhotoGetPayload<{
 export type PhotoFullFieldset = Prisma.PhotoGetPayload<{
     include: {
         locality: {
-          select: {
-            name: true
-          }
+            select: {
+                name: true
+            }
         },
+        minerals: {
+            select: {
+                mineral: {
+                    select: {
+                        name: true,
+                        photos: {
+                            take: 1,
+                            select: {
+                                photo: {
+                                    select: {
+                                        title: true,
+                                        image: true,
+                                        imageBlurhash: true,
+                                    }
+                                }
+                            },
+                            orderBy: {
+                                photo: {
+                                    number: "asc"
+                                }
+                            }
+                        },
+                        number: true,
+                        id: true
+                    }
+                }
+            }
+        }
     }
 }>
