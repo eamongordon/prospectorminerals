@@ -8,7 +8,7 @@ export type MineralFullFieldset = Prisma.MineralGetPayload<{
                 photo: {
                     take: 1,
                     select: {
-                        title: true,
+                        name: true,
                         image: true,
                         imageBlurhash: true,
                     }
@@ -29,7 +29,7 @@ export type MineralFullFieldset = Prisma.MineralGetPayload<{
                     select: {
                         photo: {
                             select: {
-                                title: true,
+                                name: true,
                                 image: true,
                                 imageBlurhash: true,
                             }
@@ -52,7 +52,7 @@ export type MineralFullFieldset = Prisma.MineralGetPayload<{
                     select: {
                         photo: {
                             select: {
-                                title: true,
+                                name: true,
                                 image: true,
                                 imageBlurhash: true,
                             }
@@ -77,7 +77,7 @@ export type MineralDisplayFieldset = Prisma.MineralGetPayload<{
             select: {
                 photo: {
                     select: {
-                        title: true,
+                        name: true,
                         image: true,
                         imageBlurhash: true,
                     }
@@ -106,7 +106,7 @@ export type LocalityDisplayFieldset = Prisma.LocalityGetPayload<{
         photos: {
             take: 1,
             select: {
-                title: true,
+                name: true,
                 image: true,
                 imageBlurhash: true,
             }
@@ -124,7 +124,7 @@ export type LocalityFullFieldset = Prisma.LocalityGetPayload<{
                     select: {
                         photo: {
                             select: {
-                                title: true,
+                                name: true,
                                 image: true,
                                 imageBlurhash: true,
                             }
@@ -143,7 +143,7 @@ export type LocalityFullFieldset = Prisma.LocalityGetPayload<{
         photos: {
             take: 3,
             select: {
-                title: true,
+                name: true,
                 image: true,
                 imageBlurhash: true,
             }
@@ -153,7 +153,7 @@ export type LocalityFullFieldset = Prisma.LocalityGetPayload<{
 
 export type PhotoDisplayFieldset = Prisma.PhotoGetPayload<{
     select: {
-        title: true,
+        name: true,
         image: true,
         imageBlurhash: true,
         number: true,
@@ -183,7 +183,7 @@ export type PhotoFullFieldset = Prisma.PhotoGetPayload<{
                             select: {
                                 photo: {
                                     select: {
-                                        title: true,
+                                        name: true,
                                         image: true,
                                         imageBlurhash: true,
                                     }

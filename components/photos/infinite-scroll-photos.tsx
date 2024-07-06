@@ -111,7 +111,7 @@ export default function InfiniteScrollPhotos({
                 )}
                 {hoverItem === photo.id ? (
                   <>
-                    <h3 className="text-sm sm:text-xl z-10 font-medium text-white px-2">{photo?.title}</h3>
+                    <h3 className="text-sm sm:text-xl z-10 font-medium text-white px-2">{photo?.name}</h3>
                     <p className="text-sm sm:text-md z-10 text-white px-2">{photo?.locality?.name}</p>
                   </>
                 ) : (
