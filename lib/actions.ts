@@ -650,6 +650,9 @@ const photoDisplaySelectObject = {
 const photoFullSelectObject = {
   ...photoDisplaySelectObject,
   description: true,
+  specimen_height: true,
+  specimen_length: true,
+  specimen_width: true,
   minerals: {
     select: {
       mineral: { select: mineralDisplaySelectObj }
