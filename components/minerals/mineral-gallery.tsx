@@ -10,7 +10,7 @@ export type GalleryItem = {
 
 export default function Gallery({ data }: { data: GalleryItem[] }) {
     return (
-        <div className={`${data.length >= 3 ? "grid grid-rows-2 grid-cols-3 gap-2 sm:gap-4 max-w-screen-xl aspect-[2/1] sm:aspect-[8/3] max-h-[500px] mx-auto" : data.length === 2 ? "grid grid-rows-1 grid-cols-2 gap-2 sm:gap-4 max-w-screen-xl aspect-[8/3] max-h-[500px] mx-auto" : data.length > 1 ? "grid grid-rows-1 grid-cols-1 gap-2 sm:gap-4 max-w-screen-xl aspect-[8/3] max-h-[500px] mx-auto" : "hidden"}`}>
+        <div className={`${data.length >= 3 ? "grid grid-rows-2 grid-cols-3 gap-2 sm:gap-4 max-w-screen-xl aspect-[2/1] sm:aspect-[8/3] max-h-[500px] mx-auto" : data.length === 2 ? "grid grid-rows-1 grid-cols-2 gap-2 sm:gap-4 max-w-screen-xl aspect-[8/3] max-h-[500px] mx-auto" : data.length > 0 ? "grid grid-rows-1 grid-cols-1 gap-2 sm:gap-4 max-w-screen-xl aspect-[8/3] max-h-[500px] mx-auto" : "hidden"}`}>
             <div
                 className={`group ${data.length >= 3 ? "relative rounded-md row-span-2 col-span-2 flex flex-col items-center justify-center" : "relative rounded-md row-span-1 col-span-1 flex flex-col items-center justify-center"}`}
                 id="image1"
