@@ -70,7 +70,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
     return (
         <main className="px-6 max-w-screen-xl mx-auto">
             <h1 className='font-semibold text-4xl sm:text-6xl py-4'>{mineral.name}</h1>
-            {mineral.photos ? <Gallery data={mineral.photos.map((obj) => { return { title: obj.photo.name ? obj.photo.name : undefined, caption: "Test Caption", image: obj.photo.image ? obj.photo.image : undefined } })} /> : <></>}
+            {mineral.photos ? <Gallery data={mineral.photos.map((obj) => { return { title: obj.photo.name ? obj.photo.name : undefined, caption: obj.photo.locality ? obj.photo.locality.name : obj.photo.locality_fallback || undefined, image: obj.photo.image ? obj.photo.image : undefined } })} /> : <></>}
             <div className="flex w-full flex-col sm:flex-row my-5 sm:my-10">
                 <div className="w-full sm:pr-12">
                     {mineral.description ? (<p>{mineral.description}</p>) : (<></>)}
