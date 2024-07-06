@@ -209,7 +209,7 @@ type FetchMineralsReturn<T extends string> = T extends 'display'
 
 const photoSelectObject = {
   select: {
-    title: true,
+    name: true,
     image: true,
     imageBlurhash: true,
   } satisfies Prisma.PhotoSelect
@@ -466,7 +466,7 @@ type FetchPhotosReturn<T extends string> = T extends 'display'
   : { results: PhotoFullFieldset[], next: number | undefined };
 
 const photoDisplaySelectObject = {
-    title: true,
+    name: true,
     image: true,
     imageBlurhash: true,
     number: true,
@@ -534,6 +534,28 @@ export async function fetchPhotos<T extends string>({ filterObj, cursor, limit, 
     next: results.length === limit ? results[results.length - 1].number : undefined
   } as FetchPhotosReturn<T>
 };
+
+/*
+export async function migrateTitleToName() {
+  const prismaAllPhotos = await prisma.photo.findMany();
+  try {
+    prismaAllPhotos.forEach(async (photo) => {
+      await prisma.photo.update({
+        where: {
+          id: photo.id,
+        },
+        data: {
+          name: photo.name,
+        },
+      });
+    });
+    return { success: true, message: "Migration completed successfully." };
+  } catch (error) {
+    console.error("Migration failed:", error);
+    return { success: false, message: "Migration failed." };
+  }
+}
+*/
 
 // creating a separate function for this because we're not using FormData
 export const updatePost = async (data: Post) => {
