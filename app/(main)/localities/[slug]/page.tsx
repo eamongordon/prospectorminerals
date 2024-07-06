@@ -51,7 +51,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 <p>{locality.description}</p>
                 <div className='flex flex-col md:flex-row gap-4 md:gap-8'>
                     <div className='w-full md:w-2/3'>
-                        <Gallery data={galleryData} />
+                        <Gallery data={locality.photos.map((obj) => { return { title: obj.name ? obj.name : undefined, caption: obj.locality ? obj.locality.name : obj.locality_fallback || undefined, image: obj.image ? obj.image : undefined } })} />
                     </div>
                     <div className='w-full md:w-1/3'>
                         <PropertyTable data={tableData} />
