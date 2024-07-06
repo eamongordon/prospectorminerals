@@ -1,6 +1,8 @@
+import MineralTags from '@/components/minerals/mineral-tags';
 import PhotoSlugImage from '@/components/photos/photo-slug-image';
 import { fetchPhotos } from '@/lib/actions';
 import prisma from "@/lib/prisma";
+import { MineralListItem } from '@/types/types';
 import { notFound } from 'next/navigation';
 
 const galleryData = [
@@ -41,6 +43,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     <p className='text-lg font-semibold'>{"Smoky Hawk Claim, Lake George Co., Colorado"}</p>
                     <p className='text-md'>{"6.0 x 4.3 x 2.5 cm"}</p>
                     <p className='text-md'>{photo.description ? photo.description : ""}</p>
+                    {photo.minerals.length ? 
+                    <>
+                    <h2 className='text-2xl font-semibold'>Minerals In this Photo</h2>
+                    <MineralTags tags={photo.minerals.map((obj) => { return { name: obj.mineral.name, image: obj.mineral.photos[0].photo.image, id: obj.mineral.id } as MineralListItem })} /> 
+                    </>: null}
                 </div>
             </div>
         </main>
