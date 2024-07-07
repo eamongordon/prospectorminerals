@@ -15,12 +15,10 @@ export default function Editor({ post }: { post: Post }) {
   let [isPendingSaving, startTransitionSaving] = useTransition();
   let [isPendingPublishing, startTransitionPublishing] = useTransition();
   const [data, setData] = useState<Post>(post);
-  const [hydrated, setHydrated] = useState(false);
-
+  
   const url = process.env.NEXT_PUBLIC_VERCEL_ENV
     ? `https://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/${data.slug}`
-    : `http://localhost:3000/${data.slug}`;
-
+    : `http://localhost:3001/${data.slug}`;
   // listen to CMD + S and override the default behavior
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -130,6 +128,7 @@ export default function Editor({ post }: { post: Post }) {
             await updatePost(data);
           });
         }}
+        disableLocalStorage={true}
       />
     </div>
   );
