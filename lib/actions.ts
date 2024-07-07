@@ -582,7 +582,14 @@ export async function fetchLocalities<T extends string>({ filterObj, cursor, lim
 };
 
 export async function fetchPosts({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: ArticlesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: string }) {
-  const { title } = Object(filterObj)
+  let queryArray = [];
+  const { title, id } = Object(filterObj)
+  if (id) {
+    queryArray.push({ id: { equals: id } });
+  }
+  if (title) {
+    queryArray.push({ title: { contains: title, mode: 'insensitive' } });
+  }
   const cursorObj = !cursor ? undefined : { number: cursor };
   let selectObj;
   if (!fieldset || fieldset === "display") {
@@ -600,13 +607,7 @@ export async function fetchPosts({ filterObj, cursor, limit, sortObj, fieldset }
       skip: !cursor ? 0 : 1,
       cursor: cursorObj,
       take: limit,
-      where: {
-        published: true,
-        title: {
-          contains: title,
-          mode: 'insensitive'
-        }
-      },
+      where: { AND: [{ published: true }, ...queryArray as Prisma.PostWhereInput[]] },
       select: selectObj,
       orderBy: [
         sortObj ? { [sortObj.property]: sortObj.order } : {},
