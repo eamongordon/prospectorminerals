@@ -77,7 +77,7 @@ export default function InfiniteScrollArticles({
                       />
                     </div>
                   ) : null}
-                  <div className={`${article.image ? "w-[55%]" : ""} flex flex-col justify-center gap-4`}>
+                  <div className={`${article.image ? "w-[55%]" : ""} flex flex-col justify-center gap-4 hover:opacity-60`}>
                     <p className="text-sm opacity-70">
                       {new Date(article.createdAt).toLocaleDateString('en-US', {
                         month: 'short', // "Feb"
