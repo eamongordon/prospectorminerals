@@ -10,5 +10,5 @@ export default async function RootLayout({
     if (session) {
         return redirect(`/account/settings`);
     }
-    return ({ children })
+    return (children)
 }
