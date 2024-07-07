@@ -524,6 +524,7 @@ const localityDisplaySelectObj = {
 
 const localityFullSelectObj = {
   ...localityDisplaySelectObj,
+  description: true,
   photos: photoSelectObjectWithLocality,
   minerals: { select: mineralDisplaySelectObj }
 }
