@@ -9,10 +9,7 @@ import type { ArticlesFilterObj, MineralsFilterObj, PhotosSortObj } from '@/type
 import type { Post } from '@prisma/client';
 import BlurImage from '../blur-image';
 import Link from 'next/link';
-const nanoid = customAlphabet(
-  "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
-  7,
-); // 7-character random string
+import { toDateString } from '@/lib/utils';
 
 export default function InfiniteScrollArticles({
   filterObj,
@@ -79,11 +76,7 @@ export default function InfiniteScrollArticles({
                   ) : null}
                   <div className={`${article.image ? "w-[55%]" : ""} flex flex-col justify-center gap-4 hover:opacity-60`}>
                     <p className="text-sm opacity-70">
-                      {new Date(article.createdAt).toLocaleDateString('en-US', {
-                        month: 'short', // "Feb"
-                        day: '2-digit', // "23"
-                        year: 'numeric', // "2024"
-                      })}
+                      {toDateString(article.publishedAt || article.createdAt)}
                     </p>
                     <h3 className="text-4xl font-bold">{article.title}</h3>
                     <p className="text-lg">{article.description}</p>

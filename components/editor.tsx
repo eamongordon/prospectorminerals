@@ -58,17 +58,24 @@ export default function Editor({ post }: { post: Post }) {
             //const formData = new FormData();
             console.log(data.published, typeof data.published);
             //formData.append("published", String(!data.published));
+            const now = new Date();
             startTransitionPublishing(async () => {
-              await updatePostMetadata(String(!data.published), post.slug, "published").then(
-                () => {
-                  toast.success(
-                    `Successfully ${
-                      data.published ? "unpublished" : "published"
-                    } your post.`,
-                  );
-                  setData((prev: any) => ({ ...prev, published: !prev.published }));
-                },
-              );
+              Promise.all([
+                await updatePostMetadata(String(!data.published), post.slug, "published").then(
+                  () => {
+                    toast.success(
+                      `Successfully ${data.published ? "unpublished" : "published"
+                      } your post.`,
+                    );
+                    setData((prev: any) => ({ ...prev, published: !prev.published }));
+                  },
+                ),
+                await updatePostMetadata(now, post.slug, "publishedAt").then(
+                  () => {
+                    setData((prev: any) => ({ ...prev, publishedAt: now }));
+                  },
+                ),
+              ])
             });
           }}
           className={cn(
