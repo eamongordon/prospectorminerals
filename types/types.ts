@@ -27,7 +27,8 @@ export type LocalitiesFilterObj = {
 }
 
 export type ArticlesFilterObj = {
-    title?: string
+    title?: string,
+    id?: string
 }
 
 
