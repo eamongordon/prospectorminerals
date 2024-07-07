@@ -56,7 +56,7 @@ export default function InfiniteScrollArticles({
   return (
     <ul
       role='list'
-      className='w-full'
+      className='w-full flex flex-col gap-8'
     >
       <>
         {
