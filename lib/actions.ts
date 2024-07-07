@@ -599,7 +599,9 @@ export async function fetchPosts({ filterObj, cursor, limit, sortObj, fieldset }
       imageBlurhash: true,
       createdAt: true,
       number: true,
-      description: true
+      description: true,
+      id: true,
+      slug: true
     }
   }
   const results = await prisma.post.findMany(
