@@ -86,11 +86,6 @@ export default async function SitePostPage({
             >
               <div className="w-full border-t border-stone-300 dark:border-stone-700" />
             </div>
-            <div className="relative flex justify-center">
-              <span className="bg-white px-2 text-sm text-stone-500 dark:bg-black dark:text-stone-400">
-                Continue Reading
-              </span>
-            </div>
           </div>
         )}
         {data.adjacentPosts && (
