@@ -41,23 +41,32 @@ export default function Uploader({
           } else {
             formattedFileType = "PNG"
           }
-          Resizer.imageFileResizer(
-            file,
-            240,
-            240,
-            formattedFileType,
-            80,
-            0,
-            (newfile) => {
-              const reader = new FileReader();
-              reader.onload = (e) => {
-                setData((prev) => ({ ...prev, [name]: e.target?.result as string }));
-              };
-              reader.readAsDataURL(newfile as Blob);
-              formFunction(newfile);
-            },
-            "file"
-          )
+          if (name === "avatar") {
+            Resizer.imageFileResizer(
+              file,
+              240,
+              240,
+              formattedFileType,
+              80,
+              0,
+              (newfile) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                  setData((prev) => ({ ...prev, [name]: e.target?.result as string }));
+                };
+                reader.readAsDataURL(newfile as Blob);
+                formFunction(newfile);
+              },
+              "file"
+            )
+          } else {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              setData((prev) => ({ ...prev, [name]: e.target?.result as string }));
+            };
+            reader.readAsDataURL(file as Blob);
+            formFunction(file);
+          }
         } else {
           const reader = new FileReader();
           reader.onload = (e) => {
