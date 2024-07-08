@@ -74,6 +74,7 @@ model VerificationToken {
 model Mineral {
   id                     String           @id @default(cuid())
   name                   String
+  slug                   String?
   mineral_class          String
   crystal_system         String
   chemical_formula       String
@@ -138,6 +139,7 @@ model Photo {
 model Locality {
   id                String    @id @default(cuid())
   name              String
+  slug              String?
   type              String
   coordinates_known Boolean
   description       String?
