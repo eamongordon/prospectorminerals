@@ -733,6 +733,33 @@ export async function migrateTitleToName() {
 }
 */
 
+/*
+export async function addSlug() {
+  const prismaAllPhotos = await prisma.locality.findMany();
+  try {
+    prismaAllPhotos.forEach(async (photo) => {
+      const slug = photo.name
+      .toLowerCase() // Step 1: Convert to lowercase
+      .replace(/[^a-z0-9\s]/g, '') // Step 2: Remove special characters
+      .replace(/\s+/g, '-') // Step 3: Replace spaces with hyphens
+      .replace(/^-+|-+$/g, ''); // Step 4: Trim leading/trailing hyphens
+      await prisma.locality.update({
+        where: {
+          id: photo.id,
+        },
+        data: {
+          slug: slug,
+        },
+      });
+    });
+    return { success: true, message: "Migration completed successfully." };
+  } catch (error) {
+    console.error("Migration failed:", error);
+    return { success: false, message: "Migration failed." };
+  }
+}
+*/
+
 // creating a separate function for this because we're not using FormData
 export const updatePost = async (data: Post) => {
   const session = await getSession();
