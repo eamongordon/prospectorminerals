@@ -392,7 +392,8 @@ const mineralDisplaySelectObj = {
   name: true,
   photos: photoExplicitSelectObject,
   number: true,
-  id: true
+  id: true,
+  slug: true,
 } as Prisma.MineralSelect;
 
 const mineralFullSelectObj = {
@@ -415,6 +416,7 @@ const mineralFullSelectObj = {
     select: {
       name: true,
       id: true,
+      slug: true,
       photos: photoExplicitSelectObject
     }
   },
@@ -422,6 +424,7 @@ const mineralFullSelectObj = {
     select: {
       name: true,
       id: true,
+      slug: true,
       photos: photoExplicitSelectObject
     }
   }
@@ -438,10 +441,12 @@ export async function fetchMinerals<T extends string>({ filterObj, cursor, limit
     })
     queryArray.push({ OR: filterArray })
   }
-  const { name, minHardness, maxHardness, lusters, streaks, mineralClasses, crystalSystems, chemistry, associates, id } = Object(filterObj);
-  console.log(associates)
+  const { name, minHardness, maxHardness, lusters, streaks, mineralClasses, crystalSystems, chemistry, associates, id, slug } = Object(filterObj);
   if (id) {
     queryArray.push({ id: { equals: id } });
+  }
+  if (slug) {
+    queryArray.push({ slug: { equals: slug } });
   }
   if (name) {
     queryArray.push({ name: { contains: name, mode: 'insensitive' } });
@@ -515,6 +520,7 @@ const localityDisplaySelectObj = {
   name: true,
   number: true,
   id: true,
+  slug: true,
   latitude: true,
   longitude: true,
   type: true,
@@ -537,9 +543,12 @@ type FetchLocalitiesReturn<T extends string> = T extends 'display'
 
 export async function fetchLocalities<T extends string>({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: LocalitiesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: string }): Promise<FetchLocalitiesReturn<T>> {
   let queryArray = [];
-  const { name, minerals, id } = Object(filterObj);
+  const { name, minerals, id, slug } = Object(filterObj);
   if (id) {
     queryArray.push({ id: { equals: id } });
+  }
+  if (slug) {
+    queryArray.push({ slug: { equals: slug } });
   }
   if (name) {
     queryArray.push({ name: { contains: name, mode: 'insensitive' } });
