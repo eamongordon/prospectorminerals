@@ -68,7 +68,7 @@ export default function Search({ isHero }: { isHero?: boolean }) {
                     label="Search"
                     size="sm"
                     radius="md"
-                    classNames={{ base: "w-full" }}
+                    classNames={{ base: `w-full`, inputWrapper: `${initialLoad.current || !initialLoad.current && resultsLoading ? "rounded-b-none" : ""}` }}
                     value={searchTerm || ""}
                     isClearable={searchTerm ? true : false}
                     onValueChange={(value) => {setResultsLoading(true); setSearchTerm(value)}}
@@ -77,7 +77,7 @@ export default function Search({ isHero }: { isHero?: boolean }) {
                     }
                 />
                 <div className="relative">
-                    <div className={`${isHero ? "bg-white dark:bg-zinc-900" : "sm:bg-white sm:dark:bg-zinc-900"} absolute w-full rounded-lg ${!initialLoad.current && !resultsLoading ? "" : "p-5"}`}>
+                    <div className={`${isHero ? "bg-white dark:bg-zinc-900" : "sm:bg-white sm:dark:bg-zinc-900"} absolute w-full rounded-medium ${initialLoad.current || !initialLoad.current && resultsLoading ? "rounded-t-none" : ""} ${!initialLoad.current && !resultsLoading ? "" : "p-5"}`}>
                         {resultsLoading ? (
                             <div className="flex flex-col rounded-lg gap-4">
                                 <>
