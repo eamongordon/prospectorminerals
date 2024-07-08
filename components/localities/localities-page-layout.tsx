@@ -201,7 +201,7 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                             >
                                 {localities.map((locality) => (
                                     <li key={locality.id} className='relative flex flex-col items-center justify-center text-center group w-full overflow-hidden rounded-xl xl:w-[311px]'>
-                                        <LocalityCard name={locality.name} id={locality.id} blurDataURL={locality.photos.length > 0 && locality.photos[0].imageBlurhash ? locality.photos[0].imageBlurhash : undefined} image={locality.photos.length > 0 && locality.photos[0].image ? locality.photos[0].image : undefined} />
+                                        <LocalityCard name={locality.name} slug={locality.slug} blurDataURL={locality.photos.length > 0 && locality.photos[0].imageBlurhash ? locality.photos[0].imageBlurhash : undefined} image={locality.photos.length > 0 && locality.photos[0].image ? locality.photos[0].image : undefined} />
                                     </li>
                                 )
                                 )}
