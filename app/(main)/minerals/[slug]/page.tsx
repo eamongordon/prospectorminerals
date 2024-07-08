@@ -83,10 +83,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
                             </div>
                         )
                     })}
-                    <div className="space-y-2">
-                        <h2 className="font-semibold text-3xl sm:text-4xl mb-4">Associates</h2>
-                        <MineralTags tags={mineralAssociatesArray} />
-                    </div>
+                    {mineralAssociatesArray.length > 0 ?
+                        <div className="space-y-2">
+                            <h2 className="font-semibold text-3xl sm:text-4xl mb-4">Associates</h2>
+                            <MineralTags tags={mineralAssociatesArray} />
+                        </div> : null}
                 </div>
                 <div className="w-full my-4 sm:my-0 sm:w-[40%] sm:min-w-80">
                     <PropertyTable data={tableData} />
