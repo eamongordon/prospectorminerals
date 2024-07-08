@@ -21,12 +21,12 @@ export default function Hero() {
                 blurDataURL="data:image/png;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAmADIDASIAAhEBAxEB/8QAGwAAAgMBAQEAAAAAAAAAAAAAAAQBAgMFBgf/xAAgEAACAgEFAAMAAAAAAAAAAAAAAQIDEQQSEyExIkFR/8QAGAEAAwEBAAAAAAAAAAAAAAAAAAEDAgX/xAAYEQEBAQEBAAAAAAAAAAAAAAAAARExAv/aAAwDAQACEQMRAD8A+e2WN9FqH8kW4W2SoOJ06vT9c+is1uyLQswbqxYNQ4wuqTTOXqql2dS6zpnL1VnbFaekeFfgF+QDGE9PDDItisMTq1GPsm3UZj6UgZ2T2smueRKybcjamePQglMWRbTOdqI9j07lhiF1qbCwYx2AHIgMhvOTiy0JOXoAOitVWsZMbZOPgAKdLyVnfLLFp2tsAKVS8Z8jAAJMP//Z"
                 priority={true}
             />
-            <div className="flex flex-col justify-center items-center z-10 space-y-16 w-full px-8 min-w-72 sm:px-0 sm:w-1/3">
-                <div className='transform scale-150'>
-                    <PMLogo />
+            <div className="flex flex-col justify-center items-center z-10 w-full px-8 gap-4 min-w-72 sm:px-0 sm:w-1/3">
+                <div className='hidden sm:block'>
+                    <PMLogo isHero height={65}/>
                 </div>
                 <div className='w-full'>
-                    <Search />
+                    <Search isHero />
                 </div>
             </div>
         </div>

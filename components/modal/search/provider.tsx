@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import Modal from "./index";
 import { ReactNode, createContext, useContext, useState, useEffect } from "react";
 
@@ -19,7 +20,7 @@ export function SearchModalProvider({ children }: { children: ReactNode }) {
     if (showModal) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "auto";
   }, [showModal]);
-  
+
   const show = (content: ReactNode) => {
     setModalContent(content);
     setShowModal(true);
@@ -31,6 +32,14 @@ export function SearchModalProvider({ children }: { children: ReactNode }) {
       setModalContent(null);
     }, 300); // Adjust this timeout as per your transition duration
   };
+
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (showModal) {
+      setShowModal(false);
+    }
+  }, [pathname]);
 
   return (
     <ModalContext.Provider value={{ show, hide }}>
