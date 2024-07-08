@@ -13,11 +13,13 @@ type SearchResult = {
 }
 
 export default function Search() {
-    const [searchTerm, setSearchTerm] = useState('');
+    const [searchTerm, setSearchTerm] = useState("");
     const [results, setResults] = useState<SearchResult[]>([]);
     const [query] = useDebounce(searchTerm, 500);
     useEffect(() => {
-        fetchResults();
+        if (searchTerm) {
+            fetchResults();
+        }
     }, [query]);
     function fetchResults() {
         Promise.all([
@@ -59,27 +61,27 @@ export default function Search() {
                         searchTerm ? (null) : (<><div className='h-full flex items-center'><MagnifyingGlassIcon /></div></>)
                     }
                 />
-                <div className={`sm:bg-white sm:dark:bg-slate-800 rounded-lg p-5 ${results.length > 0 ? "" : "hidden"}`}>
+                <div className={`sm:bg-white sm:dark:bg-zinc-900 rounded-lg p-5 ${results.length > 0 ? "" : "hidden"}`}>
                     {results.length > 0 ?
                         (
                             <ul className="flex flex-col rounded-lg gap-4">
                                 {results.map((result) => (
                                     <li key={result.slug} className="hover:opacity-70">
-                                        <Link className="flex flex-row gap-4" href={result.type === "Mineral" ? `/minerals/${result.slug}` : result.type === "Photo" ? `/minerals/${result.slug}` : result.type === "Locality" ? `/localities/${result.slug}` : `/articles/${result.slug}`}>
-                                        <BlurImage
-                                            src={result.image!}
-                                            alt={result.name}
-                                            blurDataURL={result.imageBlurhash}
-                                            width={100}
-                                            height={100}
-                                            className="rounded-lg object-cover aspect-[3/2]"
-                                        />
-                                        <div className="flex flex-col">
-                                            <div className="justify-center items-center">
-                                        <p className="text-lg font-semibold">{result.name}</p>
-                                        </div>
-                                        <Chip size="md">{result.type}</Chip>
-                                        </div>
+                                        <Link className="flex flex-row gap-4" href={result.type === "Mineral" ? `/minerals/${result.slug}` : result.type === "Photo" ? `/photos/${result.slug}` : result.type === "Locality" ? `/localities/${result.slug}` : `/articles/${result.slug}`}>
+                                            <BlurImage
+                                                src={result.image!}
+                                                alt={result.name}
+                                                blurDataURL={result.imageBlurhash}
+                                                width={100}
+                                                height={100}
+                                                className="rounded-lg object-cover aspect-[3/2]"
+                                            />
+                                            <div className="flex flex-col">
+                                                <div className="justify-center items-center">
+                                                    <p className="text-lg font-semibold">{result.name}</p>
+                                                </div>
+                                                <Chip size="md">{result.type}</Chip>
+                                            </div>
                                         </Link>
                                     </li>
                                 ))}
