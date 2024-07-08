@@ -1,4 +1,4 @@
-export default function PMLogo() {
+export default function PMLogo({ isHero }: { isHero?: boolean }) {
     return (
         <svg data-bbox="0 0 58.561 11.289" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 58.561 11.289" height="42.667" width="221.333" data-type="color">
             <g>
@@ -61,26 +61,20 @@ export default function PMLogo() {
                         <path d="m20.875 21.195 11.43 8.192 11.77 1.949-1.169-10.32-16.843-10.164zm0 0" fill="#75d4ff" data-color="4" />
                     </g>
                 </g>
-                <g transform="scale(.35278)" className="fill-black dark:fill-white">
+                <g transform="scale(.35278)" className={`${isHero ? "fill-white" : "fill-black dark:fill-white"}`}>
                     <use height="100%" width="100%" y="14.167" x="45.51" xlinkHref="#c87b2d1f-afce-4567-b868-ab483c9c89ef" data-color="1" />
                     <use height="100%" width="100%" y="14.167" x="57.048" xlinkHref="#4d617dd5-e623-47ef-a2bc-5fd67b8ea487" data-color="1" />
-                </g>
-                <g className="fill-black dark:fill-white" transform="scale(.35278)">
                     <use height="100%" width="100%" y="14.167" x="68.766" xlinkHref="#79500da1-899c-42b8-9308-00a08412c44d" data-color="1" />
                     <use height="100%" width="100%" y="14.167" x="83.67" xlinkHref="#e9b7dd90-14e4-4e6a-8c15-9b614ee90a3b" data-color="1" />
                     <use height="100%" width="100%" y="14.167" x="93.75" xlinkHref="#c87b2d1f-afce-4567-b868-ab483c9c89ef" data-color="1" />
                     <use height="100%" width="100%" y="14.167" x="105.288" xlinkHref="#cceea666-4c30-4e56-8c96-6d9b3b8f6c79" data-color="1" />
                     <use height="100%" width="100%" y="14.167" x="116.286" xlinkHref="#d0b4bd97-762c-4a33-9573-8f378a95d99e" data-color="1" />
                     <use height="100%" width="100%" y="14.167" x="129.156" xlinkHref="#c33ac01e-315c-4364-955c-a70a7db75776" data-color="1" />
-                </g>
-                <g transform="scale(.35278)" className="fill-black dark:fill-white">
                     <use height="100%" width="100%" y="14.167" x="139.434" xlinkHref="#79500da1-899c-42b8-9308-00a08412c44d" data-color="1" />
                     <use height="100%" width="100%" y="14.167" x="154.338" xlinkHref="#4d617dd5-e623-47ef-a2bc-5fd67b8ea487" data-color="1" />
-                </g>
-                <g transform="scale(.35278)" className="fill-black dark:fill-white">
                     <use height="100%" width="100%" y="29.819" x="68.938" xlinkHref="#b85ec368-baae-4387-b0b9-204f644cf8f9" />
                 </g>
-                <g transform="scale(.35278)" className="fill-[#3f3f3f] dark:fill-[#DEDEDE]" >
+                <g transform="scale(.35278)" className={`${isHero ? "fill-[#DEDEDE]" : "fill-[#3f3f3f] dark:fill-[#DEDEDE]"}`} >
                     <use height="100%" width="100%" y="29.819" x="71.494" xlinkHref="#d5c36df3-4529-479e-9c6f-5f7e42b863d4" data-color="5" />
                     <use height="100%" width="100%" y="29.819" x="84.654" xlinkHref="#788109f1-a169-4bca-ba95-48bfa1d6160f" data-color="5" />
                     <use height="100%" width="100%" y="29.819" x="89.232" xlinkHref="#e23a382f-ac18-400d-a36b-4feff4a7540e" data-color="5" />
