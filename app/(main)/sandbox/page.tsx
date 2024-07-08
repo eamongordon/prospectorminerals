@@ -49,7 +49,7 @@ export default function Page() {
                 />
                 <div className="product-des" dangerouslySetInnerHTML={{ __html: htmltest }}/>
                 <Gallery data={galleryData} />
-                <Card name="Azurite" id="az" />
+                <Card name="Azurite" slug="az" />
                 <RegModal />
                 <TestServerActions/>
 
