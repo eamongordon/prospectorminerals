@@ -1,6 +1,7 @@
-export default function PMLogo({ isHero }: { isHero?: boolean }) {
+export default function PMLogo({ isHero, height }: { isHero?: boolean, height?: number}) {
+    const defaultAspectRatio = (221 + (1/3)) / (42 + (2/3));
     return (
-        <svg data-bbox="0 0 58.561 11.289" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 58.561 11.289" height="42.667" width="221.333" data-type="color">
+        <svg data-bbox="0 0 58.561 11.289" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 58.561 11.289" height={height ? `${height}` : `42.667`} width={`${height ? height * defaultAspectRatio : "221.333"}`} data-type="color">
             <g>
                 <defs>
                     <symbol id="c87b2d1f-afce-4567-b868-ab483c9c89ef" overflow="visible">
