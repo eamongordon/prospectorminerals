@@ -32,7 +32,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     {photo.minerals.length ?
                         <>
                             <h2 className='text-2xl font-semibold'>Minerals In this Photo</h2>
-                            <MineralTags tags={photo.minerals.map((obj) => { return { name: obj.mineral.name, image: obj.mineral.photos[0].photo.image, id: obj.mineral.id } as MineralListItem })} />
+                            <MineralTags tags={photo.minerals.map((obj) => { return { name: obj.mineral.name, image: obj.mineral.photos[0].photo.image, slug: obj.mineral.slug } as MineralListItem })} />
                         </> : null}
                 </div>
             </div>

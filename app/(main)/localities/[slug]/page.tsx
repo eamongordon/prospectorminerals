@@ -24,7 +24,7 @@ const galleryData = [
 ];
 
 export default async function Page({ params }: { params: { slug: string } }) {
-    const localityResult = await fetchLocalities({ filterObj: { id: params.slug }, cursor: undefined, limit: 1, fieldset: 'full' });
+    const localityResult = await fetchLocalities({ filterObj: { slug: params.slug }, cursor: undefined, limit: 1, fieldset: 'full' });
     if (localityResult.results.length === 0) {
         return notFound();
     }
@@ -59,7 +59,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 </div>
                 <div className="space-y-2">
                     <h2 className="font-semibold text-3xl sm:text-4xl mb-4">Minerals</h2>
-                    <MineralTags tags={locality.minerals.map((mineral) => { return { id: mineral.id, name: mineral.name, image: mineral.photos.length > 0 && mineral.photos[0].photo.image ? mineral.photos[0].photo.image : undefined } as MineralListItem })} />
+                    <MineralTags tags={locality.minerals.map((mineral) => { return { slug: mineral.slug, name: mineral.name, image: mineral.photos.length > 0 && mineral.photos[0].photo.image ? mineral.photos[0].photo.image : undefined } as MineralListItem })} />
                 </div>
             </div>
         </main>

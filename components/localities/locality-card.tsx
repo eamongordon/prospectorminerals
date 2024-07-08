@@ -2,9 +2,9 @@ import { Card, CardHeader, CardBody, CardFooter, Image as UIImage, Button } from
 import Link from 'next/link';
 //import BlurImage from './blur-ui-image';
 
-export default function LocalityCard({ name, id, image, blurDataURL }: { name: string, id: string, image?: string, blurDataURL?: string }) {
+export default function LocalityCard({ name, slug, image, blurDataURL }: { name: string, slug: string, image?: string, blurDataURL?: string }) {
     return (
-        <Link href={`/localities/${id}`}>
+        <Link href={`/localities/${slug}`}>
             <Card isFooterBlurred className="w-full">
                 <UIImage
                     removeWrapper

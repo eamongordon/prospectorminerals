@@ -2,6 +2,7 @@ import Gallery from "@/components/minerals/mineral-gallery";
 import MineralTags from "@/components/minerals/mineral-tags";
 import PropertyTable from "@/components/property-table";
 import { fetchMinerals } from "@/lib/actions";
+import { MineralListItem } from "@/types/types";
 import { notFound } from "next/navigation";
 
 const galleryData = [
@@ -30,7 +31,7 @@ const mineralTagsTest = [{
 }];
 
 export default async function Page({ params }: { params: { slug: string } }) {
-    const mineralResult = await fetchMinerals({ filterObj: { id: params.slug }, cursor: undefined, limit: 1, fieldset: 'full' });
+    const mineralResult = await fetchMinerals({ filterObj: { slug: params.slug }, cursor: undefined, limit: 1, fieldset: 'full' });
     let mineral;
     if (mineralResult.results.length === 0) {
         return notFound();
@@ -64,8 +65,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
         return {
             name: associate.name,
             image: associate.photos.length > 0 && associate.photos[0].photo.image ? associate.photos[0].photo.image : undefined,
-            id: associate.id
-        }
+            slug: associate.slug
+        } as MineralListItem
     })
     return (
         <main className="px-6 max-w-screen-xl mx-auto">

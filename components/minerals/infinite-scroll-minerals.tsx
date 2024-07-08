@@ -53,14 +53,12 @@ export default function InfiniteScrollPhotos({
 
   // TODO: wrap loadMoreMovies in useCallback and pass it to the dep array
   useEffect(() => {
-    console.log("ref");
-    console.log(ref);
-    console.log("inView");
-    console.log(inView);
     if (inView && page) {
       loadMorePhotos()
     }
-  }, [inView])
+  }, [inView]);
+
+  console.log(photos)
   return (
     <ul
       role='list'
@@ -70,7 +68,7 @@ export default function InfiniteScrollPhotos({
         {
           photos?.map(mineral => (
             <li key={mineral.id} className='relative flex flex-col items-center justify-center text-center group w-full overflow-hidden rounded-xl'>
-              <MineralCard name={mineral.name} id={mineral.id} blurDataURL={mineral.photos.length > 0 && mineral.photos[0].photo.imageBlurhash ? mineral.photos[0].photo.imageBlurhash : undefined} image={mineral.photos.length > 0 && mineral.photos[0].photo.image ? mineral.photos[0].photo.image : undefined} />
+              <MineralCard name={mineral.name} slug={mineral.slug} blurDataURL={mineral.photos.length > 0 && mineral.photos[0].photo.imageBlurhash ? mineral.photos[0].photo.imageBlurhash : undefined} image={mineral.photos.length > 0 && mineral.photos[0].photo.image ? mineral.photos[0].photo.image : undefined} />
             </li>
           ))
         }
