@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import prisma from '@/lib/prisma'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL;
+    const baseUrl = process.env.VERCEL_URL;
     const pages = await prisma.photo.findMany({
         select: {
             id: true
