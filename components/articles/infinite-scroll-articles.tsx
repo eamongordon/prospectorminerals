@@ -60,7 +60,7 @@ export default function InfiniteScrollArticles({
           articles?.length && articles.length > 0 ? (
             articles?.map(article => (
               <li key={article.id}>
-                <Link href={`/articles/${article.slug}`} className='flex w-full flex-col sm:flex-row gap-8'>
+                <Link href={`/articles/${article.slug}`} className='flex w-full flex-col sm:flex-row gap-8 hover:opacity-65'>
                   {article.image ? (
                     <div className="w-full sm:w-[45%] h-52 sm:h-80"> {/* This div ensures BlurImage can be styled to fill its parent */}
                       <BlurImage
@@ -74,7 +74,7 @@ export default function InfiniteScrollArticles({
                       />
                     </div>
                   ) : null}
-                  <div className={`w-full ${article.image ? "sm:w-[55%]" : ""} flex flex-col justify-center gap-4 hover:opacity-60`}>
+                  <div className={`w-full ${article.image ? "sm:w-[55%]" : ""} flex flex-col justify-center gap-4`}>
                     <p className="text-sm opacity-70">
                       {toDateString(article.publishedAt || article.createdAt)}
                     </p>
