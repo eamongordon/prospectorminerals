@@ -9,6 +9,8 @@ import { signOut } from "next-auth/react";
 import LoginModalButton from './registration/login-modal-button';
 import LoginModal from './modal/login';
 import SearchModalButton from "./search/search-button";
+import SearchComp from './search/search';
+
 //import RegModal from './next-ui-modal';
 
 export default function HeaderComp({
@@ -86,7 +88,7 @@ export default function HeaderComp({
                         onChange={() => console.log('')}
                     />
                     <>
-                        <SearchModalButton {...(isMenuOpen ? { closeMenuCallback: setIsMenuOpen } : {})}><div className="w-[96px] h-[96px]"><button>Hey</button></div></SearchModalButton>
+                        <SearchModalButton {...(isMenuOpen ? { closeMenuCallback: setIsMenuOpen } : {})}><section className="max-w-screen-xl px-8 w-full"><SearchComp/></section></SearchModalButton>
                     </>
                     {loggedIn ? (
                         <>
