@@ -58,7 +58,7 @@ export default function Modal({
                   }
                 }}
               >
-                <div className="flex w-full h-[96px] bg-white flex items-center justify-center">
+                <div className="flex w-full h-[96px] bg-white items-center justify-center">
                   {children}
                 </div>
               </motion.div>
