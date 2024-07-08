@@ -12,7 +12,7 @@ type SearchResult = {
     type: string, name: string, image?: string, imageBlurhash?: string, slug: string
 }
 
-export default function Search() {
+export default function Search({ isHero }: { isHero?: boolean }) {
     const [searchTerm, setSearchTerm] = useState("");
     const [results, setResults] = useState<SearchResult[]>([]);
     const [query] = useDebounce(searchTerm, 500);
@@ -52,8 +52,8 @@ export default function Search() {
         });
     }
     return (
-        <div className="w-full relative">
-            <div className="flex flex-col sm:absolute w-full sm:mt-[-30px]">
+        <div className="relative">
+            <div className="w-full relative flex flex-col">
                 <Input
                     type="text"
                     label="Search"
@@ -67,7 +67,8 @@ export default function Search() {
                         searchTerm ? (null) : (<><div className='h-full flex items-center'><MagnifyingGlassIcon /></div></>)
                     }
                 />
-                <div className={`sm:bg-white sm:dark:bg-zinc-900 rounded-lg p-5 ${results.length > 0 ? "" : "hidden"}`}>
+                <div className="relative">
+                <div className={`${isHero ? "bg-white dark:bg-zinc-900" : "sm:bg-white sm:dark:bg-zinc-900"} absolute w-full rounded-lg p-5 ${results.length > 0 ? "" : "hidden"}`}>
                     {results.length > 0 ?
                         (
                             <ul className="flex flex-col rounded-lg gap-4">
@@ -95,6 +96,7 @@ export default function Search() {
                         )
                         : (<></>)
                     }
+                </div>
                 </div>
             </div>
         </div>
