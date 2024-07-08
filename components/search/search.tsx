@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { fetchMinerals, fetchLocalities, fetchPhotos, fetchPosts } from "@/lib/actions";
 import BlurImage from "../blur-image";
 import { Chip, Input } from "@nextui-org/react";
@@ -16,12 +16,18 @@ export default function Search() {
     const [searchTerm, setSearchTerm] = useState("");
     const [results, setResults] = useState<SearchResult[]>([]);
     const [query] = useDebounce(searchTerm, 500);
+    const initialLoad = useRef(false);
     useEffect(() => {
         if (searchTerm) {
             fetchResults();
+        } else {
+            if (initialLoad.current) {
+                setResults([]);
+            }
         }
     }, [query]);
     function fetchResults() {
+        initialLoad.current = true;
         Promise.all([
             fetchMinerals({ filterObj: { name: query }, limit: 3, fieldset: 'display' }),
             fetchLocalities({ filterObj: { name: query }, limit: 3, fieldset: 'display' }),
