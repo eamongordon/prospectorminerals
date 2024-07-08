@@ -8,7 +8,7 @@ import PMLogo from '../pmLogo';
 export default function Hero() {
     return (
         <div
-            className="w-full h-screen flex justify-center items-center overflow-hidden relative bg-black">
+            className="w-full h-[calc(100vh-64px)] flex justify-center items-center overflow-hidden relative bg-black">
             <BlurImage
                 src={FlouriteBanner}
                 alt="Hero Image"
@@ -22,7 +22,7 @@ export default function Hero() {
                 priority={true}
             />
             <div className='max-w-screen-xl z-10 w-full flex justify-center items-center'>
-                <div className="flex flex-col justify-center items-center w-full px-8 gap-4 min-w-72 sm:px-0 sm:w-1/3">
+                <div className="flex flex-col justify-center items-center w-full px-8 gap-6 min-w-72 sm:px-0 sm:w-1/3">
                     <div className='hidden sm:block'>
                         <PMLogo isHero height={65} />
                     </div>
