@@ -617,14 +617,13 @@ export async function fetchPosts({ filterObj, cursor, limit, sortObj, fieldset }
     {
       skip: !cursor ? 0 : 1,
       cursor: cursorObj,
-      take: limit,
       where: { AND: [{ published: true }, ...queryArray as Prisma.PostWhereInput[]] },
       select: selectObj,
       orderBy: [
         sortObj ? { [sortObj.property]: sortObj.order } : {},
         {
-          publishedAt: "desc",
-        },
+          number: "asc",
+        }
       ],
       ...(limit ? { take: limit } : {}),
     }
