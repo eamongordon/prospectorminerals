@@ -12,7 +12,7 @@ export default function Hero() {
             <BlurImage
                 src={FlouriteBanner}
                 alt="Hero Image"
-                className="opacity-60 object-cover"
+                className="opacity-65 object-cover"
                 width={0}
                 height={0}
                 fill
