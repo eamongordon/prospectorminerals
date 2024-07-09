@@ -4,15 +4,9 @@ import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 import { fetchMinerals } from '@/lib/actions';
 import MineralCard from './mineral-card';
-import { customAlphabet } from "nanoid";
 import { Spinner, Button } from "@nextui-org/react";
 import type { MineralsFilterObj, PhotosSortObj, MineralListItem } from '@/types/types';
 import type { MineralDisplayFieldset } from '@/types/prisma';
-
-const nanoid = customAlphabet(
-  "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
-  7,
-); // 7-character random string
 
 export default function InfiniteScrollPhotos({
   filterObj,
@@ -38,14 +32,12 @@ export default function InfiniteScrollPhotos({
   async function loadMorePhotos() {
     if (page) {
       console.log("loadMoreMin")
-      const photosQuery = await fetchMinerals({ ...(filterObj ? { filterObj: filterObj.associates ? {...filterObj, associates: filterObj.associates?.map((associateObj) => (associateObj as MineralListItem).name)} : filterObj } : {}) || {}, cursor: page, limit: limit ? limit : 10, ...(sort ? { sortObj: sort } : {}), fieldset: "display" });
-      if (photosQuery.results?.length) {
-        setPage(photosQuery.next ? photosQuery.next : undefined)
-        setPhotos((prev: MineralDisplayFieldset[] | undefined) => [
-          ...(prev?.length ? prev : []),
-          ...photosQuery.results
-        ]);
-      };
+      const photosQuery = await fetchMinerals({ ...(filterObj ? { filterObj: filterObj.associates ? { ...filterObj, associates: filterObj.associates?.map((associateObj) => (associateObj as MineralListItem).name) } : filterObj } : {}) || {}, cursor: page, limit: limit ? limit : 10, ...(sort ? { sortObj: sort } : {}), fieldset: "display" });
+      setPage(photosQuery.next ? photosQuery.next : undefined)
+      setPhotos((prev: MineralDisplayFieldset[] | undefined) => [
+        ...(prev?.length ? prev : []),
+        ...photosQuery.results
+      ]);
     } else {
       console.log("noMoreMin")
     }
