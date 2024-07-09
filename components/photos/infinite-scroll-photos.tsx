@@ -63,13 +63,11 @@ export default function InfiniteScrollPhotos({
   async function loadMorePhotos() {
     if (page) {
       const photosQuery = await fetchPhotos({ filterObj: { name: search }, cursor: page, limit: 10, ...(sort ? { sortObj: sort } : {}), });
-      if (photosQuery.results?.length) {
-        setPage(photosQuery.next ? photosQuery.next : undefined)
-        setPhotos((prev: PhotoDisplayFieldset[] | undefined) => [
-          ...(prev?.length ? prev : []),
-          ...photosQuery.results
-        ]);
-      };
+      setPage(photosQuery.next ? photosQuery.next : undefined)
+      setPhotos((prev: PhotoDisplayFieldset[] | undefined) => [
+        ...(prev?.length ? prev : []),
+        ...photosQuery.results
+      ]);
     } else {
     }
   }
