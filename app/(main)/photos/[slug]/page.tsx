@@ -3,8 +3,43 @@ import PhotoSlugImage from '@/components/photos/photo-slug-image';
 import { fetchPhotos } from '@/lib/actions';
 import { MineralListItem } from '@/types/types';
 import { notFound } from 'next/navigation';
+import type { Metadata, ResolvingMetadata } from 'next'
+import prisma from '@/lib/prisma';
 
-export default async function Page({ params }: { params: { slug: string } }) {
+type Props = {
+    params: { slug: string }
+}
+
+export async function generateMetadata(
+    { params }: Props,
+    parent: ResolvingMetadata
+): Promise<Metadata> {
+
+    const result = await prisma.photo.findUnique({
+        where: {
+            id: params.slug
+        },
+        select: {
+            name: true,
+            description: true,
+            image: true,
+            imageBlurhash: true
+        }
+    });
+    
+    // optionally access and extend (rather than replace) parent metadata
+    const previousImages = (await parent).openGraph?.images || []
+
+    return {
+        title: `${result?.name} | Prospector Minerals`,
+        description: result?.description,
+        openGraph: {
+            images: result?.image ? [result.image, ...previousImages] : previousImages,
+        },
+    }
+}
+
+export default async function Page({ params }: Props) {
     const photoResult = await fetchPhotos({ filterObj: { id: params.slug }, cursor: undefined, limit: 1, fieldset: 'full' });
     let photo;
     if (photoResult.results.length === 0) {
