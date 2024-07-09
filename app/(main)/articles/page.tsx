@@ -1,6 +1,6 @@
 import InfiniteScrollArticles from '@/components/articles/infinite-scroll-articles';
 import ArticlesLayout from "@/components/articles/articles-layout";
-import SortDropdown from '@/components/photos/sort-dropdown';
+import SortDropdown from '@/components/sort-dropdown';
 import { fetchPosts } from '@/lib/actions';
 import type { Metadata } from 'next'
 

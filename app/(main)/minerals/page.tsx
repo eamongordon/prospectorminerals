@@ -1,14 +1,20 @@
 import InfiniteScrollMinerals from '@/components/minerals/infinite-scroll-minerals';
 import MineralPageLayout from "@/components/minerals/mineral-page-layout";
-import SortDropdown from "@/components/minerals/sort-dropdown";
+import SortDropdown from "@/components/sort-dropdown";
 import { fetchMinerals } from '@/lib/actions';
 import type { CrystalSystemsList, LustersList, MineralClassesList, MineralListItem } from '@/types/types';
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Minerals | Prospector Minerals',
-  description: 'A mineralogy database featuring comprehensive information, photos, localities, uses, and properties of mineral species.',
+    title: 'Minerals | Prospector Minerals',
+    description: 'A mineralogy database featuring comprehensive information, photos, localities, uses, and properties of mineral species.',
 }
+
+const sortOptions = [
+    { label: "Default", value: "default" },
+    { label: "A → Z", value: "name,asc" },
+    { label: "Z → A", value: "name,desc" }
+];
 
 const Page = async ({
     searchParams
@@ -36,7 +42,7 @@ const Page = async ({
     const order =
         typeof searchParams.order === 'string' ? searchParams.order : undefined
     const filterObj = { name: name, lusters: lusters, mineralClasses: mineralClasses, crystalSystems: crystalSystems, chemistry: chemistry?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness), associates: associates }
-    const photosQuery = await fetchMinerals({ filterObj: filterObj.associates ? {...filterObj, associates: filterObj.associates?.map((associateObj: MineralListItem) => associateObj.name)} : filterObj, cursor: undefined, limit: 10, ...(property && order ? { sortObj: { property: property, order: order } } : {}), fieldset: 'display' });
+    const photosQuery = await fetchMinerals({ filterObj: filterObj.associates ? { ...filterObj, associates: filterObj.associates?.map((associateObj: MineralListItem) => associateObj.name) } : filterObj, cursor: undefined, limit: 10, ...(property && order ? { sortObj: { property: property, order: order } } : {}), fieldset: 'display' });
     const serializedKey = JSON.stringify({ filterObj, property, order });
     return (
         <main>
@@ -55,6 +61,7 @@ const Page = async ({
                             }
                             sortDropdownElem={
                                 <SortDropdown
+                                    sortOptions={sortOptions}
                                     {...(property && order ? { sort: `${property},${order}` } : {})}
                                 />
                             }
