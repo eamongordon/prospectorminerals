@@ -34,7 +34,7 @@ const nextConfig = {
             },
             {
                 source: '/mineral-database/:path*',
-                destination: '/minerals/*path',
+                destination: '/minerals/:path*',
                 permanent: true,
             },
             {
@@ -49,7 +49,7 @@ const nextConfig = {
             },
             {
                 source: '/locality-database/:path*',
-                destination: '/localities/*path',
+                destination: '/localities/:path*',
                 permanent: true,
             },
             {
