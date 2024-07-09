@@ -5,6 +5,12 @@ import ClearFilters from '@/components/localities/clear-filters';
 import LocalityMap from '@/components/localities/locality-map';
 import { Skeleton } from '@nextui-org/react';
 import { Suspense } from 'react'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Localities | Prospector Minerals',
+  description: 'Explore worldwide localities and mines at Prospector Minerals. Find information, photos, and minerals of mineral, rock, and geology localities and mines.',
+}
 
 const Page = async ({
     searchParams
