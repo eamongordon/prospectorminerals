@@ -622,6 +622,9 @@ export async function fetchPosts({ filterObj, cursor, limit, sortObj, fieldset }
       orderBy: [
         sortObj ? { [sortObj.property]: sortObj.order } : {},
         {
+          publishedAt: "desc",
+        },
+        {
           number: "asc",
         }
       ],
