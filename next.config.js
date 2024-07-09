@@ -33,6 +33,11 @@ const nextConfig = {
                 permanent: true,
             },
             {
+                source: '/mineral-database/:path*',
+                destination: '/minerals/*path',
+                permanent: true,
+            },
+            {
                 source: '/about-localities',
                 destination: '/localities',
                 permanent: true,
@@ -40,6 +45,11 @@ const nextConfig = {
             {
                 source: '/locality-database',
                 destination: '/localities',
+                permanent: true,
+            },
+            {
+                source: '/locality-database/:path*',
+                destination: '/localities/*path',
                 permanent: true,
             },
             {
