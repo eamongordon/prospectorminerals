@@ -3,6 +3,12 @@ import MineralPageLayout from "@/components/minerals/mineral-page-layout";
 import SortDropdown from "@/components/minerals/sort-dropdown";
 import { fetchMinerals } from '@/lib/actions';
 import type { CrystalSystemsList, LustersList, MineralClassesList, MineralListItem } from '@/types/types';
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Minerals | Prospector Minerals',
+  description: 'A mineralogy database featuring comprehensive information, photos, localities, uses, and properties of mineral species.',
+}
 
 const Page = async ({
     searchParams

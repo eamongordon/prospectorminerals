@@ -2,6 +2,12 @@ import InfiniteScrollArticles from '@/components/articles/infinite-scroll-articl
 import ArticlesLayout from "@/components/articles/articles-layout";
 import SortDropdown from '@/components/photos/sort-dropdown';
 import { fetchPosts } from '@/lib/actions';
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Articles | Prospector Minerals',
+  description: 'Detailed, comprehensive mineralogy articles covering Minerals, Localities, Chemical Properties, News, and More.',
+}
 
 const Page = async ({
     searchParams

@@ -2,6 +2,12 @@ import InfiniteScrollPhotos from '@/components/photos/infinite-scroll-photos';
 import PhotosLayout from "@/components/photos/photos-layout";
 import SortDropdown from '@/components/photos/sort-dropdown';
 import { fetchPhotos } from '@/lib/actions';
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Photos | Prospector Minerals',
+  description: 'A searchable photo gallery of minerals from worldwide localities.',
+}
 
 const Page = async ({
     searchParams
