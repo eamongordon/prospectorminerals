@@ -12,16 +12,16 @@ const Page = async ({
 }) => {
     const query = typeof searchParams.q === 'string' ? searchParams.q : undefined
     return (
-        <main className="px-8 max-w-screen-xl mx-auto mb-8">
+        <main className="px-6 max-w-screen-xl mx-auto mb-8">
             <section className='flex-col justify-center items-center mt-4 py-4 w-full'>
                 <h1 className="text-center font-semibold text-3xl sm:text-4xl">Site Policy</h1>
             </section>
-            <section className='flex-col justify-center items-center py-4 px-6 w-full max-w-screen-xl'>
+            <section className='flex-col justify-center items-center py-4 w-full max-w-screen-xl'>
                 <div>
                     <p>Thank you for reviewing our site policy. We seek to provide an understandable and transparent site policy and if there are any clarifications or inquries necessary, please <a className="font-medium text-cyan-500" href="#contact">contact us</a>.</p>
                 </div>
             </section>
-            <section className='flex-col space-y-10 justify-center items-center py-4 px-6 w-full max-w-screen-xl'>
+            <section className='flex-col space-y-10 justify-center items-center py-4 w-full max-w-screen-xl'>
                 <div className="flex-col space-y-3">
                     <h2 className="text-3xl font-medium scroll-mt-16" id="copyright">Copyright Policy</h2>
                     <p>No portion of this site can be reproduced, distributed, replicated, modified or used as a source of derivative works without the written permission of the owner. To receive permission for the use of website content and images, please <a className="font-medium text-cyan-500" href="#contact">contact us</a>. After contacting us, we may allow the use of Images from this site for educational, non-commercial purposes only, provided appropriate credit and a link to this website is given when applicable. Preferably, our website name should be contained as a watermark (contact us for examples). The Prospector Minerals logo may be used solely and only for promoting this website.</p>
