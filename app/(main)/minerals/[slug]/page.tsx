@@ -4,6 +4,48 @@ import PropertyTable from "@/components/property-table";
 import { fetchMinerals } from "@/lib/actions";
 import { MineralListItem } from "@/types/types";
 import { notFound } from "next/navigation";
+import type { Metadata, ResolvingMetadata } from 'next'
+import prisma from '@/lib/prisma';
+
+type Props = {
+    params: { slug: string }
+}
+
+export async function generateMetadata(
+    { params }: Props,
+    parent: ResolvingMetadata
+): Promise<Metadata> {
+
+    const result = await prisma.mineral.findUnique({
+        where: {
+            slug: params.slug
+        },
+        select: {
+            name: true,
+            description: true,
+            photos: {
+                select: {
+                    photo: {
+                        select: {
+                            image: true
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // optionally access and extend (rather than replace) parent metadata
+    const previousImages = (await parent).openGraph?.images || []
+
+    return {
+        title: `${result?.name} | Prospector Minerals`,
+        description: result?.description,
+        openGraph: {
+            images: result?.photos[0]?.photo.image ? [result?.photos[0].photo.image , ...previousImages] : previousImages,
+        },
+    }
+}
 
 const galleryData = [
     {

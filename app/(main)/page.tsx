@@ -1,6 +1,12 @@
 import Hero from '@/components/home/hero';
 import Card from '@/components/home/card';
 import { getSession } from "@/lib/auth";
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Prospector Minerals | Comprehensive Mineralogy Resource',
+  description: 'Minerals, Localities, Articles, Resources, and More. Prospector Minerals offers mineralogy-related photos, information, resources and articles.',
+}
 
 export default async function Home() {
   const session = await getSession();
