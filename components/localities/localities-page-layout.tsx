@@ -168,7 +168,7 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                             <AccordionItem key="minerals" aria-label="Minerals" title="Minerals">
                                 <MineralAssociatesSearch minerals={associatesVal} onChange={handleMineralsChange} />
                             </AccordionItem>
-                            <AccordionItem key="Extra dev" aria-label="Extra dev" title="Extra dev">
+                            <AccordionItem key="Extra dev" aria-label="Extra dev" title="Extra dev" className="hidden">
                                 <SearchLocation />
                                 <GetMyLocation />
                             </AccordionItem>
