@@ -9,7 +9,7 @@ import { compare } from "bcrypt";
 import { createTransport } from "nodemailer";
 import { hash } from "bcrypt";
 
-const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
+const VERCEL_DEPLOYMENT = !!`https://www.${process.env.VERCEL_PROJECT_PRODUCTION_URL}`	;
 
 export const authOptions: NextAuthOptions = {
   providers: [
