@@ -1,3 +1,4 @@
 User-agent: *
 Disallow: /manage/
 Disallow: /account/
+Disallow: /sandbox/
