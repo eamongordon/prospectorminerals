@@ -4,10 +4,10 @@ import { useEffect, useRef, useState } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { Select, SelectItem } from "@nextui-org/react";
 
-export const defaultSortOptions = [
+const defaultSortOptions = [
     { label: "Default", value: "default" },
-    { label: "A - Z", value: "title,asc" },
-    { label: "Z - A", value: "title,desc" }
+    { label: "A - Z", value: "name,asc" },
+    { label: "Z - A", value: "name,desc" }
 ];
 
 export default function SortDropdown({ sort, sortOptions }: { sort?: string, sortOptions?: { label: string, value: string }[] }) {
