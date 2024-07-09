@@ -271,7 +271,7 @@ export const createPhoto = async (
   key: string,
 ) => {
   const session = await getSession();
-  if (!session?.user.id) {
+  if (!session?.user.id || session.user.email !== process.env.ADMIN_EMAIL) {
     return {
       error: "Not authenticated",
     };
