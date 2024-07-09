@@ -4,13 +4,13 @@ import { useEffect, useRef, useState } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { Select, SelectItem } from "@nextui-org/react";
 
-const sortItems = [
+export const defaultSortOptions = [
     { label: "Default", value: "default" },
     { label: "A - Z", value: "title,asc" },
     { label: "Z - A", value: "title,desc" }
 ];
 
-export default function SortDropdown({ sort }: { sort?: string }) {
+export default function SortDropdown({ sort, sortOptions }: { sort?: string, sortOptions?: { label: string, value: string }[] }) {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -62,9 +62,9 @@ export default function SortDropdown({ sort }: { sort?: string }) {
                         setQuery(undefined);
                     }
                 }
-            }
+                }
             >
-                {sortItems.map((item) => (
+                {(sortOptions || defaultSortOptions).map((item) => (
                     <SelectItem key={item.value} value={item.value}>
                         {item.label}
                     </SelectItem>
