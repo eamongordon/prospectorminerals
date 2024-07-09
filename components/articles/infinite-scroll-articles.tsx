@@ -35,13 +35,11 @@ export default function InfiniteScrollArticles({
   async function loadMoreArticles() {
     if (page) {
       const articlesQuery = await fetchPosts({ filterObj: filterObj, cursor: page, limit: limit ? limit : 10, ...(sort ? { sortObj: sort } : {}), fieldset: "display" });
-      if (articlesQuery.results?.length) {
-        setPage(articlesQuery.next ? articlesQuery.next : undefined)
-        setArticles((prev: Post[] | undefined) => [
-          ...(prev?.length ? prev : []),
-          ...articlesQuery.results
-        ]);
-      };
+      setPage(articlesQuery.next ? articlesQuery.next : undefined)
+      setArticles((prev: Post[] | undefined) => [
+        ...(prev?.length ? prev : []),
+        ...articlesQuery.results
+      ]);
     }
   }
 
