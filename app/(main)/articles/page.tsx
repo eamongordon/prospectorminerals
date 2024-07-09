@@ -5,9 +5,17 @@ import { fetchPosts } from '@/lib/actions';
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Articles | Prospector Minerals',
-  description: 'Detailed, comprehensive mineralogy articles covering Minerals, Localities, Chemical Properties, News, and More.',
+    title: 'Articles | Prospector Minerals',
+    description: 'Detailed, comprehensive mineralogy articles covering Minerals, Localities, Chemical Properties, News, and More.',
 }
+
+const selectOptions = [
+    { label: "Default", value: "default" },
+    { label: 'Recently Published', value: 'publishedAt,desc' },
+    { label: 'Recently Updated', value: 'updatedAt,desc' },
+    { label: "A - Z", value: "title,asc" },
+    { label: "Z - A", value: "title,desc" },
+]
 
 const Page = async ({
     searchParams
@@ -36,7 +44,7 @@ const Page = async ({
                                 key={serializedKey} />
                         }
                         sortDropdownElem={
-                            <SortDropdown {...(property && order ? { sort: `${property},${order}` } : {})} />
+                            <SortDropdown sortOptions={selectOptions} {...(property && order ? { sort: `${property},${order}` } : {})} />
                         }
                         filterObj={filterObj}
                     />

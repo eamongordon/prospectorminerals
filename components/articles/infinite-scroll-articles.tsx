@@ -3,9 +3,8 @@
 import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 import { fetchPosts } from '@/lib/actions';
-import { customAlphabet } from "nanoid";
 import { Spinner, Button } from "@nextui-org/react";
-import type { ArticlesFilterObj, MineralsFilterObj, PhotosSortObj } from '@/types/types';
+import type { ArticlesFilterObj, PhotosSortObj } from '@/types/types';
 import type { Post } from '@prisma/client';
 import BlurImage from '../blur-image';
 import Link from 'next/link';
