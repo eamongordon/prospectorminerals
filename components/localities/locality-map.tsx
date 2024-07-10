@@ -1,16 +1,17 @@
 "use client"
 
-import 'leaflet/dist/leaflet.css'
-import './popup-styles.css';
-import "leaflet-defaulticon-compatibility"
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
-import { Work_Sans } from 'next/font/google'
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import L from 'leaflet';
-import Link from 'next/link';
-import { Card, CardFooter, Skeleton, Image as UIImage } from "@nextui-org/react";
-import { Suspense } from 'react';
 import { LocalityDisplayFieldset } from '@/types/prisma';
+import { Card, CardFooter, Skeleton } from "@nextui-org/react";
+import L from 'leaflet';
+import "leaflet-defaulticon-compatibility";
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+import 'leaflet/dist/leaflet.css';
+import { Work_Sans } from 'next/font/google';
+import Link from 'next/link';
+import { Suspense } from 'react';
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import BlurImage from '../blur-image';
+import './popup-styles.css';
 
 const inter = Work_Sans({ subsets: ['latin'] })
 
@@ -53,12 +54,14 @@ export default function LocalityMap({ localities, center, zoom }: { localities: 
                             <div key={locality.id} className='flex items-center justify-center text-center w-full overflow-hidden rounded-xl'>
                                 <Link href={`/localities/${locality.slug}`}>
                                     <Card isFooterBlurred className="w-full">
-                                        <UIImage
-                                            removeWrapper
-                                            alt={locality.name}
-                                            className="z-0 w-full h-full scale-125 -translate-y-6 object-cover aspect-[5/4]"
+                                        <BlurImage
+                                            width={300}
+                                            height={300}
+                                            quality={50}
+                                            alt={locality.name || "Photo"}
+                                            className="object-cover w-full h-full scale-125 -translate-y-6 aspect-[5/4]"
                                             src={locality.photos.length > 0 && locality.photos[0].image ? locality.photos[0].image : "/Amazonite-106_horiz.jpeg"}
-                                            fallbackSrc="data:image/png;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAoADIDASIAAhEBAxEB/8QAGwAAAwADAQEAAAAAAAAAAAAAAAYHBAUIAwL/xAAmEAACAgICAQMEAwAAAAAAAAABAgADBREEBiESEyIHMUGRFHGh/8QAGQEAAwEBAQAAAAAAAAAAAAAAAQIDBQAE/8QAGxEAAgIDAQAAAAAAAAAAAAAAAAIBEQMhMQT/2gAMAwEAAhEDEQA/AOWEqdz4EzeNjLbSNKYzYHDDkFfEoGI6snxJSGiLZlXpOsf1e24A+gzM5HULlTYrP6l3wnXqFCgqIwW9Zotq0EEm00UxvD8OR+fg7qCdqZqLaWrOiJ0t2vqCIjsqf5In2jF/xbX+OtTlaykrQnwn0V8mEcUqHUeXWpTZEp/AyFK1Loic+YfINQw8xv4vYCqAeuUWTL9OFmnRZ+JmlVwAY24rJ+6o87nPXC7Bu0fOPvXuxIAu3k8lSP5cbpOyoZiheTxm+O9iQj6g4YhrGCyvUdgpenRcfaIvduZRfW+iJ511JsdggT49g7ePzCMdnt+439mEtZKhHSwr9p7DluPzCEYSok96cg6HfqM3XA7DZTr5GEIJDGjeU9wsVde4f3MDJdmfkKQXJhCChrkXzkmJJ3CEIaBZ/9k="
+                                            blurDataURL={locality.photos.length > 0 && locality.photos[0].imageBlurhash ? locality.photos[0].imageBlurhash : undefined}
                                         />
                                         <CardFooter className="absolute bg-white/30 bottom-0 z-10 flex justify-center items-center">
                                             <p className="mx-auto text-white text-lg font-semibold locality-card-text">{locality.name}</p>
