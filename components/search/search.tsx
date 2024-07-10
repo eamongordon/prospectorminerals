@@ -38,8 +38,12 @@ export default function Search({ isHero }: { isHero?: boolean }) {
                 }
             }
         } else {
-            if (isSmallerThanMd && !isHero) {
-                return promptSuggestionLabel;
+            if (isSmallerThanMd) {
+                if (query) {
+                    return `Results for "${query}"`;
+                } else {
+                    return defaultLabel;
+                }
             } else {
                 return defaultLabel;
             }
@@ -140,11 +144,34 @@ export default function Search({ isHero }: { isHero?: boolean }) {
         }
     };
 
+    const parentDivRef = useRef<HTMLDivElement>(null);
+
+    const checkFocus = () => {
+        // Delay the check to allow focus event to complete
+        setTimeout(() => {
+            if (parentDivRef.current && parentDivRef.current.contains(document.activeElement)) {
+                setIsFocused(true);
+            } else {
+                setIsFocused(false);
+            }
+        }, 0); // A timeout of 0 ms is often enough to delay the execution until after the current event stack
+    };
+
+    useEffect(() => {
+        // Add event listeners to the document to track focus changes
+        document.addEventListener('focusin', checkFocus);
+        document.addEventListener('focusout', checkFocus);
+
+        return () => {
+            // Cleanup the event listeners
+            document.removeEventListener('focusin', checkFocus);
+            document.removeEventListener('focusout', checkFocus);
+        };
+    }, []);
+
     return (
-        <div className="relative">
+        <div className="relative" ref={parentDivRef}>
             <div className={`w-full relative flex flex-col ${!isHero ? "mb-2" : ""}`}
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => !isMobile || isHero ? setIsFocused(false) : null}
                 tabIndex={-1}
             >
                 <Input
@@ -162,7 +189,7 @@ export default function Search({ isHero }: { isHero?: boolean }) {
                     onKeyDown={handleKeyDown}
                 />
                 <div className="relative">
-                    <div className={`${isHero ? "bg-white dark:bg-zinc-900" : "sm:bg-white sm:dark:bg-zinc-900"} ${!isHero ? "md:absolute" : ""}  w-full rounded-medium ${isHero && (initialLoad.current || !initialLoad.current && resultsLoading) ? "rounded-t-none sm:rounded-medium" : ""} ${isFocused ? "sm:rounded-t-none" : ""} ${!initialLoad.current && !resultsLoading ? "" : "p-5"} ${isFocused ? "sm:block" : "hidden"}`}>
+                    <div className={`${isHero ? "bg-white dark:bg-zinc-900" : "sm:bg-white sm:dark:bg-zinc-900"} ${!isHero ? "md:absolute" : ""}  w-full rounded-medium ${isHero && (initialLoad.current || !initialLoad.current && resultsLoading) ? "rounded-t-none sm:rounded-medium" : ""} ${isFocused ? "sm:rounded-t-none sm:block" : isHero ? "hidden" : ""} ${!initialLoad.current && !resultsLoading ? "" : "p-5"}`}>
                         {resultsLoading ? (
                             <div className="flex flex-col rounded-lg gap-4">
                                 <>
