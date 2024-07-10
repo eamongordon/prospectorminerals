@@ -7,50 +7,27 @@ import { Button, Chip, Input, Skeleton } from "@nextui-org/react";
 import { Search as MagnifyingGlassIcon } from "lucide-react";
 import { useDebounce } from "use-debounce";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import useWindowSize from "@/lib/hooks/use-window-size";
 
 type SearchResult = {
-    type: string, name: string, image?: string, imageBlurhash?: string, slug: string
+    type: "Mineral" | "Photo" | "Locality" | "Article", name: string, image?: string, imageBlurhash?: string, slug: string
 }
 
 export default function Search({ isHero }: { isHero?: boolean }) {
     const [searchTerm, setSearchTerm] = useState("");
     const [results, setResults] = useState<SearchResult[]>([]);
     const [query] = useDebounce(searchTerm, 500);
-    const [noResultsLoading, setNoResultsLoading] = useState(false);
     const [resultsLoading, setResultsLoading] = useState(false);
     const initialLoad = useRef(false);
-    const [isInputFocused, setIsInputFocused] = useState(false);
+    const [isFocused, setIsFocused] = useState(false);
+    const [focusedSlug, setFocusedSlug] = useState<string | undefined>(undefined);
 
-    const { isMobile } = useWindowSize();
+    const { isMobile } = useWindowSize()
 
-    const [inputWidth, setInputWidth] = useState(0);
-    const inputRef = useRef<HTMLInputElement>(null);
-
-    const updateInputWidth = () => {
-        console.log(inputRef.current!.getBoundingClientRect().width)
-        if (inputRef.current) {
-            setInputWidth(inputRef.current.getBoundingClientRect().width);
-        }
-    };
-
-    // Effect hook to add resize listener on mount
-    useEffect(() => {
-        window.addEventListener('resize', updateInputWidth);
-
-        // Initial width update
-        updateInputWidth();
-
-        // Cleanup on unmount
-        return () => {
-            window.removeEventListener('resize', updateInputWidth);
-        };
-    }, []);
-
-    const getLabel = () => {
-        const defaultLabel = (inputWidth > 300) ? "Search for Minerals, Localities, and more..." : "Search...";
+    const getLabel = (defaultLabel: string, isSmallerThanMd: boolean) => {
         const promptSuggestionLabel = `Try "Malachite" or "Tsumeb Mine"`;
-        if (isInputFocused) {
+        if (isFocused) {
             if (resultsLoading) {
                 return "Loading Results...";
             } else {
@@ -61,7 +38,7 @@ export default function Search({ isHero }: { isHero?: boolean }) {
                 }
             }
         } else {
-            if (isMobile && !isHero) {
+            if (isSmallerThanMd && !isHero) {
                 return promptSuggestionLabel;
             } else {
                 return defaultLabel;
@@ -78,6 +55,13 @@ export default function Search({ isHero }: { isHero?: boolean }) {
             }
         }
     }, [query]);
+
+    const MAX_RESULTS_LENGTH = 3;
+
+    useEffect(() => {
+        console.log("isFocused");
+        console.log(isFocused)
+    }, [isFocused]);
 
     function fetchResults() {
         console.log("fetchRes")
@@ -101,39 +85,84 @@ export default function Search({ isHero }: { isHero?: boolean }) {
             posts.results.forEach((post) => {
                 allResults.push({ slug: post.slug, type: "Article", name: post.title!, image: post.image!, imageBlurhash: post.imageBlurhash! });
             });
-            allResults.length = 3;
+            allResults.length = allResults.length > MAX_RESULTS_LENGTH ? MAX_RESULTS_LENGTH : allResults.length;
             setResults(allResults);
             if (resultsLoading) {
                 setResultsLoading(false);
             }
-            if (noResultsLoading) {
-                setNoResultsLoading(false);
-            }
         });
     }
 
+    const router = useRouter();
+
+    const getLink = (type: "Mineral" | "Photo" | "Locality" | "Article", slug: string) => {
+        return type === "Mineral" ? `/minerals/${slug}` : type === "Photo" ? `/photos/${slug}` : type === "Locality" ? `/localities/${slug}` : `/articles/${slug}`;
+    }
+
+    const handleKeyDown = (event: any) => {
+        if (!resultsLoading && results.length) {
+            const currentItemIndex = results.findIndex((obj) => obj.slug === focusedSlug);
+            switch (event.key) {
+                case 'ArrowDown':
+                    if (currentItemIndex + 1 === results.length) {
+                        setFocusedSlug(undefined);
+                    } else {
+                        const nextItem = results[currentItemIndex + 1];
+                        setFocusedSlug(nextItem.slug);
+
+                    }
+                    break;
+                case 'ArrowUp':
+                    if (currentItemIndex === 0) {
+                        setFocusedSlug(undefined);
+                    } else if (currentItemIndex === -1) {
+                        const lastItem = results[results.length - 1];
+                        setFocusedSlug(lastItem.slug)
+                    } else {
+                        const nextItem = results[currentItemIndex - 1];
+                        setFocusedSlug(nextItem.slug);
+                    }
+                    break;
+                case 'Enter':
+                    const currentItem = results[currentItemIndex]
+                    router.push(getLink(currentItem.type, currentItem.slug));
+                    break;
+                case 'Escape':
+                    // Logic to clear search or close results
+                    setSearchTerm("");
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            console.log(results.length);
+            console.log(results);
+        }
+    };
+
     return (
         <div className="relative">
-            <div className={`group w-full relative flex flex-col ${!isHero ? "mb-2" : ""}`}
+            <div className={`w-full relative flex flex-col ${!isHero ? "mb-2" : ""}`}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => !isMobile || isHero ? setIsFocused(false) : null}
+                tabIndex={-1}
             >
                 <Input
-                    ref={inputRef}
                     type="text"
-                    label={getLabel()}
+                    label={<><p className="block sm:hidden">{getLabel("Search...", true)}</p><p className="hidden sm:block md:hidden">{getLabel("Search Minerals, Localities, and more...", true)}</p><p className="hidden md:block">{getLabel("Search Minerals, Localities, and more...", false)}</p></>}
                     size="sm"
                     radius="md"
-                    classNames={{ base: `w-full`, inputWrapper: `${isHero && (initialLoad.current || !initialLoad.current && resultsLoading) ? "rounded-b-none sm:rounded-medium sm:group-focus-within:rounded-b-none" : ""}` }}
+                    classNames={{ base: `w-full`, inputWrapper: `${isHero && (initialLoad.current || !initialLoad.current && resultsLoading) && isFocused ? "rounded-b-none" : ""}` }}
                     value={searchTerm || ""}
                     isClearable={searchTerm ? true : false}
                     onValueChange={(value) => { setResultsLoading(true); setSearchTerm(value) }}
                     endContent={
                         searchTerm ? (null) : (<><div className='h-full flex items-center'><MagnifyingGlassIcon /></div></>)
                     }
-                    onFocus={() => setIsInputFocused(true)}
-                    onBlur={() => setIsInputFocused(false)}
+                    onKeyDown={handleKeyDown}
                 />
-                <div className="relative" tabIndex={-1}>
-                    <div className={`${isHero ? "bg-white dark:bg-zinc-900" : "sm:bg-white sm:dark:bg-zinc-900"} ${!isHero ? "md:absolute" : ""}  w-full rounded-medium ${isHero && (initialLoad.current || !initialLoad.current && resultsLoading) ? "rounded-t-none sm:rounded-medium sm:group-focus-within:rounded-t-none" : ""} ${!initialLoad.current && !resultsLoading ? "" : "p-5"} sm:group-focus-within:block sm:hidden`}>
+                <div className="relative">
+                    <div className={`${isHero ? "bg-white dark:bg-zinc-900" : "sm:bg-white sm:dark:bg-zinc-900"} ${!isHero ? "md:absolute" : ""}  w-full rounded-medium ${isHero && (initialLoad.current || !initialLoad.current && resultsLoading) ? "rounded-t-none sm:rounded-medium" : ""} ${isFocused ? "sm:rounded-t-none" : ""} ${!initialLoad.current && !resultsLoading ? "" : "p-5"} ${isFocused ? "sm:block" : "hidden"}`}>
                         {resultsLoading ? (
                             <div className="flex flex-col rounded-lg gap-4">
                                 <>
@@ -149,14 +178,14 @@ export default function Search({ isHero }: { isHero?: boolean }) {
                                 </>
                             </div>
                         ) : (<></>)}
-                        {!resultsLoading && results.length && results[0] ?
+                        {!resultsLoading && results.length ?
                             (
                                 <ul className="flex flex-col rounded-lg gap-4">
                                     {results.map((result) => (
-                                        <li key={result.slug} className="hover:opacity-70">
-                                            <Link className="flex flex-row gap-4" href={result.type === "Mineral" ? `/minerals/${result.slug}` : result.type === "Photo" ? `/photos/${result.slug}` : result.type === "Locality" ? `/localities/${result.slug}` : `/articles/${result.slug}`}>
+                                        <li key={result.slug} className={`hover:opacity-70 ${focusedSlug === result.slug ? "opacity-60" : ""}`}>
+                                            <Link className="flex flex-row gap-4" href={getLink(result.type, result.slug)}>
                                                 <BlurImage
-                                                    src={"/Amazonite-106_horiz.jpeg"}
+                                                    src={result.image || "/Amazonite-106_horiz.jpeg"}
                                                     alt={result.name || "Photo"}
                                                     blurDataURL={result.imageBlurhash}
                                                     quality={25}
@@ -176,11 +205,11 @@ export default function Search({ isHero }: { isHero?: boolean }) {
                                 </ul>
                             ) : (<></>)
                         }
-                        {initialLoad.current && !resultsLoading && !results[0] ? (
+                        {initialLoad.current && !resultsLoading && !results.length ? (
                             <div className='flex-col items-center justify-center'>
                                 <p className='w-full text-center'>No Results Found. Try adjusting your filters.</p>
                                 <div className='flex items-center justify-center py-4'>
-                                    <Button className="flex" isLoading={noResultsLoading} onClick={() => { setNoResultsLoading(true); setSearchTerm(""); }}>
+                                    <Button className="flex" isLoading={resultsLoading} onClick={() => { setResultsLoading(true); setSearchTerm(""); }}>
                                         Clear Filters
                                     </Button>
                                 </div>
