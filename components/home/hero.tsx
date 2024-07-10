@@ -1,7 +1,5 @@
 import React from 'react'
-import Image from 'next/image'
 import BlurImage from '../blur-image';
-import FlouriteBanner from '@/public/Fluorite-164_horiz-Optimized.jpg';
 import Search from '../search/search';
 import PMLogo from '../pmLogo';
 
@@ -10,7 +8,7 @@ export default function Hero() {
         <div
             className="w-full h-[calc(100vh-64px)] flex justify-center items-center overflow-hidden relative bg-black">
             <BlurImage
-                src={FlouriteBanner}
+                src={"/Fluorite-164_horiz-Optimized.jpg"}
                 alt="Hero Image"
                 className="opacity-65 object-cover"
                 width={0}
