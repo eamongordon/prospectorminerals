@@ -59,7 +59,7 @@ export default function InfiniteScrollPhotos({
       <>
         {
           photos?.map(mineral => (
-            <li key={mineral.id} className='relative flex flex-col items-center justify-center text-center group w-full overflow-hidden rounded-xl'>
+            <li key={mineral.id}>
               <MineralCard name={mineral.name} slug={mineral.slug} blurDataURL={mineral.photos.length > 0 && mineral.photos[0].photo.imageBlurhash ? mineral.photos[0].photo.imageBlurhash : undefined} image={mineral.photos.length > 0 && mineral.photos[0].photo.image ? mineral.photos[0].photo.image : undefined} />
             </li>
           ))
