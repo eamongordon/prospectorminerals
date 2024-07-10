@@ -133,7 +133,7 @@ export default function Search({ isHero }: { isHero?: boolean }) {
                     onBlur={() => setIsInputFocused(false)}
                 />
                 <div className="relative">
-                    <div className={`${isHero ? "bg-white dark:bg-zinc-900" : "sm:bg-white sm:dark:bg-zinc-900"} sm:absolute w-full rounded-medium ${isHero && (initialLoad.current || !initialLoad.current && resultsLoading) ? "rounded-t-none sm:rounded-medium sm:group-focus-within:rounded-t-none" : ""} ${!initialLoad.current && !resultsLoading ? "" : "p-5"} sm:group-focus-within:block sm:hidden`}>
+                    <div className={`${isHero ? "bg-white dark:bg-zinc-900" : "sm:bg-white sm:dark:bg-zinc-900"} md:absolute w-full rounded-medium ${isHero && (initialLoad.current || !initialLoad.current && resultsLoading) ? "rounded-t-none sm:rounded-medium sm:group-focus-within:rounded-t-none" : ""} ${!initialLoad.current && !resultsLoading ? "" : "p-5"} sm:group-focus-within:block sm:hidden`}>
                         {resultsLoading ? (
                             <div className="flex flex-col rounded-lg gap-4">
                                 <>
