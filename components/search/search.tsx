@@ -100,9 +100,10 @@ export default function Search({ isHero }: { isHero?: boolean }) {
                                         <li key={result.slug} className="hover:opacity-70">
                                             <Link className="flex flex-row gap-4" href={result.type === "Mineral" ? `/minerals/${result.slug}` : result.type === "Photo" ? `/photos/${result.slug}` : result.type === "Locality" ? `/localities/${result.slug}` : `/articles/${result.slug}`}>
                                                 <BlurImage
-                                                    src={result.image!}
-                                                    alt={result.name}
+                                                    src={result.image || "/Amazonite-106_horiz.jpeg"}
+                                                    alt={result.name || "Photo"}
                                                     blurDataURL={result.imageBlurhash}
+                                                    quality={50}
                                                     width={100}
                                                     height={100}
                                                     className="rounded-lg object-cover aspect-[3/2]"
