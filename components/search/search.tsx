@@ -103,7 +103,7 @@ export default function Search({ isHero }: { isHero?: boolean }) {
                                                     src={result.image || "/Amazonite-106_horiz.jpeg"}
                                                     alt={result.name || "Photo"}
                                                     blurDataURL={result.imageBlurhash}
-                                                    quality={50}
+                                                    quality={25}
                                                     width={100}
                                                     height={100}
                                                     className="rounded-lg object-cover aspect-[3/2]"
