@@ -7,6 +7,7 @@ import { Button, Chip, Input, Skeleton } from "@nextui-org/react";
 import { Search as MagnifyingGlassIcon } from "lucide-react";
 import { useDebounce } from "use-debounce";
 import Link from "next/link";
+import useWindowSize from "@/lib/hooks/use-window-size";
 
 type SearchResult = {
     type: string, name: string, image?: string, imageBlurhash?: string, slug: string
@@ -20,6 +21,54 @@ export default function Search({ isHero }: { isHero?: boolean }) {
     const [resultsLoading, setResultsLoading] = useState(false);
     const initialLoad = useRef(false);
     const [isInputFocused, setIsInputFocused] = useState(false);
+
+    const { isMobile } = useWindowSize();
+
+    const [inputWidth, setInputWidth] = useState(0);
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    const updateInputWidth = () => {
+        console.log(inputRef.current!.getBoundingClientRect().width)
+        if (inputRef.current) {
+            setInputWidth(inputRef.current.getBoundingClientRect().width);
+        }
+    };
+
+    // Effect hook to add resize listener on mount
+    useEffect(() => {
+        window.addEventListener('resize', updateInputWidth);
+
+        // Initial width update
+        updateInputWidth();
+
+        // Cleanup on unmount
+        return () => {
+            window.removeEventListener('resize', updateInputWidth);
+        };
+    }, []);
+
+    const getLabel = () => {
+        const defaultLabel = (inputWidth > 300) ? "Search for Minerals, Localities, and more..." : "Search...";
+        const promptSuggestionLabel = `Try "Malachite" or "Tsumeb Mine"`;
+        if (isInputFocused) {
+            if (resultsLoading) {
+                return "Loading Results...";
+            } else {
+                if (query) {
+                    return `Results for "${query}"`;
+                } else {
+                    return promptSuggestionLabel;
+                }
+            }
+        } else {
+            if (isMobile && !isHero) {
+                return promptSuggestionLabel;
+            } else {
+                return defaultLabel;
+            }
+        }
+    }
+
     useEffect(() => {
         if (searchTerm || initialLoad.current) {
             fetchResults();
@@ -29,6 +78,7 @@ export default function Search({ isHero }: { isHero?: boolean }) {
             }
         }
     }, [query]);
+
     function fetchResults() {
         console.log("fetchRes")
         initialLoad.current = true;
@@ -61,13 +111,15 @@ export default function Search({ isHero }: { isHero?: boolean }) {
             }
         });
     }
+
     return (
         <div className="relative">
             <div className={`group w-full relative flex flex-col ${!isHero ? "mb-2" : ""}`}
             >
                 <Input
+                    ref={inputRef}
                     type="text"
-                    label={isInputFocused ? resultsLoading ? "Loading Results..." : results.length && query ? `Results for "${query}"` : `Try "Malchite" or "Tsumeb Mine"` : "Search for Minerals, Localities, and more..."}
+                    label={getLabel()}
                     size="sm"
                     radius="md"
                     classNames={{ base: `w-full`, inputWrapper: `${isHero && (initialLoad.current || !initialLoad.current && resultsLoading) ? "rounded-b-none sm:rounded-medium sm:group-focus-within:rounded-b-none" : ""}` }}
