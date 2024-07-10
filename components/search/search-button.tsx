@@ -23,12 +23,3 @@ export default function SearchModalButton({
         </Button>
     );
 }
-
-/*
-    <Button 
-      onClick={() => {if (closeMenuCallback) {closeMenuCallback(false);} modal?.show(children);}}
-      color="default" variant="flat" className={`${isMobile ? "px-4": "hidden sm:flex"}`}
-    >
-      Log In
-    </Button>
-*/
