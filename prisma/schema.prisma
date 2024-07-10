@@ -92,7 +92,7 @@ model Mineral {
   number                 Int              @unique @default(autoincrement())
   photos                 PhotoOnMineral[]
 
-  @@index([id])
+  @@index([slug])
 }
 
 model Post {
@@ -112,7 +112,7 @@ model Post {
   userId        String?
 
   @@unique([slug])
-  @@index([userId])
+  @@index([slug])
 }
 
 model Photo {
@@ -149,7 +149,7 @@ model Locality {
   minerals          Mineral[]
   photos            Photo[]
 
-  @@index([id])
+  @@index([slug])
 }
 
 model PhotoOnMineral {
