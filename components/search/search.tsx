@@ -70,7 +70,7 @@ export default function Search({ isHero }: { isHero?: boolean }) {
                     label={isInputFocused ? resultsLoading ? "Loading Results..." : results.length && query ? `Results for "${query}"` : `Try "Malchite" or "Tsumeb Mine"` : "Search for Minerals, Localities, and more..."}
                     size="sm"
                     radius="md"
-                    classNames={{ base: `w-full`, inputWrapper: `${isHero && (initialLoad.current || !initialLoad.current && resultsLoading) ? "sm:group-focus-within:rounded-b-none" : ""}` }}
+                    classNames={{ base: `w-full`, inputWrapper: `${isHero && (initialLoad.current || !initialLoad.current && resultsLoading) ? "rounded-b-none sm:rounded-medium sm:group-focus-within:rounded-b-none" : ""}` }}
                     value={searchTerm || ""}
                     isClearable={searchTerm ? true : false}
                     onValueChange={(value) => { setResultsLoading(true); setSearchTerm(value) }}
@@ -81,7 +81,7 @@ export default function Search({ isHero }: { isHero?: boolean }) {
                     onBlur={() => setIsInputFocused(false)}
                 />
                 <div className="relative">
-                    <div className={`${isHero ? "bg-white dark:bg-zinc-900" : "sm:bg-white sm:dark:bg-zinc-900"} sm:absolute w-full rounded-medium ${isHero && (initialLoad.current || !initialLoad.current && resultsLoading) ? "sm:group-focus-within:rounded-t-none" : ""} ${!initialLoad.current && !resultsLoading ? "" : "p-5"} sm:group-focus-within:block sm:hidden`}>
+                    <div className={`${isHero ? "bg-white dark:bg-zinc-900" : "sm:bg-white sm:dark:bg-zinc-900"} sm:absolute w-full rounded-medium ${isHero && (initialLoad.current || !initialLoad.current && resultsLoading) ? "rounded-t-none sm:rounded-medium sm:group-focus-within:rounded-t-none" : ""} ${!initialLoad.current && !resultsLoading ? "" : "p-5"} sm:group-focus-within:block sm:hidden`}>
                         {resultsLoading ? (
                             <div className="flex flex-col rounded-lg gap-4">
                                 <>
