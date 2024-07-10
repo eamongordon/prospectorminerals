@@ -1,15 +1,14 @@
 'use client'
 
 import { fetchPhotos } from '@/lib/actions'
+import { PhotoDisplayFieldset } from '@/types/prisma'
 import type { PhotosSortObj } from '@/types/types'
 import { Button, Skeleton, Spinner } from "@nextui-org/react"
-import type { Photo } from '@prisma/client'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 import BlurImage from '../blur-image'
-import { PhotoDisplayFieldset } from '@/types/prisma'
 
 export default function InfiniteScrollPhotos({
   search,
@@ -98,12 +97,13 @@ export default function InfiniteScrollPhotos({
                   className='h-full w-full absolute' />
                 {photo.image && (
                   <BlurImage
-                    src={photo.image}//"/Cavansite-45.jpeg"
-                    alt=''
+                    src={photo.image}
+                    alt={photo.name || "Photo"}
+                    width={300}
+                    height={300}
+                    quality={50}
                     id={photo.id}
-                    className={`${hoverItem === photo.id ? "brightness-50 blur-sm" : ""} rounded-lg`}
-                    fill={true}
-                    objectFit='cover'
+                    className={`${hoverItem === photo.id ? "brightness-50 blur-sm" : ""} absolute rounded-lg w-full h-full object-cover`}
                     blurDataURL={photo.imageBlurhash || undefined}
                   />
                 )}
