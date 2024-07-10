@@ -376,7 +376,8 @@ const photoSelectObjectWithLocality = {
         name: true
       }
     },
-    locality_fallback: true
+    locality_fallback: true,
+    id: true
   } satisfies Prisma.PhotoSelect
 };
 
