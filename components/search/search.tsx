@@ -132,8 +132,8 @@ export default function Search({ isHero }: { isHero?: boolean }) {
                     onFocus={() => setIsInputFocused(true)}
                     onBlur={() => setIsInputFocused(false)}
                 />
-                <div className="relative">
-                    <div className={`${isHero ? "bg-white dark:bg-zinc-900" : "sm:bg-white sm:dark:bg-zinc-900"} md:absolute w-full rounded-medium ${isHero && (initialLoad.current || !initialLoad.current && resultsLoading) ? "rounded-t-none sm:rounded-medium sm:group-focus-within:rounded-t-none" : ""} ${!initialLoad.current && !resultsLoading ? "" : "p-5"} sm:group-focus-within:block sm:hidden`}>
+                <div className="relative" tabIndex={-1}>
+                    <div className={`${isHero ? "bg-white dark:bg-zinc-900" : "sm:bg-white sm:dark:bg-zinc-900"} ${!isHero ? "md:absolute" : ""}  w-full rounded-medium ${isHero && (initialLoad.current || !initialLoad.current && resultsLoading) ? "rounded-t-none sm:rounded-medium sm:group-focus-within:rounded-t-none" : ""} ${!initialLoad.current && !resultsLoading ? "" : "p-5"} sm:group-focus-within:block sm:hidden`}>
                         {resultsLoading ? (
                             <div className="flex flex-col rounded-lg gap-4">
                                 <>
@@ -156,7 +156,7 @@ export default function Search({ isHero }: { isHero?: boolean }) {
                                         <li key={result.slug} className="hover:opacity-70">
                                             <Link className="flex flex-row gap-4" href={result.type === "Mineral" ? `/minerals/${result.slug}` : result.type === "Photo" ? `/photos/${result.slug}` : result.type === "Locality" ? `/localities/${result.slug}` : `/articles/${result.slug}`}>
                                                 <BlurImage
-                                                    src={result.image || "/Amazonite-106_horiz.jpeg"}
+                                                    src={"/Amazonite-106_horiz.jpeg"}
                                                     alt={result.name || "Photo"}
                                                     blurDataURL={result.imageBlurhash}
                                                     quality={25}
