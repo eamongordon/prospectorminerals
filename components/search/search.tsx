@@ -19,6 +19,7 @@ export default function Search({ isHero }: { isHero?: boolean }) {
     const [noResultsLoading, setNoResultsLoading] = useState(false);
     const [resultsLoading, setResultsLoading] = useState(false);
     const initialLoad = useRef(false);
+    const [isFocused, setIsFocused] = useState(false);
     useEffect(() => {
         if (searchTerm || initialLoad.current) {
             fetchResults();
@@ -62,19 +63,21 @@ export default function Search({ isHero }: { isHero?: boolean }) {
     }
     return (
         <div className="relative">
-            <div className={`w-full relative flex flex-col ${!isHero ? "mb-2": ""}`}>
+            <div className={`w-full relative flex flex-col ${!isHero ? "mb-2" : ""}`}>
                 <Input
                     type="text"
-                    label="Search"
+                    label={isFocused ? resultsLoading ? "Loading Results..." : results.length && query ? `Results for "${query}"` : `Try "Malchite" or "Tsumeb Mine"` : "Search for Minerals, Localities, and more..."}
                     size="sm"
                     radius="md"
                     classNames={{ base: `w-full`, inputWrapper: `${isHero && (initialLoad.current || !initialLoad.current && resultsLoading) ? "rounded-b-none" : ""}` }}
                     value={searchTerm || ""}
                     isClearable={searchTerm ? true : false}
-                    onValueChange={(value) => {setResultsLoading(true); setSearchTerm(value)}}
+                    onValueChange={(value) => { setResultsLoading(true); setSearchTerm(value) }}
                     endContent={
                         searchTerm ? (null) : (<><div className='h-full flex items-center'><MagnifyingGlassIcon /></div></>)
                     }
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
                 />
                 <div className="relative">
                     <div className={`${isHero ? "bg-white dark:bg-zinc-900" : "sm:bg-white sm:dark:bg-zinc-900"} sm:absolute w-full rounded-medium ${isHero && (initialLoad.current || !initialLoad.current && resultsLoading) ? "rounded-t-none" : ""} ${!initialLoad.current && !resultsLoading ? "" : "p-5"}`}>
@@ -112,7 +115,7 @@ export default function Search({ isHero }: { isHero?: boolean }) {
                                                     <div className="justify-center items-center">
                                                         <p className="text-lg font-semibold">{result.name}</p>
                                                     </div>
-                                                    <Chip variant="flat"size="md">{result.type}</Chip>
+                                                    <Chip variant="flat" size="md">{result.type}</Chip>
                                                 </div>
                                             </Link>
                                         </li>
