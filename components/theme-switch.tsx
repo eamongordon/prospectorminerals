@@ -74,7 +74,7 @@ export default function ThemeSwitch() {
                     </Button>
                 </DropdownTrigger>
                 {/*@ts-expect-error*/}
-                <DropdownMenu variant="faded" aria-label="Dropdown menu with icons" onAction={(key) => { setTheme(key); setHasSetTheme(true) }}>
+                <DropdownMenu variant="faded" aria-label="Shift Theme" onAction={(key) => { setTheme(key); setHasSetTheme(true) }}>
                     <DropdownItem
                         key="system"
                         startContent={<Laptop2 />}
