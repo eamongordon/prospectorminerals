@@ -51,7 +51,7 @@ export default function LocalityMap({ localities, center, zoom }: { localities: 
                 {localities.map((locality) => {
                     return (<Marker key={locality.id} position={[Number(locality.latitude), Number(locality.longitude)]} icon={locality.type === 'Single' ? locality.coordinates_known ? singleLocalityKnownIcon : singleLocalityEstimatedIcon : locality.coordinates_known ? groupLocalityKnownIcon : groupLocalityEstimatedIcon} >
                         <Popup className={`${inter.className} w-[200px]`} offset={[0, -21]}>
-                            <div key={locality.id} className='flex items-center justify-center text-center w-full overflow-hidden rounded-xl'>
+                            <div key={locality.id}>
                                 <Link href={`/localities/${locality.slug}`}>
                                     <Card isFooterBlurred className="w-full">
                                         <BlurImage
