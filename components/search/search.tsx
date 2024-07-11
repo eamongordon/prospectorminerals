@@ -88,11 +88,15 @@ export default function Search({ isHero }: { isHero?: boolean }) {
             });
             allResults.length = allResults.length > MAX_RESULTS_LENGTH ? MAX_RESULTS_LENGTH : allResults.length;
             setResults(allResults);
-            if (resultsLoading) {
-                setResultsLoading(false);
-            }
         });
     }
+
+    useEffect(() => {
+        if (resultsLoading) {
+            setResultsLoading(false);
+        }
+        console.log("RESULTSCHANGE")
+    }, [results])
 
     const router = useRouter();
 
@@ -128,30 +132,48 @@ export default function Search({ isHero }: { isHero?: boolean }) {
                     const currentItem = results[currentItemIndex]
                     router.push(getLink(currentItem.type, currentItem.slug));
                     break;
-                case 'Escape':
-                    // Logic to clear search or close results
-                    setSearchTerm("");
-                    break;
                 default:
                     break;
             }
-        } else {
-            console.log(results.length);
-            console.log(results);
+        }
+        if (event.key === 'Escape') {
+            setResultsLoading(true);
+            blurAllChildElements();
+            setSearchTerm("");
         }
     };
 
     const parentDivRef = useRef<HTMLDivElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null); // Ref for the input element
 
     const checkFocus = () => {
         // Delay the check to allow focus event to complete
         setTimeout(() => {
             if (parentDivRef.current && parentDivRef.current.contains(document.activeElement)) {
+                if (inputRef.current) {
+                    inputRef.current.focus();
+                }
                 setIsFocused(true);
             } else {
+                if (inputRef.current) {
+                    inputRef.current.blur();
+                }
                 setIsFocused(false);
             }
         }, 0); // A timeout of 0 ms is often enough to delay the execution until after the current event stack
+    };
+
+    const blurAllChildElements = () => {
+        if (parentDivRef.current) {
+            // Select all child elements
+            const allChildElements = parentDivRef.current.querySelectorAll('*');
+            // Iterate over each element and blur it
+            allChildElements.forEach(element => {
+                if (element instanceof HTMLElement) {
+                    element.blur();
+                }
+            });
+        }
     };
 
     useEffect(() => {
@@ -183,6 +205,7 @@ export default function Search({ isHero }: { isHero?: boolean }) {
                     endContent={
                         searchTerm ? (null) : (<><div className='h-full flex items-center'><MagnifyingGlassIcon /></div></>)
                     }
+                    ref={inputRef}
                     onKeyDown={handleKeyDown}
                 />
                 <div className="relative">
