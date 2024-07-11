@@ -56,7 +56,7 @@ export default function HeaderComp({
             <NavbarContent className="gap-[72px]" justify="center">
                 <NavbarContent className="hidden lg:flex gap-10" justify="end">
                     <NavbarItem>
-                        <UILink color="foreground" href="/learn">
+                        <UILink color="foreground" href="/#explore">
                             Learn
                         </UILink>
                     </NavbarItem>
@@ -129,7 +129,7 @@ export default function HeaderComp({
                 </NavbarContent>
                 <NavbarMenu>
                     <NavbarMenuItem key="learn">
-                        <UILink color="foreground" href="/learn">
+                        <UILink color="foreground" href="/#explore">
                             Learn
                         </UILink>
                     </NavbarMenuItem>
