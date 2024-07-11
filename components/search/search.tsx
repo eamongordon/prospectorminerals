@@ -8,7 +8,6 @@ import { Search as MagnifyingGlassIcon } from "lucide-react";
 import { useDebounce } from "use-debounce";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import useWindowSize from "@/lib/hooks/use-window-size";
 
 type SearchResult = {
     type: "Mineral" | "Photo" | "Locality" | "Article", name: string, image?: string, imageBlurhash?: string, slug: string
@@ -22,8 +21,6 @@ export default function Search({ isHero }: { isHero?: boolean }) {
     const initialLoad = useRef(false);
     const [isFocused, setIsFocused] = useState(false);
     const [focusedSlug, setFocusedSlug] = useState<string | undefined>(undefined);
-
-    const { isMobile } = useWindowSize()
 
     const getLabel = (defaultLabel: string, isSmallerThanMd: boolean) => {
         const promptSuggestionLabel = `Try "Malachite" or "Tsumeb Mine"`;
@@ -103,7 +100,7 @@ export default function Search({ isHero }: { isHero?: boolean }) {
         return type === "Mineral" ? `/minerals/${slug}` : type === "Photo" ? `/photos/${slug}` : type === "Locality" ? `/localities/${slug}` : `/articles/${slug}`;
     }
 
-    const handleKeyDown = (event: any) => {
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
         if (!resultsLoading && results.length) {
             const currentItemIndex = results.findIndex((obj) => obj.slug === focusedSlug);
             switch (event.key) {
