@@ -200,7 +200,7 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                                 className='w-full flex flex-wrap mt-16 gap-4 sm:grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:flex xl:flex-wrap xl:flex-auto xl:grid-cols-none px-4 sm:p-2'
                             >
                                 {localities.map((locality) => (
-                                    <li key={locality.id} className='xl:w-[311px]'>
+                                    <li key={locality.id} className='w-full xl:w-[311px]'>
                                         <LocalityCard name={locality.name} slug={locality.slug} blurDataURL={locality.photos.length > 0 && locality.photos[0].imageBlurhash ? locality.photos[0].imageBlurhash : undefined} image={locality.photos.length > 0 && locality.photos[0].image ? locality.photos[0].image : undefined} />
                                     </li>
                                 )
