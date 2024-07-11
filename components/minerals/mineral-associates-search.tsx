@@ -162,7 +162,7 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: Min
         />
         <Listbox
             items={mineralList}
-            aria-label="Dynamic Actions"
+            aria-label="Filter by Minerals"
             onAction={(key) => {
                 const MineralListItem = mineralList.find((mineral) => mineral.name === key) as MineralDisplayFieldset;
                 const newObject = {
