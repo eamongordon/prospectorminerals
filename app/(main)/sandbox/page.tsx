@@ -1,13 +1,11 @@
 import Footer from '@/components/footer';
 import Header from '@/components/header';
 import { LoginModalProvider } from "@/components/modal/registration/provider";
-//import LoginForm from '@/components/registration/login-form';
-//import Modal from "@/components/next-ui-modal";
 import Card from "@/components/minerals/mineral-card";
 import Gallery from "@/components/minerals/mineral-gallery";
-import RegModal from "@/components/next-ui-modal";
-import TestServerActions from '@/components/test-server-actions';
 import Image from 'next/image';
+import { getSession } from '@/lib/auth';
+import { notFound } from 'next/navigation';
 
 const galleryData = [
     {
@@ -36,7 +34,11 @@ const htmltest = `<p class=""font_8"">Aurichalcite is commonly associated with:<
   <li><p class=""font_8"">Rosasite</p></li>
 </ul>`
 
-export default function Page() {
+export default async function Page() {
+    const session = await getSession();
+    if (!session || session.user.email !== process.env.ADMIN_EMAIL) {
+        return notFound();
+    }
     return (
         <main>
             <LoginModalProvider>
@@ -50,9 +52,6 @@ export default function Page() {
                 <div className="product-des" dangerouslySetInnerHTML={{ __html: htmltest }}/>
                 <Gallery data={galleryData} />
                 <Card name="Azurite" slug="az" />
-                <RegModal />
-                <TestServerActions/>
-
                 <Footer />
             </LoginModalProvider>
         </main>
