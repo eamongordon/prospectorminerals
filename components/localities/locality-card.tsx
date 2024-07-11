@@ -5,7 +5,7 @@ import BlurImage from "../blur-image";
 export default function LocalityCard({ name, slug, image, blurDataURL }: { name: string, slug: string, image?: string, blurDataURL?: string }) {
     return (
         <Link href={`/localities/${slug}`}>
-            <Card isFooterBlurred className="w-full">
+            <Card isFooterBlurred className="w-full text-center">
                 <BlurImage
                     width={300}
                     height={300}
