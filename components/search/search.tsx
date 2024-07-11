@@ -77,14 +77,14 @@ export default function Search({ isHero }: { isHero?: boolean }) {
             minerals.results.forEach((mineral) => {
                 allResults.push({ slug: mineral.slug, type: "Mineral", name: mineral.name, image: mineral.photos.length > 0 && mineral.photos[0].photo.image ? mineral.photos[0].photo.image : undefined });
             });
-            photos.results.forEach((photo) => {
-                allResults.push({ slug: photo.id, type: "Photo", name: photo.name!, image: photo.image!, imageBlurhash: photo.imageBlurhash! });
-            });
             localities.results.forEach((locality) => {
                 allResults.push({ slug: locality.slug, type: "Locality", name: locality.name, image: locality.photos.length > 0 && locality.photos[0].image ? locality.photos[0].image : undefined, imageBlurhash: locality.photos.length > 0 && locality.photos[0].imageBlurhash ? locality.photos[0].imageBlurhash : undefined });
             });
             posts.results.forEach((post) => {
                 allResults.push({ slug: post.slug, type: "Article", name: post.title!, image: post.image!, imageBlurhash: post.imageBlurhash! });
+            });
+            photos.results.forEach((photo) => {
+                allResults.push({ slug: photo.id, type: "Photo", name: photo.name!, image: photo.image!, imageBlurhash: photo.imageBlurhash! });
             });
             allResults.length = allResults.length > MAX_RESULTS_LENGTH ? MAX_RESULTS_LENGTH : allResults.length;
             setResults(allResults);
