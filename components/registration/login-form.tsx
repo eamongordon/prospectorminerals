@@ -38,7 +38,7 @@ export default function FormWrapper(
         <Tabs
           fullWidth
           size="md"
-          aria-label="Tabs form"
+          aria-label="Shift between Login and Signup forms"
           selectedKey={isModal ? selected : pathname}
           // @ts-ignore
           onSelectionChange={setSelected}
