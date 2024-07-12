@@ -54,7 +54,7 @@ export default async function Home() {
     {
       title: 'Members',
       description: session ? 'Manage your Account details and preferences.' : 'Join and gain access to all we have to offer. For Free.',
-      cta: 'Go to Settings',
+      cta: session ? 'Go to Settings' : 'Log In or Sign Up',
       image: '/AluminoAdamite-Smithsonite_horiz.jpeg',
       blurDataURL: "data:image/png;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAgADIDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAABQcAAwYECP/EACEQAAEDBQEAAwEAAAAAAAAAAAEAAgMEBQYREjJCcaEi/8QAFgEBAQEAAAAAAAAAAAAAAAAAAgED/8QAGBEAAwEBAAAAAAAAAAAAAAAAAAECERL/2gAMAwEAAhEDEQA/APMEFG6UjQROmssj9fyUcx63tlLdhMG12Nha08hZVYsFpFjshHn8Ukx54+BToZZoms8hUy2mInyEe2FtCSnsMjQTyUHq6J8JOwV6ClsEUkRIaFgMrsbYeiGpzWhVaK/kqIm6l04/aiYjVY9XNi52VvaC+RtY0dBJSmrXRa0UQjvT2jXSDkTY6JMhZz6/VxvyFvXpKV17eR7Kpfd5D8ipwDB1QZJHwQXBZrJ7pHOx2iEu23mQD0VTUXR8o0XKqcCpxnU+VvbvtRBzUHaiYz//2Q==",
       link: "/account/settings"
