@@ -105,7 +105,7 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
         } else {
           //Forgot Password
           setLoading(true);
-          signIn('email', { redirect: false, email: e.currentTarget.email.value, callbackUrl: '/account/settings/#new-password' }).then(() => {
+          signIn('nodemailer', { redirect: false, email: e.currentTarget.email.value, callbackUrl: '/account/settings/#new-password' }).then(() => {
             setLoading(false);
             setSentForgotPasswordEmail(true);
             toast.success("Email Sent! Check your inbox.");
