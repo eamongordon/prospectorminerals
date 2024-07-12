@@ -63,7 +63,7 @@ export default async function Home() {
   return (
     <main>
       <Hero />
-      <div className="pb-40" />
+      <div className="pb-20" />
       <div className='max-w-[1024px] mx-auto gap-4 grid grid-cols-1 w-600 md:grid-cols-2 lg:grid-cols-3 justify-items-center' id="explore">
         {
           cardItemList.map((obj, index) => (
@@ -73,7 +73,7 @@ export default async function Home() {
           ))
         }
       </div>
-      <div className="pb-40" />
+      <div className="pb-20" />
     </main>
   )
 }
