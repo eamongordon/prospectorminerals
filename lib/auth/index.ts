@@ -24,13 +24,11 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         }
         const user = await prisma.user.findUnique({
           where: {
-            //@ts-expect-error
-            email,
+            email : email as string,
           },
         });
         // if user doesn't exist or password doesn't match
-        //@ts-expect-error
-        if (!user || !user.password || !(await compare(password, user.password))) {
+        if (!user || !user.password || !(await compare(password as string, user.password))) {
           throw new Error("Invalid email or password")
         }
         return user;
