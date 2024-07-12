@@ -34,7 +34,8 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
             }).then(({ error }) => {
               if (error) {
                 setLoading(false);
-                toast.error(error);
+                //TODO: Create custom error message
+                toast.error("Invalid Email or Password");
               } else {
                 router.refresh();
                 if (isModal) {
@@ -53,7 +54,8 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
             }).then((res) => {
               if (res?.error) {
                 setLoading(false);
-                toast.error(res.error);
+                //TODO: Create custom error message
+                toast.error("Invalid Email or Password");
               }
             });
           }
