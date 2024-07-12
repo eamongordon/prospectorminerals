@@ -159,7 +159,7 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
       }
       {type === 'login' ? (
         <div>
-          <button className="hover:opacity-80 transition-opacity tap-highlight-transparent relative inline-flex items-center font-semibold text-sm" color="foreground" {...(resetPasswordFunc ? { onClick: () => resetPasswordFunc(false) } : {})} >
+          <button type="button" className="hover:opacity-80 transition-opacity tap-highlight-transparent relative inline-flex items-center font-semibold text-sm" color="foreground" {...(resetPasswordFunc ? { onClick: () => resetPasswordFunc(false) } : {})} >
             Forgot Password?
           </button>
         </div>
