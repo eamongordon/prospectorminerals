@@ -7,9 +7,8 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/lib/prisma";
 import { compare } from "bcrypt";
 import { createTransport } from "nodemailer";
-import { hash } from "bcrypt";
 
-const VERCEL_DEPLOYMENT = !!`https://www.${process.env.VERCEL_PROJECT_PRODUCTION_URL}`	;
+const VERCEL_DEPLOYMENT = !!`https://www.${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -130,12 +129,10 @@ export const authOptions: NextAuthOptions = {
           token[key] = session[key];
           //@ts-expect-error;
           if (token?.user && token?.user[key]) {
-            if (key === 'password') {
-              //@ts-expect-error
-              token.user.password = await hash(session[key], 10);
+            if (key !== 'password') {
+              //@ts-expect-error;
+              token.user[key] = session[key];
             }
-            //@ts-expect-error;
-            token.user[key] = session[key];
           }
         });
       }
@@ -184,7 +181,7 @@ function html(params: { url: string, host: string, theme: Theme }) {
 
   const brandColor = theme.brandColor || "#346df1";
   const buttonText = theme.buttonText || "#fff";
-  
+
   const color = {
     background: "#f9f9f9",
     text: "#444",
