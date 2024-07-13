@@ -1,6 +1,5 @@
 "use client";
 
-import LoadingDots from "@/components/icons/loading-dots";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@nextui-org/react";

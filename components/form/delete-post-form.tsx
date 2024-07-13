@@ -1,8 +1,7 @@
 "use client";
 
-import LoadingDots from "@/components/icons/loading-dots";
 import { deletePost } from "@/lib/actions";
-import { cn } from "@/lib/utils";
+import { Button } from "@nextui-org/react";
 import va from "@vercel/analytics";
 import { useParams, useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
@@ -27,7 +26,7 @@ export default function DeletePostForm({ postName }: { postName: string }) {
       className="rounded-lg border border-red-600 bg-white dark:bg-black"
     >
       <div className="relative flex flex-col space-y-4 p-5 sm:p-10">
-        <h2 className="font-cal text-xl dark:text-white">Delete Post</h2>
+        <h2 className="text-xl dark:text-white">Delete Post</h2>
         <p className="text-sm text-stone-500 dark:text-stone-400">
           Deletes your post permanently. Type in the name of your post{" "}
           <b>{postName}</b> to confirm.
@@ -58,16 +57,11 @@ export default function DeletePostForm({ postName }: { postName: string }) {
 function FormButton() {
   const { pending } = useFormStatus();
   return (
-    <button
-      className={cn(
-        "flex h-8 w-32 items-center justify-center space-x-2 rounded-md border text-sm transition-all focus:outline-none sm:h-10",
-        pending
-          ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
-          : "border-red-600 bg-red-600 text-white hover:bg-white hover:text-red-600 dark:hover:bg-transparent",
-      )}
-      disabled={pending}
+    <Button
+      isLoading={pending}
+      type="submit"
     >
-      {pending ? <LoadingDots color="#808080" /> : <p>Confirm Delete</p>}
-    </button>
+      Delete Post
+    </Button>
   );
 }
