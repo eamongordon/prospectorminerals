@@ -1,8 +1,7 @@
 "use client";
 
-import LoadingDots from "@/components/icons/loading-dots";
 import { createPost } from "@/lib/actions";
-import { cn } from "@/lib/utils";
+import { Button } from "@nextui-org/react";
 import va from "@vercel/analytics";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
@@ -13,7 +12,7 @@ export default function CreatePostButton() {
   const [isPending, startTransition] = useTransition();
 
   return (
-    <button
+    <Button
       onClick={() =>
         startTransition(async () => {
           const post = await createPost();
@@ -23,15 +22,10 @@ export default function CreatePostButton() {
           router.push(`/manage/posts/${post.slug}`);
         })
       }
-      className={cn(
-        "flex h-8 w-36 items-center justify-center space-x-2 rounded-lg border text-sm transition-all focus:outline-none sm:h-9",
-        isPending
-          ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
-          : "border border-black bg-black text-white hover:bg-white hover:text-black active:bg-stone-100 dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:hover:text-white dark:active:bg-stone-800",
-      )}
-      disabled={isPending}
+      className={"flex h-8 w-36 items-center justify-center space-x-2 rounded-lg border text-sm transition-all focus:outline-none sm:h-9"}
+      isLoading={isPending}
     >
-      {isPending ? <LoadingDots color="#808080" /> : <p>Create New Post</p>}
-    </button>
+      Create New Post
+    </Button>
   );
 }
