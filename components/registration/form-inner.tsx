@@ -2,7 +2,6 @@
 
 import { signIn } from "next-auth/react";
 import { useState } from "react";
-//import LoadingDots from "@/components/icons/loading-dots";
 import { Button, Input } from "@nextui-org/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
