@@ -1,15 +1,12 @@
 "use client";
 
-import LoadingDots from "@/components/icons/loading-dots";
-import { cn } from "@/lib/utils";
-import { Input, Button } from "@nextui-org/react";
-import { signOut } from "next-auth/react"
-import { useParams, useRouter } from "next/navigation";
-import { useFormStatus } from "react-dom";
-import { toast } from "sonner";
 import { deleteUser } from "@/lib/actions";
+import { Button, Input } from "@nextui-org/react";
 import va from "@vercel/analytics";
+import { signOut } from "next-auth/react";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function DeleteUserForm() {
   const { id } = useParams() as { id: string };
