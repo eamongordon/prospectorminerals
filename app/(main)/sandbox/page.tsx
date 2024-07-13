@@ -35,10 +35,6 @@ const htmltest = `<p class=""font_8"">Aurichalcite is commonly associated with:<
 </ul>`
 
 export default async function Page() {
-    const session = await getSession();
-    if (!session || session.user.email !== process.env.ADMIN_EMAIL) {
-        return notFound();
-    }
     return (
         <main>
             <LoginModalProvider>
