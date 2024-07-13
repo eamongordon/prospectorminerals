@@ -119,6 +119,16 @@ export default function Form({
             {...inputAttrs}
             required
             onChange={formUpdate}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                if (inputAttrs.type === "password" && !data) {
+                  toast.error("Please enter a password.");
+                } else {
+                  e.preventDefault(); // Prevent the default action to avoid submitting the form
+                  submitForm();
+                }
+              }
+            }}
           //className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
           />
         )}
