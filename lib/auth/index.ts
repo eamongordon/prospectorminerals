@@ -149,6 +149,7 @@ export async function getSession() {
       username: string;
       email: string;
       image: string;
+      roles: string[];
     };
   } | null>;
 }

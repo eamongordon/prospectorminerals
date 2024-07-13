@@ -75,7 +75,7 @@ export const createPhotoBulk = async (
   input: string
 ) => {
   const session = await getSession();
-  if (!session?.user.id || session.user.email !== process.env.ADMIN_EMAIL) {
+  if (!session?.user.id || !session.user.roles.includes("Admin")) {
     return {
       error: "Not authenticated",
     };
@@ -126,7 +126,7 @@ export const createMineralBulk = async (
   input: string
 ) => {
   const session = await getSession();
-  if (!session?.user.id || session.user.email !== process.env.ADMIN_EMAIL) {
+  if (!session?.user.id || !session.user.roles.includes("Admin")) {
     return {
       error: "Not authenticated",
     };
@@ -149,7 +149,7 @@ export const createLocalityBulk = async (
   input: string
 ) => {
   const session = await getSession();
-  if (!session?.user.id || session.user.email !== process.env.ADMIN_EMAIL) {
+  if (!session?.user.id || !session.user.roles.includes("Admin")) {
     return {
       error: "Not authenticated",
     };
@@ -189,7 +189,7 @@ export const createRelationsBulk = async (
   input: string
 ) => {
   const session = await getSession();
-  if (!session?.user.id || session.user.email !== process.env.ADMIN_EMAIL) {
+  if (!session?.user.id || !session.user.roles.includes("Admin")) {
     return {
       error: "Not authenticated",
     };
@@ -217,7 +217,7 @@ export const addPhotoFallbackLocality = async(
   input: string
 ) => {
   const session = await getSession();
-  if (!session?.user.id || session.user.email !== process.env.ADMIN_EMAIL) {
+  if (!session?.user.id || !session.user.roles.includes("Admin")) {
     return {
       error: "Not authenticated",
     };
@@ -271,7 +271,7 @@ export const createPhoto = async (
   key: string,
 ) => {
   const session = await getSession();
-  if (!session?.user.id || session.user.email !== process.env.ADMIN_EMAIL) {
+  if (!session?.user.id || !session.user.roles.includes("Admin")) {
     return {
       error: "Not authenticated",
     };
@@ -775,7 +775,8 @@ export async function addSlug() {
 // creating a separate function for this because we're not using FormData
 export const updatePost = async (data: Post) => {
   const session = await getSession();
-  if (!session?.user.id || session.user.email !== process.env.ADMIN_EMAIL) {
+  console.log(session);
+  if (!session?.user.id || !session.user.roles.includes("Admin")) {
     return {
       error: "Not authenticated",
     };
@@ -820,7 +821,7 @@ export const updatePostMetadata = async (
   const value = formData;
   try {
     const session = await getSession();
-    if (!session?.user.id || session.user.email !== process.env.ADMIN_EMAIL) {
+    if (!session?.user.id || !session.user.roles.includes("Admin")) {
       return {
         error: "Not authenticated",
       };
@@ -874,7 +875,7 @@ export const updatePostMetadata = async (
 
 export const createPost = async (_?: FormData) => {
   const session = await getSession();
-  if (!session?.user.id || session.user.email !== process.env.ADMIN_EMAIL) {
+  if (!session?.user.id || !session.user.roles.includes("Admin")) {
     return {
       error: "Not authenticated",
     };
@@ -893,7 +894,7 @@ export const createPost = async (_?: FormData) => {
 export const deletePost = async (_: FormData, postSlug: string) => {
   try {
     const session = await getSession();
-    if (!session?.user.id || session.user.email !== process.env.ADMIN_EMAIL) {
+    if (!session?.user.id || !session.user.roles.includes("Admin")) {
       return {
         error: "Not authenticated",
       };

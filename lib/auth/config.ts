@@ -4,6 +4,12 @@ import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "@/lib/prisma";
 
+declare module "next-auth" {
+    interface User {
+        roles?: string[]
+    }
+}
+
 export default {
     providers: [
         GoogleProvider({
@@ -41,32 +47,18 @@ export default {
     },
     adapter: PrismaAdapter(prisma),
     session: { strategy: "jwt" },
-    /*
-    cookies: {
-      sessionToken: {
-        name: `${VERCEL_DEPLOYMENT ? "__Secure-" : ""}next-auth.session-token`,
-        options: {
-          httpOnly: true,
-          sameSite: "lax",
-          path: "/",
-          // When working on localhost, the cookie domain must be omitted entirely (https://stackoverflow.com/a/1188145)
-          domain: VERCEL_DEPLOYMENT
-            ? `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
-            : undefined,
-          secure: VERCEL_DEPLOYMENT,
-        },
-      },
-    },
-    */
     theme: {
         colorScheme: "auto", // "auto" | "dark" | "light"
         brandColor: "#666565", // Hex color code
         //DOMAIN_UPDATE
-        logo: "https://prospectorminerals.vercel.app/_next/image?url=%2FPM-Favicon-New-Square.png&w=128&q=75", // Absolute URL to image
+        logo: `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}/_next/image?url=%2FPM-Favicon-New-Square.png&w=128&q=75`, // Absolute URL to image
         buttonText: "#FFFFFF" // Hex color code
     },
     callbacks: {
         jwt: async ({ token, user, trigger, session }) => {
+            if (user) {
+                token.roles = user.roles;
+            }
             if (trigger === "update") {
                 const sessionKeyList = Object.keys(session);
                 sessionKeyList.forEach(async (key) => {
@@ -86,7 +78,9 @@ export default {
             session.user = {
                 ...session.user,
                 // @ts-expect-error
-                id: token.sub,
+                roles: token?.roles,
+                // @ts-expect-error
+                id: token?.sub,
                 // @ts-expect-error
                 username: token?.user?.username || token?.user?.gh_username,
             };
