@@ -2,11 +2,9 @@ import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
 import Nodemailer from "next-auth/providers/nodemailer";
 import { createTransport } from "nodemailer";
-import authConfig from "./auth.config";
+import authConfig from "./config";
 import prisma from "@/lib/prisma";
 import { compare } from "bcrypt";
-
-const VERCEL_DEPLOYMENT = !!`https://www.${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   ...authConfig,
