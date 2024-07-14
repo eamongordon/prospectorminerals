@@ -15,7 +15,8 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    images: ['/Fluorite-164_horiz-Optimized.jpg']
+    images: ['/Fluorite-164_horiz-Optimized.jpg'],
+    siteName: 'Prospector Minerals',
   }
 }
 
