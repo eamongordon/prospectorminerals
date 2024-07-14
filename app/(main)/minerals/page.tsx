@@ -7,10 +7,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
     title: 'Minerals | Prospector Minerals',
-    description: 'A mineralogy database featuring comprehensive information, photos, localities, uses, and properties of mineral species.',
-    openGraph: {
-        url: '/minerals'
-    }
+    description: 'A mineralogy database featuring comprehensive information, photos, localities, uses, and properties of mineral species.'
 }
 
 const sortOptions = [
