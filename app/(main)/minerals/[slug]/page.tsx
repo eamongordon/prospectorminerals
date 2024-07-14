@@ -42,7 +42,7 @@ export async function generateMetadata(
         description: result?.description,
         openGraph: {
             ...parentData.openGraph,
-            images: result?.photos[0]?.photo.image ? [result?.photos[0].photo.image , ...previousImages] : previousImages,
+            images: result?.photos[0]?.photo.image ? [result?.photos[0].photo.image] : previousImages,
             url: `/minerals/${params.slug}`
         },
     }
