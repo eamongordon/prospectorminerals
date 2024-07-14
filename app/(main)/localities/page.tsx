@@ -10,6 +10,11 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Localities | Prospector Minerals',
   description: 'Explore worldwide localities and mines at Prospector Minerals. Find information, photos, and minerals of mineral, rock, and geology localities and mines.',
+  openGraph: {
+    images: ['/Fluorite-164_horiz-Optimized.jpg'],
+    siteName: 'Prospector Minerals',
+    url: '/localities'
+  }
 }
 
 const Page = async ({
