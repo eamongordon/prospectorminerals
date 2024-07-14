@@ -27,14 +27,15 @@ export async function generateMetadata(
         }
     });
     
-    // optionally access and extend (rather than replace) parent metadata
-    const previousImages = (await parent).openGraph?.images || []
-
+    const parentData = await parent;
+    const previousImages = parentData.openGraph?.images || [];
     return {
         title: `${result?.name} | Prospector Minerals`,
         description: result?.description,
         openGraph: {
+            ...parentData.openGraph,
             images: result?.image ? [result.image, ...previousImages] : previousImages,
+            url: '/photos'
         },
     }
 }
