@@ -1,39 +1,34 @@
 import { getPostData } from "@/lib/fetchers";
 import { notFound } from "next/navigation";
-//import BlogCard from "@/components/blog-card"
 import BlurImage from "@/components/blur-image";
 import MDX from "@/components/mdx";
+import type { Metadata, ResolvingMetadata } from 'next'
 import { placeholderBlurhash, toDateString } from "@/lib/utils";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}) {
+type Props = {
+  params: { slug: string }
+}
+
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+
   const slug = decodeURIComponent(params.slug);
 
   const data = await getPostData(slug);
 
-  if (!data) {
-    return null;
-  }
-  const { title, description } = data;
-
+  const parentData = await parent;
+  const previousImages = parentData.openGraph?.images || [];
   return {
-    title,
-    description,
+    title: `${data?.title} | Prospector Minerals`,
+    description: data?.description,
     openGraph: {
-      title,
-      description,
-    }
-    // Optional: Set canonical URL to custom domain if it exists
-    // ...(params.domain.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) &&
-    //   siteData.customDomain && {
-    //     alternates: {
-    //       canonical: `https://${siteData.customDomain}/${params.slug}`,
-    //     },
-    //   }),
-  };
+      ...parentData.openGraph,
+      images: data?.image ? [data?.image] : previousImages,
+      url: `/articles/${params.slug}`
+    },
+  }
 }
 
 export default async function SitePostPage({
