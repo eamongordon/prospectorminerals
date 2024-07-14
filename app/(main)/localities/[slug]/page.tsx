@@ -42,7 +42,7 @@ export async function generateMetadata(
         openGraph: {
             ...parentData.openGraph,
             images: result?.photos[0]?.image ? [result?.photos[0]?.image, ...previousImages] : previousImages,
-            url: '/localities'
+            url: `/localities/${params.slug}`
         },
     }
 }
