@@ -7,6 +7,9 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Photos | Prospector Minerals',
   description: 'A searchable photo gallery of minerals from worldwide localities.',
+  openGraph: {
+    url: '/photos'
+  }
 }
 
 const Page = async ({
