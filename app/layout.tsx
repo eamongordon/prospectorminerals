@@ -10,6 +10,9 @@ const inter = Work_Sans({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Prospector Minerals',
   description: 'A comprehensive mineralogy resource.',
+  openGraph: {
+    images: ['/small_Fluorite-164_horiz-Optimized_350x263.jpeg']
+  }
 }
 
 export default function RootLayout({
