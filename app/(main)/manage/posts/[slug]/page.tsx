@@ -17,7 +17,7 @@ export default async function PostPage({ params }: { params: { slug: string } })
       slug: decodeURIComponent(params.slug),
     },
   });
-  if (!data || data.userId !== session.user.id) {
+  if (!data) {
     notFound();
   }
 
