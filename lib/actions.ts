@@ -881,9 +881,7 @@ export const createPost = async (_?: FormData) => {
     };
   }
   const response = await prisma.post.create({
-    data: {
-      userId: session.user.id,
-    },
+    data: {},
   });
   await revalidateTag(
     `posts`,
