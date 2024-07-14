@@ -41,7 +41,7 @@ export async function generateMetadata(
         description: result?.description,
         openGraph: {
             ...parentData.openGraph,
-            images: result?.photos[0]?.image ? [result?.photos[0]?.image, ...previousImages] : previousImages,
+            images: result?.photos[0]?.image ? [result?.photos[0]?.image] : previousImages,
             url: `/localities/${params.slug}`
         },
     }
