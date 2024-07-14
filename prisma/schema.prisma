@@ -28,7 +28,6 @@ model User {
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
-  posts         Post[]
 }
 
 model Account {
@@ -109,8 +108,6 @@ model Post {
   published     Boolean   @default(false)
   publishedAt   DateTime?
   number        Int       @unique @default(autoincrement())
-  user          User?     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId        String?
 
   @@unique([slug])
   @@index([slug])
