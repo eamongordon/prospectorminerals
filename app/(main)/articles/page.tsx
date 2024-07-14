@@ -7,9 +7,6 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
     title: 'Articles | Prospector Minerals',
     description: 'Detailed, comprehensive mineralogy articles covering Minerals, Localities, Chemical Properties, News, and More.',
-    openGraph: {
-        url: '/articles'
-    }
 }
 
 const selectOptions = [
