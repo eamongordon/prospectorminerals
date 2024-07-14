@@ -3,9 +3,6 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Policy | Prospector Minerals',
   description: 'View our site policy, including copyright policy, terms of use, cookie policy, and privacy policy.',
-  openGraph: {
-    url: '/policy',
-  }
 }
 
 const Page = async ({
