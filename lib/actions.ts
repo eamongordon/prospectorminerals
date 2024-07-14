@@ -786,7 +786,7 @@ export const updatePost = async (data: Post) => {
       id: data.id,
     },
   });
-  if (!post || post.userId !== session.user.id) {
+  if (!post) {
     return {
       error: "Post not found",
     };
