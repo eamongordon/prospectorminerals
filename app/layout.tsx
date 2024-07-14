@@ -10,13 +10,14 @@ const inter = Work_Sans({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Prospector Minerals',
   description: 'A comprehensive mineralogy resource.',
-  metadataBase: new URL(`https://www.prospectorminerals.com`),
+  metadataBase: new URL(`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     images: ['/Fluorite-164_horiz-Optimized.jpg'],
     siteName: 'Prospector Minerals',
+    url: '/',
   }
 }
 
