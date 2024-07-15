@@ -22,7 +22,6 @@ export default function CreatePostButton() {
           router.push(`/manage/posts/${post.slug}`);
         })
       }
-      className={"flex h-8 w-36 items-center justify-center space-x-2 rounded-lg border text-sm transition-all focus:outline-none sm:h-9"}
       isLoading={isPending}
     >
       Create New Post
