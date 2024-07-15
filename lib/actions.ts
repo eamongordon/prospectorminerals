@@ -568,7 +568,7 @@ type FetchLocalitiesReturn<T extends string> = T extends 'full'
   : { results: LocalityDisplayFieldset[], next: number | undefined };
 
 
-export async function fetchLocalities<T extends string>({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: LocalitiesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: string }): Promise<FetchLocalitiesReturn<T>> {
+export async function fetchLocalities<T extends string>({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: LocalitiesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: T }): Promise<FetchLocalitiesReturn<T>> {
   let queryArray = [];
   const { name, minerals, id, slug } = Object(filterObj);
   if (id) {
@@ -626,7 +626,7 @@ const localityUniqueDisplayObject = {
 type FetchUniqueLocalityReturn<T extends string> = T extends 'full'
   ? LocalityFullFieldset : LocalityUniqueDisplayFieldset;
 
-export async function FetchUniqueLocality<T extends string>({ slug, fieldset }: { slug: string, fieldset?: T }): Promise<FetchUniqueLocalityReturn<T>> {
+export async function FetchUniqueLocality<T extends string>(slug: string, fieldset?: T): Promise<FetchUniqueLocalityReturn<T>> {
   let selectObj: Prisma.LocalitySelect | undefined;
   if (!fieldset || fieldset === 'display') {
     selectObj = localityUniqueDisplayObject satisfies Prisma.LocalitySelect;
@@ -728,7 +728,7 @@ const photoFullSelectObject = {
   }
 } satisfies Prisma.PhotoSelect;
 
-export async function fetchPhotos<T extends string>({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj: PhotosFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: string }): Promise<FetchPhotosReturn<T>> {
+export async function fetchPhotos<T extends string>({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj: PhotosFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: T }): Promise<FetchPhotosReturn<T>> {
   if (!limit) {
     limit = 10;
   }
@@ -784,7 +784,7 @@ const photoUniqueDisplaySelectObject = {
 type FetchUniquePhotoReturn<T extends string> = T extends 'full'
   ? PhotoFullFieldset : PhotosUniqueDisplayFieldset;
 
-export async function FetchUniquePhotoReturn<T extends string>({ id, fieldset }: { id: string, fieldset?: T }): Promise<FetchUniquePhotoReturn<T>> {
+export async function FetchUniquePhotoReturn<T extends string>(id: string, fieldset?: T): Promise<FetchUniquePhotoReturn<T>> {
   let selectObj: Prisma.PhotoSelect | undefined;
   if (!fieldset || fieldset === 'display') {
     selectObj = photoUniqueDisplaySelectObject satisfies Prisma.PhotoSelect;
