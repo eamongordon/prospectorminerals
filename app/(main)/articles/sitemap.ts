@@ -1,15 +1,15 @@
 import { MetadataRoute } from 'next'
-import prisma from '@/lib/prisma'
+import prisma from '@/lib/prisma';
+import { getBaseUrl } from '@/lib/utils';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+    const baseUrl = await getBaseUrl();
     const pages = await prisma.post.findMany({
         select: {
             slug: true,
             updatedAt: true
         }
     });
-    console.log(baseUrl)
     return [
         {
             url: `${baseUrl}/articles`
