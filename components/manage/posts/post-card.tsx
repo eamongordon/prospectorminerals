@@ -1,7 +1,6 @@
 import BlurImage from "@/components/blur-image";
-import { placeholderBlurhash, random } from "@/lib/utils";
+import { placeholderBlurhash } from "@/lib/utils";
 import { Post } from "@prisma/client";
-import { BarChart, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 export default function PostCard({
@@ -9,7 +8,7 @@ export default function PostCard({
 }: {
   data: Post
 }) {
-  const url = `${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/${data.slug}`;
+  const url = `${process.env.VERCEL_PROJECT_PRODUCTION_URL ? "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://" + "localhost:3001"}/articles/${data.slug}`;
 
   return (
     <div className="relative rounded-lg border border-stone-200 pb-10 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white">
@@ -22,7 +21,7 @@ export default function PostCard({
             alt={data.title ?? "Card thumbnail"}
             width={500}
             height={400}
-            className="h-full object-cover"
+            className="h-full w-full object-cover"
             src={data.image ?? "/placeholder.png"}
             placeholder="blur"
             blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
@@ -34,7 +33,7 @@ export default function PostCard({
           )}
         </div>
         <div className="border-t border-stone-200 p-4 dark:border-stone-700">
-          <h3 className="my-0 truncate font-cal text-xl font-bold tracking-wide dark:text-white dark:text-white">
+          <h3 className="my-0 truncate  text-xl font-bold tracking-wide dark:text-white">
             {data.title}
           </h3>
           <p className="mt-2 line-clamp-1 text-sm font-normal leading-snug text-stone-500 dark:text-stone-400">
@@ -44,7 +43,7 @@ export default function PostCard({
       </Link>
       <div className="absolute bottom-4 flex w-full px-4">
         <a
-          href={"/"
+          href={url
             /*
             process.env.NEXT_PUBLIC_VERCEL_ENV
               ? `https://${url}`
