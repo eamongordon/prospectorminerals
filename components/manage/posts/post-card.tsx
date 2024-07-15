@@ -1,5 +1,5 @@
 import BlurImage from "@/components/blur-image";
-import { placeholderBlurhash } from "@/lib/utils";
+import { baseUrl, placeholderBlurhash } from "@/lib/utils";
 import { Post } from "@prisma/client";
 import Link from "next/link";
 
@@ -8,7 +8,7 @@ export default function PostCard({
 }: {
   data: Post
 }) {
-  const url = `${process.env.VERCEL_PROJECT_PRODUCTION_URL ? "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://" + "localhost:3001"}/articles/${data.slug}`;
+  const url = `${baseUrl}/articles/${data.slug}`;
 
   return (
     <div className="relative rounded-lg border border-stone-200 pb-10 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white">
