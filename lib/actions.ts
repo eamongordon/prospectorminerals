@@ -346,9 +346,9 @@ export const deleteUser = async () => {
   }
 };
 
-type FetchMineralsReturn<T extends string> = T extends 'display'
-  ? { results: MineralDisplayFieldset[], next: number | undefined }
-  : { results: MineralFullFieldset[], next: number | undefined };
+type FetchMineralsReturn<T extends string> = T extends 'full'
+  ? { results: MineralFullFieldset[], next: number | undefined }
+  : { results: MineralDisplayFieldset[], next: number | undefined };
 
 const photoSelectObject = {
   select: {
@@ -537,9 +537,9 @@ const localityFullSelectObj = {
 }
 
 
-type FetchLocalitiesReturn<T extends string> = T extends 'display'
-  ? { results: LocalityDisplayFieldset[], next: number | undefined }
-  : { results: LocalityFullFieldset[], next: number | undefined };
+type FetchLocalitiesReturn<T extends string> = T extends 'full'
+  ? { results: LocalityFullFieldset[], next: number | undefined }
+  : { results: LocalityDisplayFieldset[], next: number | undefined };
 
 
 export async function fetchLocalities<T extends string>({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: LocalitiesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: string }): Promise<FetchLocalitiesReturn<T>> {
@@ -645,9 +645,9 @@ export async function fetchPosts({ filterObj, cursor, limit, sortObj, fieldset }
 };
 
 
-type FetchPhotosReturn<T extends string> = T extends 'display'
-  ? { results: PhotoDisplayFieldset[], next: number | undefined }
-  : { results: PhotoFullFieldset[], next: number | undefined };
+type FetchPhotosReturn<T extends string> = T extends 'full'
+  ? { results: PhotoFullFieldset[], next: number | undefined }
+  : { results: PhotoDisplayFieldset[], next: number | undefined };
 
 const photoDisplaySelectObject = {
   name: true,
