@@ -56,6 +56,11 @@ const nextConfig = {
                 source: '/locality-map',
                 destination: '/localities',
                 permanent: true,
+            },
+            {
+                source: '/galleries/:path*',
+                destination: '/photos/:path*',
+                permanent: false,
             }
         ]
     },
