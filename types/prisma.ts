@@ -98,7 +98,55 @@ export type MineralDisplayFieldset = Prisma.MineralGetPayload<{
         slug: true,
     }
 }>
-
+/*
+export type MineralUniqueDisplayFieldset = Prisma.MineralGetPayload<{
+    select: {
+        name: true,
+        photos: {
+            take: 1,
+            select: {
+                photo: {
+                    select: {
+                        name: true,
+                        image: true,
+                        imageBlurhash: true,
+                    }
+                }
+            },
+            orderBy: {
+                featured: "desc"
+            }
+        },
+        number: true,
+        id: true,
+        slug: true,
+        description: true,
+    }
+}>
+*/
+/*
+export type LocalityUniqueDisplayFieldset = Prisma.LocalityGetPayload<{
+    select: {
+        name: true,
+        number: true,
+        id: true,
+        slug: true,
+        latitude: true,
+        longitude: true,
+        type: true,
+        coordinates_known: true,
+        photos: {
+            take: 1,
+            select: {
+                name: true,
+                image: true,
+                imageBlurhash: true,
+            }
+        },
+        description: true,
+    }
+}>
+*/
 export type LocalityDisplayFieldset = Prisma.LocalityGetPayload<{
     select: {
         name: true,
@@ -165,6 +213,24 @@ export type LocalityFullFieldset = Prisma.LocalityGetPayload<{
     },
 }>
 
+/*
+export type PhotoUniqueDisplayFieldset = Prisma.PhotoGetPayload<{
+    select: {
+        name: true,
+        image: true,
+        imageBlurhash: true,
+        number: true,
+        id: true,
+        locality: {
+            select: {
+                name: true
+            }
+        },
+        locality_fallback: true,
+        description: true,
+    }
+}>
+*/
 export type PhotoDisplayFieldset = Prisma.PhotoGetPayload<{
     select: {
         name: true,
