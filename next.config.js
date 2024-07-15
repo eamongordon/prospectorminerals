@@ -59,7 +59,7 @@ const nextConfig = {
             },
             {
                 source: '/galleries/:path*',
-                destination: '/photos/:path*',
+                destination: '/photos?search=:path*',
                 permanent: false,
             }
         ]
