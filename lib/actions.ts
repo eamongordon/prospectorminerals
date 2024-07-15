@@ -517,6 +517,27 @@ export async function fetchMinerals<T extends string>({ filterObj, cursor, limit
   } as FetchMineralsReturn<T>;
 }
 
+/*
+type FetchUniqueMineralReturn<T extends string> = T extends 'full'
+  ? MineralFullFieldset : MineralDisplayFieldset;
+
+export async function fetchUniqueMineral<T extends string>(slug: string, fieldset?: T): Promise<FetchUniqueMineralReturn<T>> {
+  let selectObj: Prisma.MineralSelect | undefined;
+  if (!fieldset || fieldset === 'display') {
+    selectObj = mineralDisplaySelectObj satisfies Prisma.MineralSelect;
+  } else if (fieldset === "full") {
+    selectObj = mineralFullSelectObj satisfies Prisma.MineralSelect;
+  }
+  const result = await prisma.mineral.findUnique({
+    where: {
+      slug: slug
+    },
+    select: selectObj
+  });
+  return result as FetchUniqueMineralReturn<T>;
+}
+*/
+
 const localityDisplaySelectObj = {
   name: true,
   number: true,
@@ -590,6 +611,27 @@ export async function fetchLocalities<T extends string>({ filterObj, cursor, lim
     next: results.length === limit ? results[results.length - 1].number : undefined
   } as FetchLocalitiesReturn<T>;
 };
+
+/*
+type FetchUniqueLocalityReturn<T extends string> = T extends 'full'
+  ? LocalityFullFieldset : LocalityDisplayFieldset;
+
+export async function FetchUniqueLocality<T extends string>({ slug, fieldset }: { slug: string, fieldset?: T }): Promise<FetchUniqueLocalityReturn<T>> {
+  let selectObj: Prisma.LocalitySelect | undefined;
+  if (!fieldset || fieldset === 'display') {
+    selectObj = localityDisplaySelectObj satisfies Prisma.LocalitySelect;
+  } else if (fieldset === "full") {
+    selectObj = localityFullSelectObj satisfies Prisma.LocalitySelect;
+  }
+  const result = await prisma.locality.findUnique({
+    where: {
+      slug: slug
+    },
+    select: selectObj
+  });
+  return result as FetchUniqueLocalityReturn<T>;
+}
+*/
 
 export async function fetchPosts({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: ArticlesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: string }) {
   let queryArray = [];
@@ -722,6 +764,27 @@ export async function fetchPhotos<T extends string>({ filterObj, cursor, limit, 
     next: results.length === limit ? results[results.length - 1].number : undefined
   } as FetchPhotosReturn<T>
 };
+
+/*
+type FetchUniquePhotoReturn<T extends string> = T extends 'full'
+  ? PhotoFullFieldset : PhotoDisplayFieldset;
+
+export async function FetchUniquePhotoReturn<T extends string>({ id, fieldset }: { id: string, fieldset?: T }): Promise<FetchUniquePhotoReturn<T>> {
+  let selectObj: Prisma.PhotoSelect | undefined;
+  if (!fieldset || fieldset === 'display') {
+    selectObj = photoDisplaySelectObject satisfies Prisma.PhotoSelect;
+  } else if (fieldset === "full") {
+    selectObj = photoFullSelectObject satisfies Prisma.PhotoSelect;
+  }
+  const result = await prisma.photo.findUnique({
+    where: {
+      id: id
+    },
+    select: selectObj
+  });
+  return result as FetchUniquePhotoReturn<T>;
+}
+*/
 
 /*
 export async function migrateTitleToName() {
