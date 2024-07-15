@@ -4,13 +4,14 @@ import './globals.css';
 import { Providers } from './providers';
 import { Analytics } from "@vercel/analytics/react";
 import { headers } from 'next/headers';
+import { baseUrl } from '@/lib/utils';
 
 const inter = Work_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Prospector Minerals',
   description: 'A comprehensive mineralogy resource.',
-  metadataBase: new URL(`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`),
+  metadataBase: new URL(baseUrl),
   alternates: {
     canonical: '/',
   },

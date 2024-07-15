@@ -3,6 +3,7 @@ import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "@/lib/prisma";
+import { baseUrl } from "../utils";
 
 declare module "next-auth" {
     interface User {
@@ -51,7 +52,7 @@ export default {
         colorScheme: "auto", // "auto" | "dark" | "light"
         brandColor: "#666565", // Hex color code
         //DOMAIN_UPDATE
-        logo: `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}/_next/image?url=%2FPM-Favicon-New-Square.png&w=128&q=75`, // Absolute URL to image
+        logo: `${baseUrl}/_next/image?url=%2FPM-Favicon-New-Square.png&w=128&q=75`, // Absolute URL to image
         buttonText: "#FFFFFF" // Hex color code
     },
     callbacks: {
