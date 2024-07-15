@@ -2,9 +2,7 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 export const baseUrl: string = process.env.NODE_ENV === "production"
-  ? process.env.VERCEL_ENV === "preview"
-    ? `https://${process.env.VERCEL_URL}`
-    : `https://${process.env.VERCEL_URL}`
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
   : `http://localhost:${process.env.PORT || 3000}`;
 
 export function cn(...inputs: ClassValue[]) {

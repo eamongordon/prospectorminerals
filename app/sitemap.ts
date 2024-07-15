@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
+import { baseUrl } from '@/lib/utils';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` || 'http://localhost:3001';
 
     return [
         {

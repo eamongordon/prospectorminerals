@@ -1,6 +1,7 @@
 import CreatePostButton from "@/components/manage/posts/create-post-button";
 import Posts from "@/components/manage/posts/posts";
 import { getSession } from "@/lib/auth";
+import { baseUrl } from "@/lib/utils";
 import { redirect } from "next/navigation";
 
 export default async function SitePosts() {
@@ -10,7 +11,7 @@ export default async function SitePosts() {
     redirect("/login");
   }
 
-  const url = `${process.env.VERCEL_PROJECT_PRODUCTION_URL ? "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://" + "localhost:3001"}/articles`;
+  const url = `${baseUrl}/articles`;
 
   return (
     <div className="mx-8">
