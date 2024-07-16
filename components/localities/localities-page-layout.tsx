@@ -1,7 +1,7 @@
 'use client'
 
-import { Tabs, Tab } from "@nextui-org/react";
-import { useState, useEffect, useRef } from 'react'
+import { Tabs, Tab, Skeleton } from "@nextui-org/react";
+import { Suspense, useState, useEffect, useRef } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useDebounce } from "use-debounce";
 import { Accordion, AccordionItem, Button } from '@nextui-org/react'
