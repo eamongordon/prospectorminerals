@@ -284,3 +284,20 @@ export type PhotoFullFieldset = Prisma.PhotoGetPayload<{
         }
     }
 }>
+
+// Utility type for converting latitude and longitude from Decimal to number
+type ConvertLatLong<T> = Omit<T, 'latitude' | 'longitude'> & {
+    latitude: number;
+    longitude: number;
+};
+
+export const convertLocalityDataToComponentType = <T extends LocalityDisplayFieldset | LocalityFullFieldset>(localities: T[]): ConvertLatLong<T>[] => {
+    return localities.map((locality) => ({
+        ...locality,
+        latitude: locality.latitude.toNumber(),
+        longitude: locality.longitude.toNumber(),
+    }));
+};
+
+export type LocalityDisplayFieldsetComponent = ConvertLatLong<LocalityDisplayFieldset>;
+export type LocalityFullFieldsetComponent = ConvertLatLong<LocalityFullFieldset>;
