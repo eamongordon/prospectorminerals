@@ -1,18 +1,14 @@
 'use client'
 
-import { Tabs, Tab, Skeleton } from "@nextui-org/react";
-import { Suspense, useState, useEffect, useRef } from 'react'
-import { useRouter, usePathname, useSearchParams } from 'next/navigation'
-import { useDebounce } from "use-debounce";
-import { Accordion, AccordionItem, Button } from '@nextui-org/react'
-import type { LocalitiesQueryParams, MineralListItem } from '@/types/types'
-import { Input } from '@nextui-org/react';
-import { Search as MagnifyingGlassIcon, Filter } from 'lucide-react';
-import LocalityCard from './locality-card';
-import { Children, cloneElement } from "react";
-import { Map, Rows } from 'lucide-react';
-import { MineralAssociatesSearch } from "../minerals/mineral-associates-search";
 import type { LocalityDisplayFieldsetComponent } from "@/types/prisma";
+import type { LocalitiesQueryParams, MineralListItem } from '@/types/types';
+import { Accordion, AccordionItem, Button, Input, Tab, Tabs } from "@nextui-org/react";
+import { Filter, Search as MagnifyingGlassIcon, Map, Rows } from 'lucide-react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { Children, cloneElement, useEffect, useRef, useState } from 'react';
+import { useDebounce } from "use-debounce";
+import { MineralAssociatesSearch } from "../minerals/mineral-associates-search";
+import LocalityCard from './locality-card';
 
 export default function LocalitiesPageLayout({ filterObj, localities, mapElement, clearButton }: { filterObj: LocalitiesQueryParams, localities: LocalityDisplayFieldsetComponent[], mapElement: React.ReactElement, clearButton?: React.ReactElement }) {
 
