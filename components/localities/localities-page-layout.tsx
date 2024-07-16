@@ -12,10 +12,9 @@ import LocalityCard from './locality-card';
 import { Children, cloneElement } from "react";
 import { Map, Rows } from 'lucide-react';
 import { MineralAssociatesSearch } from "../minerals/mineral-associates-search";
-import { LocalityDisplayFieldset } from "@/types/prisma";
+import type { LocalityDisplayFieldsetComponent } from "@/types/prisma";
 
-//chore: update any definition for localities
-export default function LocalitiesPageLayout({ filterObj, localities, mapElement, clearButton }: { filterObj: LocalitiesQueryParams, localities: LocalityDisplayFieldset[], mapElement: React.ReactElement, clearButton?: React.ReactElement }) {
+export default function LocalitiesPageLayout({ filterObj, localities, mapElement, clearButton }: { filterObj: LocalitiesQueryParams, localities: LocalityDisplayFieldsetComponent[], mapElement: React.ReactElement, clearButton?: React.ReactElement }) {
 
     const [coord, setCoord] = useState([51.505, -0.09])
 
@@ -58,8 +57,6 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
     const [noResultsLoading, setNoResultsLoading] = useState(false);
 
     function handleMineralsChange(mineralsValReturn: MineralListItem[]) {
-        console.log("CHANGED ASSOCIATES");
-        console.log(mineralsValReturn);
         setAssociatesVal(mineralsValReturn);
     }
 

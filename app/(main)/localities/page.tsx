@@ -6,15 +6,16 @@ import LocalityMap from '@/components/localities/locality-map';
 import { Skeleton } from '@nextui-org/react';
 import { Suspense } from 'react'
 import type { Metadata } from 'next'
+import { convertLocalityDataToComponentType } from "@/types/prisma";
 
 export const metadata: Metadata = {
-  title: 'Localities | Prospector Minerals',
-  description: 'Explore worldwide localities and mines at Prospector Minerals. Find information, photos, and minerals of mineral, rock, and geology localities and mines.',
-  openGraph: {
-    images: ['/Fluorite-164_horiz-Optimized.jpg'],
-    siteName: 'Prospector Minerals',
-    url: '/localities'
-  }
+    title: 'Localities | Prospector Minerals',
+    description: 'Explore worldwide localities and mines at Prospector Minerals. Find information, photos, and minerals of mineral, rock, and geology localities and mines.',
+    openGraph: {
+        images: ['/Fluorite-164_horiz-Optimized.jpg'],
+        siteName: 'Prospector Minerals',
+        url: '/localities'
+    }
 }
 
 const Page = async ({
@@ -43,12 +44,13 @@ const Page = async ({
     const localities = await fetchLocalities({ filterObj: { ...filterObj, minerals: minerals ? minerals.map((obj: MineralListItem) => obj.name) : undefined }, cursor: undefined, limit: 100, ...(property && order ? { sortObj: { property: property, order: order } } : {}) });
     //TODO: make Button re-render with new key
     const serializedKey = JSON.stringify({ filterObj, property, order });
+    const modifiedLocalities = convertLocalityDataToComponentType(localities.results);
     return (
         <main>
             <LocalitiesPageLayout
                 filterObj={{ ...filterObj, minerals: minerals }}
-                localities={localities.results}
-                mapElement={<Suspense fallback={<Skeleton className='h-[400px] w-full' />}><LocalityMap localities={localities.results} center={[25, 0]} zoom={2} /></Suspense>}
+                localities={modifiedLocalities}
+                mapElement={<Suspense fallback={<Skeleton className='h-[400px] w-full' />}><LocalityMap localities={modifiedLocalities} center={[25, 0]} zoom={2} /></Suspense>}
                 clearButton={
                     <ClearFilters key={serializedKey} />
                 }
