@@ -3,8 +3,6 @@ import { fetchLocalities } from '@/lib/actions';
 import type { MineralListItem } from '@/types/types';
 import ClearFilters from '@/components/localities/clear-filters';
 import LocalityMap from '@/components/localities/locality-map';
-import { Skeleton } from '@nextui-org/react';
-import { Suspense } from 'react'
 import type { Metadata } from 'next'
 import { convertLocalityDataToComponentType } from "@/types/prisma";
 
@@ -50,7 +48,7 @@ const Page = async ({
             <LocalitiesPageLayout
                 filterObj={{ ...filterObj, minerals: minerals }}
                 localities={modifiedLocalities}
-                mapElement={<Suspense fallback={<Skeleton className='h-[400px] w-full' />}><LocalityMap localities={modifiedLocalities} center={[25, 0]} zoom={2} /></Suspense>}
+                mapElement={<LocalityMap localities={modifiedLocalities} center={[25, 0]} zoom={2} />}
                 clearButton={
                     <ClearFilters key={serializedKey} />
                 }
