@@ -1,6 +1,5 @@
 "use client"
 
-import { LocalityDisplayFieldset } from '@/types/prisma';
 import { Card, CardFooter, Skeleton } from "@nextui-org/react";
 import L from 'leaflet';
 import "leaflet-defaulticon-compatibility";
@@ -12,10 +11,11 @@ import { Suspense } from 'react';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import BlurImage from '../blur-image';
 import './popup-styles.css';
+import type { LocalityDisplayFieldsetComponent } from '@/types/prisma';
 
 const inter = Work_Sans({ subsets: ['latin'] })
 
-export default function LocalityMap({ localities, center, zoom }: { localities: LocalityDisplayFieldset[], center: [number, number], zoom: number }) {
+export default function LocalityMap({ localities, center, zoom }: { localities: LocalityDisplayFieldsetComponent[], center: [number, number], zoom: number }) {
     const singleLocalityKnownIcon = L.icon({
         iconUrl: '/localities/PM-Single-Locality-Pin_Light.png', // Replace with your icon's path
         iconSize: [35, 35], // Adjust based on your icon's dimensions

@@ -9,6 +9,7 @@ import { Suspense } from 'react';
 import { MineralListItem } from '@/types/types';
 import type { Metadata, ResolvingMetadata } from 'next'
 import prisma from '@/lib/prisma';
+import { convertLocalityDataToComponentType } from '@/types/prisma';
 
 type Props = {
     params: { slug: string }
@@ -67,7 +68,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
     if (localityResult.results.length === 0) {
         return notFound();
     }
-    const locality = localityResult.results[0];
+    const convertedLocalityResult = convertLocalityDataToComponentType(localityResult.results);
+    const locality = convertedLocalityResult[0];
     let tableData = [];
     if (locality.longitude) {
         tableData.push({ property: "Longitude", value: locality.longitude.toString() });
