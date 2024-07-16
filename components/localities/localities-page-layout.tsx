@@ -171,7 +171,9 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                 <div className="flex-col items-center w-full">
                     <Tabs aria-label="Localities" classNames={
                         { base: 'flex justify-end', tabList: "w-48 absolute z-10 mt-2 mr-4 sm:m-2", panel: "py-0 px-0" }
-                    }>
+                    }
+                    destroyInactiveTabPanel={false}
+                    >
                         <Tab key="map"
                             title={
                                 <div className="flex items-center space-x-2">
