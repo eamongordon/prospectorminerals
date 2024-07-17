@@ -85,10 +85,9 @@ export default function HeaderComp({
                     <NavbarMenuToggle
                         aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                         className="mr-4 hidden sm:block lg:hidden xl:hidden"
-                        onChange={() => console.log('')}
                     />
                     <>
-                        <SearchModalButton {...(isMenuOpen ? { closeMenuCallback: setIsMenuOpen } : {})}><section className="max-w-screen-xl px-8 w-full"><SearchComp/></section></SearchModalButton>
+                        <SearchModalButton {...(isMenuOpen ? { closeMenuCallback: setIsMenuOpen } : {})}><section className="max-w-screen-xl px-8 w-full"><SearchComp /></section></SearchModalButton>
                     </>
                     {loggedIn ? (
                         <>
