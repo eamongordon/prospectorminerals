@@ -82,9 +82,7 @@ export const createPhotoBulk = async (
   }
 
   try {
-    console.log("itemsArray");
     const itemArray = JSON.parse(input);
-    console.log(itemArray);
     const newItems = await Promise.all(itemArray.map(async (obj: any) => {
       const fetchRes = await fetch(obj.image);
       const imageBlob = await fetchRes.blob();
@@ -110,8 +108,6 @@ export const createPhotoBulk = async (
         imageBlurhash: blurhash
       }
     }));
-    console.log("new items");
-    console.log(newItems);
     const response = prisma.photo.createMany({ data: newItems });
     return response;
   } catch (error: any) {
@@ -133,7 +129,6 @@ export const createMineralBulk = async (
   }
 
   try {
-    console.log("itemsArray");
     const itemArray = JSON.parse(input);
     const newItems = itemArray;
     const response = prisma.mineral.createMany({ data: newItems });
@@ -196,7 +191,6 @@ export const createRelationsBulk = async (
   }
 
   try {
-    console.log("itemsArray");
     const itemArray = JSON.parse(input);
     const newItems = itemArray.map((obj: any) => {
       return {
@@ -853,7 +847,6 @@ export async function addSlug() {
 // creating a separate function for this because we're not using FormData
 export const updatePost = async (data: Post) => {
   const session = await getSession();
-  console.log(session);
   if (!session?.user.id || !session.user.roles.includes("Admin")) {
     return {
       error: "Not authenticated",
