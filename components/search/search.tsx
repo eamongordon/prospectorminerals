@@ -59,13 +59,7 @@ export default function Search({ isHero }: { isHero?: boolean }) {
 
     const MAX_RESULTS_LENGTH = 3;
 
-    useEffect(() => {
-        console.log("isFocused");
-        console.log(isFocused)
-    }, [isFocused]);
-
     function fetchResults() {
-        console.log("fetchRes")
         initialLoad.current = true;
         Promise.all([
             fetchMinerals({ filterObj: { name: query }, limit: 3, fieldset: 'display' }),
