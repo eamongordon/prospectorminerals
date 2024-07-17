@@ -12,9 +12,6 @@ export const metadata: Metadata = {
   title: 'Prospector Minerals',
   description: 'A comprehensive mineralogy resource.',
   metadataBase: new URL(baseUrl),
-  alternates: {
-    canonical: '/',
-  },
   openGraph: {
     images: ['/Fluorite-164_horiz-Optimized.jpg'],
     siteName: 'Prospector Minerals',
