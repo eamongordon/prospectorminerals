@@ -1,14 +1,14 @@
 "use client"
 
-import type { LocalityDisplayFieldsetComponent } from '@/types/prisma';
 import { Card, CardFooter, Skeleton } from "@nextui-org/react";
 import 'leaflet/dist/leaflet.css';
-import dynamic from "next/dynamic";
 import { Work_Sans } from 'next/font/google';
 import Link from 'next/link';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import BlurImage from '../blur-image';
 import './popup-styles.css';
+import type { LocalityDisplayFieldsetComponent } from '@/types/prisma';
+import dynamic from "next/dynamic";
 
 const inter = Work_Sans({ subsets: ['latin'] })
 
@@ -31,33 +31,23 @@ export default function LocalityMap({ localities, center, zoom }: { localities: 
         ssr: false,
     }), []);
 
-    const icons = useMemo(() => {
-        const L = require('leaflet'); // Correctly placed require statement
-        return {
-            singleLocalityKnownIcon: L.icon({
-                iconUrl: '/localities/PM-Single-Locality-Pin_Light.png',
-                iconSize: [35, 35],
-                iconAnchor: [17.5, 35],
-            }),
-            singleLocalityEstimatedIcon: L.icon({
-                iconUrl: '/localities/PM-Single-Locality-Pin-Dark.png',
-                iconSize: [35, 35],
-                iconAnchor: [17.5, 35],
-            }),
-            groupLocalityKnownIcon: L.icon({
-                iconUrl: '/localities/PM-Group-Locality-Pin_Light.png',
-                iconSize: [35, 35],
-                iconAnchor: [17.5, 35],
-            }),
-            groupLocalityEstimatedIcon: L.icon({
-                iconUrl: '/localities/PM-Group-Locality-Pin_Dark.png',
-                iconSize: [35, 35],
-                iconAnchor: [17.5, 35],
-            }),
-        };
-    }, []);
+    const [icons, setIcons] = useState({
+        singleLocalityKnownIcon: null,
+        singleLocalityEstimatedIcon: null,
+        groupLocalityKnownIcon: null,
+        groupLocalityEstimatedIcon: null,
+    });
 
-    console.log("RERENDER LOCALITY MAP");
+    useEffect(() => {
+        const L = require('leaflet');
+        const newIcons = {
+            singleLocalityKnownIcon: L.icon({ iconUrl: '/localities/PM-Single-Locality-Pin_Light.png', iconSize: [35, 35], iconAnchor: [17.5, 35] }),
+            singleLocalityEstimatedIcon: L.icon({ iconUrl: '/localities/PM-Single-Locality-Pin-Dark.png', iconSize: [35, 35], iconAnchor: [17.5, 35] }),
+            groupLocalityKnownIcon: L.icon({ iconUrl: '/localities/PM-Group-Locality-Pin_Light.png', iconSize: [35, 35], iconAnchor: [17.5, 35] }),
+            groupLocalityEstimatedIcon: L.icon({ iconUrl: '/localities/PM-Group-Locality-Pin_Dark.png', iconSize: [35, 35], iconAnchor: [17.5, 35] }),
+        };
+        setIcons(newIcons);
+    }, []);
 
     return (
         <MapContainer
