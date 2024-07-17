@@ -85,7 +85,6 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
         }
         const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
         if (!searchQuery) {
-            console.log("NO SEARCHQUERY")
             current.delete("name");
         } else {
             current.set("name", searchQuery);

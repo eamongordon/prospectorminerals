@@ -156,15 +156,12 @@ export default function MineralPageLayout({
             initialChemistryRender.current = false
             return
         }
-        console.log("UseEffectChemistryChange");
-        //TO REMOVE
         const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
         if (!chemistryVal) {
             current.delete("chemistry");
         } else {
             current.set("chemistry", chemistryVal.join(','));
         }
-        //setChemistryInput("");
         const search = current.toString();
         const queryParam = search ? `?${search}` : "";
         router.push(`${pathname}${queryParam}`);
@@ -211,23 +208,18 @@ export default function MineralPageLayout({
             initialAssociatesRender.current = false
             return
         }
-        console.log("UseEffectChemistryChange");
-        //TO REMOVE
         const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
         if (!associatesVal) {
             current.delete("associates");
         } else {
             current.set("associates", JSON.stringify(associatesVal));
         }
-        //setChemistryInput("");
         const search = current.toString();
         const queryParam = search ? `?${search}` : "";
         router.push(`${pathname}${queryParam}`);
     }, [associatesVal]);
 
     function handleMineralsChange(mineralsValReturn: MineralListItem[]) {
-        console.log("CHANGED ASSOCIATES");
-        console.log(mineralsValReturn);
         setAssociatesVal(mineralsValReturn);
     }
 
@@ -378,7 +370,6 @@ export default function MineralPageLayout({
                                             if (e.currentTarget.value.length) {
                                                 let currentChemistry = chemistryVal ? [...chemistryVal] : [];
                                                 currentChemistry?.push(e.currentTarget.value);
-                                                console.log(e.currentTarget.value.toString())
                                                 setChemistryVal(currentChemistry);
                                                 setChemistryInput("");
                                             }
@@ -420,9 +411,6 @@ export default function MineralPageLayout({
                                                         } else {
                                                             setChemistryVal(newArray);
                                                         }
-                                                        //setTimeout(() => {
-                                                        console.log("cheminput - " + chemistryInput)
-                                                        //}, 200)
                                                     }}
                                                     key={index}
                                                     variant="bordered"
