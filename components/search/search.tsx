@@ -60,6 +60,7 @@ export default function Search({ isHero }: { isHero?: boolean }) {
     const MAX_RESULTS_LENGTH = 3;
 
     function fetchResults() {
+        console.log("fetching results");
         initialLoad.current = true;
         Promise.all([
             fetchMinerals({ filterObj: { name: query }, limit: 3, fieldset: 'display' }),
@@ -89,7 +90,6 @@ export default function Search({ isHero }: { isHero?: boolean }) {
         if (resultsLoading) {
             setResultsLoading(false);
         }
-        console.log("RESULTSCHANGE")
     }, [results])
 
     const router = useRouter();
