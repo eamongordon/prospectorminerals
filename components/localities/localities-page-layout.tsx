@@ -64,8 +64,6 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
             initialChemistryRender.current = false
             return
         }
-        console.log("UseEffectChemistryChange");
-        //TO REMOVE
         const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
         if (!associatesVal) {
             current.delete("minerals");
