@@ -1,14 +1,14 @@
 "use client"
 
+import type { LocalityDisplayFieldsetComponent } from '@/types/prisma';
 import { Card, CardFooter, Skeleton } from "@nextui-org/react";
 import 'leaflet/dist/leaflet.css';
+import dynamic from "next/dynamic";
 import { Work_Sans } from 'next/font/google';
 import Link from 'next/link';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import BlurImage from '../blur-image';
 import './popup-styles.css';
-import type { LocalityDisplayFieldsetComponent } from '@/types/prisma';
-import dynamic from "next/dynamic";
 
 const inter = Work_Sans({ subsets: ['latin'] })
 
@@ -31,34 +31,33 @@ export default function LocalityMap({ localities, center, zoom }: { localities: 
         ssr: false,
     }), []);
 
-    const [singleLocalityKnownIcon, setSingleLocalityKnownIcon] = useState(null);
-    const [singleLocalityEstimatedIcon, setSingleLocalityEstimatedIcon] = useState(null);
-    const [groupLocalityKnownIcon, setGroupLocalityKnownIcon] = useState(null);
-    const [groupLocalityEstimatedIcon, setGroupLocalityEstimatedIcon] = useState(null);
-
-    useEffect(() => {
-        const L = require('leaflet');
-        setSingleLocalityKnownIcon(L.icon({
-            iconUrl: '/localities/PM-Single-Locality-Pin_Light.png',
-            iconSize: [35, 35],
-            iconAnchor: [17.5, 35],
-        }));
-        setSingleLocalityEstimatedIcon(L.icon({
-            iconUrl: '/localities/PM-Single-Locality-Pin-Dark.png',
-            iconSize: [35, 35],
-            iconAnchor: [17.5, 35],
-        }));
-        setGroupLocalityKnownIcon(L.icon({
-            iconUrl: '/localities/PM-Group-Locality-Pin_Light.png',
-            iconSize: [35, 35],
-            iconAnchor: [17.5, 35],
-        }));
-        setGroupLocalityEstimatedIcon(L.icon({
-            iconUrl: '/localities/PM-Group-Locality-Pin_Dark.png',
-            iconSize: [35, 35],
-            iconAnchor: [17.5, 35],
-        }));
+    const icons = useMemo(() => {
+        const L = require('leaflet'); // Correctly placed require statement
+        return {
+            singleLocalityKnownIcon: L.icon({
+                iconUrl: '/localities/PM-Single-Locality-Pin_Light.png',
+                iconSize: [35, 35],
+                iconAnchor: [17.5, 35],
+            }),
+            singleLocalityEstimatedIcon: L.icon({
+                iconUrl: '/localities/PM-Single-Locality-Pin-Dark.png',
+                iconSize: [35, 35],
+                iconAnchor: [17.5, 35],
+            }),
+            groupLocalityKnownIcon: L.icon({
+                iconUrl: '/localities/PM-Group-Locality-Pin_Light.png',
+                iconSize: [35, 35],
+                iconAnchor: [17.5, 35],
+            }),
+            groupLocalityEstimatedIcon: L.icon({
+                iconUrl: '/localities/PM-Group-Locality-Pin_Dark.png',
+                iconSize: [35, 35],
+                iconAnchor: [17.5, 35],
+            }),
+        };
     }, []);
+
+    console.log("RERENDER LOCALITY MAP");
 
     return (
         <MapContainer
@@ -69,7 +68,7 @@ export default function LocalityMap({ localities, center, zoom }: { localities: 
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             {localities.map((locality) => {
-                return (<Marker key={locality.id} position={[Number(locality.latitude), Number(locality.longitude)]} icon={locality.type === 'Single' ? locality.coordinates_known ? singleLocalityKnownIcon! : singleLocalityEstimatedIcon! : locality.coordinates_known ? groupLocalityKnownIcon! : groupLocalityEstimatedIcon!} >
+                return (<Marker key={locality.id} position={[Number(locality.latitude), Number(locality.longitude)]} icon={locality.type === 'Single' ? locality.coordinates_known ? icons.singleLocalityKnownIcon! : icons.singleLocalityEstimatedIcon! : locality.coordinates_known ? icons.groupLocalityKnownIcon! : icons.groupLocalityEstimatedIcon!} >
                     <Popup className={`${inter.className} w-[200px]`} offset={[0, -21]}>
                         <div key={locality.id}>
                             <Link href={`/localities/${locality.slug}`}>
