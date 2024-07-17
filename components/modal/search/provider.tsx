@@ -16,7 +16,6 @@ export function SearchModalProvider({ children }: { children: ReactNode }) {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    console.log("useEffect")
     if (showModal) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "auto";
   }, [showModal]);
