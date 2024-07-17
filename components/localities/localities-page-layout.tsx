@@ -12,6 +12,7 @@ import LocalityCard from './locality-card';
 
 export default function LocalitiesPageLayout({ filterObj, localities, mapElement, clearButton }: { filterObj: LocalitiesQueryParams, localities: LocalityDisplayFieldsetComponent[], mapElement: React.ReactElement, clearButton?: React.ReactElement }) {
 
+    const [selectedTab, SetSelectedTab] = useState<string | number>("map");
     const [coord, setCoord] = useState([51.505, -0.09])
 
     const SearchLocation = () => {
@@ -84,6 +85,7 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
         }
         const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
         if (!searchQuery) {
+            console.log("NO SEARCHQUERY")
             current.delete("name");
         } else {
             current.set("name", searchQuery);
@@ -92,8 +94,6 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
         const queryParam = search ? `?${search}` : "";
         router.push(`${pathname}${queryParam}`);
     }, [searchQuery]);
-
-    //console.log(chemistryVal);
 
     const initialRender = useRef(true);
 
@@ -132,11 +132,6 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                         radius="md"
                         value={searchText || ""}
                         isClearable={searchText ? true : false}
-                        /*
-                        classNames={{
-                            inputWrapper: ["h-12 sm:h-auto"]
-                        }}
-                        */
                         onValueChange={setSearchText}
                         endContent={
                             searchText ? (null) : (<><div className='h-full flex items-center'><MagnifyingGlassIcon /></div></>)
@@ -172,7 +167,8 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                     <Tabs aria-label="Localities" classNames={
                         { base: 'flex justify-end', tabList: "w-48 absolute z-10 mt-2 mr-4 sm:m-2", panel: "py-0 px-0" }
                     }
-                    destroyInactiveTabPanel={false}
+                        onSelectionChange={SetSelectedTab}
+                        destroyInactiveTabPanel={false}
                     >
                         <Tab key="map"
                             title={
@@ -182,7 +178,6 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                                 </div>
                             }
                         >
-                            {mapElement}
                         </Tab>
                         <Tab key="list" title={
                             <div className="flex items-center space-x-2">
@@ -215,9 +210,11 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                             }
                         </Tab>
                     </Tabs>
+                    <div className={`contents w-full max-h-[400px] aspect-[5/3] ${selectedTab !== "map" ? "hidden" : ""}`}>
+                        {mapElement}
+                    </div>
                 </div>
             </div >
         </div >
     )
-
 }
