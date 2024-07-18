@@ -50,7 +50,6 @@ export default function InfiniteScrollPhotos({
     }
   }, [inView]);
 
-  console.log(photos)
   return (
     <ul
       role='list'
