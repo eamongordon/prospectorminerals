@@ -1,10 +1,8 @@
-"use client";
-
-import { MDXRemote, MDXRemoteProps } from "next-mdx-remote";
+import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc";
 import { replaceLinks } from "@/lib/remark-plugins";
 import BlurImage from "@/components/blur-image";
 
-export default function MDX({ source }: { source: MDXRemoteProps }) {
+export default function MDX({ source }: { source: string }) {
   const components = {
     a: replaceLinks,
     BlurImage
@@ -16,7 +14,7 @@ export default function MDX({ source }: { source: MDXRemoteProps }) {
       suppressHydrationWarning={true}
     >
       {/* @ts-ignore */}
-      <MDXRemote {...source} components={components} />
+      <MDXRemote source={source} components={components} />
     </article>
   );
 }
