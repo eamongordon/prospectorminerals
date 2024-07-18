@@ -70,7 +70,7 @@ export default async function SitePostPage({
             src={data.image ?? "/placeholder.png"}
           />
         </div>
-        <MDX source={data.mdxSource} />
+        <MDX source={data.transformedContent} />
       </main>
     </>
   );

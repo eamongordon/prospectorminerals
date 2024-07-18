@@ -1,6 +1,5 @@
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
-import { serialize } from "next-mdx-remote/serialize";
 
 export async function getPostsForSite() {
 
@@ -45,11 +44,11 @@ export async function getPostData(slug: string) {
 
       if (!data) return null;
 
-      const mdxSource = await getMdxSource(data.content!)
+      const transformedContent = getTransformedContent(data.content!);
 
       return {
         ...data,
-        mdxSource
+        transformedContent
       };
     },
     [`post-${slug}`],
@@ -60,17 +59,7 @@ export async function getPostData(slug: string) {
   )();
 }
 
-async function getMdxSource(postContents: string) {
-  // transforms links like <link> to [link](link) as MDX doesn't support <link> syntax
+const getTransformedContent = (postContents: string): string =>
+    // transforms links like <link> to [link](link) as MDX doesn't support <link> syntax
   // https://mdxjs.com/docs/what-is-mdx/#markdown
-  const content =
-    postContents?.replaceAll(/<(https?:\/\/\S+)>/g, "[$1]($1)") ?? "";
-  // Serialize the content string into MDX
-  const mdxSource = await serialize(content, {
-    mdxOptions: {
-      remarkPlugins: [],
-    },
-  });
-
-  return mdxSource;
-}
+  postContents?.replaceAll(/<(https?:\/\/\S+)>/g, "[$1]($1)") ?? "";
