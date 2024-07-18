@@ -70,28 +70,7 @@ export default async function SitePostPage({
             src={data.image ?? "/placeholder.png"}
           />
         </div>
-
         <MDX source={data.mdxSource} />
-
-        {data.adjacentPosts.length > 0 && (
-          <div className="relative mb-20 mt-10 sm:mt-20">
-            <div
-              className="absolute inset-0 flex items-center"
-              aria-hidden="true"
-            >
-              <div className="w-full border-t border-stone-300 dark:border-stone-700" />
-            </div>
-          </div>
-        )}
-        {data.adjacentPosts && (
-          /*
-          <div className="mx-5 mb-20 grid max-w-screen-xl grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 xl:mx-auto xl:grid-cols-3">
-            {data.adjacentPosts.map((data: any, index: number) => (
-              <BlogCard key={index} data={data} />
-            ))}
-          </div>*/
-          <></>
-        )}
       </main>
     </>
   );

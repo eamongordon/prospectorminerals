@@ -2,7 +2,7 @@ import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
 import { serialize } from "next-mdx-remote/serialize";
 
-export async function getPostsForSite(domain: string) {
+export async function getPostsForSite() {
 
   return await unstable_cache(
     async () => {
@@ -45,30 +45,11 @@ export async function getPostData(slug: string) {
 
       if (!data) return null;
 
-      const [mdxSource, adjacentPosts] = await Promise.all([
-        getMdxSource(data.content!),
-        prisma.post.findMany({
-          where: {
-            published: true,
-            NOT: {
-              id: data.id,
-            },
-          },
-          select: {
-            slug: true,
-            title: true,
-            createdAt: true,
-            description: true,
-            image: true,
-            imageBlurhash: true,
-          },
-        }),
-      ]);
+      const mdxSource = await getMdxSource(data.content!)
 
       return {
         ...data,
-        mdxSource,
-        adjacentPosts,
+        mdxSource
       };
     },
     [`post-${slug}`],
