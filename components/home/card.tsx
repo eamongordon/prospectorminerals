@@ -24,7 +24,8 @@ export default function NavCard({
             <Card className="w-[330px] h-[240px] dark:border dark:border-gray-400">
                 <BlurImage
                     alt="Card background"
-                    fill
+                    height={330}
+                    width={240}
                     className="z-0 w-full h-full object-cover brightness-50"
                     src={image ? image : "/Fluorite-164_horiz-Optimized.jpg"}
                     blurDataURL={blurDataURL ? blurDataURL : undefined}
