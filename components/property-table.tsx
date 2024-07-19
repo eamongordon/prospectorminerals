@@ -16,7 +16,7 @@ type TableData = {
 
 export default function PropertyTable({ data }: { data: TableData[] }) {
     return data.length ? (
-        <Table shadow="none">
+        <Table shadow="none" aria-label="Properties">
             <TableHeader>
                 <TableColumn className="text-md">Properties</TableColumn>
                 <TableColumn><></></TableColumn>
