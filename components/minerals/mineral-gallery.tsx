@@ -43,6 +43,7 @@ export default function Gallery({ data }: { data: GalleryItem[] }) {
                         className={"group-hover:brightness-50 group-hover:blur-sm rounded-xl z-0 w-full h-full object-cover absolute"}
                         src={data[0]?.image || "/Amazonite-106_horiz.jpeg"}
                         blurDataURL={data[0]?.blurDataURL}
+                        priority={true}
                     />
                     <div className='absolute'>
                         <h3 className="text-center group-hover:block hidden text-md sm:text-xl z-10 font-medium text-white">{data[0]?.title}</h3>
