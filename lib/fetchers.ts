@@ -1,37 +1,6 @@
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
 
-export async function getPostsForSite() {
-
-  return await unstable_cache(
-    async () => {
-      return prisma.post.findMany({
-        where: {
-          published: true,
-        },
-        select: {
-          title: true,
-          description: true,
-          slug: true,
-          image: true,
-          imageBlurhash: true,
-          createdAt: true,
-        },
-        orderBy: [
-          {
-            createdAt: "desc",
-          },
-        ],
-      });
-    },
-    [`posts`],
-    {
-      revalidate: 900,
-      tags: [`posts`],
-    },
-  )();
-}
-
 export async function getPostData(slug: string) {
   return await unstable_cache(
     async () => {
