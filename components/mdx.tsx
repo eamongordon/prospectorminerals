@@ -1,4 +1,4 @@
-import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc";
+import { MDXRemote } from "next-mdx-remote/rsc";
 import { replaceLinks } from "@/lib/remark-plugins";
 import BlurImage from "@/components/blur-image";
 
