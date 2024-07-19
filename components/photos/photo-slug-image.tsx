@@ -9,13 +9,12 @@ export default function PhotoSlugImage({ src, blurDataURL, alt }: { src?: string
     return (
         <div className='group relative flex items-center justify-center aspect-video' onClick={() => setExpanded(!expanded)}>
             <BlurImage
-                className={`rounded-xl z-0 group-hover:brightness-50 group-hover:blur-sm`}
+                className={`rounded-xl z-0 object-cover group-hover:brightness-50 group-hover:blur-sm`}
                 src={src ? src : '/Cavansite-45.jpeg'}
-                objectFit='cover'
                 blurDataURL={blurDataURL || undefined}
                 alt={alt ? alt : ""}
                 {...expanded ? {
-                    height: 200, width: 200, style: {
+                    height: 1000, width: 1000, style: {
                         width: '100%',
                         height: 'auto', // Allow the height to adjust automatically
                     }
