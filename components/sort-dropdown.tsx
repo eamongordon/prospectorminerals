@@ -7,7 +7,8 @@ import { Select, SelectItem } from "@nextui-org/react";
 const defaultSortOptions = [
     { label: "Default", value: "default" },
     { label: "A - Z", value: "name,asc" },
-    { label: "Z - A", value: "name,desc" }
+    { label: "Z - A", value: "name,desc" },
+    { label: "Recently Updated", value: "updatedAt,desc" },
 ];
 
 export default function SortDropdown({ sort, sortOptions }: { sort?: string, sortOptions?: { label: string, value: string }[] }) {
