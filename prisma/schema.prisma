@@ -91,6 +91,7 @@ model Mineral {
   localities             Locality[]
   number                 Int              @unique @default(autoincrement())
   photos                 PhotoOnMineral[]
+  updatedAt              DateTime         @updatedAt
 
   @@index([slug])
 }
@@ -130,6 +131,7 @@ model Photo {
   locality_fallback String?
   locality          Locality?        @relation(fields: [localityId], references: [id])
   localityId        String?
+  updatedAt         DateTime         @updatedAt
 
   @@index([id])
 }
@@ -146,6 +148,7 @@ model Locality {
   number            Int       @unique @default(autoincrement())
   minerals          Mineral[]
   photos            Photo[]
+  updatedAt         DateTime  @updatedAt
 
   @@index([slug])
 }
@@ -157,7 +160,6 @@ model PhotoOnMineral {
   photoId    String // relation scalar field (used in the `@relation` attribute above)
   featured   Boolean  @default(false)
   assignedAt DateTime @default(now())
-  assignedBy String?
 
   @@id([mineralId, photoId])
 }
