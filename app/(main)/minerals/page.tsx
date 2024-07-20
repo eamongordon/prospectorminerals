@@ -15,12 +15,6 @@ export const metadata: Metadata = {
     }
 }
 
-const sortOptions = [
-    { label: "Default", value: "default" },
-    { label: "A → Z", value: "name,asc" },
-    { label: "Z → A", value: "name,desc" }
-];
-
 const Page = async ({
     searchParams
 }: {
@@ -66,7 +60,6 @@ const Page = async ({
                             }
                             sortDropdownElem={
                                 <SortDropdown
-                                    sortOptions={sortOptions}
                                     {...(property && order ? { sort: `${property},${order}` } : {})}
                                 />
                             }
