@@ -48,8 +48,9 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: Min
     }, [inView])
 
     async function loadMorePhotos(isInput?: boolean) {
+        console.log("loadMoreAssociatesResults")
         if (isInput) {
-            const photosQuery = await fetchMinerals({ filterObj: { name: chemistryInput }, cursor: undefined, limit: 5 });
+            const photosQuery = await fetchMinerals({ filterObj: { name: chemistryQuery }, cursor: undefined, limit: 5 });
             if (!initialLoad.current) {
                 initialLoad.current = true;
             }
@@ -145,6 +146,7 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: Min
                                         alt={obj.name}
                                         className="rounded-full object-cover"
                                         src={obj.image}
+                                        blurDataURL={obj.imageBlurhash || undefined}
                                     /> : undefined
                                 }
                             >
@@ -187,14 +189,16 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: Min
             >
                 {(item) => (
                     <ListboxItem
-                        startContent={item.photos.length > 0 && item.photos[0].photo.image ? <BlurImage
-                            width={28}
-                            height={28}
-                            quality={25}
-                            alt={"Name"}
-                            className="rounded-full h-6 w-6"
-                            src={item.photos[0].photo.image}
-                        /> : undefined}
+                        startContent={item.photos.length > 0 && item.photos[0].photo.image ?
+                            <BlurImage
+                                width={24}
+                                height={24}
+                                quality={25}
+                                alt={item.name}
+                                className="rounded-full h-6 w-6 object-cover"
+                                src={item.photos[0].photo.image}
+                                blurDataURL={item.photos[0].photo.imageBlurhash || undefined}
+                            /> : undefined}
                         key={item.name}
                     /*
                     endContent={chemistryVal?.includes(item.key) ? (

@@ -68,7 +68,7 @@ export default async function Page({ params }: Props) {
                     {photo.minerals.length ?
                         <>
                             <h2 className='text-2xl font-semibold'>Minerals In this Photo</h2>
-                            <MineralTags tags={photo.minerals.map((obj) => { return { name: obj.mineral.name, image: obj.mineral.photos[0].photo.image, slug: obj.mineral.slug } as MineralListItem })} />
+                            <MineralTags tags={photo.minerals.map((obj) => { return { name: obj.mineral.name, image: obj.mineral.photos[0].photo.image, slug: obj.mineral.slug, imageBlurhash: obj.mineral.photos[0].photo.imageBlurhash} as MineralListItem })} />
                         </> : null}
                 </div>
             </div>

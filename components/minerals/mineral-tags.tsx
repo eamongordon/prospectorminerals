@@ -21,6 +21,7 @@ export default function MineralTags({ tags }: { tags: MineralListItem[] }) {
                                     quality={25}
                                     alt={obj.name}
                                     src={obj.image}
+                                    blurDataURL={obj.imageBlurhash || undefined}
                                 />
                                 : undefined
                             }
