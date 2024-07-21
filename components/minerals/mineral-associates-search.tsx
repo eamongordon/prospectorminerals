@@ -3,10 +3,11 @@
 import { fetchMinerals } from '@/lib/actions';
 import type { MineralDisplayFieldset } from "@/types/prisma";
 import { MineralListItem } from '@/types/types';
-import { Avatar, Chip, Listbox, ListboxItem, Spinner, Textarea } from '@nextui-org/react';
+import { Chip, Listbox, ListboxItem, Spinner, Textarea } from '@nextui-org/react';
 import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useDebounce } from "use-debounce";
+import BlurImage from '../blur-image';
 
 export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: MineralListItem[], onChange: any }) {
     const [mineralsVal, setMineralsVal] = useState<MineralListItem[] | undefined>(minerals);
@@ -121,7 +122,7 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: Min
                 }}
                 //display chips below input, change to endContent
                 endContent={
-                    (minerals?.map((obj: any, index) => {
+                    (minerals?.map((obj: MineralListItem, index) => {
                         return (
                             <Chip className="mr-1 min-h-[28px]"
                                 size="md"
@@ -136,7 +137,12 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: Min
                                 key={index}
                                 variant="flat"
                                 avatar={obj.image ?
-                                    <Avatar
+                                    <BlurImage
+                                        width={24}
+                                        height={24}
+                                        quality={25}
+                                        alt={obj.name}
+                                        className="rounded-full object-cover"
                                         src={obj.image}
                                     /> : undefined
                                 }
@@ -180,7 +186,14 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: Min
             >
                 {(item) => (
                     <ListboxItem
-                        startContent={item.photos.length > 0 && item.photos[0].photo.image ? <Avatar alt={item.name} className="w-6 h-6" src={item.photos[0].photo.image} /> : undefined}
+                        startContent={item.photos.length > 0 && item.photos[0].photo.image ? <BlurImage
+                            width={28}
+                            height={28}
+                            quality={25}
+                            alt={"Name"}
+                            className="rounded-full h-6 w-6"
+                            src={item.photos[0].photo.image}
+                        /> : undefined}
                         key={item.name}
                     /*
                     endContent={chemistryVal?.includes(item.key) ? (
