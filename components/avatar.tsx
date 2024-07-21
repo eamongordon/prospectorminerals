@@ -1,6 +1,6 @@
 import { forwardRef, useMemo, ForwardedRef } from "react";
 import { AvatarIcon, useAvatar, AvatarProps } from "@nextui-org/react";
-import Image, {type ImageProps} from "next/image";
+import Image, { type ImageProps } from "next/image";
 
 interface CustomAvatarProps extends AvatarProps {
     alt?: string;
@@ -59,4 +59,5 @@ const CustomAvatar = forwardRef((props: CustomAvatarProps, ref: ForwardedRef<HTM
     );
 });
 
+CustomAvatar.displayName = "CustomAvatar";
 export default CustomAvatar;
