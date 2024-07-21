@@ -1,15 +1,16 @@
 "use client"
 
-import { useState, useEffect } from "react";
-import { Navbar, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, NavbarBrand, NavbarContent, NavbarItem, Link as UILink, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Divider, Avatar, Button } from "@nextui-org/react";
-import PMLogo from "./pmLogo";
+import { Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle, Link as UILink } from "@nextui-org/react";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
-import { signOut } from "next-auth/react";
-import LoginModalButton from './registration/login-modal-button';
+import { useEffect, useState } from "react";
+import CustomAvatar from "./avatar";
 import LoginModal from './modal/login';
-import SearchModalButton from "./search/search-button";
+import PMLogo from "./pmLogo";
+import LoginModalButton from './registration/login-modal-button';
 import SearchComp from './search/search';
+import SearchModalButton from "./search/search-button";
 
 //import RegModal from './next-ui-modal';
 
@@ -93,7 +94,7 @@ export default function HeaderComp({
                         <>
                             <Dropdown placement="bottom-end">
                                 <DropdownTrigger>
-                                    <Avatar
+                                    <CustomAvatar
                                         isBordered
                                         as="button"
                                         className="hidden sm:flex transition-transform"
@@ -101,6 +102,8 @@ export default function HeaderComp({
                                         name={name ? name : undefined}
                                         size="sm"
                                         src={image ? image : undefined}
+                                        height={32}
+                                        width={32}
                                     />
                                 </DropdownTrigger>
                                 <DropdownMenu aria-label="Profile Actions" variant="flat" onAction={(item) => {
@@ -158,7 +161,7 @@ export default function HeaderComp({
                             <Dropdown placement="bottom-start">
                                 <DropdownTrigger>
                                     <NavbarContent className="flex items-center">
-                                        <Avatar
+                                        <CustomAvatar
                                             isBordered
                                             as="button"
                                             className="transition-transform"
@@ -166,6 +169,8 @@ export default function HeaderComp({
                                             name={name ? name : undefined}
                                             size="md"
                                             src={image ? image : undefined}
+                                            height={40}
+                                            width={40}
                                         />
                                         <div className="h-14 gap-2 py-1">
                                             <p className="text-sm">Signed in as</p>
