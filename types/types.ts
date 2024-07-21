@@ -46,6 +46,7 @@ export type MineralListItem = {
     name: string,
     image?: string,
     slug?: string,
+    imageBlurhash?: string
 }
 
 export type PhotosFilterObj = {
