@@ -36,6 +36,7 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: Min
             initialRender.current = false;
             return;
         }
+        loadMorePhotos(true);
     }, [chemistryQuery]);
 
     useEffect(() => {
