@@ -1,6 +1,7 @@
 import type { MineralListItem } from "@/types/types";
-import { Chip, Avatar } from "@nextui-org/react";
+import { Chip } from "@nextui-org/react";
 import Link from "next/link";
+import BlurImage from "../blur-image";
 
 export default function MineralTags({ tags }: { tags: MineralListItem[] }) {
     return (
@@ -12,11 +13,16 @@ export default function MineralTags({ tags }: { tags: MineralListItem[] }) {
                             size="lg"
                             key={index}
                             variant="solid"
-                            classNames={{ base: 'hover:opacity-80' }}
+                            classNames={{ base: 'hover:opacity-80', avatar: 'rounded-full object-cover' }}
                             avatar={obj.image ?
-                                <Avatar
+                                <BlurImage
+                                    width={24}
+                                    height={24}
+                                    quality={25}
+                                    alt={obj.name}
                                     src={obj.image}
-                                /> : undefined
+                                />
+                                : undefined
                             }
                         >
                             {obj.name}
