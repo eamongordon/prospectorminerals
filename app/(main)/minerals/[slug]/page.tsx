@@ -48,31 +48,6 @@ export async function generateMetadata(
     }
 }
 
-const galleryData = [
-    {
-        title: "Amazonite",
-        caption: "Smoky Hawk Mine, Routte Co., Colorado"
-    },
-    {
-        title: "Cavansite",
-        caption: "Pune, Maharashtra Province, India"
-    },
-    {
-        title: "Krohnkite",
-        caption: "Chuquicamata Mine, El Loa Province, Chile"
-    }
-];
-
-const mineralTagsTest = [{
-    name: "Test1",
-    image: 'https://i.pravatar.cc/300?u=a042581f4e29026709d',
-    id: 'test1'
-}, {
-    name: "Test2",
-    image: 'https://i.pravatar.cc/300?u=a042581f4e29026709d',
-    id: 'test2'
-}];
-
 export default async function Page({ params }: { params: { slug: string } }) {
     const mineralResult = await fetchMinerals({ filterObj: { slug: params.slug }, cursor: undefined, limit: 1, fieldset: 'full' });
     let mineral;
