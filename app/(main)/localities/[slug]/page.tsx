@@ -98,10 +98,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
                         <PropertyTable data={tableData} />
                     </div>
                 </div>
-                <div className="space-y-2">
-                    <h2 className="font-semibold text-3xl sm:text-4xl mb-4">Minerals</h2>
-                    <MineralTags tags={locality.minerals.map((mineral) => { return { slug: mineral.slug, name: mineral.name, image: mineral.photos.length > 0 && mineral.photos[0].photo.image ? mineral.photos[0].photo.image : undefined, imageBlurhash:  mineral.photos.length > 0 && mineral.photos[0].photo.imageBlurhash ? mineral.photos[0].photo.imageBlurhash : undefined} as MineralListItem })} />
-                </div>
+                {locality.minerals.length > 0 ?
+                    <div className="space-y-2">
+                        <h2 className="font-semibold text-3xl sm:text-4xl mb-4">Minerals</h2>
+                        <MineralTags tags={locality.minerals.map((mineral) => { return { slug: mineral.slug, name: mineral.name, image: mineral.photos.length > 0 && mineral.photos[0].photo.image ? mineral.photos[0].photo.image : undefined, imageBlurhash:  mineral.photos.length > 0 && mineral.photos[0].photo.imageBlurhash ? mineral.photos[0].photo.imageBlurhash : undefined} as MineralListItem })} />
+                    </div> : null}
             </div>
         </main>
     );
