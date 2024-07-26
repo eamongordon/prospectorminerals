@@ -126,7 +126,8 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: Min
                 endContent={
                     (minerals?.map((obj: MineralListItem, index) => {
                         return (
-                            <Chip className="mr-1 min-h-[28px]"
+                            <Chip 
+                                classNames={{ base: 'mr-1 min-h-[28px]', avatar: 'rounded-full object-cover' }}
                                 size="md"
                                 onClose={() => {
                                     const newArray = minerals.filter((val) => val.name !== obj.name);
