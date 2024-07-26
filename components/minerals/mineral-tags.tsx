@@ -18,7 +18,7 @@ export default function MineralTags({ tags }: { tags: MineralListItem[] }) {
                                 <BlurImage
                                     width={24}
                                     height={24}
-                                    quality={25}
+                                    quality={50}
                                     alt={obj.name}
                                     src={obj.image}
                                     blurDataURL={obj.imageBlurhash || undefined}
