@@ -143,7 +143,7 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: Min
                                     <BlurImage
                                         width={24}
                                         height={24}
-                                        quality={25}
+                                        quality={50}
                                         alt={obj.name}
                                         className="rounded-full object-cover"
                                         src={obj.image}
@@ -194,7 +194,7 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: Min
                             <BlurImage
                                 width={24}
                                 height={24}
-                                quality={25}
+                                quality={50}
                                 alt={item.name}
                                 className="rounded-full h-6 w-6 object-cover"
                                 src={item.photos[0].photo.image}
