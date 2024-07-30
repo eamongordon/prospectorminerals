@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 
 export const baseUrl: string = process.env.NODE_ENV === "production"
   ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  : `http://localhost:${process.env.PORT || 3000}`;
+  : `http://localhost:${process.env.PORT ?? 3000}`;
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
