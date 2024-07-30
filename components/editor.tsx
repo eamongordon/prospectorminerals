@@ -16,7 +16,7 @@ export default function Editor({ post }: { post: Post }) {
   let [isPendingPublishing, startTransitionPublishing] = useTransition();
   const [data, setData] = useState<Post>(post);
 
-  const url = `${baseUrl}/${data.slug}`;
+  const url = `${baseUrl}/articles/${data.slug}`;
   // listen to CMD + S and override the default behavior
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -46,9 +46,13 @@ export default function Editor({ post }: { post: Post }) {
             <ExternalLink className="h-4 w-4" />
           </Link>
         )}
-        <div className="rounded-lg bg-stone-100 px-2 py-1 text-sm text-stone-400 dark:bg-stone-800 dark:text-stone-500">
+        <Button isLoading={isPendingSaving} onClick={() => {
+          startTransitionSaving(async () => {
+            await updatePost(data);
+          });
+        }}>
           {isPendingSaving ? "Saving..." : "Saved"}
-        </div>
+        </Button>
         <Button
           onClick={() => {
             //const formData = new FormData();
