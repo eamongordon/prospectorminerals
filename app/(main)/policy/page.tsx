@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Policy | Prospector Minerals',
@@ -23,17 +24,17 @@ const Page = async ({
             </section>
             <section className='flex-col justify-center items-center py-4 w-full max-w-screen-xl'>
                 <div>
-                    <p>Thank you for reviewing our site policy. We seek to provide an understandable and transparent site policy and if there are any clarifications or inquries necessary, please <a className="font-medium text-cyan-500" href="#contact">contact us</a>.</p>
+                    <p>Thank you for reviewing our site policy. We seek to provide an understandable and transparent site policy and if there are any clarifications or inquries necessary, please <Link className="font-medium text-cyan-500" href="#contact">contact us</Link>.</p>
                 </div>
             </section>
             <section className='flex-col space-y-10 justify-center items-center py-4 w-full max-w-screen-xl'>
                 <div className="flex-col space-y-3">
                     <h2 className="text-3xl font-medium scroll-mt-16" id="copyright">Copyright Policy</h2>
-                    <p>No portion of this site can be reproduced, distributed, replicated, modified or used as a source of derivative works without the written permission of the owner. To receive permission for the use of website content and images, please <a className="font-medium text-cyan-500" href="#contact">contact us</a>. After contacting us, we may allow the use of Images from this site for educational, non-commercial purposes only, provided appropriate credit and a link to this website is given when applicable. Preferably, our website name should be contained as a watermark (contact us for examples). The Prospector Minerals logo may be used solely and only for promoting this website.</p>
+                    <p>No portion of this site can be reproduced, distributed, replicated, modified or used as a source of derivative works without the written permission of the owner. To receive permission for the use of website content and images, please <Link className="font-medium text-cyan-500" href="#contact">contact us</Link>. After contacting us, we may allow the use of Images from this site for educational, non-commercial purposes only, provided appropriate credit and a link to this website is given when applicable. Preferably, our website name should be contained as a watermark (contact us for examples). The Prospector Minerals logo may be used solely and only for promoting this website.</p>
                 </div>
                 <div>
                     <h2 className="text-3xl font-medium scroll-mt-16" id="termsofuse">Terms of Use</h2>
-                    <p>Prospector Minerals is not liable for any damages incurred by the use of this site. When creating an account (signing up for a membership), we, Prospector Minerals, collect your email address, which may then be used for email updates or campaigns. If you would like to remove this information, please delete your account by visiting the <a className="font-medium text-cyan-500" href="/account/settings#new-password">account settings page</a>. Members, registered by submission of &quot;Sign Up&quot; forms, must adhere to the Prospector Minerals terms of use. Failure to comply with these terms or abuse of this website or platform may result in membership suspension or account deletion at our sole discretion.</p>
+                    <p>Prospector Minerals is not liable for any damages incurred by the use of this site. When creating an account (signing up for a membership), we, Prospector Minerals, collect your email address, which may then be used for email updates or campaigns. If you would like to remove this information, please delete your account by visiting the <Link className="font-medium text-cyan-500" href="/account/settings#new-password">account settings page</Link>. Members, registered by submission of &quot;Sign Up&quot; forms, must adhere to the Prospector Minerals terms of use. Failure to comply with these terms or abuse of this website or platform may result in membership suspension or account deletion at our sole discretion.</p>
                 </div>
                 <div className="flex-col">
                     <h2 className="text-3xl font-medium scroll-mt-16" id="privacy">Privacy Policy</h2>
@@ -41,11 +42,11 @@ const Page = async ({
                     <div className="flex-col space-y-6">
                         <div>
                             <h4 className="text-xl font-medium">Account</h4>
-                            <p>When creating an account (&quot;signing up&quot; for a membership), we, Prospector Minerals, collect your email address, which may then be used for email updates or campaigns. If you would like to remove this information, please delete your account by visiting the <a className="font-medium text-cyan-500" href="/account/settings#new-password">account settings page</a>.</p>
+                            <p>When creating an account (&quot;signing up&quot; for a membership), we, Prospector Minerals, collect your email address, which may then be used for email updates or campaigns. If you would like to remove this information, please delete your account by visiting the <Link className="font-medium text-cyan-500" href="/account/settings#new-password">account settings page</Link>.</p>
                         </div>
                         <div>
                             <h4 className="text-xl font-medium">Third-Party Login Services</h4>
-                            <p>By using third-party login services (i.e. Google or Facebook) we may collect data including your email address, name, and phone number. See the Data Use section for information regarding the use of your data. Please note that the respective provider&apos;s terms of service and privacy policy apply.</p>
+                            <p>By using third-party login services (i.e. Google or Facebook) we may collect data including your email address, name, and phone number. See the <Link className="font-medium text-cyan-500" href="#datause">Data Use section</Link> for information regarding the use of your data. Please note that the respective provider&apos;s terms of service and privacy policy apply.</p>
                         </div>
                         <div>
                             <h4 className="text-xl font-medium">Browser Cookies</h4>
@@ -57,7 +58,7 @@ const Page = async ({
                             </p>
                         </div>
                     </div>
-                    <h3 className="text-2xl font-medium pt-6">Data Use</h3>
+                    <h3 className="text-2xl font-medium pt-6" id="datause">Data Use</h3>
                     <p>We may use your data for numerous legitimate purposes, including, but not limited to, the following:</p>
                     <div className="flex-col space-y-6 pt-4">
                         <div>
@@ -87,7 +88,7 @@ const Page = async ({
                     <p>Have a suggestion for improving Prospector Minerals? Notice an error in our site? Need to contact us for another reason?
                         <br />
                         <br />
-                        Contact Us at: <a className="font-medium text-cyan-500" href="mailto:prospectorminerals@prospectorminerals.com">prospectorminerals@prospectorminerals.com</a>.
+                        Contact Us at: <Link className="font-medium text-cyan-500" href="mailto:prospectorminerals@prospectorminerals.com">prospectorminerals@prospectorminerals.com</Link>.
                     </p>
                 </div>
             </section>
