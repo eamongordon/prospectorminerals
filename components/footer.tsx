@@ -108,7 +108,7 @@ export default function Footer() {
 
                         <ul className="mt-2 flex gap-6">
                             <li>
-                                <a
+                                <Link
                                     href="https://www.facebook.com/ProspectorMinerals/"
                                     rel="noreferrer"
                                     target="_blank"
@@ -123,11 +123,11 @@ export default function Footer() {
                                             clipRule="evenodd"
                                         />
                                     </svg>
-                                </a>
+                                </Link>
                             </li>
 
                             <li>
-                                <a
+                                <Link
                                     href="https://www.instagram.com/prospector.minerals/"
                                     rel="noreferrer"
                                     target="_blank"
@@ -142,7 +142,7 @@ export default function Footer() {
                                             clipRule="evenodd"
                                         />
                                     </svg>
-                                </a>
+                                </Link>
                             </li>
 
                         </ul>
@@ -158,19 +158,19 @@ export default function Footer() {
 
                             <ul className="mt-6 space-y-4 text-sm">
                                 <li>
-                                    <a href="/minerals" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Minerals </a>
+                                    <Link href="/minerals" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Minerals </Link>
                                 </li>
 
                                 <li>
-                                    <a href="/localities" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Localities </a>
+                                    <Link href="/localities" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Localities </Link>
                                 </li>
 
                                 <li>
-                                    <a href="/photos" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Photos </a>
+                                    <Link href="/photos" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Photos </Link>
                                 </li>
 
                                 <li>
-                                    <a href="/articles" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Articles </a>
+                                    <Link href="/articles" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Articles </Link>
                                 </li>
                             </ul>
                         </div>
@@ -180,15 +180,15 @@ export default function Footer() {
 
                             <ul className="mt-6 space-y-4 text-sm">
                                 <li>
-                                    <a href="/login" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Login </a>
+                                    <Link href="/login" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Login </Link>
                                 </li>
 
                                 <li>
-                                    <a href="/signup" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Signup </a>
+                                    <Link href="/signup" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Signup </Link>
                                 </li>
 
                                 <li>
-                                    <a href="/account/settings" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Dashboard </a>
+                                    <Link href="/account/settings" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Dashboard </Link>
                                 </li>
                             </ul>
                         </div>
@@ -198,7 +198,7 @@ export default function Footer() {
 
                             <ul className="mt-6 space-y-4 text-sm">
                                 <li>
-                                    <a href="/policy" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> About </a>
+                                    <Link href="/policy" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> About </Link>
                                 </li>
 
                                 <li>
