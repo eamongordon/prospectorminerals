@@ -26,7 +26,7 @@ export default function PropertyTable({ data }: { data: TableData[] }) {
                     return (
                         <TableRow key={index}>
                             <TableCell>{row.property}</TableCell>
-                            <TableCell>{row.value}</TableCell>
+                            <TableCell className="[overflow-wrap:anywhere]">{row.value}</TableCell>
                         </TableRow>
                     )
                 })}
