@@ -4,7 +4,7 @@ import './globals.css';
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
 
-const inter = Work_Sans({ subsets: ['latin'] })
+const workSans = Work_Sans({ subsets: ['latin'] })
 
 export default function GlobalError({
     error,
@@ -15,7 +15,7 @@ export default function GlobalError({
 }) {
     return (
         <html>
-            <body className={`${inter.className} bg-gradient-to-b from-[rgb(214,219,220)] to-white text-black dark:bg-gradient-to-b dark:from-black dark:to-black dark:text-white`}>
+            <body className={`${workSans.className} bg-gradient-to-b from-[rgb(214,219,220)] to-white text-black dark:bg-gradient-to-b dark:from-black dark:to-black dark:text-white`}>
                 <div className="h-screen flex gap-y-5 items-center justify-center">
                     <div className="flex-col items-center justify-center">
                         <h2 className="mb-3 mx-auto">Oops! Something went wrong.</h2>
