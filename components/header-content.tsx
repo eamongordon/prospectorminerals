@@ -12,8 +12,6 @@ import LoginModalButton from './registration/login-modal-button';
 import SearchComp from './search/search';
 import SearchModalButton from "./search/search-button";
 
-//import RegModal from './next-ui-modal';
-
 export default function HeaderComp({
     loggedIn,
     userData
