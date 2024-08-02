@@ -188,7 +188,7 @@ export default function Footer() {
                                 </li>
 
                                 <li>
-                                    <Link href="/account/settings" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Dashboard </Link>
+                                    <Link href="/account/settings" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Settings </Link>
                                 </li>
                             </ul>
                         </div>
