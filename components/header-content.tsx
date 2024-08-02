@@ -113,7 +113,6 @@ export default function HeaderComp({
                                         <p className="font-semibold">Signed in as</p>
                                         <p className="font-semibold">{name ? name : email}</p>
                                     </DropdownItem>
-                                    <DropdownItem key="dashboard">Dashboard</DropdownItem>
                                     <DropdownItem key="settings" as={Link} href="/account/settings">Settings</DropdownItem>
                                     <DropdownItem key="logout" color="danger">
                                         Log Out
@@ -181,7 +180,6 @@ export default function HeaderComp({
                                         signOut({ callbackUrl: pathname.includes('/account') ? '/' : undefined });
                                     }
                                 }}>
-                                    <DropdownItem key="dashboard">Dashboard</DropdownItem>
                                     <DropdownItem key="settings" as={Link} href="/account/settings">Settings</DropdownItem>
                                     <DropdownItem key="logout" color="danger">
                                         Log Out
