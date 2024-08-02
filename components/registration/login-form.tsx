@@ -47,7 +47,7 @@ export default function FormWrapper(
             tab: "rounded-t-xl rounded-b-none",
           }}
         >
-          <Tab key="/login" title="Login" {...(isModal ? {} : { href: "/login", as: Link })}>
+          <Tab key="/login" title="Log In" {...(isModal ? {} : { href: "/login", as: Link })}>
             <Image
               alt="Prospector Minerals"
               width={100}
