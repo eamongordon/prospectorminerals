@@ -81,12 +81,12 @@ export default function FormWrapper(
                     Don&apos;t have an account?{" "}
                     {isModal ? (
                       <button className="hover:opacity-80 transition-opacity tap-highlight-transparent font-semibold text-sm" {...(isModal ? { onClick: () => setSelected("/signup") } : { href: "/signup" })} >
-                        Sign up
+                        Sign Up
                       </button>
                     ) : (
                       <Link href="/signup">
                         <button className="hover:opacity-80 transition-opacity tap-highlight-transparent font-semibold text-sm" {...(isModal ? { onClick: () => setSelected("/signup") } : { href: "/signup" })} >
-                          Sign up
+                          Sign Up
                         </button>
                       </Link>
                     )}
@@ -123,12 +123,12 @@ export default function FormWrapper(
               Already have an account?{" "}
               {isModal ? (
                 <button className="hover:opacity-80 transition-opacity tap-highlight-transparent font-semibold text-sm" {...(isModal ? { onClick: () => setSelected("/login") } : { href: "/login" })}>
-                  Sign in
+                  Log In
                 </button>
               ) : (
                 <Link href="/login">
                   <button className="hover:opacity-80 transition-opacity tap-highlight-transparent font-semibold text-sm" {...(isModal ? { onClick: () => setSelected("/login") } : { href: "/login" })}>
-                    Sign in
+                    Log In
                   </button>
                 </Link>
               )}
