@@ -18,7 +18,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       async authorize(credentials) {
         const { email, password } = credentials ?? {}
         if (!email || !password) {
-          throw new Error("Missing username or password");
+          throw new Error("Missing email or password");
         }
         const user = await prisma.user.findUnique({
           where: {
@@ -146,7 +146,6 @@ export async function getSession() {
     user: {
       id: string;
       name: string;
-      username: string;
       email: string;
       image: string;
       roles: string[];
