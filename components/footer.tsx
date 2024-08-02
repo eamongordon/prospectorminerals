@@ -180,11 +180,11 @@ export default function Footer() {
 
                             <ul className="mt-6 space-y-4 text-sm">
                                 <li>
-                                    <Link href="/login" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Login </Link>
+                                    <Link href="/login" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Log In </Link>
                                 </li>
 
                                 <li>
-                                    <Link href="/signup" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Signup </Link>
+                                    <Link href="/signup" className="text-gray-700 dark:text-gray-300 transition hover:opacity-75"> Sign Up </Link>
                                 </li>
 
                                 <li>
