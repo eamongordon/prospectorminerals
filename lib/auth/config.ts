@@ -34,7 +34,6 @@ export default {
                 return {
                     id: profile.id.toString(),
                     name: profile.name || profile.login,
-                    gh_username: profile.login,
                     email: profile.email,
                     image: profile.avatar_url,
                 };
@@ -82,8 +81,6 @@ export default {
                 roles: token?.roles,
                 // @ts-expect-error
                 id: token?.sub,
-                // @ts-expect-error
-                username: token?.user?.username || token?.user?.gh_username,
             };
             return session;
         },
