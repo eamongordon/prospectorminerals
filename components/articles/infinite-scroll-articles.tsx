@@ -59,7 +59,7 @@ export default function InfiniteScrollArticles({
               <li key={article.id}>
                 <Link href={`/articles/${article.slug}`} className='flex w-full flex-col sm:flex-row gap-8 hover:opacity-65'>
                   {article.image ? (
-                    <div className="w-full sm:w-[45%] h-52 sm:h-80"> {/* This div ensures BlurImage can be styled to fill its parent */}
+                    <div className="w-full sm:w-[45%] h-52 sm:h-80">
                       <BlurImage
                         alt='Article Image'
                         src={article.image}
@@ -67,7 +67,6 @@ export default function InfiniteScrollArticles({
                         height={350}
                         className="w-full h-full object-cover rounded-xl"
                         blurDataURL={article.imageBlurhash || undefined}
-                      // Add a className here if you need to apply specific styles
                       />
                     </div>
                   ) : null}
