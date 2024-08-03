@@ -20,7 +20,7 @@ export default function Blurhash() {
         <div className="flex max-w-screen-xl flex-col space-y-12 p-8">
             <div className="flex flex-col space-y-6">
                 <h1 className="text-3xl font-semibold dark:text-white">
-                    Get Blur Hash
+                    Get Blurhash
                 </h1>
                 <Input placeholder="Enter a URL" type="text" onChange={(event) => setTextInput(event.target.value)} />
                 <Button onClick={() => blurFunc()} isLoading={loading}>Get Blur</Button>
