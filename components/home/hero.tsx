@@ -1,4 +1,3 @@
-import React from 'react'
 import BlurImage from '../blur-image';
 import Search from '../search/search';
 import PMLogo from '../pmLogo';
