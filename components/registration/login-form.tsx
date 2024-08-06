@@ -1,14 +1,13 @@
 "use client";
 
-import Form from './form-inner';
-import { useRouter, usePathname } from "next/navigation";
-import { useSearchParams } from 'next/navigation'
-import Image from "next/image";
-import LoginButton from "./social-login-button";
-import { Suspense } from "react";
 import { Divider, Tab, Tabs } from "@nextui-org/react";
-import React from "react";
+import Image from "next/image";
 import Link from 'next/link';
+import { usePathname } from "next/navigation";
+import type { Key } from "react";
+import { Suspense, useState } from "react";
+import Form from './form-inner';
+import LoginButton from "./social-login-button";
 
 export default function FormWrapper(
   {
@@ -19,11 +18,9 @@ export default function FormWrapper(
     onCloseAction?: Function
 
   }) {
-  const router = useRouter();
-  const searchParams = useSearchParams()
-  const redirectUri = searchParams.get('redirect');
-  const [selected, setSelected] = React.useState("/login");
-  const [forgotPassword, setForgotPassword] = React.useState(false);
+  const pathname = usePathname();
+  const [selected, setSelected] = useState<Key>(isModal ? "/login" : pathname);
+  const [forgotPassword, setForgotPassword] = useState(false);
   const pull_ForgotPassword = (back: boolean) => {
     if (back) {
       setForgotPassword(false);
@@ -31,7 +28,6 @@ export default function FormWrapper(
       setForgotPassword(true);
     }
   }
-  const pathname = usePathname();
   return (
     <div className={`${isModal ? "flex items-center justify-center" : "flex h-screen w-screen items-center justify-center"}`}>
       <div className={`${isModal ? "bg-white dark:bg-black border border-stone-200 dark:border-stone-700 sm:mx-auto w-full rounded-xl sm:shadow-md" : "max-w-[348px] border border-stone-200 dark:border-stone-700 sm:max-w-md sm:mx-auto w-full rounded-xl sm:shadow-md"}`}>
@@ -39,8 +35,7 @@ export default function FormWrapper(
           fullWidth
           size="md"
           aria-label="Shift between Login and Signup forms"
-          selectedKey={isModal ? selected : pathname}
-          // @ts-ignore
+          selectedKey={isModal ? selected.toString() : pathname}
           onSelectionChange={setSelected}
           classNames={{
             tabList: "rounded-t-xl rounded-b-none",
