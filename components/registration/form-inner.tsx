@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Button, Input } from "@nextui-org/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
+import { createUser } from "@/lib/actions";
 
 
 export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }: { type: "login" | "register" | "forgotPassword", isModal?: boolean, onCloseAction?: Function, resetPasswordFunc?: Function }) {
@@ -65,42 +66,48 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
+
               email: e.currentTarget.email.value,
               password: e.currentTarget.password.value,
               name: e.currentTarget.nametxt.value ? e.currentTarget.nametxt.value : undefined
             }),
+          })
+          createUser({
+            email: e.currentTarget.email.value,
+            password: e.currentTarget.password.value,
+            name: e.currentTarget.nametxt.value ? e.currentTarget.nametxt.value : undefined
           }).then(async (res) => {
-            if (res.status === 200) {
-              signIn("credentials", {
-                redirect: false,
-                email: data.email,
-                password: data.password,
-                // @ts-ignore
-              }).then((signInRes) => {
-                if (signInRes?.error) {
-                  setLoading(false);
-                  toast.error(signInRes.error);
+            signIn("credentials", {
+              redirect: false,
+              email: data.email,
+              password: data.password,
+              // @ts-ignore
+            }).then((signInRes) => {
+              if (signInRes?.error) {
+                setLoading(false);
+                toast.error(signInRes.error);
+              } else {
+                router.refresh();
+                if (isModal) {
+                  // @ts-expect-error
+                  onCloseAction();
+                  toast.success("Signed Up Successfully. Welcome aboard!");
                 } else {
-                  router.refresh();
-                  if (isModal) {
-                    // @ts-expect-error
-                    onCloseAction();
-                    toast.success("Signed Up Successfully. Welcome aboard!");
+                  if (redirectUri) {
+                    router.push(decodeURIComponent(redirectUri));
                   } else {
-                    if (redirectUri) {
-                      router.push(decodeURIComponent(redirectUri));
-                    } else {
-                      router.push("/");
-                    }
+                    router.push("/");
                   }
                 }
-              })
-            } else if (res.status === 400) {
-              setLoading(false);
-              const { error } = await res.json();
-              toast.error(error);
+              }
+            })
+          }).catch((err) => {
+            console.log("error", err)
+            setLoading(false);
+            if (err.message === "User already exists") {
+              toast.error("An account already exists under this email.");
             } else {
-              toast.error("Internal Server Error")
+              toast.error("An error occurred. Please try again later.");
             }
           });
         } else {
