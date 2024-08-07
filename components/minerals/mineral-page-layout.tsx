@@ -241,7 +241,7 @@ export default function MineralPageLayout({
                         */
                         onValueChange={setSearchText}
                         endContent={
-                            searchText ? (null) : (<><div className='h-full flex items-center'><MagnifyingGlassIcon /></div></>)
+                            !searchText && (<><div className='h-full flex items-center'><MagnifyingGlassIcon /></div></>)
                         }
                     />
                     <Button

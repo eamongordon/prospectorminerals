@@ -131,7 +131,7 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                         isClearable={searchText ? true : false}
                         onValueChange={setSearchText}
                         endContent={
-                            searchText ? (null) : (<><div className='h-full flex items-center'><MagnifyingGlassIcon /></div></>)
+                            !searchText && (<><div className='h-full flex items-center'><MagnifyingGlassIcon /></div></>)
                         }
                     />
                     <Button

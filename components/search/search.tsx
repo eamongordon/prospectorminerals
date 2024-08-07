@@ -197,7 +197,7 @@ export default function Search({ isHero }: { isHero?: boolean }) {
                     isClearable={searchTerm ? true : false}
                     onValueChange={(value) => { setResultsLoading(true); setSearchTerm(value) }}
                     endContent={
-                        searchTerm ? (null) : (<><div className='h-full flex items-center'><MagnifyingGlassIcon /></div></>)
+                        !searchTerm && (<><div className='h-full flex items-center'><MagnifyingGlassIcon /></div></>)
                     }
                     ref={inputRef}
                     onKeyDown={handleKeyDown}
@@ -218,35 +218,32 @@ export default function Search({ isHero }: { isHero?: boolean }) {
                                     ))}
                                 </>
                             </div>
-                        ) : (<></>)}
-                        {!resultsLoading && results.length ?
-                            (
-                                <ul className="flex flex-col rounded-lg gap-4">
-                                    {results.map((result) => (
-                                        <li key={result.slug} className={`hover:opacity-70 ${focusedSlug === result.slug ? "opacity-60" : ""}`}>
-                                            <Link className="flex flex-row gap-4" href={getLink(result.type, result.slug)}>
-                                                <BlurImage
-                                                    src={result.image || "/Amazonite-106_horiz.jpeg"}
-                                                    alt={result.name || "Photo"}
-                                                    blurDataURL={result.imageBlurhash}
-                                                    quality={25}
-                                                    width={100}
-                                                    height={100}
-                                                    className="rounded-lg object-cover aspect-[3/2]"
-                                                />
-                                                <div className="flex flex-col justify-center">
-                                                    <div className="justify-center items-center">
-                                                        <p className="text-lg font-semibold">{result.name}</p>
-                                                    </div>
-                                                    <Chip variant="flat" size="md">{result.type}</Chip>
+                        ) : results.length ? (
+                            <ul className="flex flex-col rounded-lg gap-4">
+                                {results.map((result) => (
+                                    <li key={result.slug} className={`hover:opacity-70 ${focusedSlug === result.slug ? "opacity-60" : ""}`}>
+                                        <Link className="flex flex-row gap-4" href={getLink(result.type, result.slug)}>
+                                            <BlurImage
+                                                src={result.image || "/Amazonite-106_horiz.jpeg"}
+                                                alt={result.name || "Photo"}
+                                                blurDataURL={result.imageBlurhash}
+                                                quality={25}
+                                                width={100}
+                                                height={100}
+                                                className="rounded-lg object-cover aspect-[3/2]"
+                                            />
+                                            <div className="flex flex-col justify-center">
+                                                <div className="justify-center items-center">
+                                                    <p className="text-lg font-semibold">{result.name}</p>
                                                 </div>
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
-                            ) : (<></>)
-                        }
-                        {initialLoad.current && !resultsLoading && !results.length ? (
+                                                <Chip variant="flat" size="md">{result.type}</Chip>
+                                            </div>
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (<></>)}
+                        {initialLoad.current && !resultsLoading && !results.length && (
                             <div className='flex-col items-center justify-center'>
                                 <p className='w-full text-center'>No Results Found. Try adjusting your filters.</p>
                                 <div className='flex items-center justify-center py-4'>
@@ -255,7 +252,7 @@ export default function Search({ isHero }: { isHero?: boolean }) {
                                     </Button>
                                 </div>
                             </div>
-                        ) : (<></>)}
+                        )}
                     </div>
                 </div>
             </div>
