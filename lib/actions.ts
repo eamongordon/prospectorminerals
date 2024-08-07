@@ -39,7 +39,9 @@ export const editUser = async (
             "Missing BLOB_READ_WRITE_TOKEN token. Note: Vercel Blob is currently in beta – please fill out this form for access: https://tally.so/r/nPDMNd",
         };
       }
-
+      if (session.user.image && new URL(session.user.image).hostname === process.env.BLOB_HOSTNAME) {
+        await del(session.user.image);
+      }
       const file = formData.get(key) as File;
       const filename = `${nanoid()}.${file.type.split("/")[1]}`;
 
@@ -316,7 +318,7 @@ export const createPhoto = async (
 
 export const createUser = async (userdata: { email: string; password: string; name: string }) => {
   const { email, password, name } = userdata;
-  
+
   try {
     const exists = await prisma.user.findUnique({
       where: {
@@ -350,7 +352,7 @@ export const deleteUser = async () => {
         error: "Not authenticated",
       };
     } else {
-      if (session.user.image && new URL(session.user.image).hostname === "ousfgajmtaam7m3j.public.blob.vercel-storage.com") {
+      if (session.user.image && new URL(session.user.image).hostname === process.env.BLOB_HOSTNAME) {
         await del(session.user.image);
       }
       const response = await prisma.user.delete({
