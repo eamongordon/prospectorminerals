@@ -82,7 +82,7 @@ export default function PhotosLayout({
                             isClearable={text ? true : false}
                             onValueChange={setText}
                             endContent={
-                                text ? (null): (<><div className='h-full flex items-center'><MagnifyingGlassIcon /></div></>)
+                                !text && (<><div className='h-full flex items-center'><MagnifyingGlassIcon /></div></>)
                             }
                         />
                     </div>

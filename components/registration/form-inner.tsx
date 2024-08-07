@@ -122,7 +122,7 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
       }}
       className="flex flex-col space-y-4 px-4 mt-8 sm:px-16"
     >
-      {type === 'register' ? (
+      {type === 'register' && (
         <div>
           <Input
             id="nametxt"
@@ -134,7 +134,7 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
           //className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
           />
         </div>
-      ) : (null)}
+      )}
       <div>
         <Input
           id="email"
@@ -149,7 +149,7 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
         //className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
         />
       </div>
-      {type === 'register' || type === 'login' ? (
+      {type === 'register' || type === 'login' && (
         <div>
           <Input
             id="password"
@@ -163,15 +163,15 @@ export default function Form({ type, isModal, onCloseAction, resetPasswordFunc }
           //className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
           />
         </div>
-      ) : (null)
+      )
       }
-      {type === 'login' ? (
+      {type === 'login' && (
         <div>
           <button type="button" className="hover:opacity-80 transition-opacity tap-highlight-transparent relative inline-flex items-center font-semibold text-sm" color="foreground" {...(resetPasswordFunc ? { onClick: () => resetPasswordFunc(false) } : {})} >
             Forgot Password?
           </button>
         </div>
-      ) : (null)}
+      )}
       <Button
         disabled={loading}
         isLoading={loading}
