@@ -201,11 +201,6 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: Min
                                 blurDataURL={item.photos[0].photo.imageBlurhash || undefined}
                             /> : undefined}
                         key={item.name}
-                    /*
-                    endContent={chemistryVal?.includes(item.key) ? (
-                        <Check height={12} />
-                    ) : (<></>)}
-                    */
                     >
                         {item.name}
                     </ListboxItem>

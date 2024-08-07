@@ -15,22 +15,20 @@ type TableData = {
 }
 
 export default function PropertyTable({ data }: { data: TableData[] }) {
-    return data.length ? (
+    return data.length > 0 && (
         <Table shadow="none" aria-label="Properties">
             <TableHeader>
                 <TableColumn className="text-md">Properties</TableColumn>
                 <TableColumn><></></TableColumn>
             </TableHeader>
             <TableBody>
-                {data.map((row, index) => {
-                    return (
-                        <TableRow key={index}>
-                            <TableCell>{row.property}</TableCell>
-                            <TableCell className="[overflow-wrap:anywhere]">{row.value}</TableCell>
-                        </TableRow>
-                    )
-                })}
+                {data.map((row, index) => (
+                    <TableRow key={index}>
+                        <TableCell>{row.property}</TableCell>
+                        <TableCell className="[overflow-wrap:anywhere]">{row.value}</TableCell>
+                    </TableRow>
+                ))}
             </TableBody>
-        </Table >
-    ) : (<></>)
+        </Table>
+    );
 }
