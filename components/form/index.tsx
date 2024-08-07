@@ -100,12 +100,14 @@ export default function Form({
           )
         }
         {inputAttrs.name === "image" || inputAttrs.name === "avatar" ? (
-          <Uploader
-            //@ts-expect-error
-            defaultValue={inputAttrs.defaultValue}
-            name={inputAttrs.name}
-            formFunction={uploadFormFunction}
-          />
+          <div className="flex justify-center items-center sm:flex-none">
+            <Uploader
+              //@ts-expect-error
+              defaultValue={inputAttrs.defaultValue}
+              name={inputAttrs.name}
+              formFunction={uploadFormFunction}
+            />
+          </div>
         ) : inputAttrs.name === "description" ? (
           <textarea
             {...inputAttrs}
@@ -138,6 +140,7 @@ export default function Form({
         <Button
           onClick={() => submitForm()}
           isLoading={loading}
+          isDisabled={(data === null) ? true : false}
         >
           <p>Save Changes</p>
         </Button>
@@ -145,17 +148,3 @@ export default function Form({
     </div>
   );
 }
-
-/*
-function FormButton() {
-  const { pending } = useFormStatus();
-  return (
-    <Button
-      type="submit"
-      isLoading={pending}
-    >
-      <p>Save Changes</p>
-    </Button>
-  );
-}
-*/
