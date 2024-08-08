@@ -20,18 +20,12 @@ export default function DeleteUserForm() {
     setLoading(true);
     if (window.confirm("Are you sure you want to delete your account?")) {
       deleteUser()
-        .then(async (res) => {
-          //@ts-expect-error
-          if (res.error) {
-            //@ts-expect-error
-            toast.error(res.error);
-          } else {
-            va.track("Deleted User");
-            signOut({ callbackUrl: "/" });
-            toast.success(`Account deleted.`);
-          }
+        .then(async () => {
+          va.track("Deleted User");
+          signOut({ callbackUrl: "/" });
+          toast.success(`Account deleted.`);
         })
-        .catch((err: Error) => toast.error(err.message))
+        .catch((err: Error) => toast.error("There was an error deleting your account. Please try again later."))
     }
   }
   return (
@@ -58,14 +52,14 @@ export default function DeleteUserForm() {
         <p className="text-center text-sm text-stone-500 dark:text-stone-400">
           This action is irreversible. Please proceed with caution.
         </p>
-          <Button
-            color="danger"
-            onClick={() => submitForm()}
-            isLoading={loading}
-            isDisabled={data === "DELETE" ? false : true}
-          >
-            <p>Confirm Delete</p>
-          </Button>
+        <Button
+          color="danger"
+          onClick={() => submitForm()}
+          isLoading={loading}
+          isDisabled={data === "DELETE" ? false : true}
+        >
+          <p>Confirm Delete</p>
+        </Button>
       </div>
     </div>
   );

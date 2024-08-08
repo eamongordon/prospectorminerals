@@ -348,9 +348,7 @@ export const deleteUser = async () => {
   try {
     const session = await getSession();
     if (!session?.user.id) {
-      return {
-        error: "Not authenticated",
-      };
+      throw new Error("Not authenticated");
     } else {
       if (session.user.image && new URL(session.user.image).hostname === process.env.BLOB_HOSTNAME) {
         await del(session.user.image);
@@ -364,9 +362,7 @@ export const deleteUser = async () => {
       return response;
     }
   } catch (error: any) {
-    return {
-      error: error.message,
-    };
+    throw new Error(error.message);
   }
 };
 
