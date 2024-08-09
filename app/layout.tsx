@@ -28,7 +28,7 @@ export default function RootLayout({
   const useragent = headersList.get('User-Agent');
   return (
     <html lang="en">
-      <body className={`${workSans.className} bg-gradient-to-b from-[rgb(214,219,220)] to-white text-black dark:bg-gradient-to-b dark:from-black dark:to-black dark:text-white`}>
+      <body className={`${workSans.className} bg-gradient-to-b from-[rgb(214,219,220)] to-white text-black dark:bg-none dark:bg-black dark:text-white`}>
         <Providers>{children}</Providers>
         <Analytics />
       </body>
