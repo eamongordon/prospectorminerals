@@ -28,8 +28,6 @@ export default function RootLayout({
   const useragent = headersList.get('User-Agent');
   return (
     <html lang="en">
-      {/*Stop Input Autozoom on iPhone*/}
-      <head><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /></head>
       <body className={`${workSans.className} bg-gradient-to-b from-[rgb(214,219,220)] to-white text-black dark:bg-gradient-to-b dark:from-black dark:to-black dark:text-white`}>
         <Providers>{children}</Providers>
         <Analytics />
