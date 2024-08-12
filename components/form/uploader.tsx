@@ -1,9 +1,8 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn, resizeImage } from "@/lib/utils";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
-import Resizer from "react-image-file-resizer";
 
 export default function Uploader({
   defaultValue,
@@ -42,23 +41,14 @@ export default function Uploader({
             formattedFileType = "PNG"
           }
           if (name === "avatar") {
-            Resizer.imageFileResizer(
-              file,
-              240,
-              240,
-              formattedFileType,
-              80,
-              0,
-              (newfile) => {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                  setData((prev) => ({ ...prev, [name]: e.target?.result as string }));
-                };
-                reader.readAsDataURL(newfile as Blob);
-                formFunction(newfile);
-              },
-              "file"
-            )
+            resizeImage(file, 240, 240, 80).then((newfile) => {
+              const reader = new FileReader();
+              reader.onload = (e) => {
+                setData((prev) => ({ ...prev, [name]: e.target?.result as string }));
+              };
+              reader.readAsDataURL(newfile as Blob);
+              formFunction(newfile);
+            });
           } else {
             const reader = new FileReader();
             reader.onload = (e) => {
