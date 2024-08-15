@@ -70,7 +70,7 @@ export default function Search({ isHero }: { isHero?: boolean }) {
         ]).then(([minerals, localities, posts, photos]) => {
             let allResults: SearchResult[] = [];
             minerals.results.forEach((mineral) => {
-                allResults.push({ slug: mineral.slug, type: "Mineral", name: mineral.name, image: mineral.photos.length > 0 && mineral.photos[0].photo.image ? mineral.photos[0].photo.image : undefined });
+                allResults.push({ slug: mineral.slug, type: "Mineral", name: mineral.name, image: mineral.photos.length > 0 && mineral.photos[0].photo.image ? mineral.photos[0].photo.image : undefined, imageBlurhash: mineral.photos.length > 0 && mineral.photos[0].photo.imageBlurhash ? mineral.photos[0].photo.imageBlurhash : undefined });
             });
             localities.results.forEach((locality) => {
                 allResults.push({ slug: locality.slug, type: "Locality", name: locality.name, image: locality.photos.length > 0 && locality.photos[0].image ? locality.photos[0].image : undefined, imageBlurhash: locality.photos.length > 0 && locality.photos[0].imageBlurhash ? locality.photos[0].imageBlurhash : undefined });
@@ -230,7 +230,7 @@ export default function Search({ isHero }: { isHero?: boolean }) {
                                                 quality={25}
                                                 width={100}
                                                 height={100}
-                                                className="rounded-lg object-cover aspect-[3/2]"
+                                                className="rounded-lg object-cover aspect-[3/2] shrink-0"
                                             />
                                             <div className="flex flex-col justify-center">
                                                 <div className="justify-center items-center">
