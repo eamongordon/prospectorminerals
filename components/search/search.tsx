@@ -191,15 +191,28 @@ export default function Search({ isHero }: { isHero?: boolean }) {
             >
                 <Input
                     type="text"
-                    label={<><p className="block sm:hidden">{getLabel("Search...", true)}</p><p className="hidden sm:block md:hidden">{getLabel("Search Minerals, Localities, and more...", true)}</p><p className="hidden md:block">{getLabel("Search Minerals, Localities, and more...", false)}</p></>}
+                    label={
+                        <>
+                            <p className="block sm:hidden">{getLabel("Search...", true)}</p>
+                            <p className="hidden sm:block md:hidden">{getLabel("Search Minerals, Localities, and more...", true)}</p>
+                            <p className="hidden md:block">{getLabel("Search Minerals, Localities, and more...", false)}</p>
+                        </>
+                    }
                     size="sm"
                     radius="md"
-                    classNames={{ base: `w-full`, inputWrapper: `${isHero && (initialLoad.current || !initialLoad.current && resultsLoading) && isFocused ? "rounded-b-none" : ""}` }}
+                    classNames={{
+                        base: `w-full`,
+                        inputWrapper: `${isHero && (initialLoad.current || (!initialLoad.current && resultsLoading)) && isFocused ? "rounded-b-none" : ""}`
+                    }}
                     value={searchTerm || ""}
-                    isClearable={searchTerm ? true : false}
+                    isClearable={!!searchTerm}
                     onValueChange={(value) => { setResultsLoading(true); setSearchTerm(value) }}
                     endContent={
-                        !searchTerm && (<><div className='h-full flex items-center'><MagnifyingGlassIcon /></div></>)
+                        !searchTerm && (
+                            <div className='h-full flex items-center'>
+                                <MagnifyingGlassIcon />
+                            </div>
+                        )
                     }
                     ref={inputRef}
                     onKeyDown={handleKeyDown}
