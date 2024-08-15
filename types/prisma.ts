@@ -294,8 +294,8 @@ type ConvertLatLong<T> = Omit<T, 'latitude' | 'longitude'> & {
 export const convertLocalityDataToComponentType = <T extends LocalityDisplayFieldset | LocalityFullFieldset>(localities: T[]): ConvertLatLong<T>[] => {
     return localities.map((locality) => ({
         ...locality,
-        latitude: locality.latitude.toNumber(),
-        longitude: locality.longitude.toNumber(),
+        latitude: new Prisma.Decimal(locality.latitude).toNumber(),
+        longitude: new Prisma.Decimal(locality.longitude).toNumber(),
     }));
 };
 
