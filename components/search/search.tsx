@@ -205,7 +205,7 @@ export default function Search({ isHero }: { isHero?: boolean }) {
                     onKeyDown={handleKeyDown}
                 />
                 <div className="relative">
-                    <div className={`${isHero ? "bg-white dark:bg-zinc-900" : "sm:bg-white sm:dark:bg-zinc-900"} ${!isHero ? "md:absolute" : ""}  w-full rounded-medium ${isHero && (initialLoad.current || !initialLoad.current && resultsLoading) ? "rounded-t-none sm:rounded-medium" : ""} ${isFocused ? "sm:rounded-t-none sm:block" : isHero ? "hidden" : ""} ${!initialLoad.current && !resultsLoading ? "" : "p-5"}`}>
+                    <div className={`${isHero ? "bg-white dark:bg-zinc-900" : "sm:bg-white sm:dark:bg-zinc-900"} ${!isHero ? "md:absolute" : ""}  w-full rounded-medium ${isHero && (initialLoad.current || !initialLoad.current && resultsLoading) ? "rounded-t-none sm:rounded-medium" : ""} ${isFocused && isHero ? "sm:rounded-t-none sm:block" : isHero ? "hidden" : ""} ${!initialLoad.current && !resultsLoading ? "" : "p-5"}`}>
                         {resultsLoading ? (
                             <div className="flex flex-col rounded-lg gap-4">
                                 <>
