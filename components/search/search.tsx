@@ -8,6 +8,7 @@ import { Search as MagnifyingGlassIcon } from "lucide-react";
 import { useDebounce } from "use-debounce";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { convertLocalityDataToComponentType } from "@/types/prisma";
 
 type SearchResult = {
     type: "Mineral" | "Photo" | "Locality" | "Article", name: string, image?: string, imageBlurhash?: string, slug: string
@@ -72,7 +73,8 @@ export default function Search({ isHero }: { isHero?: boolean }) {
             minerals.results.forEach((mineral) => {
                 allResults.push({ slug: mineral.slug, type: "Mineral", name: mineral.name, image: mineral.photos.length > 0 && mineral.photos[0].photo.image ? mineral.photos[0].photo.image : undefined, imageBlurhash: mineral.photos.length > 0 && mineral.photos[0].photo.imageBlurhash ? mineral.photos[0].photo.imageBlurhash : undefined });
             });
-            localities.results.forEach((locality) => {
+            const modifiedLocalities = convertLocalityDataToComponentType(localities.results);
+            modifiedLocalities.forEach((locality) => {
                 allResults.push({ slug: locality.slug, type: "Locality", name: locality.name, image: locality.photos.length > 0 && locality.photos[0].image ? locality.photos[0].image : undefined, imageBlurhash: locality.photos.length > 0 && locality.photos[0].imageBlurhash ? locality.photos[0].imageBlurhash : undefined });
             });
             posts.results.forEach((post) => {
