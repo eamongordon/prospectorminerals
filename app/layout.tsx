@@ -24,8 +24,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const headersList = headers();
-  const useragent = headersList.get('User-Agent');
   return (
     <html lang="en">
       <body className={`${workSans.className} bg-gradient-to-b from-[rgb(214,219,220)] to-white text-black dark:bg-none dark:bg-black dark:text-white`}>
