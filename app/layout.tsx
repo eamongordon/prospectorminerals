@@ -3,7 +3,6 @@ import { Work_Sans } from 'next/font/google'
 import './globals.css';
 import { Providers } from './providers';
 import { Analytics } from "@vercel/analytics/react";
-import { headers } from 'next/headers';
 import { baseUrl } from '@/lib/utils';
 
 const workSans = Work_Sans({ subsets: ['latin'] })
