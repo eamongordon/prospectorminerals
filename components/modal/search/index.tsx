@@ -44,24 +44,26 @@ export default function Modal({
           {isMobile && <Leaflet setShow={setShowModal}>{children}</Leaflet>}
           {isDesktop && (
             <>
-              <motion.div
-                ref={desktopModalRef}
-                key="desktop-modal"
-                className="fixed inset-0 z-50 hidden min-h-screen items-top justify-center md:flex"
-                initial={{ y: '-100vh' }} // Start above the screen
-                animate={{ y: 0 }} // Slide to original position
-                exit={{ y: '-100vh' }} // Slide out to above the screen
-                transition={{ ease: "easeInOut" }} // Adjusted for smoother transition
-                onMouseDown={(e) => {
-                  if (desktopModalRef.current === e.target) {
-                    setShowModal(false);
-                  }
-                }}
-              >
-                <div className="flex w-full h-[96px] bg-white dark:bg-black items-center justify-center">
-                  {children}
-                </div>
-              </motion.div>
+              <FocusTrap focusTrapOptions={{ initialFocus: false }}>
+                <motion.div
+                  ref={desktopModalRef}
+                  key="desktop-modal"
+                  className="fixed inset-0 z-50 hidden min-h-screen items-top justify-center md:flex"
+                  initial={{ y: '-100vh' }} // Start above the screen
+                  animate={{ y: 0 }} // Slide to original position
+                  exit={{ y: '-100vh' }} // Slide out to above the screen
+                  transition={{ ease: "easeInOut" }} // Adjusted for smoother transition
+                  onMouseDown={(e) => {
+                    if (desktopModalRef.current === e.target) {
+                      setShowModal(false);
+                    }
+                  }}
+                >
+                  <div className="flex w-full h-[96px] bg-white dark:bg-black items-center justify-center">
+                    {children}
+                  </div>
+                </motion.div>
+              </FocusTrap>
               <motion.div
                 key="desktop-backdrop"
                 className="fixed inset-0 z-40 bg-gray-100 bg-opacity-10 backdrop-blur"
