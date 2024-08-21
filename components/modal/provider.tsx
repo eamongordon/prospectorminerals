@@ -29,7 +29,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
     setShowModal(false);
     setTimeout(() => {
       setModalContent(null);
-    }, 300); // Adjust this timeout as per your transition duration
+    }, 300); // Timeout adjusts transition duration
   };
 
   return (
