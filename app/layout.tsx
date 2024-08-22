@@ -1,9 +1,9 @@
-import type { Metadata } from 'next'
-import { Work_Sans } from 'next/font/google'
+import { baseUrl } from '@/lib/utils';
+import { Analytics } from "@vercel/analytics/react";
+import type { Metadata } from 'next';
+import { Work_Sans } from 'next/font/google';
 import './globals.css';
 import { Providers } from './providers';
-import { Analytics } from "@vercel/analytics/react";
-import { baseUrl } from '@/lib/utils';
 
 const workSans = Work_Sans({ subsets: ['latin'] })
 
