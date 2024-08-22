@@ -1,8 +1,7 @@
 "use client";
 
-//Must import from ./index, "." does not work here but works in registration
-import Modal from "./index";
 import { usePathname } from "next/navigation";
+import Modal from "./index";
 import { ReactNode, createContext, useContext, useState, useEffect } from "react";
 
 interface ModalContextProps {
@@ -30,7 +29,7 @@ export function SearchModalProvider({ children }: { children: ReactNode }) {
     setShowModal(false);
     setTimeout(() => {
       setModalContent(null);
-    }, 300); // Timeout adjusts transition duration
+    }, 300); // Adjust this timeout as per your transition duration
   };
 
   const pathname = usePathname();
