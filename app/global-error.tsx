@@ -1,6 +1,6 @@
 'use client'
 
-import { workSansClassName } from '@/lib/utils';
+import { workSansClassName } from '@/lib/fonts';
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
 import './globals.css';
