@@ -2,15 +2,13 @@
 
 import { Card, CardFooter, Skeleton } from "@nextui-org/react";
 import 'leaflet/dist/leaflet.css';
-import { Work_Sans } from 'next/font/google';
+import { workSansClassName } from "@/lib/utils";
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import BlurImage from '../blur-image';
 import './popup-styles.css';
 import type { LocalityDisplayFieldsetComponent } from '@/types/prisma';
 import dynamic from "next/dynamic";
-
-const workSans = Work_Sans({ subsets: ['latin'] })
 
 export default function LocalityMap({ localities, center, zoom }: { localities: LocalityDisplayFieldsetComponent[], center: [number, number], zoom: number }) {
     // Dynamically import React Leaflet components with SSR disabled
@@ -59,7 +57,7 @@ export default function LocalityMap({ localities, center, zoom }: { localities: 
             />
             {localities.map((locality) => {
                 return (<Marker key={locality.id} position={[Number(locality.latitude), Number(locality.longitude)]} icon={locality.type === 'Single' ? locality.coordinates_known ? icons.singleLocalityKnownIcon! : icons.singleLocalityEstimatedIcon! : locality.coordinates_known ? icons.groupLocalityKnownIcon! : icons.groupLocalityEstimatedIcon!} >
-                    <Popup className={`${workSans.className} w-[200px]`} offset={[0, -21]}>
+                    <Popup className={`${workSansClassName} w-[200px]`} offset={[0, -21]}>
                         <div key={locality.id}>
                             <Link href={`/localities/${locality.slug}`}>
                                 <Card isFooterBlurred className="w-full">
