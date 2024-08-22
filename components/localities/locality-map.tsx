@@ -2,7 +2,7 @@
 
 import { Card, CardFooter, Skeleton } from "@nextui-org/react";
 import 'leaflet/dist/leaflet.css';
-import { workSansClassName } from "@/lib/utils";
+import { workSansClassName } from "@/lib/fonts";
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import BlurImage from '../blur-image';

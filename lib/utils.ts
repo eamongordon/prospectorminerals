@@ -1,9 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { Work_Sans } from 'next/font/google'
-
-const workSans = Work_Sans({ subsets: ['latin'] });
-export const workSansClassName = workSans.className;
 
 export const baseUrl: string = process.env.NODE_ENV === "production"
   ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`

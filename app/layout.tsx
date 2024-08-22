@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { workSansClassName } from '@/lib/utils';
+import { workSansClassName } from '@/lib/fonts';
 import './globals.css';
 import { Providers } from './providers';
 import { Analytics } from "@vercel/analytics/react";
