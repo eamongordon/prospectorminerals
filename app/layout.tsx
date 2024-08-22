@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
-import { workSansClassName } from '@/lib/fonts';
+import { Work_Sans } from 'next/font/google'
 import './globals.css';
 import { Providers } from './providers';
 import { Analytics } from "@vercel/analytics/react";
 import { baseUrl } from '@/lib/utils';
+
+const workSans = Work_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Prospector Minerals',
@@ -23,7 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${workSansClassName} bg-gradient-to-b from-[rgb(214,219,220)] to-white text-black dark:bg-none dark:bg-black dark:text-white`}>
+      <body className={`${workSans.className} bg-gradient-to-b from-[rgb(214,219,220)] to-white text-black dark:bg-none dark:bg-black dark:text-white`}>
         <Providers>{children}</Providers>
         <Analytics />
       </body>
