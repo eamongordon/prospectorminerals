@@ -6,6 +6,9 @@ import { SessionProvider } from "next-auth/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { useRouter } from 'next/navigation';
 import { Toaster } from "sonner";
+import { Work_Sans } from 'next/font/google';
+
+const workSans = Work_Sans({ subsets: ['latin'] })
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -13,8 +16,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <SessionProvider>
       <NextUIProvider navigate={router.push}>
         <NextThemesProvider attribute="class">
-          <Toaster className="dark:hidden" />
-          <Toaster theme="dark" className="hidden dark:block" />
+          <Toaster className={`${workSans.className} dark:hidden`} />
+          <Toaster theme="dark" className={`${workSans.className} hidden dark:block`} />
           <ModalProvider>
             {children}
           </ModalProvider>
