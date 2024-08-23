@@ -6,7 +6,7 @@ import DeleteUserForm from "@/components/form/delete-user-form";
 export default async function SettingsPage() {
     const session = await getSession();
     if (!session) {
-        return null;//redirect(`/login?redirect=/account/settings`);
+        return null;
     }
     return (
         <main>
