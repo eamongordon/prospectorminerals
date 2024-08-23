@@ -1,7 +1,8 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+//Must import from ./index, "." does not work here but works in registration
 import Modal from "./index";
+import { usePathname } from "next/navigation";
 import { ReactNode, createContext, useContext, useState, useEffect } from "react";
 
 interface ModalContextProps {
