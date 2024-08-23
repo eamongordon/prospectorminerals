@@ -34,10 +34,6 @@ export default function Form({
   const [data, setData] = useState<FormData | string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const formUpdate = (event: any) => {
-    setData(event.target.value);
-  }
-
   const uploadFormFunction = (file: File) => {
     const formData = new FormData();
     if (inputAttrs.name === "avatar") {
@@ -114,13 +110,13 @@ export default function Form({
             rows={3}
             required
             className="w-full max-w-xl rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
-            onChange={formUpdate}
+            onChange={(event) => setData(event.target.value)}
           />
         ) : (
           <Input
             {...inputAttrs}
             required
-            onChange={formUpdate}
+            onChange={(event) => setData(event.target.value)}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 if (inputAttrs.type === "password" && !data) {

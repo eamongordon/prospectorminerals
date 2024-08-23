@@ -4,18 +4,12 @@ import { deleteUser } from "@/lib/actions";
 import { Button, Input } from "@nextui-org/react";
 import va from "@vercel/analytics";
 import { signOut } from "next-auth/react";
-import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
 export default function DeleteUserForm() {
-  const { id } = useParams() as { id: string };
-  const router = useRouter();
   const [data, setData] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const formUpdate = (event: any) => {
-    setData(event.target.value);
-  }
   function submitForm() {
     setLoading(true);
     if (window.confirm("Are you sure you want to delete your account?")) {
@@ -44,7 +38,7 @@ export default function DeleteUserForm() {
           required
           pattern={"DELETE"}
           placeholder={"DELETE"}
-          onChange={formUpdate}
+          onChange={(event => setData(event.target.value))}
         />
       </div>
 
