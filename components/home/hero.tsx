@@ -5,7 +5,7 @@ import PMLogo from '../pmLogo';
 export default function Hero() {
     return (
         <div
-            className="w-full h-[calc(100vh-64px)] flex justify-center items-center overflow-hidden relative bg-black">
+            className="w-full h-[calc(100dvh-64px)] flex justify-center items-center overflow-hidden relative bg-black">
             <BlurImage
                 src={"/Fluorite-164_horiz-Optimized.jpg"}
                 alt="Hero Image"
