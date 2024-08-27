@@ -7,7 +7,7 @@ export default function NotFound() {
   return (
     <main>
       <Header />
-      <div className="grid h-screen place-content-center px-4">
+      <div className="grid h-dvh place-content-center px-4">
         <div className="text-center">
           <h1 className="text-9xl sm:text-[164px] font-black bg-clip-text text-transparent bg-[url('/small_Fluorite-164_horiz-Optimized_350x263.jpeg')]">404</h1>
 
