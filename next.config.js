@@ -3,11 +3,7 @@ const nextConfig = {
     images: {
         remotePatterns: [
             { hostname: process.env.BLOB_HOSTNAME },
-            { hostname: "public.blob.vercel-storage.com" },
-            { hostname: "res.cloudinary.com" },
-            { hostname: "avatar.vercel.sh" },
-            { hostname: "avatars.githubusercontent.com" },
-            { hostname: "www.google.com" },
+            { hostname: "lh3.googleusercontent.com", pathname: '/a/**' },
         ]
     },
     async redirects() {
