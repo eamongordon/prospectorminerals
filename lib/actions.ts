@@ -704,12 +704,6 @@ export async function fetchPosts({ filterObj, cursor, limit, sortObj, fieldset }
       ...(limit ? { take: limit } : {}),
     }
   );
-  /*
-  let returnArray;
-  if (fieldset === "display") {
-    returnArray = results.map((result) => {return {name: result.name, number: result.number, id: result.id, photo: result.photos[0].image}});
-  }
-  */
   return {
     results: results,
     next: results.length === limit ? results[results.length - 1].number : undefined
