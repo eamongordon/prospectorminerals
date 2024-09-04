@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { fetchMinerals, fetchLocalities, fetchPhotos, fetchPosts } from "@/lib/actions";
-import BlurImage from "../blur-image";
+import BlurImage from "./blur-image";
 import { Button, Chip, Input, Skeleton } from "@nextui-org/react";
 import { Search as MagnifyingGlassIcon } from "lucide-react";
 import { useDebounce } from "use-debounce";
