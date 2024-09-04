@@ -6,9 +6,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  return (<>
-    <Header />
-    {children}
-    <Footer />
-  </>)
+  return (
+    <>
+      <Header />
+      {children}
+      <Footer />
+    </>
+  )
 }
