@@ -1,16 +1,16 @@
 "use client"
 
-import { Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle, Link as UILink } from "@nextui-org/react";
+import { Button, Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle, Link as UILink } from "@nextui-org/react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from "react";
 import CustomAvatar from "./avatar";
-import LoginModal from './modal/login';
 import PMLogo from "./pmLogo";
-import LoginModalButton from './registration/login-modal-button';
-import SearchComp from './search/search';
-import SearchModalButton from "./search/search-button";
+import SearchComp from './search';
+import { useModal } from "./modal/provider";
+import LoginForm from "./registration/login-form";
+import { Search } from "lucide-react";
 
 export default function HeaderComp({
     loggedIn,
@@ -26,7 +26,7 @@ export default function HeaderComp({
     const { name, image, email } = userData || {};
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const pathname = usePathname();
-
+    const modal = useModal();
     useEffect(() => {
         if (isMenuOpen) {
             setIsMenuOpen(false);
@@ -85,9 +85,11 @@ export default function HeaderComp({
                         aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                         className="mr-4 hidden sm:block lg:hidden xl:hidden"
                     />
-                    <>
-                        <SearchModalButton {...(isMenuOpen ? { closeMenuCallback: setIsMenuOpen } : {})}><section className="max-w-screen-xl px-8 w-full"><SearchComp /></section></SearchModalButton>
-                    </>
+                    <Button
+                        onClick={() => { setIsMenuOpen(false); modal?.show(<section className="max-w-screen-xl px-8 w-full"><SearchComp /></section>, "search"); }}
+                        isIconOnly color="default" variant="faded" aria-label="Search">
+                        <Search />
+                    </Button>
                     {loggedIn ? (
                         <>
                             <Dropdown placement="bottom-end">
@@ -121,9 +123,12 @@ export default function HeaderComp({
                             </Dropdown>
                         </>
                     ) : (
-                        <>
-                            <LoginModalButton {...(isMenuOpen ? { closeMenuCallback: setIsMenuOpen } : {})}><LoginModal /></LoginModalButton>
-                        </>
+                        <Button
+                            onClick={() => { setIsMenuOpen(false); modal?.show(<LoginForm isModal={true} onCloseAction={modal?.hide} />, "registration"); }}
+                            color="default" variant="flat" className="hidden sm:flex"
+                        >
+                            Log In
+                        </Button>
                     )}
                 </NavbarContent>
                 <NavbarMenu>
@@ -187,7 +192,12 @@ export default function HeaderComp({
                                 </DropdownMenu>
                             </Dropdown>
                         ) : (
-                            <LoginModalButton isMobile={true} closeMenuCallback={setIsMenuOpen}><LoginModal /></LoginModalButton>
+                            <Button
+                                onClick={() => { setIsMenuOpen(false); modal?.show(<LoginForm isModal={true} onCloseAction={modal?.hide} />, "registration"); }}
+                                color="default" variant="flat" className="px-4"
+                            >
+                                Log In
+                            </Button>
                         )}
                     </div>
                 </NavbarMenu>
