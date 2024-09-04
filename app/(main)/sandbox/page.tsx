@@ -1,11 +1,8 @@
 import Footer from '@/components/footer';
 import Header from '@/components/header';
-import { LoginModalProvider } from "@/components/modal/registration/provider";
 import Card from "@/components/minerals/mineral-card";
 import Gallery from "@/components/minerals/mineral-gallery";
 import Image from 'next/image';
-import { getSession } from '@/lib/auth';
-import { notFound } from 'next/navigation';
 
 const galleryData = [
     {
@@ -37,19 +34,17 @@ const htmltest = `<p class=""font_8"">Aurichalcite is commonly associated with:<
 export default async function Page() {
     return (
         <main>
-            <LoginModalProvider>
-                <Header />
-                <Image
-                    src="/PM-Favicon-New-Square.png"
-                    width={50}
-                    height={50}
-                    alt="Prospector Minerals Logo"
-                />
-                <div className="product-des" dangerouslySetInnerHTML={{ __html: htmltest }}/>
-                <Gallery data={galleryData} />
-                <Card name="Azurite" slug="az" />
-                <Footer />
-            </LoginModalProvider>
+            <Header />
+            <Image
+                src="/PM-Favicon-New-Square.png"
+                width={50}
+                height={50}
+                alt="Prospector Minerals Logo"
+            />
+            <div className="product-des" dangerouslySetInnerHTML={{ __html: htmltest }} />
+            <Gallery data={galleryData} />
+            <Card name="Azurite" slug="az" />
+            <Footer />
         </main>
     )
 }
