@@ -67,7 +67,9 @@ export default function Form({
           } else {
             value = data;
           }
-          await update({ [inputAttrsName]: value });
+          if (inputAttrs.name !== "password") {
+            await update({ [inputAttrsName]: value });
+          }
           router.refresh();
         }
         toast.success(`Successfully updated ${inputAttrs.name}!`);
