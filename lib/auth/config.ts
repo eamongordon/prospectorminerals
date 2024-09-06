@@ -4,9 +4,22 @@ import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "@/lib/prisma";
 import { baseUrl } from "../utils";
+import { JWT } from "next-auth/jwt";
 
 declare module "next-auth" {
     interface User {
+        roles?: string[]
+    }
+    interface Token {
+        roles?: string[]
+        user: {}
+    }
+}
+
+declare module "next-auth/jwt" {
+    /** Returned by the `jwt` callback and `auth`, when using JWT sessions */
+    interface JWT {
+        /** OpenID ID Token */
         roles?: string[]
     }
 }
@@ -77,10 +90,8 @@ export default {
         session: async ({ session, token }) => {
             session.user = {
                 ...session.user,
-                // @ts-expect-error
                 roles: token?.roles,
-                // @ts-expect-error
-                id: token?.sub,
+                ...(token.sub && { id: token.sub }),
             };
             return session;
         },
