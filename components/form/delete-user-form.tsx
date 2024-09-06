@@ -20,6 +20,8 @@ export default function DeleteUserForm() {
           toast.success(`Account deleted.`);
         })
         .catch((err: Error) => toast.error("There was an error deleting your account. Please try again later."))
+    } else {
+      setLoading(false);
     }
   }
   return (
@@ -39,6 +41,16 @@ export default function DeleteUserForm() {
           pattern={"DELETE"}
           placeholder={"DELETE"}
           onChange={(event => setData(event.target.value))}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              if (data === "DELETE") {
+                e.preventDefault(); // Prevent the default action to avoid submitting the form
+                submitForm();
+              } else {
+                toast.error("Please type DELETE to confirm.");
+              }
+            }
+          }}
         />
       </div>
 
