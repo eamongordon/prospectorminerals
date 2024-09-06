@@ -22,7 +22,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         }
         const user = await prisma.user.findUnique({
           where: {
-            email : email as string,
+            email: email as string,
           },
         });
         // if user doesn't exist or password doesn't match
@@ -45,7 +45,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       sendVerificationRequest: async function sendVerificationRequest(params) {
         const { identifier, url, provider, theme } = params
         const { host } = new URL(url)
-        // NOTE: You are not required to use `nodemailer`, use whatever you want.
         const transport = createTransport(provider.server)
         const result = await transport.sendMail({
           to: identifier,
