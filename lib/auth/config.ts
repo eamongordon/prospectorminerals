@@ -75,9 +75,7 @@ export default {
             if (trigger === "update") {
                 const sessionKeyList = Object.keys(session);
                 sessionKeyList.forEach(async (key) => {
-                    if (key !== "password") {
-                        token[key] = session[key];
-                    }
+                    token[key] = session[key];
                 });
             }
             return token;
