@@ -2,6 +2,7 @@
 
 import Modal from ".";
 import { ReactNode, createContext, useContext, useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 interface ModalContextProps {
   show: (content: ReactNode, type?: ModalType) => void;
@@ -37,6 +38,14 @@ export function ModalProvider({ children }: { children: ReactNode }) {
       setModalContent(null);
     }, 300); // Timeout adjusts transition duration
   };
+
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (showModal && modalType === "search") {
+      setShowModal(false);
+    }
+  }, [pathname]);
 
   return (
     <ModalContext.Provider value={{ show, hide, modalType, setModalType }}>
