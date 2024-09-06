@@ -12,14 +12,12 @@ declare module "next-auth" {
     }
     interface Token {
         roles?: string[]
-        user: {}
     }
 }
 
 declare module "next-auth/jwt" {
     /** Returned by the `jwt` callback and `auth`, when using JWT sessions */
     interface JWT {
-        /** OpenID ID Token */
         roles?: string[]
     }
 }
@@ -63,7 +61,6 @@ export default {
     theme: {
         colorScheme: "auto", // "auto" | "dark" | "light"
         brandColor: "#666565", // Hex color code
-        //DOMAIN_UPDATE
         logo: `${baseUrl}/_next/image?url=%2FPM-Favicon-New-Square.png&w=128&q=75`, // Absolute URL to image
         buttonText: "#FFFFFF" // Hex color code
     },
@@ -96,7 +93,7 @@ export default {
                     },
                 });
                 if (userExists) {
-                    return true;   //if the email exists in the User collection, email them a magic login link
+                    return true;   //if the email exists in the User table, email them a magic login link
                 } else {
                     return false;
                 }
