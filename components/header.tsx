@@ -1,22 +1,17 @@
-import HeaderContent from './header-content'
+import HeaderContent from './header-content';
 import { getSession } from "@/lib/auth";
+import { ModalProvider } from './modal/provider';
 
 export default async function Header() {
   const session = await getSession();
   const { name, image, email } = session?.user || {};
-  return session ? (
-    <HeaderContent
-      loggedIn={true}
-      userData={
-        {
-          name: name,
-          image: image,
-          email: email
-        }
-      }
-    />) : (
-    <HeaderContent
-      loggedIn={false}
-    />
+
+  return (
+    <ModalProvider>
+      <HeaderContent
+        loggedIn={!!session}
+        userData={session ? { name, image, email } : undefined}
+      />
+    </ModalProvider>
   );
 }

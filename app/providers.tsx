@@ -1,6 +1,5 @@
 "use client";
 
-import { ModalProvider } from "@/components/modal/provider";
 import { NextUIProvider } from '@nextui-org/react';
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
@@ -16,9 +15,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         <NextThemesProvider attribute="class">
           <Toaster className={`${workSansClassName} dark:hidden`} />
           <Toaster theme="dark" className={`${workSansClassName} hidden dark:block`} />
-          <ModalProvider>
-            {children}
-          </ModalProvider>
+          {children}
         </NextThemesProvider>
       </NextUIProvider>
     </SessionProvider>
