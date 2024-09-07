@@ -1,6 +1,6 @@
 "use client";
 
-import Modal from ".";
+import Modal, { type ModalType } from ".";
 import { ReactNode, createContext, useContext, useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
@@ -10,8 +10,6 @@ interface ModalContextProps {
   modalType: ModalType;
   setModalType: (type: ModalType) => void;
 }
-
-type ModalType = "search" | "registration";
 
 const ModalContext = createContext<ModalContextProps | undefined>(undefined);
 

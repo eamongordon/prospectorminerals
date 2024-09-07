@@ -12,7 +12,7 @@ import {
   useRef,
 } from "react";
 
-type ModalType = "search" | "registration";
+export type ModalType = "search" | "registration";
 
 interface ModalProps {
   children: React.ReactNode;
