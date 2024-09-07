@@ -18,7 +18,6 @@ const nanoid = customAlphabet(
 
 export const editUser = async (
   formData: any,
-  _id: unknown,
   key: string,
 ) => {
   const session = await getSession();
@@ -263,7 +262,6 @@ export async function addPhotoLocalityRelations() {
 
 export const createPhoto = async (
   formData: any,
-  _id: unknown,
   key: string,
 ) => {
   const session = await getSession();
