@@ -1,33 +1,221 @@
 "use client";
 
-import { Divider, Tab, Tabs } from "@nextui-org/react";
+import { signIn } from "next-auth/react";
+import { useState, Suspense, type Key } from "react";
+import { Button, Input, Divider, Tab, Tabs } from "@nextui-org/react";
 import Image from "next/image";
 import Link from 'next/link';
-import { usePathname } from "next/navigation";
-import type { Key } from "react";
-import { Suspense, useState } from "react";
-import Form from './form-inner';
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { toast } from "sonner";
+import { createUser } from "@/lib/actions";
 import LoginButton from "./social-login-button";
 
-export default function FormWrapper(
-  {
-    isModal,
-    onCloseAction
-  }: {
-    isModal?: boolean,
-    onCloseAction?: Function
+type AuthHeaderProps = {
+  title: string;
+};
 
-  }) {
+type AuthFooterProps = {
+  isModal?: boolean;
+  linkText: string;
+  linkHref: string;
+  buttonText: string;
+  onClick: () => void;
+};
+
+type AuthFormProps = {
+  type: "login" | "register" | "forgotPassword";
+  data: { email: string; password?: string };
+  setData: React.Dispatch<React.SetStateAction<{ email: string; password?: string }>>;
+  loading: boolean;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>, type: "login" | "register" | "forgotPassword") => void;
+};
+
+const AuthHeader = ({ title }: AuthHeaderProps) => (
+  <>
+    <Image
+      alt="Prospector Minerals"
+      width={100}
+      height={100}
+      className="relative mx-auto h-12 w-auto dark:scale-120 dark:rounded-full dark:border dark:border-stone-400 my-5"
+      src="/PM-Favicon-New-Square.svg"
+    />
+    <h1 className="mt-6 text-center font-medium text-3xl dark:text-white">
+      {title}
+    </h1>
+  </>
+);
+
+const AuthFooter = ({ isModal, linkText, linkHref, buttonText, onClick }: AuthFooterProps) => (
+  <p className="text-center text-sm pt-8 pb-8 px-16">
+    {linkText}{" "}
+    {isModal ? (
+      <button className="hover:opacity-80 transition-opacity tap-highlight-transparent font-semibold text-sm" onClick={onClick}>
+        {buttonText}
+      </button>
+    ) : (
+      <Link href={linkHref}>
+        <button className="hover:opacity-80 transition-opacity tap-highlight-transparent font-semibold text-sm">
+          {buttonText}
+        </button>
+      </Link>
+    )}
+    {" "}
+    instead.
+  </p>
+);
+
+const AuthForm = ({ type, data, setData, loading, handleSubmit }: AuthFormProps) => (
+  <form
+    onSubmit={(e) => handleSubmit(e, type)}
+    className="flex flex-col space-y-4 px-4 mt-8 sm:px-16"
+  >
+    {type === "register" && (
+      <div>
+        <Input
+          id="nametxt"
+          name="nametxt"
+          label="Name (Optional)"
+          size="sm"
+          radius="md"
+          type="text"
+        />
+      </div>
+    )}
+    <div>
+      <Input
+        id="email"
+        name="email"
+        size="sm"
+        radius="md"
+        type="email"
+        label="Email"
+        autoComplete="email"
+        onChange={(e) => setData({ ...data, email: e.target.value })}
+        required
+      />
+    </div>
+    {type !== "forgotPassword" && (
+      <div>
+        <Input
+          id="password"
+          name="password"
+          label="Password"
+          size="sm"
+          radius="md"
+          type="password"
+          onChange={(e) => setData({ ...data, password: e.target.value })}
+          required
+        />
+      </div>
+    )}
+    <Button
+      disabled={loading}
+      isLoading={loading}
+      color="default"
+      type="submit"
+    >
+      <p>{type === "login" ? "Sign In" : type === "register" ? "Sign Up" : "Send Email"}</p>
+    </Button>
+  </form>
+);
+
+const FallbackUI = () => (
+  <div className="my-2 h-10 w-full rounded-md border border-stone-200 bg-stone-100 dark:border-stone-700 dark:bg-stone-800" />
+);
+
+export default function FormWrapper({ isModal, onCloseAction }: { isModal?: boolean, onCloseAction?: Function }) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const pathname = usePathname();
+  const redirectUri = searchParams.get('redirect');
   const [selected, setSelected] = useState<Key>(isModal ? "/login" : pathname);
   const [forgotPassword, setForgotPassword] = useState(false);
-  const pull_ForgotPassword = (back: boolean) => {
-    if (back) {
-      setForgotPassword(false);
-    } else {
-      setForgotPassword(true);
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState<{ email: string; password?: string }>({
+    email: "",
+    password: "",
+  });
+
+  const handleLogin = async (email: string, password: string, initialLogin?: boolean) => {
+    try {
+      const signInResult = await signIn("credentials", {
+        redirect: isModal ? false : true,
+        email,
+        password,
+        callbackUrl: isModal ? undefined : initialLogin ? redirectUri ? decodeURIComponent(redirectUri) : "/" : "/"
+      });
+      setLoading(false);
+      if (signInResult?.error) {
+        toast.error("Invalid Email or Password");
+      } else {
+        router.refresh();
+        if (isModal) {
+          onCloseAction?.();
+          if (!initialLogin) {
+            toast.success("Logged In Successfully!");
+          }
+        }
+      }
+    } catch {
+      setLoading(false);
+      toast.error("An unknown error occurred. Please try again later.");
     }
-  }
+  };
+
+  const handleRegister = async (email: string, password: string, name?: string) => {
+    try {
+      await createUser({ email, password, name });
+      await handleLogin(email, password, true);
+      if (isModal) {
+        onCloseAction?.();
+        toast.success("Signed Up Successfully. Welcome aboard!");
+      }
+    } catch (err) {
+      setLoading(false);
+      if (err instanceof Error) {
+        if (err.message === "User already exists") {
+          toast.error("An account already exists under this email.");
+        } else {
+          toast.error("An error occurred. Please try again later.");
+        }
+      } else {
+        toast.error("An unknown error occurred. Please try again later.");
+      }
+    }
+  };
+
+  const handleForgotPassword = async (email: string) => {
+    try {
+      const signInResult = await signIn('nodemailer', { redirect: false, email, callbackUrl: '/account/settings/#new-password' });
+      setLoading(false);
+      if (signInResult?.error) {
+        toast.error("There was an error sending the email. Please try again later.");
+      } else {
+        toast.success("Email Sent! Check your inbox.");
+      }
+    } catch {
+      setLoading(false);
+      toast.error("There was an error sending the email. Please try again later.");
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, type: "login" | "register" | "forgotPassword") => {
+    e.preventDefault();
+    setLoading(true);
+
+    const email = e.currentTarget.email.value;
+    const password = e.currentTarget.password?.value;
+    const name = e.currentTarget.nametxt?.value;
+
+    if (type === "login") {
+      await handleLogin(email, password);
+    } else if (type === 'register') {
+      await handleRegister(email, password, name);
+    } else {
+      await handleForgotPassword(email);
+    }
+  };
+
   return (
     <div className={`${isModal ? "flex items-center justify-center" : "flex h-screen w-screen items-center justify-center"}`}>
       <div className={`${isModal ? "bg-white dark:bg-black border border-stone-200 dark:border-stone-700 sm:mx-auto w-full rounded-xl sm:shadow-md" : "max-w-[348px] border border-stone-200 dark:border-stone-700 sm:max-w-md sm:mx-auto w-full rounded-xl sm:shadow-md"}`}>
@@ -43,107 +231,41 @@ export default function FormWrapper(
           }}
         >
           <Tab key="/login" title="Log In" {...(isModal ? {} : { href: "/login", as: Link })}>
-            <Image
-              alt="Prospector Minerals"
-              width={100}
-              height={100}
-              className="relative mx-auto h-12 w-auto dark:scale-120 dark:rounded-full dark:border dark:border-stone-400 my-5"
-              src="/PM-Favicon-New-Square.svg"
-            />
-            {
-              forgotPassword ? (
-                <>
-                  <h1 className="mt-6 text-center font-medium text-3xl dark:text-white">
-                    Reset Password
-                  </h1>
-                  <p className="text-center text-sm pt-4 px-16">
-                    Send a login link to your account&apos;s email.
-                  </p>
-                  <Form type="forgotPassword" isModal={isModal} onCloseAction={onCloseAction} resetPasswordFunc={pull_ForgotPassword} />
-                  <p className="text-center text-sm pt-8 pb-8 px-16">
-                    <button className="hover:opacity-80 transition-opacity tap-highlight-transparent font-semibold text-sm" onClick={() => pull_ForgotPassword(true)} >
-                      Back to Login
-                    </button>
-                  </p>
-                </>
-              ) : (
-                <>
-                  <h1 className="mt-6 text-center font-medium text-3xl dark:text-white">
-                    Welcome Back
-                  </h1>
-                  <Form type="login" isModal={isModal} onCloseAction={onCloseAction} resetPasswordFunc={pull_ForgotPassword} />
-                  <p className="text-center text-sm pt-8 pb-8 px-16">
-                    Don&apos;t have an account?{" "}
-                    {isModal ? (
-                      <button className="hover:opacity-80 transition-opacity tap-highlight-transparent font-semibold text-sm" {...(isModal ? { onClick: () => setSelected("/signup") } : { href: "/signup" })} >
-                        Sign Up
-                      </button>
-                    ) : (
-                      <Link href="/signup">
-                        <button className="hover:opacity-80 transition-opacity tap-highlight-transparent font-semibold text-sm" {...(isModal ? { onClick: () => setSelected("/signup") } : { href: "/signup" })} >
-                          Sign Up
-                        </button>
-                      </Link>
-                    )}
-                    {" "}
-                    for free.
-                  </p>
-                  <Divider />
-                  <div className="flex flex-col space-y-4 px-4 mt-8 mb-8 sm:px-16">
-                    <Suspense
-                      fallback={
-                        <div className="my-2 h-10 w-full rounded-md border border-stone-200 bg-stone-100 dark:border-stone-700 dark:bg-stone-800" />
-                      }
-                    >
-                      <LoginButton signup={false} isModal={isModal} />
-                    </Suspense>
-                  </div>
-                </>
-              )
-            }
+            <AuthHeader title={forgotPassword ? "Reset Password" : "Welcome Back"} />
+            {forgotPassword ? (
+              <>
+                <p className="text-center text-sm pt-4 px-16">
+                  Send a login link to your account&apos;s email.
+                </p>
+                <AuthForm type="forgotPassword" data={data} setData={setData} loading={loading} handleSubmit={handleSubmit} />
+                <AuthFooter isModal={isModal} linkText="Back to Login" linkHref="/login" buttonText="Back to Login" onClick={() => setForgotPassword(false)} />
+              </>
+            ) : (
+              <>
+                <AuthForm type="login" data={data} setData={setData} loading={loading} handleSubmit={handleSubmit} />
+                <AuthFooter isModal={isModal} linkText="Don&apos;t have an account?" linkHref="/signup" buttonText="Sign Up" onClick={() => setSelected("/signup")} />
+                <Divider />
+                <div className="flex flex-col space-y-4 px-4 mt-8 mb-8 sm:px-16">
+                  <Suspense fallback={<FallbackUI />}>
+                    <LoginButton signup={false} isModal={isModal} />
+                  </Suspense>
+                </div>
+              </>
+            )}
           </Tab>
           <Tab key="/signup" title="Sign Up" {...(isModal ? {} : { href: "/signup", as: Link })}>
-            <Image
-              alt="Prospector Minerals Icon"
-              width={100}
-              height={100}
-              className="relative mx-auto h-12 w-auto dark:scale-120 dark:rounded-full dark:border dark:border-stone-400 my-5"
-              src="/PM-Favicon-New-Square.svg"
-            />
-            <h1 className="mt-6 text-center font-medium text-3xl dark:text-white">
-              Get Started
-            </h1>
-            <Form type="register" isModal={isModal} onCloseAction={onCloseAction} />
-            <p className="text-center text-sm pt-8 pb-8 px-16">
-              Already have an account?{" "}
-              {isModal ? (
-                <button className="hover:opacity-80 transition-opacity tap-highlight-transparent font-semibold text-sm" {...(isModal ? { onClick: () => setSelected("/login") } : { href: "/login" })}>
-                  Log In
-                </button>
-              ) : (
-                <Link href="/login">
-                  <button className="hover:opacity-80 transition-opacity tap-highlight-transparent font-semibold text-sm" {...(isModal ? { onClick: () => setSelected("/login") } : { href: "/login" })}>
-                    Log In
-                  </button>
-                </Link>
-              )}
-              {" "}
-              instead.
-            </p>
+            <AuthHeader title="Get Started" />
+            <AuthForm type="register" data={data} setData={setData} loading={loading} handleSubmit={handleSubmit} />
+            <AuthFooter isModal={isModal} linkText="Already have an account?" linkHref="/login" buttonText="Log In" onClick={() => setSelected("/login")} />
             <Divider />
             <div className="flex flex-col space-y-4 px-4 mt-8 mb-8 sm:px-16">
-              <Suspense
-                fallback={
-                  <div className="my-2 h-10 w-full rounded-md border border-stone-200 bg-stone-100 dark:border-stone-700 dark:bg-stone-800" />
-                }
-              >
+              <Suspense fallback={<FallbackUI />}>
                 <LoginButton signup={true} isModal={isModal} />
               </Suspense>
             </div>
           </Tab>
         </Tabs>
       </div>
-    </div >
-  )
-
+    </div>
+  );
 }

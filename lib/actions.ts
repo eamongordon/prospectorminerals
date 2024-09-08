@@ -314,7 +314,7 @@ export const createPhoto = async (
   }
 };
 
-export const createUser = async (userdata: { email: string; password: string; name: string }) => {
+export const createUser = async (userdata: { email: string; password: string; name?: string }) => {
   const { email, password, name } = userdata;
 
   try {
