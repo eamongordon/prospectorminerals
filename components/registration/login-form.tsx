@@ -226,55 +226,57 @@ export default function FormWrapper({ isModal, onCloseAction }: { isModal?: bool
   };
 
   return (
-    <div className={`${isModal ? "flex items-center justify-center" : "flex h-screen w-screen items-center justify-center"}`}>
-      <div className={`${isModal ? "bg-white dark:bg-black border border-stone-200 dark:border-stone-700 sm:mx-auto w-full rounded-xl sm:shadow-md" : "max-w-[348px] border border-stone-200 dark:border-stone-700 sm:max-w-md sm:mx-auto w-full rounded-xl sm:shadow-md"}`}>
-        <Tabs
-          fullWidth
-          size="md"
-          aria-label="Shift between Login and Signup forms"
-          selectedKey={isModal ? selected.toString() : pathname}
-          onSelectionChange={setSelected}
-          classNames={{
-            tabList: "rounded-t-xl rounded-b-none",
-            tab: "rounded-t-xl rounded-b-none",
-          }}
-        >
-          <Tab key="/login" title="Log In" {...(isModal ? {} : { href: "/login", as: Link })}>
-            <AuthHeader title={forgotPassword ? "Reset Password" : "Welcome Back"} />
-            {forgotPassword ? (
-              <>
-                <p className="text-center text-sm pt-4 px-16">
-                  Send a login link to your account&apos;s email.
-                </p>
-                <AuthForm type="forgotPassword" data={data} setData={setData} loading={loading} handleSubmit={handleSubmit} />
-                <AuthFooter isModal={isModal} linkHref="/login" buttonText="Back to Login" onClick={() => setForgotPassword(false)} />
-              </>
-            ) : (
-              <>
-                <AuthForm type="login" data={data} setData={setData} loading={loading} handleSubmit={handleSubmit} resetPassword={setForgotPassword} />
-                <AuthFooter isModal={isModal} linkText="Don&apos;t have an account?" secondLinkText="for free." linkHref="/signup" buttonText="Sign Up" onClick={() => setSelected("/signup")} />
-                <Divider />
-                <div className="flex flex-col space-y-4 px-4 mt-8 mb-8 sm:px-16">
-                  <Suspense fallback={<FallbackUI />}>
-                    <LoginButton signup={false} isModal={isModal} />
-                  </Suspense>
-                </div>
-              </>
-            )}
-          </Tab>
-          <Tab key="/signup" title="Sign Up" {...(isModal ? {} : { href: "/signup", as: Link })}>
-            <AuthHeader title="Get Started" />
-            <AuthForm type="register" data={data} setData={setData} loading={loading} handleSubmit={handleSubmit} />
-            <AuthFooter isModal={isModal} linkText="Already have an account?" secondLinkText="instead." linkHref="/login" buttonText="Log In" onClick={() => setSelected("/login")} />
-            <Divider />
-            <div className="flex flex-col space-y-4 px-4 mt-8 mb-8 sm:px-16">
-              <Suspense fallback={<FallbackUI />}>
-                <LoginButton signup={true} isModal={isModal} />
-              </Suspense>
-            </div>
-          </Tab>
-        </Tabs>
+    <Suspense>
+      <div className={`${isModal ? "flex items-center justify-center" : "flex h-screen w-screen items-center justify-center"}`}>
+        <div className={`${isModal ? "bg-white dark:bg-black border border-stone-200 dark:border-stone-700 sm:mx-auto w-full rounded-xl sm:shadow-md" : "max-w-[348px] border border-stone-200 dark:border-stone-700 sm:max-w-md sm:mx-auto w-full rounded-xl sm:shadow-md"}`}>
+          <Tabs
+            fullWidth
+            size="md"
+            aria-label="Shift between Login and Signup forms"
+            selectedKey={isModal ? selected.toString() : pathname}
+            onSelectionChange={setSelected}
+            classNames={{
+              tabList: "rounded-t-xl rounded-b-none",
+              tab: "rounded-t-xl rounded-b-none",
+            }}
+          >
+            <Tab key="/login" title="Log In" {...(isModal ? {} : { href: "/login", as: Link })}>
+              <AuthHeader title={forgotPassword ? "Reset Password" : "Welcome Back"} />
+              {forgotPassword ? (
+                <>
+                  <p className="text-center text-sm pt-4 px-16">
+                    Send a login link to your account&apos;s email.
+                  </p>
+                  <AuthForm type="forgotPassword" data={data} setData={setData} loading={loading} handleSubmit={handleSubmit} />
+                  <AuthFooter isModal={isModal} linkHref="/login" buttonText="Back to Login" onClick={() => setForgotPassword(false)} />
+                </>
+              ) : (
+                <>
+                  <AuthForm type="login" data={data} setData={setData} loading={loading} handleSubmit={handleSubmit} resetPassword={setForgotPassword} />
+                  <AuthFooter isModal={isModal} linkText="Don&apos;t have an account?" secondLinkText="for free." linkHref="/signup" buttonText="Sign Up" onClick={() => setSelected("/signup")} />
+                  <Divider />
+                  <div className="flex flex-col space-y-4 px-4 mt-8 mb-8 sm:px-16">
+                    <Suspense fallback={<FallbackUI />}>
+                      <LoginButton signup={false} isModal={isModal} />
+                    </Suspense>
+                  </div>
+                </>
+              )}
+            </Tab>
+            <Tab key="/signup" title="Sign Up" {...(isModal ? {} : { href: "/signup", as: Link })}>
+              <AuthHeader title="Get Started" />
+              <AuthForm type="register" data={data} setData={setData} loading={loading} handleSubmit={handleSubmit} />
+              <AuthFooter isModal={isModal} linkText="Already have an account?" secondLinkText="instead." linkHref="/login" buttonText="Log In" onClick={() => setSelected("/login")} />
+              <Divider />
+              <div className="flex flex-col space-y-4 px-4 mt-8 mb-8 sm:px-16">
+                <Suspense fallback={<FallbackUI />}>
+                  <LoginButton signup={true} isModal={isModal} />
+                </Suspense>
+              </div>
+            </Tab>
+          </Tabs>
+        </div>
       </div>
-    </div>
+    </Suspense>
   );
 }
