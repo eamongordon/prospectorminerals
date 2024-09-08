@@ -4,15 +4,22 @@ import authConfig from "@/lib/auth/config"
 export const { auth } = NextAuth(authConfig)
 
 export default auth((req) => {
-  if (!req.auth) {
-    const url = req.url.replace(req.nextUrl.pathname, `/login?callbackUrl=${encodeURIComponent(req.url)}`)
-    return Response.redirect(url)
-  } else {
-    //Ensure condition yields true when user or roles is undefined
-    if ((req.nextUrl.pathname.startsWith('/manage') || req.nextUrl.pathname.startsWith('/sandbox')) && !(req.auth.user?.roles?.includes('Admin') ?? true)) {
+  const { pathname } = req.nextUrl;
+
+  if (req.auth) {
+    const isAdmin = req.auth.user?.roles?.includes('Admin') ?? false;
+
+    if ((pathname.startsWith('/manage') || pathname.startsWith('/sandbox')) && !isAdmin) {
       return new Response('Forbidden', { status: 403 });
-    } else if ((req.nextUrl.pathname.startsWith('/login')) || (req.nextUrl.pathname.startsWith('/signup'))) {
-      const url = req.url.replace(req.nextUrl.pathname, '/account/settings')
+    }
+
+    if (pathname.startsWith('/login') || pathname.startsWith('/signup')) {
+      const url = req.url.replace(pathname, '/account/settings');
+      return Response.redirect(url);
+    }
+  } else {
+    if (!pathname.startsWith('/login')) {
+      const url = req.url.replace(pathname, `/login?callbackUrl=${encodeURIComponent(req.url)}`);
       return Response.redirect(url);
     }
   }
