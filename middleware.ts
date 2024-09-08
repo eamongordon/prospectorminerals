@@ -11,6 +11,9 @@ export default auth((req) => {
     //Ensure condition yields true when user or roles is undefined
     if ((req.nextUrl.pathname.startsWith('/manage') || req.nextUrl.pathname.startsWith('/sandbox')) && !(req.auth.user?.roles?.includes('Admin') ?? true)) {
       return new Response('Forbidden', { status: 403 });
+    } else if ((req.nextUrl.pathname.startsWith('/login')) || (req.nextUrl.pathname.startsWith('/signup'))) {
+      const url = req.url.replace(req.nextUrl.pathname, '/account/settings')
+      return Response.redirect(url);
     }
   }
 })
