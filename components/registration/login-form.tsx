@@ -139,10 +139,9 @@ export default function FormWrapper({ isModal, onCloseAction }: { isModal?: bool
   const handleLogin = async (email: string, password: string, initialLogin?: boolean) => {
     try {
       const signInResult = await signIn("credentials", {
-        redirect: isModal ? false : true,
+        redirect: false,
         email,
         password,
-        callbackUrl: isModal ? undefined : initialLogin ? redirectUri ? decodeURIComponent(redirectUri) : "/" : "/"
       });
       setLoading(false);
       if (signInResult?.error) {
@@ -153,6 +152,15 @@ export default function FormWrapper({ isModal, onCloseAction }: { isModal?: bool
           onCloseAction?.();
           if (!initialLogin) {
             toast.success("Logged In Successfully!");
+          }
+        } else {
+          if (redirectUri) {
+            router.push(decodeURIComponent(redirectUri));
+          } else {
+            router.push("/");
+            if (!initialLogin) {
+              toast.success("Logged In Successfully!");
+            }
           }
         }
       }
