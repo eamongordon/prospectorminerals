@@ -152,23 +152,20 @@ export default function FormWrapper({ isModal, onCloseAction }: { isModal?: bool
         password,
       });
       setLoading(false);
+      const toastLoginSuccessMsg = initialLogin ? "Signed Up Successfully. Welcome aboard!" : "Logged In Successfully!";
       if (signInResult?.error) {
         toast.error("Invalid Email or Password");
       } else {
         router.refresh();
         if (isModal) {
           onCloseAction?.();
-          if (!initialLogin) {
-            toast.success("Logged In Successfully!");
-          }
+          toast.success(toastLoginSuccessMsg);
         } else {
           if (redirectUri) {
             router.push(decodeURIComponent(redirectUri));
           } else {
             router.push("/");
-            if (!initialLogin) {
-              toast.success("Logged In Successfully!");
-            }
+            toast.success(toastLoginSuccessMsg);
           }
         }
       }
@@ -182,10 +179,6 @@ export default function FormWrapper({ isModal, onCloseAction }: { isModal?: bool
     try {
       await createUser({ email, password, name });
       await handleLogin(email, password, true);
-      if (isModal) {
-        onCloseAction?.();
-        toast.success("Signed Up Successfully. Welcome aboard!");
-      }
     } catch (err) {
       setLoading(false);
       if (err instanceof Error) {
