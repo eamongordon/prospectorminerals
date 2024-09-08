@@ -16,7 +16,8 @@ type AuthHeaderProps = {
 
 type AuthFooterProps = {
   isModal?: boolean;
-  linkText: string;
+  linkText?: string;
+  secondLinkText?: string;
   linkHref: string;
   buttonText: string;
   onClick: () => void;
@@ -28,6 +29,7 @@ type AuthFormProps = {
   setData: React.Dispatch<React.SetStateAction<{ email: string; password?: string }>>;
   loading: boolean;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>, type: "login" | "register" | "forgotPassword") => void;
+  resetPassword?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const AuthHeader = ({ title }: AuthHeaderProps) => (
@@ -45,9 +47,9 @@ const AuthHeader = ({ title }: AuthHeaderProps) => (
   </>
 );
 
-const AuthFooter = ({ isModal, linkText, linkHref, buttonText, onClick }: AuthFooterProps) => (
+const AuthFooter = ({ isModal, linkText, secondLinkText, linkHref, buttonText, onClick }: AuthFooterProps) => (
   <p className="text-center text-sm pt-8 pb-8 px-16">
-    {linkText}{" "}
+    {linkText && linkText + " "}
     {isModal ? (
       <button className="hover:opacity-80 transition-opacity tap-highlight-transparent font-semibold text-sm" onClick={onClick}>
         {buttonText}
@@ -59,12 +61,11 @@ const AuthFooter = ({ isModal, linkText, linkHref, buttonText, onClick }: AuthFo
         </button>
       </Link>
     )}
-    {" "}
-    instead.
+    {secondLinkText && " " + secondLinkText}
   </p>
 );
 
-const AuthForm = ({ type, data, setData, loading, handleSubmit }: AuthFormProps) => (
+const AuthForm = ({ type, data, setData, loading, handleSubmit, resetPassword }: AuthFormProps) => (
   <form
     onSubmit={(e) => handleSubmit(e, type)}
     className="flex flex-col space-y-4 px-4 mt-8 sm:px-16"
@@ -106,6 +107,13 @@ const AuthForm = ({ type, data, setData, loading, handleSubmit }: AuthFormProps)
           onChange={(e) => setData({ ...data, password: e.target.value })}
           required
         />
+      </div>
+    )}
+    {type === "login" && (
+      <div>
+        <button type="button" className="hover:opacity-80 transition-opacity tap-highlight-transparent relative inline-flex items-center font-semibold text-sm" color="foreground" onClick={() => resetPassword!(true)}>
+          Forgot Password?
+        </button>
       </div>
     )}
     <Button
@@ -246,12 +254,12 @@ export default function FormWrapper({ isModal, onCloseAction }: { isModal?: bool
                   Send a login link to your account&apos;s email.
                 </p>
                 <AuthForm type="forgotPassword" data={data} setData={setData} loading={loading} handleSubmit={handleSubmit} />
-                <AuthFooter isModal={isModal} linkText="Back to Login" linkHref="/login" buttonText="Back to Login" onClick={() => setForgotPassword(false)} />
+                <AuthFooter isModal={isModal} linkHref="/login" buttonText="Back to Login" onClick={() => setForgotPassword(false)} />
               </>
             ) : (
               <>
-                <AuthForm type="login" data={data} setData={setData} loading={loading} handleSubmit={handleSubmit} />
-                <AuthFooter isModal={isModal} linkText="Don&apos;t have an account?" linkHref="/signup" buttonText="Sign Up" onClick={() => setSelected("/signup")} />
+                <AuthForm type="login" data={data} setData={setData} loading={loading} handleSubmit={handleSubmit} resetPassword={setForgotPassword} />
+                <AuthFooter isModal={isModal} linkText="Don&apos;t have an account?" secondLinkText="for free." linkHref="/signup" buttonText="Sign Up" onClick={() => setSelected("/signup")} />
                 <Divider />
                 <div className="flex flex-col space-y-4 px-4 mt-8 mb-8 sm:px-16">
                   <Suspense fallback={<FallbackUI />}>
@@ -264,7 +272,7 @@ export default function FormWrapper({ isModal, onCloseAction }: { isModal?: bool
           <Tab key="/signup" title="Sign Up" {...(isModal ? {} : { href: "/signup", as: Link })}>
             <AuthHeader title="Get Started" />
             <AuthForm type="register" data={data} setData={setData} loading={loading} handleSubmit={handleSubmit} />
-            <AuthFooter isModal={isModal} linkText="Already have an account?" linkHref="/login" buttonText="Log In" onClick={() => setSelected("/login")} />
+            <AuthFooter isModal={isModal} linkText="Already have an account?" secondLinkText="instead." linkHref="/login" buttonText="Log In" onClick={() => setSelected("/login")} />
             <Divider />
             <div className="flex flex-col space-y-4 px-4 mt-8 mb-8 sm:px-16">
               <Suspense fallback={<FallbackUI />}>
