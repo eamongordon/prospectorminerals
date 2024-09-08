@@ -135,7 +135,7 @@ export default function FormWrapper({ isModal, onCloseAction }: { isModal?: bool
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const redirectUri = searchParams.get('redirect');
+  const callbackUrl = searchParams.get('callbackUrl');
   const [selected, setSelected] = useState<Key>(isModal ? "/login" : pathname);
   const [forgotPassword, setForgotPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -161,8 +161,8 @@ export default function FormWrapper({ isModal, onCloseAction }: { isModal?: bool
           onCloseAction?.();
           toast.success(toastLoginSuccessMsg);
         } else {
-          if (redirectUri) {
-            router.push(decodeURIComponent(redirectUri));
+          if (callbackUrl) {
+            router.push(decodeURIComponent(callbackUrl));
           } else {
             router.push("/");
             toast.success(toastLoginSuccessMsg);
