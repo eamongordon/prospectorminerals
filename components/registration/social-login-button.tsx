@@ -22,7 +22,7 @@ export default function LoginButton({
 
   useEffect(() => {
     const errorMessage = Array.isArray(error) ? error.pop() : error;
-    errorMessage && toast.error(errorMessage);
+    errorMessage && toast.error("There was an error logging in. Please try again.");
   }, [error]);
   return (
     <Button
