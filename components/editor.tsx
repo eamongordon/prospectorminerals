@@ -59,9 +59,15 @@ export default function Editor({ post }: { post: Post }) {
             console.log(data.published, typeof data.published);
             //formData.append("published", String(!data.published));
             const now = new Date();
+            const updatePostMetadataPublishedObj = {
+              formData: String(!data.published), slug: post.slug, key: "published"
+            }
+            const updatePostMetadataPublishedDateObj = {
+              formData: now, slug: post.slug, key: "publishedAt"
+            }
             startTransitionPublishing(async () => {
               Promise.all([
-                await updatePostMetadata(String(!data.published), post.slug, "published").then(
+                await updatePostMetadata(updatePostMetadataPublishedObj).then(
                   () => {
                     toast.success(
                       `Successfully ${data.published ? "unpublished" : "published"
@@ -70,7 +76,7 @@ export default function Editor({ post }: { post: Post }) {
                     setData((prev: any) => ({ ...prev, published: !prev.published }));
                   },
                 ),
-                await updatePostMetadata(now, post.slug, "publishedAt").then(
+                await updatePostMetadata(updatePostMetadataPublishedDateObj).then(
                   () => {
                     setData((prev: any) => ({ ...prev, publishedAt: now }));
                   },
