@@ -16,9 +16,14 @@ const nanoid = customAlphabet(
   7,
 ); // 7-character random string
 
+export interface FormSubmitObj {
+  formData: any;
+  key: string;
+  slug?: string;
+};
+
 export const editUser = async (
-  formData: any,
-  key: string,
+  { formData, key }: FormSubmitObj
 ) => {
   const session = await getSession();
   if (!session?.user.id) {
@@ -65,6 +70,7 @@ export const editUser = async (
         error: `This ${key} is already in use`,
       };
     } else {
+      console.error(error);
       return {
         error: error.message,
       };
@@ -261,8 +267,7 @@ export async function addPhotoLocalityRelations() {
   */
 
 export const createPhoto = async (
-  formData: any,
-  key: string,
+  { formData, key, slug }: FormSubmitObj
 ) => {
   const session = await getSession();
   if (!session?.user.id || !session.user.roles.includes("Admin")) {
@@ -903,9 +908,7 @@ export const updatePost = async (data: Post) => {
 };
 
 export const updatePostMetadata = async (
-  formData: any,
-  slug: string,
-  key: string,
+  { formData, key, slug }: FormSubmitObj
 ) => {
   const value = formData;
   try {
