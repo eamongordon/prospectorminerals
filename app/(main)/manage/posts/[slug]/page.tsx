@@ -1,6 +1,6 @@
 import Editor from "@/components/editor";
 import Form from '@/components/form';
-import DeletePostForm from "@/components/form/delete-post-form";
+import DeleteForm from "@/components/form/delete";
 import PostPageLayout from "@/components/manage/posts/post-page-layout";
 import { updatePostMetadata } from "@/lib/actions";
 import { getSession } from "@/lib/auth";
@@ -59,7 +59,7 @@ export default async function PostPage({ params }: { params: { slug: string } })
                   handleSubmit={updatePostMetadata}
                 />
 
-                <DeletePostForm postName={data?.title!} />
+                <DeleteForm type="post" name={data?.title!} />
               </div>
             </div>
           }
