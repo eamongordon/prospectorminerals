@@ -266,8 +266,9 @@ export async function addPhotoLocalityRelations() {
 }
   */
 
+/*
 export const createPhoto = async (
-  { formData, key, slug }: FormSubmitObj
+  { formData, key }: FormSubmitObj
 ) => {
   const session = await getSession();
   if (!session?.user.id || !session.user.roles.includes("Admin")) {
@@ -318,6 +319,7 @@ export const createPhoto = async (
     }
   }
 };
+*/
 
 export const createUser = async (userdata: { email: string; password: string; name?: string }) => {
   const { email, password, name } = userdata;
