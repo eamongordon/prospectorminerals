@@ -12,9 +12,9 @@ export default function DeletePostForm({ postName }: { postName: string }) {
   const router = useRouter();
   return (
     <form
-      action={async (data: FormData) =>
+      action={async () =>
         window.confirm("Are you sure you want to delete your post?") &&
-        deletePost(data, slug).then((res) => {
+        deletePost(slug).then((res) => {
             va.track("Deleted Post");
             router.refresh();
             router.push(`/manage/posts`);
