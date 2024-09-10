@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { useState } from "react";
 import Uploader from "./uploader";
 import va from "@vercel/analytics";
+import { type FormSubmitObj } from "@/lib/actions";
 
 export default function Form({
   title,
@@ -26,7 +27,7 @@ export default function Form({
     maxLength?: number;
     pattern?: string;
   };
-  handleSubmit: any;
+  handleSubmit: (submitObj: FormSubmitObj) => Promise<any>;
 }) {
   const { id, slug } = useParams() as { id?: string, slug?: string };
   const router = useRouter();
@@ -46,7 +47,12 @@ export default function Form({
 
   function submitForm() {
     setLoading(true);
-    handleSubmit(data, (slug) ? slug : undefined, inputAttrs.name).then(async (res: any) => {
+    const submitObj: FormSubmitObj = {
+      formData: data,
+      key: inputAttrs.name,
+      slug: slug ?? undefined
+    }
+    handleSubmit(submitObj).then(async (res: any) => {
       setLoading(false);
       if (res.error) {
         toast.error(res.error);
