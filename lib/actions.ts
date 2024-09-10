@@ -983,7 +983,7 @@ export const createPost = async (_?: FormData) => {
   return response;
 };
 
-export const deletePost = async (_: FormData, postSlug: string) => {
+export const deletePost = async (postSlug: string) => {
   try {
     const session = await getSession();
     if (!session?.user.id || !session.user.roles.includes("Admin")) {
