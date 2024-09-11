@@ -111,7 +111,7 @@ export default function HeaderComp({
                                         signOut({ callbackUrl: pathname.includes('/account') ? '/' : undefined });
                                     }
                                 }}>
-                                    <DropdownItem key="profile" className="h-14 gap-2">
+                                    <DropdownItem key="profile" className="h-14 gap-2" as={Link} href="/account/settings">
                                         <p className="font-semibold">Signed in as</p>
                                         <p className="font-semibold">{name ? name : email}</p>
                                     </DropdownItem>
