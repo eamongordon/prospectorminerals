@@ -56,7 +56,8 @@ export default function Form({
     setData(formData);
   };
 
-  const submitForm = () => {
+  const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setLoading(true);
     const submitObj: FormSubmitObj = {
       formData: data,
@@ -94,17 +95,14 @@ export default function Form({
     });
   };
 
-  const isFormDisabled = () => {
-    const isDataNull = data === null;
-    const isDataEmpty = !inputAttrs.defaultValue && !data;
-    const isDataUnchanged = data === inputAttrs.defaultValue;
-    const isInputInvalid = inputAttrs.name !== "image" && inputAttrs.name !== "avatar" && !isInputValid;
-
-    return isDataNull || isDataEmpty || isDataUnchanged || isInputInvalid;
-  };
+  const isDataNull = data === null;
+  const isDataEmpty = !inputAttrs.defaultValue && !data;
+  const isDataUnchanged = data === inputAttrs.defaultValue;
+  const isInputInvalid = inputAttrs.name !== "image" && inputAttrs.name !== "avatar" && !isInputValid;
+  const isFormDisabled = isDataNull || isDataEmpty || isDataUnchanged || isInputInvalid;
 
   return (
-    <div className="rounded-lg border border-stone-200 bg-white dark:border-stone-700 dark:bg-black">
+    <form onSubmit={submitForm} className="rounded-lg border border-stone-200 bg-white dark:border-stone-700 dark:bg-black">
       <div className={`relative flex ${inputAttrs.name === "avatar" ? "flex-col sm:flex-row sm:justify-between" : "flex-col"} space-y-4 p-5 sm:p-10`} {...(inputAttrs.name === "password" ? { id: "new-password" } : {})}>
         {inputAttrs.name === "avatar" ? (
           <>
@@ -131,7 +129,6 @@ export default function Form({
           <textarea
             {...inputAttrs}
             rows={3}
-            required
             className="w-full max-w-xl rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
             onChange={(event) => setData(event.target.value)}
           />
@@ -140,25 +137,19 @@ export default function Form({
             {...inputAttrs}
             ref={inputRef}
             onChange={handleInputChange}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && !isFormDisabled()) {
-                e.preventDefault(); // Prevent the default action to avoid submitting the form
-                submitForm();
-              }
-            }}
           />
         )}
       </div>
       <div className="flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t border-stone-200 bg-stone-50 p-3 dark:border-stone-700 dark:bg-stone-800 sm:flex-row sm:justify-between sm:space-y-0 sm:px-10">
         <p className="text-sm text-stone-500 dark:text-stone-400">{helpText}</p>
         <Button
-          onClick={() => submitForm()}
+          type="submit"
           isLoading={loading}
-          isDisabled={isFormDisabled()}
+          isDisabled={isFormDisabled}
         >
           <p>Save Changes</p>
         </Button>
       </div>
-    </div>
+    </form>
   );
 }
