@@ -1,10 +1,10 @@
 "use client";
 
+import { useState, useRef } from 'react';
 import { Input, Button } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { useState } from "react";
 import Uploader from "./uploader";
 import va from "@vercel/analytics";
 import { type FormSubmitObj } from "@/lib/actions";
@@ -25,6 +25,7 @@ export default function Form({
     defaultValue?: string;
     placeholder?: string;
     maxLength?: number;
+    required?: boolean;
     pattern?: string;
   };
   handleSubmit: (submitObj: FormSubmitObj) => Promise<any>;
@@ -34,6 +35,16 @@ export default function Form({
   const { update } = useSession();
   const [data, setData] = useState<FormData | string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [isInputValid, setIsInputValid] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    setData(value);
+    if (inputRef.current) {
+      setIsInputValid(inputRef.current.checkValidity());
+    }
+  };
 
   const uploadFormFunction = (file: File) => {
     const formData = new FormData();
@@ -43,15 +54,15 @@ export default function Form({
       formData.append("image", file);
     }
     setData(formData);
-  }
+  };
 
-  function submitForm() {
+  const submitForm = () => {
     setLoading(true);
     const submitObj: FormSubmitObj = {
       formData: data,
       key: inputAttrs.name,
-      slug: slug ?? undefined
-    }
+      slug: slug ?? undefined,
+    };
     handleSubmit(submitObj).then(async (res: any) => {
       setLoading(false);
       if (res.error) {
@@ -81,30 +92,33 @@ export default function Form({
         toast.success(`Successfully updated ${inputAttrs.name}!`);
       }
     });
-  }
+  };
 
-  const isDisabled = data === null || (!inputAttrs.defaultValue && !data) || data === inputAttrs.defaultValue;
+  const isFormDisabled = () => {
+    const isDataNull = data === null;
+    const isDataEmpty = !inputAttrs.defaultValue && !data;
+    const isDataUnchanged = data === inputAttrs.defaultValue;
+    const isInputInvalid = inputAttrs.name !== "image" && inputAttrs.name !== "avatar" && !isInputValid;
+
+    return isDataNull || isDataEmpty || isDataUnchanged || isInputInvalid;
+  };
 
   return (
-    <div
-      className="rounded-lg border border-stone-200 bg-white dark:border-stone-700 dark:bg-black"
-    >
+    <div className="rounded-lg border border-stone-200 bg-white dark:border-stone-700 dark:bg-black">
       <div className={`relative flex ${inputAttrs.name === "avatar" ? "flex-col sm:flex-row sm:justify-between" : "flex-col"} space-y-4 p-5 sm:p-10`} {...(inputAttrs.name === "password" ? { id: "new-password" } : {})}>
-        {inputAttrs.name === "avatar" ?
-          (
-            <>
-              <div className="sm:flex-col">
-                <h2 className="text-xl dark:text-white">{title}</h2>
-                <p className="text-sm text-stone-500 dark:text-stone-400 py-4">{description}</p>
-              </div>
-            </>
-          ) : (
-            <>
+        {inputAttrs.name === "avatar" ? (
+          <>
+            <div className="sm:flex-col">
               <h2 className="text-xl dark:text-white">{title}</h2>
-              <p className="text-sm text-stone-500 dark:text-stone-400">{description}</p>
-            </>
-          )
-        }
+              <p className="text-sm text-stone-500 dark:text-stone-400 py-4">{description}</p>
+            </div>
+          </>
+        ) : (
+          <>
+            <h2 className="text-xl dark:text-white">{title}</h2>
+            <p className="text-sm text-stone-500 dark:text-stone-400">{description}</p>
+          </>
+        )}
         {inputAttrs.name === "image" || inputAttrs.name === "avatar" ? (
           <div className="flex justify-center items-center sm:flex-none">
             <Uploader
@@ -124,16 +138,12 @@ export default function Form({
         ) : (
           <Input
             {...inputAttrs}
-            required
-            onChange={(event) => setData(event.target.value)}
+            ref={inputRef}
+            onChange={handleInputChange}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                if (inputAttrs.type === "password" && !data) {
-                  toast.error("Please enter a password.");
-                } else {
-                  e.preventDefault(); // Prevent the default action to avoid submitting the form
-                  submitForm();
-                }
+              if (e.key === 'Enter' && !isFormDisabled()) {
+                e.preventDefault(); // Prevent the default action to avoid submitting the form
+                submitForm();
               }
             }}
           />
@@ -144,7 +154,7 @@ export default function Form({
         <Button
           onClick={() => submitForm()}
           isLoading={loading}
-          isDisabled={isDisabled}
+          isDisabled={isFormDisabled()}
         >
           <p>Save Changes</p>
         </Button>
