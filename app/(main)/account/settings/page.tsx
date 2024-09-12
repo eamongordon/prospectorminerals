@@ -49,6 +49,7 @@ export default async function SettingsPage() {
                                 type: "email",
                                 defaultValue: session.user.email!,
                                 placeholder: "email@example.com",
+                                required: true
                             }}
                             handleSubmit={editUser}
                         />
@@ -59,6 +60,7 @@ export default async function SettingsPage() {
                             inputAttrs={{
                                 name: "password",
                                 type: "password",
+                                required: true
                             }}
                             handleSubmit={editUser}
                         />
