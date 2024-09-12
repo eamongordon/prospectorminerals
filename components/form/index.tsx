@@ -83,6 +83,8 @@ export default function Form({
     });
   }
 
+  const isDisabled = data === null || (!inputAttrs.defaultValue && !data) || data === inputAttrs.defaultValue;
+
   return (
     <div
       className="rounded-lg border border-stone-200 bg-white dark:border-stone-700 dark:bg-black"
@@ -106,8 +108,7 @@ export default function Form({
         {inputAttrs.name === "image" || inputAttrs.name === "avatar" ? (
           <div className="flex justify-center items-center sm:flex-none">
             <Uploader
-              //@ts-expect-error
-              defaultValue={inputAttrs.defaultValue}
+              defaultValue={inputAttrs.defaultValue ?? null}
               name={inputAttrs.name}
               formFunction={uploadFormFunction}
             />
@@ -143,7 +144,7 @@ export default function Form({
         <Button
           onClick={() => submitForm()}
           isLoading={loading}
-          isDisabled={(data === null) ? true : false}
+          isDisabled={isDisabled}
         >
           <p>Save Changes</p>
         </Button>
