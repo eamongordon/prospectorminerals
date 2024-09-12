@@ -18,8 +18,11 @@ export default function CreatePostButton() {
           const post = await createPost();
           va.track("Created Post");
           router.refresh();
-          //@ts-expect-error
-          router.push(`/manage/posts/${post.slug}`);
+          if ('slug' in post) {
+            router.push(`/manage/posts/${post.slug}`);
+          } else {
+            console.error("Post creation failed:", post);
+          }
         })
       }
       isLoading={isPending}
