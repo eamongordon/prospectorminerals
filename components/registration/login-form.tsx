@@ -117,7 +117,6 @@ const AuthForm = ({ type, data, setData, loading, handleSubmit, resetPassword }:
       </div>
     )}
     <Button
-      disabled={loading}
       isLoading={loading}
       color="default"
       type="submit"
