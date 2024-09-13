@@ -26,7 +26,7 @@ export default function LoginButton({
   }, [error]);
   return (
     <Button
-      disabled={loading}
+      isLoading={loading}
       onClick={() => {
         setLoading(true);
         isModal ? signIn("google") : signIn("google", { callbackUrl: decodeURIComponent(redirectUri || "/") })
