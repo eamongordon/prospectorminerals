@@ -4,7 +4,7 @@ import { deleteUser, deletePost } from "@/lib/actions";
 import { Button, Input } from "@nextui-org/react";
 import va from "@vercel/analytics";
 import { signOut } from "next-auth/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -14,14 +14,22 @@ interface DeleteFormProps {
 }
 
 export default function DeleteForm({ type, name }: DeleteFormProps) {
-    const [data, setData] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+    const [isInputValid, setIsInputValid] = useState(false);
     const { slug } = useParams() as { slug: string };
+    const inputRef = useRef<HTMLInputElement>(null);
 
-    const submitForm = async () => {
+    const handleInputChange = () => {
+        if (inputRef.current) {
+            setIsInputValid(inputRef.current.checkValidity());
+        }
+    };
+
+    const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         setLoading(true);
-        if (window.confirm(`Are you sure you want to delete your ${type}?`)) {
+        if (isInputValid && window.confirm(`Are you sure you want to delete your ${type}?`)) {
             try {
                 if (type === "user") {
                     await deleteUser();
@@ -46,7 +54,7 @@ export default function DeleteForm({ type, name }: DeleteFormProps) {
     };
 
     return (
-        <div className="rounded-lg border border-red-600 bg-white dark:bg-black">
+        <form onSubmit={submitForm} className="rounded-lg border border-red-600 bg-white dark:bg-black">
             <div className="relative flex flex-col space-y-4 p-5 sm:p-10">
                 <h2 className="text-xl dark:text-white">Delete {type === "user" ? "Account" : "Post"}</h2>
                 <p className="text-sm text-stone-500 dark:text-stone-400">
@@ -61,33 +69,23 @@ export default function DeleteForm({ type, name }: DeleteFormProps) {
                     required
                     pattern={type === "user" ? "DELETE" : name}
                     placeholder={type === "user" ? "DELETE" : name}
-                    onChange={(event) => setData(event.target.value)}
-                    onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                            if (data === (type === "user" ? "DELETE" : name)) {
-                                e.preventDefault(); // Prevent the default action to avoid submitting the form
-                                submitForm();
-                            } else {
-                                toast.error(`Please type ${type === "user" ? "DELETE" : name} to confirm.`);
-                            }
-                        }
-                    }}
+                    ref={inputRef}
+                    onChange={handleInputChange}
                 />
             </div>
-
             <div className="flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t border-stone-200 bg-stone-50 p-3 dark:border-stone-700 dark:bg-stone-800 sm:flex-row sm:justify-between sm:space-y-0 sm:px-10">
                 <p className="text-center text-sm text-stone-500 dark:text-stone-400">
                     This action is irreversible. Please proceed with caution.
                 </p>
                 <Button
                     color="danger"
-                    onClick={() => submitForm()}
+                    type="submit"
                     isLoading={loading}
-                    isDisabled={data !== (type === "user" ? "DELETE" : name)}
+                    isDisabled={!isInputValid}
                 >
                     <p>Confirm Delete</p>
                 </Button>
             </div>
-        </div>
+        </form>
     );
 }
