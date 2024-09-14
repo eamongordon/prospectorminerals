@@ -48,11 +48,7 @@ export default function Form({
 
   const uploadFormFunction = (file: File) => {
     const formData = new FormData();
-    if (inputAttrs.name === "avatar") {
-      formData.append("avatar", file);
-    } else {
-      formData.append("image", file);
-    }
+    formData.append(inputAttrs.name === "avatar" ? "avatar" : "image", file);
     setData(formData);
   };
 
@@ -78,15 +74,14 @@ export default function Form({
           }
         } else {
           let value;
-          let inputAttrsName = inputAttrs.name;
           if (inputAttrs.name === "avatar") {
             value = res.image;
-            inputAttrsName = "picture";
+            inputAttrs.name = "picture";
           } else {
             value = data;
           }
           if (inputAttrs.name !== "password") {
-            await update({ [inputAttrsName]: value });
+            await update({ [inputAttrs.name]: value });
           }
           router.refresh();
         }
