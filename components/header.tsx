@@ -4,13 +4,16 @@ import { ModalProvider } from './modal/provider';
 
 export default async function Header() {
   const session = await getSession();
-  const { name, image, email } = session?.user || {};
+  const userData = session?.user ? {
+    name: session.user.name,
+    image: session.user.image,
+    email: session.user.email
+  } : undefined;
 
   return (
     <ModalProvider>
       <HeaderContent
-        loggedIn={!!session}
-        userData={session ? { name, image, email } : undefined}
+        userData={userData}
       />
     </ModalProvider>
   );
