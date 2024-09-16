@@ -13,10 +13,8 @@ import LoginForm from "./registration/login-form";
 import { Search } from "lucide-react";
 
 export default function HeaderComp({
-    loggedIn,
     userData
 }: {
-    loggedIn: boolean,
     userData?: {
         name?: string,
         image?: string
@@ -27,6 +25,8 @@ export default function HeaderComp({
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const pathname = usePathname();
     const modal = useModal();
+    const loggedIn = !!userData;
+
     useEffect(() => {
         if (isMenuOpen) {
             setIsMenuOpen(false);
