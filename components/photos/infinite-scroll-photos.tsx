@@ -46,19 +46,16 @@ export default function InfiniteScrollPhotos({
       initialRender.current = false
       return
     }
-    // now you got a read/write object
     const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
-    // update as necessary
     if (!text) {
       current.delete("search");
     }
-    // cast to string
     const search = current.toString();
-    // or const query = `${'?'.repeat(search.length && 1)}${search}`;
     const queryParam = search ? `?${search}` : "";
     router.push(`${pathname}${queryParam}`);
   }, [text])
 
+  // TODO: Wrap loadMorePhotos in useCallback
   async function loadMorePhotos() {
     if (page) {
       const photosQuery = await fetchPhotos({ filterObj: { name: search }, cursor: page, limit: 10, ...(sort ? { sortObj: sort } : {}), });
