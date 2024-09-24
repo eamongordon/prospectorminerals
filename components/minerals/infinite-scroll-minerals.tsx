@@ -32,7 +32,18 @@ export default function InfiniteScrollPhotos({
   async function loadMorePhotos() {
     if (page) {
       console.log("loadMoreMin")
-      const photosQuery = await fetchMinerals({ ...(filterObj ? { filterObj: filterObj.associates ? { ...filterObj, associates: filterObj.associates?.map((associateObj) => (associateObj as MineralListItem).name) } : filterObj } : {}) || {}, cursor: page, limit: limit ? limit : 10, ...(sort ? { sortObj: sort } : {}), fieldset: "display" });
+      const photosQuery = await fetchMinerals({ 
+        ...(filterObj ? { 
+          filterObj: filterObj.associates ? { 
+            ...filterObj, 
+            associates: filterObj.associates.map((associateObj) => (associateObj as MineralListItem).name) 
+          } : filterObj 
+        } : {}), 
+        cursor: page, 
+        limit: limit || 10, 
+        ...(sort ? { sortObj: sort } : {}), 
+        fieldset: "display" 
+      });
       setPage(photosQuery.next ? photosQuery.next : undefined)
       setPhotos((prev: MineralDisplayFieldset[] | undefined) => [
         ...(prev?.length ? prev : []),
