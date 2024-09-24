@@ -54,7 +54,6 @@ export default function InfiniteScrollPhotos({
     }
   }
 
-  // TODO: wrap loadMoreMovies in useCallback and pass it to the dep array
   useEffect(() => {
     if (inView && page) {
       loadMorePhotos()
