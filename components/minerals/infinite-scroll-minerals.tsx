@@ -29,6 +29,7 @@ export default function InfiniteScrollPhotos({
   const [ref, inView] = useInView();
   const [noPhotosLoading, setNoPhotosLoading] = useState(false);
 
+  // TODO: Wrap loadMorePhotos in useCallback
   async function loadMorePhotos() {
     if (page) {
       console.log("loadMoreMin")

@@ -17,39 +17,6 @@ export default function MineralPageLayout({
     sortDropdownElem: React.ReactElement,
     filterObj?: MineralsFilterObj
 }) {
-    /*
-        const mapAccordionItems = (label: string, value: string, optionsArray: [], stateName: string) => {
-            return (
-                <CheckboxGroup
-                    isRequired
-                    description="Select lusters to filter by"
-                    isInvalid={isLusterInvalid}
-                    label="Select lusters"
-                    defaultValue={optionsArray}
-                    onValueChange={(value) => {
-                        setIsLusterInvalid(value.length < 1);
-                    }}
-                >
-                    {optionsArray.forEach((option) => {
-                        <CheckboxGroup
-                            isRequired
-                            description="Select lusters to filter by"
-                            isInvalid={isLusterInvalid}
-                            label="Select lusters"
-                            defaultValue={optionsArray}
-                            onValueChange={(value) => {
-                                setIsLusterInvalid(value.length < 1);
-                            }}
-                        >
-                            {optionsArray.forEach(() => {
-    
-                            })}
-                        </CheckboxGroup>
-                    })}
-                </CheckboxGroup>
-            )
-        }
-    */
     const { name, minHardness, maxHardness, lusters, streaks, mineralClasses, crystalSystems, chemistry, associates } = Object(filterObj);
     const router = useRouter();
     const pathname = usePathname();
@@ -65,12 +32,7 @@ export default function MineralPageLayout({
     const initialAssociatesRender = useRef(true);
     const [searchText, setSearchText] = useState(name);
     const [lustersVal, setLustersVal] = useState<string[] | undefined>(lusters);
-    let hardnessNewState = [];
-    if (minHardness && maxHardness) {
-        hardnessNewState.push(minHardness);
-        hardnessNewState.push(maxHardness);
-    }
-    const [hardnessVal, setHardnessVal] = useState<number[] | undefined>(hardnessNewState.length > 0 ? hardnessNewState : undefined);
+    const [hardnessVal, setHardnessVal] = useState<number[] | undefined>(minHardness & maxHardness ? [minHardness, maxHardness] : undefined);
     const [mineralClassVal, setMineralClassVal] = useState<string[] | undefined>(mineralClasses);
     const [crystalSystemsVal, setCrystalSystemsVal] = useState<string[] | undefined>(crystalSystems);
     const [isMineralClassInvalid, setIsMineralClassInvalid] = useState(false);
@@ -80,7 +42,7 @@ export default function MineralPageLayout({
     const [associatesVal, setAssociatesVal] = useState<MineralListItem[] | undefined>(associates);
     const [isLusterInvalid, setIsLusterInvalid] = useState(false);
     const [searchQuery] = useDebounce(searchText, 500);
-
+    
     useEffect(() => {
         if (initialRender.current) {
             initialRender.current = false
