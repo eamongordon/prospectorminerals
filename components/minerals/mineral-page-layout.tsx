@@ -17,7 +17,7 @@ export default function MineralPageLayout({
     sortDropdownElem: React.ReactElement,
     filterObj?: MineralsFilterObj
 }) {
-    const { name, minHardness, maxHardness, lusters, streaks, mineralClasses, crystalSystems, chemistry, associates } = Object(filterObj);
+    const { name, minHardness, maxHardness, lusters, mineralClasses, crystalSystems, chemistry, associates } = Object(filterObj);
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -32,7 +32,7 @@ export default function MineralPageLayout({
     const initialAssociatesRender = useRef(true);
     const [searchText, setSearchText] = useState(name);
     const [lustersVal, setLustersVal] = useState<string[] | undefined>(lusters);
-    const [hardnessVal, setHardnessVal] = useState<number[] | undefined>(minHardness & maxHardness ? [minHardness, maxHardness] : undefined);
+    const [hardnessVal, setHardnessVal] = useState<number[] | undefined>((minHardness != null && maxHardness != null) ? [minHardness, maxHardness] : undefined);
     const [mineralClassVal, setMineralClassVal] = useState<string[] | undefined>(mineralClasses);
     const [crystalSystemsVal, setCrystalSystemsVal] = useState<string[] | undefined>(crystalSystems);
     const [isMineralClassInvalid, setIsMineralClassInvalid] = useState(false);
