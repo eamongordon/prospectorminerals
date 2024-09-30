@@ -31,16 +31,16 @@ const Page = async ({
     const chemistry =
         typeof searchParams.chemistry === 'string' ? searchParams.chemistry : undefined
     const minHardness =
-        typeof searchParams.minHardness === 'string' ? searchParams.minHardness : undefined
+        typeof searchParams.minHardness === 'string' ? Number(searchParams.minHardness) : undefined
     const maxHardness =
-        typeof searchParams.maxHardness === 'string' ? searchParams.maxHardness : undefined
+        typeof searchParams.maxHardness === 'string' ? Number(searchParams.maxHardness) : undefined
     const associates =
         typeof searchParams.associates === 'string' ? JSON.parse(searchParams.associates) : undefined
     const property =
         typeof searchParams.property === 'string' ? searchParams.property : undefined
     const order =
         typeof searchParams.order === 'string' ? searchParams.order : undefined
-    const filterObj = { name: name, lusters: lusters, mineralClasses: mineralClasses, crystalSystems: crystalSystems, chemistry: chemistry?.split(','), minHardness: Number(minHardness), maxHardness: Number(maxHardness), associates: associates }
+    const filterObj = { name: name, lusters: lusters, mineralClasses: mineralClasses, crystalSystems: crystalSystems, chemistry: chemistry?.split(','), minHardness: minHardness, maxHardness: maxHardness, associates: associates }
     const photosQuery = await fetchMinerals({ filterObj: filterObj.associates ? { ...filterObj, associates: filterObj.associates?.map((associateObj: MineralListItem) => associateObj.name) } : filterObj, cursor: undefined, limit: 10, ...(property && order ? { sortObj: { property: property, order: order } } : {}), fieldset: 'display' });
     const serializedKey = JSON.stringify({ filterObj, property, order });
     return (
