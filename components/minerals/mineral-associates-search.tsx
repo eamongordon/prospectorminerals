@@ -9,7 +9,7 @@ import { useInView } from 'react-intersection-observer';
 import { useDebounce } from "use-debounce";
 import BlurImage from '../blur-image';
 
-export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: MineralListItem[], onChange: any }) {
+export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: MineralListItem[], onChange: (items: MineralListItem[] | undefined ) => void }) {
     const [mineralsVal, setMineralsVal] = useState<MineralListItem[] | undefined>(minerals);
     const [mineralList, setMineralList] = useState<MineralDisplayFieldset[]>([])
     const [ref, inView] = useInView();

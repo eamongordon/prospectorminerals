@@ -181,10 +181,6 @@ export default function MineralPageLayout({
         router.push(`${pathname}${queryParam}`);
     }, [associatesVal]);
 
-    function handleMineralsChange(mineralsValReturn: MineralListItem[]) {
-        setAssociatesVal(mineralsValReturn);
-    }
-
     return (
         <>
             <div className="'w-full flex-col sm:flex-row">
@@ -385,7 +381,7 @@ export default function MineralPageLayout({
                                 />
                             </AccordionItem>
                             <AccordionItem key="associates" aria-label="Associates" title="Associates" subtitle={associatesVal ? associatesVal.map((associate: MineralListItem) => associate.name).join(", ") : null}>
-                                <MineralAssociatesSearch minerals={associatesVal} onChange={handleMineralsChange} />
+                                <MineralAssociatesSearch minerals={associatesVal} onChange={setAssociatesVal} />
                             </AccordionItem>
                         </Accordion>
                     </div>
