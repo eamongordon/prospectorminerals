@@ -51,12 +51,7 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const [searchQuery] = useDebounce(searchText, 500);
-    const [noResultsLoading, setNoResultsLoading] = useState(false);
-
-    function handleMineralsChange(mineralsValReturn: MineralListItem[]) {
-        setAssociatesVal(mineralsValReturn);
-    }
-
+    
     const [associatesVal, setAssociatesVal] = useState<any>(minerals);
 
     useEffect(() => {
@@ -95,15 +90,13 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
     const initialRender = useRef(true);
 
     const clearFilters = () => {
-        setNoResultsLoading(true);
         setSearchText(undefined);
-        setNoResultsLoading(false);
     }
 
     const renderChildren = () => {
         return Children.map(clearButton, (child) => {
             return cloneElement(child as React.ReactElement<any>, {
-                clearFilters: () => { clearFilters(); setNoResultsLoading(true) }
+                clearFilters: () => clearFilters()
             });
         });
     };
@@ -151,7 +144,7 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                     <div className={`${isMobileFiltersOpen ? "contents sm:contents" : "hidden sm:contents"}`}>
                         <Accordion>
                             <AccordionItem key="minerals" aria-label="Minerals" title="Minerals">
-                                <MineralAssociatesSearch minerals={associatesVal} onChange={handleMineralsChange} />
+                                <MineralAssociatesSearch minerals={associatesVal} onChange={setAssociatesVal} />
                             </AccordionItem>
                             <AccordionItem key="Extra dev" aria-label="Extra dev" title="Extra dev" className="hidden">
                                 <SearchLocation />
