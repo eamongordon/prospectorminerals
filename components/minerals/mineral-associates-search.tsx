@@ -9,7 +9,7 @@ import { useInView } from 'react-intersection-observer';
 import { useDebounce } from "use-debounce";
 import BlurImage from '../blur-image';
 
-export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: MineralListItem[], onChange: (items: MineralListItem[] | undefined ) => void }) {
+export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: MineralListItem[], onChange?: (items: MineralListItem[] | undefined) => void }) {
     const [mineralsVal, setMineralsVal] = useState<MineralListItem[] | undefined>(minerals);
     const [mineralList, setMineralList] = useState<MineralDisplayFieldset[]>([])
     const [ref, inView] = useInView();
@@ -19,7 +19,9 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: Min
     const [chemistryQuery] = useDebounce(chemistryInput, 500);
 
     useEffect(() => {
-        onChange(mineralsVal);
+        if (onChange) {
+            onChange(mineralsVal);
+        }
     }, [mineralsVal]);
 
     useEffect(() => {
@@ -126,7 +128,7 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: Min
                 endContent={
                     (minerals?.map((obj: MineralListItem, index) => {
                         return (
-                            <Chip 
+                            <Chip
                                 classNames={{ base: 'mr-1 min-h-[28px]', avatar: 'rounded-full object-cover' }}
                                 size="md"
                                 onClose={() => {
