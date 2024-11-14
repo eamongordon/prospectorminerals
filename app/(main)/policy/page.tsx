@@ -1,14 +1,14 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import { Link } from '@nextui-org/react'
 
 export const metadata: Metadata = {
-  title: 'Policy | Prospector Minerals',
-  description: 'View our site policy, including copyright policy, terms of use, cookie policy, and privacy policy.',
-  openGraph: {
-    images: ['/Fluorite-164_horiz-Optimized.jpg'],
-    siteName: 'Prospector Minerals',
-    url: '/policy'
-  }
+    title: 'Policy | Prospector Minerals',
+    description: 'View our site policy, including copyright policy, terms of use, cookie policy, and privacy policy.',
+    openGraph: {
+        images: ['/Fluorite-164_horiz-Optimized.jpg'],
+        siteName: 'Prospector Minerals',
+        url: '/policy'
+    }
 }
 
 const Page = async ({
@@ -18,81 +18,100 @@ const Page = async ({
 }) => {
     const query = typeof searchParams.q === 'string' ? searchParams.q : undefined
     return (
-        <main className="px-6 max-w-screen-xl mx-auto mb-8">
-            <section className='flex-col justify-center items-center mt-4 py-4 w-full'>
+        <div className='flex flex-col max-w-screen-xl mx-auto'>
+            <section className='py-12'>
                 <h1 className="text-center font-semibold text-3xl sm:text-4xl">Site Policy</h1>
             </section>
-            <section className='flex-col justify-center items-center py-4 w-full max-w-screen-xl'>
-                <div>
-                    <p>Thank you for reviewing our site policy. We seek to provide an understandable and transparent site policy and if there are any clarifications or inquries necessary, please <Link className="font-medium text-cyan-500" href="#contact">contact us</Link>.</p>
-                </div>
-            </section>
-            <section className='flex-col space-y-10 justify-center items-center py-4 w-full max-w-screen-xl'>
-                <div className="flex-col space-y-3">
-                    <h2 className="text-3xl font-medium scroll-mt-16" id="copyright">Copyright Policy</h2>
-                    <p>No portion of this site can be reproduced, distributed, replicated, modified or used as a source of derivative works without the written permission of the owner. To receive permission for the use of website content and images, please <Link className="font-medium text-cyan-500" href="#contact">contact us</Link>. After contacting us, we may allow the use of Images from this site for educational, non-commercial purposes only, provided appropriate credit and a link to this website is given when applicable. Preferably, our website name should be contained as a watermark (contact us for examples). The Prospector Minerals logo may be used solely and only for promoting this website.</p>
-                </div>
-                <div>
-                    <h2 className="text-3xl font-medium scroll-mt-16" id="termsofuse">Terms of Use</h2>
-                    <p>Prospector Minerals is not liable for any damages incurred by the use of this site. When creating an account (signing up for a membership), we, Prospector Minerals, collect your email address, which may then be used for email updates or campaigns. If you would like to remove this information, please delete your account by visiting the <Link className="font-medium text-cyan-500" href="/account/settings#new-password">account settings page</Link>. Members, registered by submission of &quot;Sign Up&quot; forms, must adhere to the Prospector Minerals terms of use. Failure to comply with these terms or abuse of this website or platform may result in membership suspension or account deletion at our sole discretion.</p>
-                </div>
-                <div className="flex-col">
-                    <h2 className="text-3xl font-medium scroll-mt-16" id="privacy">Privacy Policy</h2>
-                    <h3 className="text-2xl font-medium my-2">Collected Data</h3>
-                    <div className="flex-col space-y-6">
+            <div className='flex flex-row'>
+                <main className="w-full sm:w-3/4 sm:flex-grow pr-8 pl-8 lg:pl-12 pb-8">
+                    <section className='flex-col justify-center items-center pb-4 w-full max-w-screen-xl'>
                         <div>
-                            <h4 className="text-xl font-medium">Account</h4>
-                            <p>When creating an account (&quot;signing up&quot; for a membership), we, Prospector Minerals, collect your email address, which may then be used for email updates or campaigns. If you would like to remove this information, please delete your account by visiting the <Link className="font-medium text-cyan-500" href="/account/settings#new-password">account settings page</Link>.</p>
+                            <p>Thank you for reviewing our site policy. We seek to provide an understandable and transparent site policy and if there are any clarifications or inquries necessary, please <Link className="font-medium text-cyan-500" href="#contact">contact us</Link>.</p>
+                        </div>
+                    </section>
+                    <section className='flex-col space-y-10 justify-center items-center py-4 w-full max-w-screen-xl'>
+                        <div className="flex-col space-y-3">
+                            <h2 className="text-3xl font-medium scroll-mt-16" id="copyright">Copyright Policy</h2>
+                            <p>No portion of this site can be reproduced, distributed, replicated, modified or used as a source of derivative works without the written permission of the owner. To receive permission for the use of website content and images, please <Link className="font-medium text-cyan-500" href="#contact">contact us</Link>. After contacting us, we may allow the use of Images from this site for educational, non-commercial purposes only, provided appropriate credit and a link to this website is given when applicable. Preferably, our website name should be contained as a watermark (contact us for examples). The Prospector Minerals logo may be used solely and only for promoting this website.</p>
                         </div>
                         <div>
-                            <h4 className="text-xl font-medium">Third-Party Login Services</h4>
-                            <p>By using third-party login services (i.e. Google or Facebook) we may collect data including your email address, name, and phone number. See the <Link className="font-medium text-cyan-500" href="#datause">Data Use section</Link> for information regarding the use of your data. Please note that the respective provider&apos;s terms of service and privacy policy apply.</p>
+                            <h2 className="text-3xl font-medium scroll-mt-16" id="termsofuse">Terms of Use</h2>
+                            <p>Prospector Minerals is not liable for any damages incurred by the use of this site. When creating an account (signing up for a membership), we, Prospector Minerals, collect your email address, which may then be used for email updates or campaigns. If you would like to remove this information, please delete your account by visiting the <Link className="font-medium text-cyan-500" href="/account/settings#new-password">account settings page</Link>. Members, registered by submission of &quot;Sign Up&quot; forms, must adhere to the Prospector Minerals terms of use. Failure to comply with these terms or abuse of this website or platform may result in membership suspension or account deletion at our sole discretion.</p>
+                        </div>
+                        <div className="flex-col">
+                            <h2 className="text-3xl font-medium scroll-mt-16" id="privacy">Privacy Policy</h2>
+                            <h3 className="text-2xl font-medium my-2" id="collecteddata">Collected Data</h3>
+                            <div className="flex-col space-y-6">
+                                <div>
+                                    <h4 className="text-xl font-medium">Account</h4>
+                                    <p>When creating an account (&quot;signing up&quot; for a membership), we, Prospector Minerals, collect your email address, which may then be used for email updates or campaigns. If you would like to remove this information, please delete your account by visiting the <Link className="font-medium text-cyan-500" href="/account/settings#new-password">account settings page</Link>.</p>
+                                </div>
+                                <div>
+                                    <h4 className="text-xl font-medium">Third-Party Login Services</h4>
+                                    <p>By using third-party login services (i.e. Google or Facebook) we may collect data including your email address, name, and phone number. See the <Link className="font-medium text-cyan-500" href="#datause" id="datause">Data Use section</Link> for information regarding the use of your data. Please note that the respective provider&apos;s terms of service and privacy policy apply.</p>
+                                </div>
+                                <div>
+                                    <h4 className="text-xl font-medium">Browser Cookies</h4>
+                                    <p>
+                                        By using this site, you consent to the use of our and third-party cookies and other similar technologies to enhance your browsing experience, store login, and language information, analyze your engagement with our content, and for other legitimate purposes.
+                                        <br />
+                                        <br />
+                                        You may withdraw your consent at any time by deleting the website cookies through your browser.
+                                    </p>
+                                </div>
+                            </div>
+                            <h3 className="text-2xl font-medium pt-6" id="datause">Data Use</h3>
+                            <p>We may use your data for numerous legitimate purposes, including, but not limited to, the following:</p>
+                            <div className="flex-col space-y-6 pt-4">
+                                <div>
+                                    <h4 className="text-xl font-medium">Account Management</h4>
+                                    <p>Your email address, phone number, and other provided information may be used to assist with the management and login of your account.</p>
+                                </div>
+                                <div>
+                                    <h4 className="text-xl font-medium">Personalization & Customization</h4>
+                                    <p>Your first name, last name, and IP address may be used in order to personalize your experience on our website and provide customization features.</p>
+                                </div>
+                                <div>
+                                    <h4 className="text-xl font-medium">Communication</h4>
+                                    <p>We may communicate updates to our site content or policy via your email address provided upon subscription or account creation.</p>
+                                </div>
+                                <div>
+                                    <h4 className="text-xl font-medium">Analytics</h4>
+                                    <p>We utilize trusted third-party tools such as Google Analytics in order to analyze your interaction with our content and website. Information collected may include IP address, geographic location, and browser data.</p>
+                                </div>
+                            </div>
                         </div>
                         <div>
-                            <h4 className="text-xl font-medium">Browser Cookies</h4>
-                            <p>
-                                By using this site, you consent to the use of our and third-party cookies and other similar technologies to enhance your browsing experience, store login, and language information, analyze your engagement with our content, and for other legitimate purposes.
+                            <h2 className="text-3xl font-medium" id="modifications">Modifications</h2>
+                            <p>We reserve the right to modify this policy at any time, as a result, we recommend that it be reviewed regularly. Changes and clarifications will take effect immediately upon their posting on this website. If we make material changes to this policy, we will notify you that it has been updated through our email or our website.</p>
+                        </div>
+                        <div>
+                            <h2 className="text-3xl font-medium scroll-mt-16" id="contact">Contact Us</h2>
+                            <p>Have a suggestion for improving Prospector Minerals? Notice an error in our site? Need to contact us for another reason?
                                 <br />
                                 <br />
-                                You may withdraw your consent at any time by deleting the website cookies through your browser.
+                                Contact Us at: <Link className="font-medium text-cyan-500" href="mailto:prospectorminerals@prospectorminerals.com">prospectorminerals@prospectorminerals.com</Link>.
                             </p>
                         </div>
-                    </div>
-                    <h3 className="text-2xl font-medium pt-6" id="datause">Data Use</h3>
-                    <p>We may use your data for numerous legitimate purposes, including, but not limited to, the following:</p>
-                    <div className="flex-col space-y-6 pt-4">
-                        <div>
-                            <h4 className="text-xl font-medium">Account Management</h4>
-                            <p>Your email address, phone number, and other provided information may be used to assist with the management and login of your account.</p>
-                        </div>
-                        <div>
-                            <h4 className="text-xl font-medium">Personalization & Customization</h4>
-                            <p>Your first name, last name, and IP address may be used in order to personalize your experience on our website and provide customization features.</p>
-                        </div>
-                        <div>
-                            <h4 className="text-xl font-medium">Communication</h4>
-                            <p>We may communicate updates to our site content or policy via your email address provided upon subscription or account creation.</p>
-                        </div>
-                        <div>
-                            <h4 className="text-xl font-medium">Analytics</h4>
-                            <p>We utilize trusted third-party tools such as Google Analytics in order to analyze your interaction with our content and website. Information collected may include IP address, geographic location, and browser data.</p>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <h2 className="text-3xl font-medium">Modifications</h2>
-                    <p>We reserve the right to modify this policy at any time, as a result, we recommend that it be reviewed regularly. Changes and clarifications will take effect immediately upon their posting on this website. If we make material changes to this policy, we will notify you that it has been updated through our email or our website.</p>
-                </div>
-                <div>
-                    <h2 className="text-3xl font-medium scroll-mt-16" id="contact">Contact Us</h2>
-                    <p>Have a suggestion for improving Prospector Minerals? Notice an error in our site? Need to contact us for another reason?
-                        <br />
-                        <br />
-                        Contact Us at: <Link className="font-medium text-cyan-500" href="mailto:prospectorminerals@prospectorminerals.com">prospectorminerals@prospectorminerals.com</Link>.
-                    </p>
-                </div>
-            </section>
-        </main >
+                    </section>
+                </main >
+                <div className="hidden sm:block border-l border-gray-300 dark:border-gray-500"></div> {/* Divider */}
+                <aside className="hidden sm:block sm:min-w-16 w-1/4 sticky top-24 h-screen px-8">
+                    <h2 className='font-semibold text-lg mb-4'>On this Page</h2>
+                    <nav className='flex flex-col'>
+                        <ul className='space-y-3'>
+                            <Link color="foreground" href="#copyright" className="block">Copyright Policy</Link>
+                            <Link color="foreground" href="#termsofuse" className="block">Terms of Use</Link>
+                            <Link color="foreground" href="#privacy" className="block">Privacy Policy</Link>
+                            <Link color="foreground" href="#collecteddata" className="ml-3 block">Collected Data</Link>
+                            <Link color="foreground" href="#datause" className="ml-3 block">Data Use</Link>
+                            <Link color="foreground" href="#modifications" className="block">Modifications</Link>
+                            <Link color="foreground" href="#contact" className="block">Contact Us</Link>
+                        </ul>
+                    </nav>
+                </aside>
+            </div>
+        </div>
     )
 }
 
