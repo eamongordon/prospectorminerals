@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Link } from '@nextui-org/react'
+import AnchorMenu from '@/components/policy/anchor-menu'
 
 export const metadata: Metadata = {
     title: 'Policy | Prospector Minerals',
@@ -96,20 +97,7 @@ const Page = async ({
                     </section>
                 </main >
                 <div className="hidden sm:block border-l border-gray-300 dark:border-gray-500"></div> {/* Divider */}
-                <aside className="hidden sm:block sm:min-w-16 w-1/4 sticky top-24 h-screen px-8">
-                    <h2 className='font-semibold text-lg mb-4'>On this Page</h2>
-                    <nav className='flex flex-col'>
-                        <ul className='space-y-3'>
-                            <Link color="foreground" href="#copyright" className="block">Copyright Policy</Link>
-                            <Link color="foreground" href="#termsofuse" className="block">Terms of Use</Link>
-                            <Link color="foreground" href="#privacy" className="block">Privacy Policy</Link>
-                            <Link color="foreground" href="#collecteddata" className="ml-3 block">Collected Data</Link>
-                            <Link color="foreground" href="#datause" className="ml-3 block">Data Use</Link>
-                            <Link color="foreground" href="#modifications" className="block">Modifications</Link>
-                            <Link color="foreground" href="#contact" className="block">Contact Us</Link>
-                        </ul>
-                    </nav>
-                </aside>
+                <AnchorMenu/>
             </div>
         </div>
     )
