@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from "react";
 import CustomAvatar from "./avatar";
-import PMLogo from "./pmLogo";
+import PMLogo from "./pm-logo";
 import SearchComp from './search';
 import { useModal } from "./modal/provider";
 import LoginForm from "./registration/login-form";
