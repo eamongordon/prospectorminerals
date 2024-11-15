@@ -1,6 +1,6 @@
 import BlurImage from '../blur-image';
 import Search from '../search';
-import PMLogo from '../pmLogo';
+import PMLogo from '../pm-logo';
 
 export default function Hero() {
     return (
