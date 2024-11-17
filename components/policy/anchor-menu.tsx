@@ -29,11 +29,11 @@ export default function AnchorMenu() {
             if (closestSection) {
                 const id = (closestSection as HTMLElement).getAttribute('id');
                 navLinks.forEach(link => {
-                    link.classList.add('text-gray-600');
-                    link.classList.remove('font-semibold', 'text-black');
+                    link.classList.add('text-gray-600', 'dark:text-gray-300');
+                    link.classList.remove('font-semibold', 'text-black', 'dark:text-white');
                     if (link.getAttribute('href') === `#${id}`) {
-                        link.classList.remove('text-gray-600');
-                        link.classList.add('font-semibold', 'text-black');
+                        link.classList.remove('text-gray-600', 'dark:text-gray-300');
+                        link.classList.add('font-semibold', 'text-black', 'dark:text-white');
                     }
                 });
             }
@@ -52,13 +52,13 @@ export default function AnchorMenu() {
             <h2 className='font-semibold text-lg mb-4'>On this Page</h2>
             <nav className='flex flex-col'>
                 <ul className='space-y-3'>
-                    <li><Link href="#copyright" className="block text-gray-600">Copyright Policy</Link></li>
-                    <li><Link href="#termsofuse" className="block text-gray-600">Terms of Use</Link></li>
-                    <li><Link href="#privacy" className="block text-gray-600">Privacy Policy</Link></li>
-                    <li><Link href="#collecteddata" className="ml-3 block text-gray-600">Collected Data</Link></li>
-                    <li><Link href="#datause" className="ml-3 block text-gray-600">Data Use</Link></li>
-                    <li><Link href="#modifications" className="block text-gray-600">Modifications</Link></li>
-                    <li><Link href="#contact" className="block text-gray-600">Contact Us</Link></li>
+                    <li><Link href="#copyright" className="block text-gray-600 dark:text-gray-300">Copyright Policy</Link></li>
+                    <li><Link href="#termsofuse" className="block text-gray-600 dark:text-gray-300">Terms of Use</Link></li>
+                    <li><Link href="#privacy" className="block text-gray-600 dark:text-gray-300">Privacy Policy</Link></li>
+                    <li><Link href="#collecteddata" className="ml-3 block text-gray-600 dark:text-gray-300">Collected Data</Link></li>
+                    <li><Link href="#datause" className="ml-3 block text-gray-600 dark:text-gray-300">Data Use</Link></li>
+                    <li><Link href="#modifications" className="block text-gray-600 dark:text-gray-300">Modifications</Link></li>
+                    <li><Link href="#contact" className="block text-gray-600 dark:text-gray-300">Contact Us</Link></li>
                 </ul>
             </nav>
         </aside>
