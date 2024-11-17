@@ -1,33 +1,26 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import Link from 'next/link';
 
 export default function AnchorMenu() {
-    const menuRef = useRef<HTMLElement | null>(null);
-
     useEffect(() => {
         const handleScroll = () => {
-            if (!menuRef.current) return;
-
             const sections = document.querySelectorAll('h2[id], h3[id]');
-            const navLinks = menuRef.current.querySelectorAll('nav ul li a');
+            const navLinks = document.querySelectorAll('aside nav ul li a');
 
-            let closestSection = null;
-            let minDistance = Number.POSITIVE_INFINITY;
+            let activeSection: Element | null = null;
+            const threshold = 100; // 100px below the top
 
             sections.forEach(section => {
                 const rect = section.getBoundingClientRect();
-                const distance = Math.abs(rect.top);
-
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    closestSection = section;
+                if (rect.top <= threshold) {
+                    activeSection = section;
                 }
             });
 
-            if (closestSection) {
-                const id = (closestSection as HTMLElement).getAttribute('id');
+            if (activeSection) {
+                const id = (activeSection as HTMLElement).getAttribute('id');
                 navLinks.forEach(link => {
                     link.classList.add('text-gray-600', 'dark:text-gray-300');
                     link.classList.remove('font-semibold', 'text-black', 'dark:text-white');
@@ -48,19 +41,19 @@ export default function AnchorMenu() {
     }, []);
 
     return (
-        <aside ref={menuRef} className="hidden sm:block sm:min-w-16 w-1/4 sticky top-24 h-screen px-8">
+        <aside className="hidden sm:block sm:min-w-16 w-1/4 sticky top-24 h-screen px-8">
             <h2 className='font-semibold text-lg mb-4'>On this Page</h2>
             <nav className='flex flex-col'>
                 <ul className='space-y-3'>
-                    <li><Link href="#copyright" className="block text-gray-600 dark:text-gray-300">Copyright Policy</Link></li>
-                    <li><Link href="#termsofuse" className="block text-gray-600 dark:text-gray-300">Terms of Use</Link></li>
-                    <li><Link href="#privacy" className="block text-gray-600 dark:text-gray-300">Privacy Policy</Link></li>
-                    <li><Link href="#collecteddata" className="ml-3 block text-gray-600 dark:text-gray-300">Collected Data</Link></li>
-                    <li><Link href="#datause" className="ml-3 block text-gray-600 dark:text-gray-300">Data Use</Link></li>
-                    <li><Link href="#modifications" className="block text-gray-600 dark:text-gray-300">Modifications</Link></li>
-                    <li><Link href="#contact" className="block text-gray-600 dark:text-gray-300">Contact Us</Link></li>
+                    <li><Link href="#copyright" className="block">Copyright Policy</Link></li>
+                    <li><Link href="#termsofuse" className="block">Terms of Use</Link></li>
+                    <li><Link href="#privacy" className="block">Privacy Policy</Link></li>
+                    <li><Link href="#collecteddata" className="ml-3 block">Collected Data</Link></li>
+                    <li><Link href="#datause" className="ml-3 block">Data Use</Link></li>
+                    <li><Link href="#modifications" className="block">Modifications</Link></li>
+                    <li><Link href="#contact" className="block">Contact Us</Link></li>
                 </ul>
             </nav>
         </aside>
     );
-};
+}
