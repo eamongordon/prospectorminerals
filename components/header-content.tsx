@@ -4,7 +4,7 @@ import { Button, Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger,
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import CustomAvatar from "./avatar";
 import PMLogo from "./pm-logo";
 import SearchComp from './search';
@@ -32,6 +32,14 @@ export default function HeaderComp({
             setIsMenuOpen(false);
         }
     }, [pathname]);
+
+    const handleMenuItemClick = (event: MouseEvent<HTMLAnchorElement>) => {
+        const targetPath = event.currentTarget.getAttribute('href');
+        if (pathname === targetPath || (targetPath && targetPath.startsWith('/#') && targetPath.substring(0, 1) === pathname)) {
+            event.preventDefault();
+            setIsMenuOpen(false);
+        }
+    }
 
     return (
         <Navbar
@@ -133,27 +141,27 @@ export default function HeaderComp({
                 </NavbarContent>
                 <NavbarMenu>
                     <NavbarMenuItem key="learn">
-                        <UILink color="foreground" href="/#explore">
+                        <UILink color="foreground" href="/#explore" onClick={handleMenuItemClick}>
                             Learn
                         </UILink>
                     </NavbarMenuItem>
                     <NavbarMenuItem key="minerals">
-                        <UILink color="foreground" href="/minerals">
+                        <UILink color="foreground" href="/minerals" onClick={handleMenuItemClick}>
                             Minerals
                         </UILink>
                     </NavbarMenuItem>
                     <NavbarMenuItem key="localities">
-                        <UILink color="foreground" href="/localities">
+                        <UILink color="foreground" href="/localities" onClick={handleMenuItemClick}>
                             Localities
                         </UILink>
                     </NavbarMenuItem>
                     <NavbarMenuItem key="articles">
-                        <UILink color="foreground" href="/articles">
+                        <UILink color="foreground" href="/articles" onClick={handleMenuItemClick}>
                             Articles
                         </UILink>
                     </NavbarMenuItem>
                     <NavbarMenuItem key="photos">
-                        <UILink color="foreground" href="/photos">
+                        <UILink color="foreground" href="/photos" onClick={handleMenuItemClick}>
                             Photos
                         </UILink>
                     </NavbarMenuItem>
