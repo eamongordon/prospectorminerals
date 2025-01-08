@@ -55,9 +55,7 @@ export default function Editor({ post }: { post: Post }) {
         </Button>
         <Button
           onClick={() => {
-            //const formData = new FormData();
             console.log(data.published, typeof data.published);
-            //formData.append("published", String(!data.published));
             const now = new Date();
             const updatePostMetadataPublishedObj = {
               formData: String(!data.published), slug: post.slug, key: "published"
