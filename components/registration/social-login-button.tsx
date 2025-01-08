@@ -22,7 +22,13 @@ export default function LoginButton({
 
   useEffect(() => {
     const errorMessage = Array.isArray(error) ? error.pop() : error;
-    errorMessage && toast.error("There was an error logging in. Please try again.");
+    if (errorMessage) {
+      if (errorMessage === "OAuthAccountNotLinked") {
+        toast.error("It appears that you signed up with an email and password. Please log in with those credentials.")
+      } else {
+        toast.error("There was an error logging in. Please try again.");
+      }
+    }
   }, [error]);
   return (
     <Button
