@@ -23,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${workSansClassName} bg-gradient-to-b from-[rgb(214,219,220)] to-white text-black dark:bg-none dark:bg-black dark:text-white`}>
+      <body className={`${workSansClassName} bg-white text-black dark:bg-black dark:text-white`}>
         <Providers>{children}</Providers>
         <Analytics />
       </body>
