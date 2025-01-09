@@ -4,7 +4,7 @@ import { Button, Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger,
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
-import { useEffect, useState, type MouseEvent } from "react";
+import { useEffect, useState } from "react";
 import CustomAvatar from "./avatar";
 import PMLogo from "./pm-logo";
 import SearchComp from './search';
@@ -33,10 +33,8 @@ export default function HeaderComp({
         }
     }, [pathname]);
 
-    const handleMenuItemClick = (event: MouseEvent<HTMLAnchorElement>) => {
-        const targetPath = event.currentTarget.getAttribute('href');
+    const handleMenuItemPress = (targetPath: string) => {
         if (pathname === targetPath || (targetPath && targetPath.startsWith('/#') && targetPath.substring(0, 1) === pathname)) {
-            event.preventDefault();
             setIsMenuOpen(false);
         }
     }
@@ -94,7 +92,7 @@ export default function HeaderComp({
                         className="mr-4 hidden sm:block lg:hidden xl:hidden"
                     />
                     <Button
-                        onClick={() => { setIsMenuOpen(false); modal?.show(<section className="max-w-screen-xl px-8 w-full"><SearchComp /></section>, "search"); }}
+                        onPress={() => { setIsMenuOpen(false); modal?.show(<section className="max-w-screen-xl px-8 w-full"><SearchComp /></section>, "search"); }}
                         isIconOnly color="default" variant="faded" aria-label="Search">
                         <Search />
                     </Button>
@@ -132,7 +130,7 @@ export default function HeaderComp({
                         </>
                     ) : (
                         <Button
-                            onClick={() => { setIsMenuOpen(false); modal?.show(<LoginForm isModal={true} onCloseAction={modal?.hide} />, "registration"); }}
+                            onPress={() => { setIsMenuOpen(false); modal?.show(<LoginForm isModal={true} onCloseAction={modal?.hide} />, "registration"); }}
                             color="default" variant="flat" className="hidden sm:flex"
                         >
                             Log In
@@ -141,27 +139,27 @@ export default function HeaderComp({
                 </NavbarContent>
                 <NavbarMenu>
                     <NavbarMenuItem key="learn">
-                        <UILink color="foreground" href="/#explore" onClick={handleMenuItemClick}>
+                        <UILink color="foreground" href="/#explore" onPress={() => handleMenuItemPress('/#explore')}>
                             Learn
                         </UILink>
                     </NavbarMenuItem>
                     <NavbarMenuItem key="minerals">
-                        <UILink color="foreground" href="/minerals" onClick={handleMenuItemClick}>
+                        <UILink color="foreground" href="/minerals" onPress={() => handleMenuItemPress('/minerals')}>
                             Minerals
                         </UILink>
                     </NavbarMenuItem>
                     <NavbarMenuItem key="localities">
-                        <UILink color="foreground" href="/localities" onClick={handleMenuItemClick}>
+                        <UILink color="foreground" href="/localities" onPress={() => handleMenuItemPress('/localities')}>
                             Localities
                         </UILink>
                     </NavbarMenuItem>
                     <NavbarMenuItem key="articles">
-                        <UILink color="foreground" href="/articles" onClick={handleMenuItemClick}>
+                        <UILink color="foreground" href="/articles" onPress={() => handleMenuItemPress('/articles')}>
                             Articles
                         </UILink>
                     </NavbarMenuItem>
                     <NavbarMenuItem key="photos">
-                        <UILink color="foreground" href="/photos" onClick={handleMenuItemClick}>
+                        <UILink color="foreground" href="/photos" onPress={() => handleMenuItemPress('/photos')}>
                             Photos
                         </UILink>
                     </NavbarMenuItem>
@@ -201,7 +199,7 @@ export default function HeaderComp({
                             </Dropdown>
                         ) : (
                             <Button
-                                onClick={() => { setIsMenuOpen(false); modal?.show(<LoginForm isModal={true} onCloseAction={modal?.hide} />, "registration"); }}
+                                onPress={() => { setIsMenuOpen(false); modal?.show(<LoginForm isModal={true} onCloseAction={modal?.hide} />, "registration"); }}
                                 color="default" variant="flat" className="px-4"
                             >
                                 Log In

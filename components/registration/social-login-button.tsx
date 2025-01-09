@@ -33,7 +33,7 @@ export default function LoginButton({
   return (
     <Button
       isLoading={loading}
-      onClick={() => {
+      onPress={() => {
         setLoading(true);
         isModal ? signIn("google") : signIn("google", { callbackUrl: decodeURIComponent(redirectUri || "/") })
       }}

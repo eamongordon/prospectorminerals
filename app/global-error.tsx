@@ -19,7 +19,7 @@ export default function GlobalError({
                     <div className="flex-col items-center justify-center">
                         <h2 className="mb-3 mx-auto">Oops! Something went wrong.</h2>
                         <div className="flex gap-3 items-center justify-center">
-                            <Button onClick={
+                            <Button onPress={
                                 // Attempt to recover by trying to re-render the segment
                                 () => reset()
                             }>Try Again</Button>

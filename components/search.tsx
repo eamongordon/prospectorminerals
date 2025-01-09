@@ -260,7 +260,7 @@ export default function Search({ isHero }: { isHero?: boolean }) {
                             <div className='flex-col items-center justify-center'>
                                 <p className='w-full text-center'>No Results Found. Try adjusting your filters.</p>
                                 <div className='flex items-center justify-center py-4'>
-                                    <Button className="flex" isLoading={resultsLoading} onClick={() => { setResultsLoading(true); setSearchTerm(""); }}>
+                                    <Button className="flex" isLoading={resultsLoading} onPress={() => { setResultsLoading(true); setSearchTerm(""); }}>
                                         Clear Filters
                                     </Button>
                                 </div>

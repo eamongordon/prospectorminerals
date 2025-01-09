@@ -6,7 +6,7 @@ import { useState } from 'react';
 export default function ClearFilters({ clearFilters }: { clearFilters?: () => void }) {
     const [noResultsLoading, setNoResultsLoading] = useState(false);
     return (
-        <Button onClick={() => {setNoResultsLoading(true); clearFilters!(); }} isLoading={noResultsLoading}>
+        <Button onPress={() => {setNoResultsLoading(true); clearFilters!(); }} isLoading={noResultsLoading}>
             Clear Filters
         </Button>
     )

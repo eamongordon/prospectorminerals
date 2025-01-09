@@ -23,7 +23,7 @@ export default function Blurhash() {
                     Get Blurhash
                 </h1>
                 <Input placeholder="Enter a URL" type="text" onChange={(event) => setTextInput(event.target.value)} />
-                <Button onClick={() => blurFunc()} isLoading={loading}>Get Blur</Button>
+                <Button onPress={() => blurFunc()} isLoading={loading}>Get Blur</Button>
                 <p className="break-words">{result}</p>
             </div>
         </div>

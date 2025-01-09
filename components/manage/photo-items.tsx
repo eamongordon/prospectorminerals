@@ -62,7 +62,7 @@ export default function PhotoAdd() {
                         Add Photos to DB
                     </h1>
                     <Input placeholder="Enter JSON" type="text" onChange={(event) => setTextInput(event.target.value)} />
-                    <Button onClick={() => actionFunc()} isLoading={loading}>Confirm</Button>
+                    <Button onPress={() => actionFunc()} isLoading={loading}>Confirm</Button>
                     <p className="break-words">{result}</p>
                 </div>
             </div>
@@ -72,7 +72,7 @@ export default function PhotoAdd() {
                         Add Minerals to DB
                     </h1>
                     <Input placeholder="Enter JSON" type="text" onChange={(event) => setTextInput(event.target.value)} />
-                    <Button onClick={() => actionMineralsFunc()} isLoading={loading}>Confirm</Button>
+                    <Button onPress={() => actionMineralsFunc()} isLoading={loading}>Confirm</Button>
                     <p className="break-words">{result}</p>
                 </div>
             </div>
@@ -82,7 +82,7 @@ export default function PhotoAdd() {
                         Add Localities to DB
                     </h1>
                     <Input placeholder="Enter JSON" type="text" onChange={(event) => setTextInput(event.target.value)} />
-                    <Button onClick={() => actionLocalitiesFunc()} isLoading={loading}>Confirm</Button>
+                    <Button onPress={() => actionLocalitiesFunc()} isLoading={loading}>Confirm</Button>
                     <p className="break-words">{result}</p>
                 </div>
             </div>
@@ -92,7 +92,7 @@ export default function PhotoAdd() {
                         Add Relations Mineral and Photo to DB
                     </h1>
                     <Input placeholder="Enter JSON" type="text" onChange={(event) => setTextInput(event.target.value)} />
-                    <Button onClick={() => actionRelationsFunc()} isLoading={loading}>Confirm</Button>
+                    <Button onPress={() => actionRelationsFunc()} isLoading={loading}>Confirm</Button>
                     <p className="break-words">{result}</p>
                 </div>
             </div>

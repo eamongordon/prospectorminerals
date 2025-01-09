@@ -13,7 +13,7 @@ export default function CreatePostButton() {
 
   return (
     <Button
-      onClick={() =>
+      onPress={() =>
         startTransition(async () => {
           const post = await createPost();
           va.track("Created Post");

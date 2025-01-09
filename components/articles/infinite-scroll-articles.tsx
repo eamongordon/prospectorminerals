@@ -84,7 +84,7 @@ export default function InfiniteScrollArticles({
             <div className='flex-col items-center justify-center col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-3'>
               <p className='w-full text-center'>No Articles Found. Try adjusting your filters.</p>
               <div className='flex items-center justify-center py-4'>
-                <Button className="flex" isLoading={noPhotosLoading} onClick={() => { if (clearFilters) { setNoPhotosLoading(true); clearFilters(); } }}>
+                <Button className="flex" isLoading={noPhotosLoading} onPress={() => { if (clearFilters) { setNoPhotosLoading(true); clearFilters(); } }}>
                   Clear Filters
                 </Button>
               </div>

@@ -46,7 +46,7 @@ export default function Editor({ post }: { post: Post }) {
             <ExternalLink className="h-4 w-4" />
           </Link>
         )}
-        <Button isLoading={isPendingSaving} onClick={() => {
+        <Button isLoading={isPendingSaving} onPress={() => {
           startTransitionSaving(async () => {
             await updatePost(data);
           });
@@ -54,7 +54,7 @@ export default function Editor({ post }: { post: Post }) {
           {isPendingSaving ? "Saving..." : "Saved"}
         </Button>
         <Button
-          onClick={() => {
+          onPress={() => {
             console.log(data.published, typeof data.published);
             const now = new Date();
             const updatePostMetadataPublishedObj = {
