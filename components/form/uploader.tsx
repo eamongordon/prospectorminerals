@@ -3,6 +3,7 @@
 import { cn, resizeImage } from "@/lib/utils";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
+import { X } from "lucide-react";
 
 export default function Uploader({
   defaultValue,
@@ -68,16 +69,28 @@ export default function Uploader({
     }
   };
 
+  const removeImage = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setData({ [name]: null });
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
+    if (formFunction) {
+      formFunction(null);
+    }
+  };
+
   return (
     <div>
       <label
         htmlFor={`${name}-upload`}
         className={cn(
-          "group relative mt-2 flex cursor-pointer flex-col items-center justify-center border border-gray-300 bg-white dark:bg-stone-800 shadow-sm transition-all hover:bg-gray-50",
+          "group relative flex cursor-pointer flex-col items-center justify-center border border-gray-300 bg-white dark:bg-stone-800 shadow-sm transition-all hover:bg-gray-50",
           aspectRatio,
           {
             "max-w-screen-md rounded-md": aspectRatio === "aspect-video",
-            "max-w-[160px] rounded-full sm:w-[160px] sm:mt-0": aspectRatio === "aspect-square",
+            "max-w-[160px] rounded-full w-[160px] mt-0": aspectRatio === "aspect-square",
           },
         )}
       >
@@ -144,6 +157,15 @@ export default function Uploader({
             alt="Preview"
             className={cn("h-full w-full object-cover", { "rounded-full": aspectRatio === "aspect-square", "rounded-md": aspectRatio === "aspect-video" })}
           />
+        )}
+        {data[name] && aspectRatio === "aspect-square" && (
+          <button
+            type="button"
+            className="absolute z-10 top-2 right-2 p-2 bg-neutral-200 hover:bg-neutral-300 dark:bg-neutral-600 dark:hover:bg-neutral-700 rounded-full shadow-sm"
+            onClick={removeImage}
+          >
+            <X size={16} />
+          </button>
         )}
       </label>
       <div className={cn("mt-1 flex shadow-sm", { "rounded-full": aspectRatio === "aspect-square", "rounded-md": aspectRatio === "aspect-video" })}>

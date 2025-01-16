@@ -46,10 +46,14 @@ export default function Form({
     }
   };
 
-  const uploadFormFunction = (file: File) => {
+  const uploadFormFunction = (file: File | null) => {
     const formData = new FormData();
-    formData.append(inputAttrs.name === "avatar" ? "avatar" : "image", file);
-    setData(formData);
+    if (file) {
+      formData.append(inputAttrs.name === "avatar" ? "avatar" : "image", file);
+      setData(formData);
+    } else {
+      setData("");
+    }
   };
 
   const submitForm = (e: React.FormEvent<HTMLFormElement>) => {

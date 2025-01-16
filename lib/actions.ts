@@ -46,13 +46,17 @@ export const editUser = async (
       if (session.user.image && new URL(session.user.image).hostname === process.env.BLOB_HOSTNAME) {
         await del(session.user.image);
       }
-      const file = formData.get(key) as File;
-      const filename = `${nanoid()}.${file.type.split("/")[1]}`;
+      if (formData) {
+        const file = formData.get(key) as File;
+        const filename = `${nanoid()}.${file.type.split("/")[1]}`;
 
-      const { url } = await put(filename, file, {
-        access: "public",
-      });
-      value = url;
+        const { url } = await put(filename, file, {
+          access: "public",
+        });
+        value = url;
+      } else {
+        value = null;
+      }
       key = "image";
     }
     const response = await prisma.user.update({
