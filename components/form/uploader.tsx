@@ -161,10 +161,10 @@ export default function Uploader({
         {data[name] && aspectRatio === "aspect-square" && (
           <button
             type="button"
-            className="absolute z-10 top-2 right-2 p-2 bg-neutral-200 hover:bg-neutral-300 dark:bg-neutral-600 dark:hover:bg-neutral-700 rounded-full shadow-sm"
+            className="absolute z-10 top-2 right-1 p-[10px] bg-neutral-200 hover:bg-neutral-300 dark:bg-neutral-600 dark:hover:bg-neutral-700 rounded-full shadow-sm"
             onClick={removeImage}
           >
-            <X size={16} />
+            <X size={20} />
           </button>
         )}
       </label>
