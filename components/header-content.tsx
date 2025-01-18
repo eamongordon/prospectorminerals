@@ -97,37 +97,35 @@ export default function HeaderComp({
                         <Search />
                     </Button>
                     {loggedIn ? (
-                        <>
-                            <Dropdown placement="bottom-end">
-                                <DropdownTrigger>
-                                    <CustomAvatar
-                                        isBordered
-                                        as="button"
-                                        className="hidden sm:flex transition-transform"
-                                        color="default"
-                                        name={name ? name : undefined}
-                                        size="sm"
-                                        src={image ? image : undefined}
-                                        height={32}
-                                        width={32}
-                                    />
-                                </DropdownTrigger>
-                                <DropdownMenu aria-label="Profile Actions" variant="flat" onAction={(item) => {
-                                    if (item === 'logout') {
-                                        signOut({ callbackUrl: pathname.includes('/account') ? '/' : undefined });
-                                    }
-                                }}>
-                                    <DropdownItem key="profile" className="h-14 gap-2" as={Link} href="/account/settings">
-                                        <p className="font-semibold">Signed in as</p>
-                                        <p className="font-semibold">{name ? name : email}</p>
-                                    </DropdownItem>
-                                    <DropdownItem key="settings" as={Link} href="/account/settings">Settings</DropdownItem>
-                                    <DropdownItem key="logout" color="danger">
-                                        Log Out
-                                    </DropdownItem>
-                                </DropdownMenu>
-                            </Dropdown>
-                        </>
+                        <Dropdown placement="bottom-end" shouldBlockScroll={false}>
+                            <DropdownTrigger>
+                                <CustomAvatar
+                                    isBordered
+                                    as="button"
+                                    className="hidden sm:flex transition-transform"
+                                    color="default"
+                                    name={name ? name : undefined}
+                                    size="sm"
+                                    src={image ? image : undefined}
+                                    height={32}
+                                    width={32}
+                                />
+                            </DropdownTrigger>
+                            <DropdownMenu aria-label="Profile Actions" variant="flat" onAction={(item) => {
+                                if (item === 'logout') {
+                                    signOut({ callbackUrl: pathname.includes('/account') ? '/' : undefined });
+                                }
+                            }}>
+                                <DropdownItem key="profile" className="h-14 gap-2" as={Link} href="/account/settings">
+                                    <p className="font-semibold">Signed in as</p>
+                                    <p className="font-semibold">{name ? name : email}</p>
+                                </DropdownItem>
+                                <DropdownItem key="settings" as={Link} href="/account/settings">Settings</DropdownItem>
+                                <DropdownItem key="logout" color="danger">
+                                    Log Out
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
                     ) : (
                         <Button
                             onPress={() => { setIsMenuOpen(false); modal?.show(<LoginForm isModal={true} onCloseAction={modal?.hide} />, "registration"); }}
