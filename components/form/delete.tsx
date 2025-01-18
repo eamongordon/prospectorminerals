@@ -1,7 +1,7 @@
 "use client";
 
 import { deleteUser, deletePost } from "@/lib/actions";
-import { Button, Input } from "@nextui-org/react";
+import { Button, Input } from "@heroui/react";
 import va from "@vercel/analytics";
 import { signOut } from "next-auth/react";
 import { useRef, useState } from "react";

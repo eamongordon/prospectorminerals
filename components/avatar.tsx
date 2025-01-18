@@ -1,5 +1,5 @@
 import { forwardRef, useMemo, ForwardedRef } from "react";
-import { AvatarIcon, useAvatar, AvatarProps } from "@nextui-org/react";
+import { AvatarIcon, useAvatar, AvatarProps } from "@heroui/react";
 import Image, { type ImageProps } from "next/image";
 
 interface CustomAvatarProps extends AvatarProps {

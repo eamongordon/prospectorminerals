@@ -2,7 +2,7 @@
 
 import { signIn } from "next-auth/react";
 import { useState, Suspense, type Key } from "react";
-import { Button, Input, Divider, Tab, Tabs } from "@nextui-org/react";
+import { Button, Input, Divider, Tab, Tabs } from "@heroui/react";
 import Image from "next/image";
 import Link from 'next/link';
 import { useRouter, useSearchParams, usePathname } from "next/navigation";

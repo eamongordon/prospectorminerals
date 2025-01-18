@@ -1,7 +1,7 @@
 "use client";
 
 import { createPost } from "@/lib/actions";
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import va from "@vercel/analytics";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";

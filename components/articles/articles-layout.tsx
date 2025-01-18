@@ -4,7 +4,7 @@ import { useEffect, useState, useRef, Children, cloneElement } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { Search as MagnifyingGlassIcon } from 'lucide-react'
 import { useDebounce } from 'use-debounce';
-import { Input } from '@nextui-org/react';
+import { Input } from "@heroui/react";
 import { ArticlesFilterObj } from '@/types/types';
 
 export default function ArticlesLayout({

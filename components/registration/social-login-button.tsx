@@ -2,7 +2,7 @@
 
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 

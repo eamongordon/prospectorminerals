@@ -3,7 +3,7 @@
 import { fetchPhotos } from '@/lib/actions'
 import { PhotoDisplayFieldset } from '@/types/prisma'
 import type { PhotosSortObj } from '@/types/types'
-import { Button, Skeleton, Spinner } from "@nextui-org/react"
+import { Button, Skeleton, Spinner } from "@heroui/react"
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'

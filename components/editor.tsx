@@ -7,7 +7,7 @@ import { Editor as NovelEditor } from "novel";
 import TextareaAutosize from "react-textarea-autosize";
 import { ExternalLink } from "lucide-react";
 import { toast } from "sonner";
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import { baseUrl } from "@/lib/utils";
 import Link from "next/link";
 

@@ -2,7 +2,7 @@
 
 import type { LocalityDisplayFieldsetComponent } from "@/types/prisma";
 import type { LocalitiesQueryParams, MineralListItem } from '@/types/types';
-import { Accordion, AccordionItem, Button, Input, Tab, Tabs } from "@nextui-org/react";
+import { Accordion, AccordionItem, Button, Input, Tab, Tabs } from "@heroui/react";
 import { Filter, Search as MagnifyingGlassIcon, Map, Rows } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Children, cloneElement, useEffect, useRef, useState } from 'react';

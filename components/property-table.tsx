@@ -7,7 +7,7 @@ import {
     TableColumn,
     TableRow,
     TableCell
-} from "@nextui-org/table";
+} from "@heroui/table";
 
 type TableData = {
     property: string;

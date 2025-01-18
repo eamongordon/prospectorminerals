@@ -1,6 +1,6 @@
 import Header from '@/components/header';
 import Footer from '@/components/footer';
-import { Button } from '@nextui-org/react';
+import { Button } from "@heroui/react";
 import Link from 'next/link';
 
 export default function NotFound() {

@@ -3,7 +3,7 @@
 
 import { createPhotoBulk, createMineralBulk, createRelationsBulk, createLocalityBulk } from "@/lib/actions";
 import { useState } from "react";
-import { Button, Input } from "@nextui-org/react";
+import { Button, Input } from "@heroui/react";
 import { toast } from "sonner";
 
 export default function PhotoAdd() {

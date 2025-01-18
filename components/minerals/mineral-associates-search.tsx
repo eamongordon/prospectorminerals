@@ -3,7 +3,7 @@
 import { fetchMinerals } from '@/lib/actions';
 import type { MineralDisplayFieldset } from "@/types/prisma";
 import { MineralListItem } from '@/types/types';
-import { Chip, Listbox, ListboxItem, Spinner, Textarea } from '@nextui-org/react';
+import { Chip, Listbox, ListboxItem, Spinner, Textarea } from "@heroui/react";
 import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useDebounce } from "use-debounce";

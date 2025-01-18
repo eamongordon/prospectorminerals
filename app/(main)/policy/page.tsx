@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Link } from '@nextui-org/react'
+import { Link } from "@heroui/react"
 import AnchorMenu from '@/components/policy/anchor-menu'
 
 export const metadata: Metadata = {

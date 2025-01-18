@@ -1,6 +1,6 @@
 "use client"
 
-import { Button, Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle, Link as UILink } from "@nextui-org/react";
+import { Button, Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle, Link as UILink } from "@heroui/react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';

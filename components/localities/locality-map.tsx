@@ -1,6 +1,6 @@
 "use client"
 
-import { Card, CardFooter, Skeleton } from "@nextui-org/react";
+import { Card, CardFooter, Skeleton } from "@heroui/react";
 import 'leaflet/dist/leaflet.css';
 import { workSansClassName } from "@/lib/utils";
 import Link from 'next/link';

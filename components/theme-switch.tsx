@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Skeleton } from "@nextui-org/react";
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Skeleton } from "@heroui/react";
 import { Laptop2, Moon, Sun } from "lucide-react";
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from "react";

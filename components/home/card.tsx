@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFooter } from "@heroui/react";
 import { ArrowRight } from 'lucide-react';
 import BlurImage from "../blur-image";
 import Link from "next/link";

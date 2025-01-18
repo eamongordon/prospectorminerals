@@ -3,7 +3,7 @@ import PropertyTable from '@/components/property-table';
 import Gallery from '@/components/minerals/mineral-gallery';
 import MineralTags from '@/components/minerals/mineral-tags';
 import { fetchLocalities } from '@/lib/actions';
-import { Skeleton } from '@nextui-org/react';
+import { Skeleton } from "@heroui/react";
 import { notFound } from "next/navigation";
 import { Suspense } from 'react';
 import { MineralListItem } from '@/types/types';

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 import { fetchMinerals } from '@/lib/actions';
 import MineralCard from './mineral-card';
-import { Spinner, Button } from "@nextui-org/react";
+import { Spinner, Button } from "@heroui/react";
 import type { MineralsFilterObj, PhotosSortObj, MineralListItem } from '@/types/types';
 import type { MineralDisplayFieldset } from '@/types/prisma';
 

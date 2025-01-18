@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 import { fetchPosts } from '@/lib/actions';
-import { Spinner, Button } from "@nextui-org/react";
+import { Spinner, Button } from "@heroui/react";
 import type { ArticlesFilterObj, PhotosSortObj } from '@/types/types';
 import type { Post } from '@prisma/client';
 import BlurImage from '../blur-image';

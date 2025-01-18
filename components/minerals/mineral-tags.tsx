@@ -1,5 +1,5 @@
 import type { MineralListItem } from "@/types/types";
-import { Chip } from "@nextui-org/react";
+import { Chip } from "@heroui/react";
 import Link from "next/link";
 import BlurImage from "../blur-image";
 
