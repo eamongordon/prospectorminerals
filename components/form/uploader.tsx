@@ -90,7 +90,7 @@ export default function Uploader({
           aspectRatio,
           {
             "max-w-screen-md rounded-md": aspectRatio === "aspect-video",
-            "max-w-[160px] rounded-full w-[160px] mt-0": aspectRatio === "aspect-square",
+            "rounded-full w-[160px] mt-0": aspectRatio === "aspect-square",
           },
         )}
       >
@@ -161,7 +161,7 @@ export default function Uploader({
         {data[name] && aspectRatio === "aspect-square" && (
           <button
             type="button"
-            className="absolute z-10 top-2 right-1 p-[10px] bg-neutral-200 hover:bg-neutral-300 dark:bg-neutral-600 dark:hover:bg-neutral-700 rounded-full shadow-sm"
+            className="absolute z-10 top-1 right-1 p-[10px] bg-neutral-200 hover:bg-neutral-300 dark:bg-neutral-600 dark:hover:bg-neutral-700 rounded-full shadow-sm"
             onClick={removeImage}
           >
             <X size={20} />
