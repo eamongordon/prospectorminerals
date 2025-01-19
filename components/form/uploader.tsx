@@ -12,7 +12,7 @@ export default function Uploader({
 }: {
   defaultValue: string | null;
   name: "image" | "avatar";
-  formFunction?: Function
+  formFunction?: (file: File | null) => void;
 }) {
   const aspectRatio = name === "image" ? "aspect-video" : "aspect-square";
 
