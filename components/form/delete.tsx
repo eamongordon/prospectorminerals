@@ -59,16 +59,16 @@ export default function DeleteForm({ type, name }: DeleteFormProps) {
                 <h2 className="text-xl dark:text-white">Delete {type === "account" ? "Account" : "Post"}</h2>
                 <p className="text-sm text-stone-500 dark:text-stone-400">
                     {type === "account"
-                        ? "Deletes your account and all data associated with it. Type DELETE to confirm."
-                        : `Deletes your post permanently. Type in the name of your post ${name} to confirm.`}
+                        ? "Deletes your account and all data associated with it. Type DELETE ACCOUNT to confirm."
+                        : `Deletes your post permanently. Type in the name of your post, ${name}, to confirm.`}
                 </p>
 
                 <Input
                     name="confirm"
                     type="text"
                     required
-                    pattern={type === "account" ? "DELETE" : name}
-                    placeholder={type === "account" ? "DELETE" : name}
+                    pattern={type === "account" ? "DELETE ACCOUNT" : name}
+                    placeholder={type === "account" ? "DELETE ACCOUNT" : name}
                     ref={inputRef}
                     onChange={handleInputChange}
                 />
