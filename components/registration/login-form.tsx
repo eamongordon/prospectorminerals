@@ -108,7 +108,7 @@ const AuthForm = ({ type, data, setData, loading, handleSubmit, resetPassword }:
           validate={(value) => {
             if (value.length === 0) {
               return "Please enter a password.";
-            } else if (value.length < 4) {
+            } else if (type === "register" && value.length < 4) {
               return "Password must be at least 4 characters long.";
             }
           }}
