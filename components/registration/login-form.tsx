@@ -91,6 +91,7 @@ const AuthForm = ({ type, data, setData, loading, handleSubmit, resetPassword }:
         type="email"
         label="Email"
         autoComplete="email"
+        errorMessage="Please enter a valid email address."
         onChange={(e) => setData({ ...data, email: e.target.value })}
         required
       />
@@ -104,6 +105,13 @@ const AuthForm = ({ type, data, setData, loading, handleSubmit, resetPassword }:
           size="sm"
           radius="md"
           type="password"
+          validate={(value) => {
+            if (value.length === 0) {
+              return "Please enter a password.";
+            } else if (value.length < 4) {
+              return "Password must be at least 4 characters long.";
+            }
+          }}
           onChange={(e) => setData({ ...data, password: e.target.value })}
           required
         />
