@@ -64,7 +64,7 @@ export default async function SettingsPage() {
                             }}
                             handleSubmit={editUser}
                         />
-                        <DeleteForm type="user" />
+                        <DeleteForm type="account" />
                     </div>
                 </div>
             </div>

@@ -9,7 +9,7 @@ import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 interface DeleteFormProps {
-    type: "user" | "post";
+    type: "account" | "post";
     name?: string;
 }
 
@@ -31,7 +31,7 @@ export default function DeleteForm({ type, name }: DeleteFormProps) {
         setLoading(true);
         if (isInputValid && window.confirm(`Are you sure you want to delete your ${type}?`)) {
             try {
-                if (type === "user") {
+                if (type === "account") {
                     await deleteUser();
                     va.track("Deleted User");
                     signOut({ callbackUrl: "/" });
@@ -56,9 +56,9 @@ export default function DeleteForm({ type, name }: DeleteFormProps) {
     return (
         <form onSubmit={submitForm} className="rounded-lg border border-red-600 bg-white dark:bg-black">
             <div className="relative flex flex-col space-y-4 p-5 sm:p-10">
-                <h2 className="text-xl dark:text-white">Delete {type === "user" ? "Account" : "Post"}</h2>
+                <h2 className="text-xl dark:text-white">Delete {type === "account" ? "Account" : "Post"}</h2>
                 <p className="text-sm text-stone-500 dark:text-stone-400">
-                    {type === "user"
+                    {type === "account"
                         ? "Deletes your account and all data associated with it. Type DELETE to confirm."
                         : `Deletes your post permanently. Type in the name of your post ${name} to confirm.`}
                 </p>
@@ -67,8 +67,8 @@ export default function DeleteForm({ type, name }: DeleteFormProps) {
                     name="confirm"
                     type="text"
                     required
-                    pattern={type === "user" ? "DELETE" : name}
-                    placeholder={type === "user" ? "DELETE" : name}
+                    pattern={type === "account" ? "DELETE" : name}
+                    placeholder={type === "account" ? "DELETE" : name}
                     ref={inputRef}
                     onChange={handleInputChange}
                 />
