@@ -90,49 +90,47 @@ function html(params: { url: string, host: string, theme: Theme }) {
 
   return `
   <html lang="en" style="color-scheme: light dark;">
-<body style="background: light-dark(${color.mainBackground}, ${color.mainBackgroundDark}); color-scheme: light dark;">
-  <table width="100%" border="0" cellspacing="20" cellpadding="0"
-    style="background: light-dark(${color.mainBackground}, ${color.mainBackgroundDark}); color-scheme: light dark; max-width: 600px; margin: auto; border-radius: 10px;">
-    <tr>
-      <td align="center"
-        style="padding: 10px 0px; font-size: 22px;">
-        <img src=${theme.logo} width="55" height="55" alt="Prospector Minerals Logo">
-        </td>
-    </tr>
-    <tr>
-      <td align="center"
-        style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: light-dark(${color.text}, ${color.textDark});">
-        Log In to <strong>${escapedHost}</strong>
-      </td>
-    </tr>
-    <tr>
-      <td align="center"
-        style="padding: 10px 0px; font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: light-dark(${color.text}, ${color.textDark})">
-        You can reset your password once logged in.
-      </td>
-    </tr>
-    <tr>
-      <td align="center" style="padding: 20px 0;">
-        <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-            <td align="center" style="border-radius: 5px;" bgcolor="${color.buttonBackground}"><a href="${url}"
-                target="_blank"
-                style="font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${color.buttonText}; text-decoration: none; border-radius: 5px; padding: 10px 20px; border: 1px solid ${color.buttonBorder}; display: inline-block; font-weight: bold;">Log
-                In</a></td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-    <tr>
-      <td align="center"
-        style="padding: 0px 0px 10px 0px; font-size: 16px; line-height: 22px; font-family: Helvetica, Arial, sans-serif; color: light-dark(${color.text}, ${color.textDark})">
-        If you did not request this email you can safely ignore it.
-      </td>
-    </tr>
-  </table>
-</body>
-</html>
-`
+    <body style="background: light-dark(${color.mainBackground}, ${color.mainBackgroundDark}); color-scheme: light dark;">
+      <table width="100%" border="0" cellspacing="20" cellpadding="0"
+        style="background: light-dark(${color.mainBackground}, ${color.mainBackgroundDark}); color-scheme: light dark; max-width: 600px; margin: auto; border-radius: 10px;">
+        <tr>
+          <td align="center" style="padding: 10px 0px; font-size: 22px;">
+            <img src=${theme.logo} width="55" height="55" alt="Prospector Minerals Logo">
+          </td>
+        </tr>
+        <tr>
+          <td align="center" style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: light-dark(${color.text}, ${color.textDark});">
+            Log In to <strong>${escapedHost}</strong>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" style="padding: 10px 0px; font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: light-dark(${color.text}, ${color.textDark})">
+            You can reset your password once logged in.
+          </td>
+        </tr>
+        <tr>
+          <td align="center" style="padding: 20px 0;">
+            <table border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td align="center" style="border-radius: 5px;" bgcolor="${color.buttonBackground}">
+                  <a href="${url}" target="_blank"
+                    style="font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${color.buttonText}; text-decoration: none; border-radius: 5px; padding: 10px 20px; border: 1px solid ${color.buttonBorder}; display: inline-block; font-weight: bold;">
+                    Log In
+                  </a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" style="padding: 0px 0px 10px 0px; font-size: 16px; line-height: 22px; font-family: Helvetica, Arial, sans-serif; color: light-dark(${color.text}, ${color.textDark})">
+            If you did not request this email you can safely ignore it.
+          </td>
+        </tr>
+      </table>
+    </body>
+  </html>
+  `
 }
 
 /** Email Text body (fallback for email clients that don't render HTML, e.g. feature phones) */
