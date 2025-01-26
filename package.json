@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.4",
+    "@heroui/react": "^2.6.14",
     "@prisma/client": "^5.22.0",
     "@tailwindcss/typography": "^0.5.16",
     "@vercel/analytics": "^1.4.1",
@@ -37,7 +38,6 @@
     "use-debounce": "^10.0.4"
   },
   "devDependencies": {
-    "@heroui/react": "2.6.13",
     "@next/bundle-analyzer": "^14.2.23",
     "@types/bcrypt": "^5.0.2",
     "@types/leaflet": "^1.9.16",
