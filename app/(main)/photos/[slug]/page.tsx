@@ -62,9 +62,9 @@ export default async function Page({ params }: Props) {
                     <p className='text-4xl font-semibold'>{photo.name ? photo.name : ""}</p>
                     <p className='text-lg font-semibold'>{photo.locality ? photo.locality.name : photo.locality_fallback}</p>
                     {photo.specimen_height && photo.specimen_length && photo.specimen_width ?
-                        <p className='text-md'>{`${photo.specimen_length} x ${photo.specimen_width} x ${photo.specimen_height} cm`}</p>
+                        <p className='text-base'>{`${photo.specimen_length} x ${photo.specimen_width} x ${photo.specimen_height} cm`}</p>
                         : null}
-                    <p className='text-md'>{photo.description ? photo.description : ""}</p>
+                    <p className='text-base'>{photo.description ? photo.description : ""}</p>
                     {photo.minerals.length ?
                         <>
                             <h2 className='text-2xl font-semibold'>Minerals In this Photo</h2>

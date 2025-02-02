@@ -18,7 +18,7 @@ export default function PropertyTable({ data }: { data: TableData[] }) {
     return data.length > 0 && (
         <Table shadow="none" aria-label="Properties">
             <TableHeader>
-                <TableColumn className="text-md">Properties</TableColumn>
+                <TableColumn className="text-base">Properties</TableColumn>
                 <TableColumn><></></TableColumn>
             </TableHeader>
             <TableBody>

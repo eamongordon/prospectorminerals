@@ -28,8 +28,8 @@ export default function Gallery({ data }: { data: GalleryItem[] }) {
                         blurDataURL={data[0]?.blurDataURL}
                     />
                     <div className='relative'>
-                        <h3 className="text-center group-hover:block hidden text-md sm:text-xl z-10 font-medium text-white">{data[0]?.title}</h3>
-                        <p className="text-center group-hover:block hidden text-sm sm:text-md z-10 text-white">{data[0]?.caption}</p>
+                        <h3 className="text-center group-hover:block hidden text-base sm:text-xl z-10 font-medium text-white">{data[0]?.title}</h3>
+                        <p className="text-center group-hover:block hidden text-sm sm:text-base z-10 text-white">{data[0]?.caption}</p>
                     </div>
                 </Link>
             ) : (
@@ -46,8 +46,8 @@ export default function Gallery({ data }: { data: GalleryItem[] }) {
                         priority={true}
                     />
                     <div className='relative'>
-                        <h3 className="text-center group-hover:block hidden text-md sm:text-xl z-10 font-medium text-white">{data[0]?.title}</h3>
-                        <p className="text-center group-hover:block hidden text-sm sm:text-md z-10 text-white">{data[0]?.caption}</p>
+                        <h3 className="text-center group-hover:block hidden text-base sm:text-xl z-10 font-medium text-white">{data[0]?.title}</h3>
+                        <p className="text-center group-hover:block hidden text-sm sm:text-base z-10 text-white">{data[0]?.caption}</p>
                     </div>
                 </div>
             )}
@@ -65,8 +65,8 @@ export default function Gallery({ data }: { data: GalleryItem[] }) {
                         blurDataURL={data[1]?.blurDataURL}
                     />
                     <div className='relative'>
-                        <h3 className="text-center group-hover:block hidden text-md sm:text-xl z-10 font-medium text-white">{data[1]?.title}</h3>
-                        <p className="text-center group-hover:block hidden text-sm sm:text-md z-10 text-white">{data[1]?.caption}</p>
+                        <h3 className="text-center group-hover:block hidden text-base sm:text-xl z-10 font-medium text-white">{data[1]?.title}</h3>
+                        <p className="text-center group-hover:block hidden text-sm sm:text-base z-10 text-white">{data[1]?.caption}</p>
                     </div>
                 </Link>
             ) : (
@@ -82,8 +82,8 @@ export default function Gallery({ data }: { data: GalleryItem[] }) {
                         blurDataURL={data[1]?.blurDataURL}
                     />
                     <div className='relative'>
-                        <h3 className="text-center group-hover:block hidden text-md sm:text-xl z-10 font-medium text-white">{data[1]?.title}</h3>
-                        <p className="text-center group-hover:block hidden text-sm sm:text-md z-10 text-white">{data[1]?.caption}</p>
+                        <h3 className="text-center group-hover:block hidden text-base sm:text-xl z-10 font-medium text-white">{data[1]?.title}</h3>
+                        <p className="text-center group-hover:block hidden text-sm sm:text-base z-10 text-white">{data[1]?.caption}</p>
                     </div>
                 </div>
             )}
@@ -101,8 +101,8 @@ export default function Gallery({ data }: { data: GalleryItem[] }) {
                         blurDataURL={data[2]?.blurDataURL}
                     />
                     <div className='relative'>
-                        <h3 className="text-center group-hover:block hidden text-md sm:text-xl z-10 font-medium text-white">{data[2]?.title}</h3>
-                        <p className="text-center group-hover:block hidden text-sm sm:text-md z-10 text-white">{data[2]?.caption}</p>
+                        <h3 className="text-center group-hover:block hidden text-base sm:text-xl z-10 font-medium text-white">{data[2]?.title}</h3>
+                        <p className="text-center group-hover:block hidden text-sm sm:text-base z-10 text-white">{data[2]?.caption}</p>
                     </div>
                 </Link>
             ) : (
@@ -119,8 +119,8 @@ export default function Gallery({ data }: { data: GalleryItem[] }) {
                         blurDataURL={data[2]?.blurDataURL}
                     />
                     <div className='relative'>
-                        <h3 className="text-center group-hover:block hidden text-md sm:text-xl z-10 font-medium text-white">{data[2]?.title}</h3>
-                        <p className="text-center group-hover:block hidden text-sm sm:text-md z-10 text-white">{data[2]?.caption}</p>
+                        <h3 className="text-center group-hover:block hidden text-base sm:text-xl z-10 font-medium text-white">{data[2]?.title}</h3>
+                        <p className="text-center group-hover:block hidden text-sm sm:text-base z-10 text-white">{data[2]?.caption}</p>
                     </div>
                 </div>
             )}
