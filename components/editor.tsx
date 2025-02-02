@@ -108,10 +108,13 @@ export default function Editor({ post }: { post: Post }) {
         className="relative block"
         defaultValue={post?.content || undefined}
         onUpdate={(editor) => {
-          setData((prev: any) => ({
-            ...prev,
-            content: editor?.storage.markdown.getMarkdown(),
-          }));
+          const content = editor?.storage.markdown.getMarkdown();
+          if (content) {
+            setData((prev: any) => ({
+              ...prev,
+              content: content,
+            }));
+          };
         }}
         onDebouncedUpdate={() => {
           if (
