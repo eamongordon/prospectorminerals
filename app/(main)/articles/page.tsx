@@ -22,11 +22,12 @@ const selectOptions = [
     { label: "Z - A", value: "title,desc" },
 ]
 
-const Page = async ({
-    searchParams
-}: {
-    searchParams: { [key: string]: string | string[] | undefined }
-}) => {
+const Page = async (
+    props: {
+        searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+    }
+) => {
+    const searchParams = await props.searchParams;
     const title =
         typeof searchParams.title === 'string' ? searchParams.title : undefined
     const property =

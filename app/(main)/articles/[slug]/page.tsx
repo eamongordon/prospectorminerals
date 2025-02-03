@@ -6,13 +6,11 @@ import type { Metadata, ResolvingMetadata } from 'next'
 import { placeholderBlurhash, toDateString } from "@/lib/utils";
 
 type Props = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
-export async function generateMetadata(
-  { params }: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata(props: Props, parent: ResolvingMetadata): Promise<Metadata> {
+  const params = await props.params;
 
   const slug = decodeURIComponent(params.slug);
 
@@ -31,11 +29,12 @@ export async function generateMetadata(
   }
 }
 
-export default async function SitePostPage({
-  params,
-}: {
-  params: { domain: string; slug: string };
-}) {
+export default async function SitePostPage(
+  props: {
+    params: Promise<{ domain: string; slug: string }>;
+  }
+) {
+  const params = await props.params;
   const slug = decodeURIComponent(params.slug);
   const data = await getPostData(slug);
 

@@ -7,7 +7,8 @@ import { getSession } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { notFound, redirect } from "next/navigation";
 
-export default async function PostPage({ params }: { params: { slug: string } }) {
+export default async function PostPage(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
   const session = await getSession();
   if (!session) {
     redirect("/login");

@@ -12,11 +12,12 @@ export const metadata: Metadata = {
     }
 }
 
-const Page = async ({
-    searchParams
-}: {
-    searchParams: { [key: string]: string | string[] | undefined }
-}) => {
+const Page = async (
+    props: {
+        searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+    }
+) => {
+    const searchParams = await props.searchParams;
     const query = typeof searchParams.q === 'string' ? searchParams.q : undefined
     return (
         <div className='flex flex-col max-w-screen-xl mx-auto'>

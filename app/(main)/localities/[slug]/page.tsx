@@ -12,13 +12,11 @@ import prisma from '@/lib/prisma';
 import { convertLocalityDataToComponentType } from '@/types/prisma';
 
 type Props = {
-    params: { slug: string }
+    params: Promise<{ slug: string }>
 }
 
-export async function generateMetadata(
-    { params }: Props,
-    parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata(props: Props, parent: ResolvingMetadata): Promise<Metadata> {
+    const params = await props.params;
 
     const result = await prisma.locality.findUnique({
         where: {
@@ -63,7 +61,8 @@ const galleryData = [
     }
 ];
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page(props: { params: Promise<{ slug: string }> }) {
+    const params = await props.params;
     const localityResult = await fetchLocalities({ filterObj: { slug: params.slug }, cursor: undefined, limit: 1, fieldset: 'full' });
     if (localityResult.results.length === 0) {
         return notFound();

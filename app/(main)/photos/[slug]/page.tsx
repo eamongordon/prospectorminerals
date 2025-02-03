@@ -7,13 +7,11 @@ import type { Metadata, ResolvingMetadata } from 'next'
 import prisma from '@/lib/prisma';
 
 type Props = {
-    params: { slug: string }
+    params: Promise<{ slug: string }>
 }
 
-export async function generateMetadata(
-    { params }: Props,
-    parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata(props: Props, parent: ResolvingMetadata): Promise<Metadata> {
+    const params = await props.params;
 
     const result = await prisma.photo.findUnique({
         where: {
@@ -26,7 +24,7 @@ export async function generateMetadata(
             imageBlurhash: true
         }
     });
-    
+
     const parentData = await parent;
     const previousImages = parentData.openGraph?.images || [];
     return {
@@ -40,7 +38,8 @@ export async function generateMetadata(
     }
 }
 
-export default async function Page({ params }: Props) {
+export default async function Page(props: Props) {
+    const params = await props.params;
     const photoResult = await fetchPhotos({ filterObj: { id: params.slug }, cursor: undefined, limit: 1, fieldset: 'full' });
     let photo;
     if (photoResult.results.length === 0) {
