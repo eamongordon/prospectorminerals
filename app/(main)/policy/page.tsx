@@ -25,7 +25,7 @@ const Page = async (
                 <h1 className="text-center font-semibold text-3xl sm:text-4xl">Site Policy</h1>
             </section>
             <div className='flex flex-row'>
-                <main className="w-full sm:w-3/4 sm:grow pr-8 pl-8 lg:pl-12 pb-8">
+                <main className="w-full sm:w-3/4 sm:flex-grow pr-8 pl-8 lg:pl-12 pb-8">
                     <section className='flex-col justify-center items-center pb-4 w-full max-w-screen-xl'>
                         <div>
                             <p>Thank you for reviewing our site policy. We seek to provide an understandable and transparent site policy and if there are any clarifications or inquries necessary, please <Link className="font-medium text-cyan-500" href="#contact">contact us</Link>.</p>

@@ -60,7 +60,7 @@ export default function Leaflet({
       <motion.div
         key="leaflet-backdrop"
         //adjust background to include header
-        className="fixed inset-0 z-40 bg-gray-100/10 backdrop-blur-sm"
+        className="fixed inset-0 z-40 bg-gray-100 bg-opacity-10 backdrop-blur"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}

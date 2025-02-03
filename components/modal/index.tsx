@@ -69,8 +69,8 @@ export default function Modal({
 
   const backdropClasses =
     modalType === "search"
-      ? "fixed inset-0 z-40 bg-gray-100/10 backdrop-blur-sm"
-      : "fixed inset-0 z-40 bg-black/50 bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-blur-[3px]";
+      ? "fixed inset-0 z-40 bg-gray-100 bg-opacity-10 backdrop-blur"
+      : "fixed inset-0 z-40 bg-black bg-opacity-50 bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-blur-[3px]";
 
   return (
     <AnimatePresence>
