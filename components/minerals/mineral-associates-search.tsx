@@ -175,7 +175,7 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: Min
                 }}
                 disabledKeys={minerals?.map((val) => val.name)}
                 classNames={{
-                    base: `${isMineralFocused ? "" : "hidden"} max-h-[150px] overflow-auto subpixel-antialiased outline-none box-border text-small bg-content1 shadow-md rounded-large w-full p-1`,
+                    base: `${isMineralFocused ? "" : "hidden"} max-h-[150px] overflow-auto subpixel-antialiased outline-hidden box-border text-small bg-content1 shadow-md rounded-large w-full p-1`,
                     list: initialLoad.current ? "" : "hidden"
                 }}
                 emptyContent={

@@ -86,7 +86,7 @@ export default function Uploader({
       <label
         htmlFor={`${name}-upload`}
         className={cn(
-          "group relative flex cursor-pointer flex-col items-center justify-center border border-gray-300 bg-white dark:bg-stone-800 shadow-sm transition-all hover:bg-gray-50",
+          "group relative flex cursor-pointer flex-col items-center justify-center border border-gray-300 bg-white dark:bg-stone-800 shadow-xs transition-all hover:bg-gray-50",
           aspectRatio,
           {
             "max-w-screen-md rounded-md": aspectRatio === "aspect-video",
@@ -161,14 +161,14 @@ export default function Uploader({
         {data[name] && aspectRatio === "aspect-square" && (
           <button
             type="button"
-            className="absolute z-10 top-1 right-1 p-[10px] bg-neutral-200 hover:bg-neutral-300 dark:bg-neutral-600 dark:hover:bg-neutral-700 rounded-full shadow-sm"
+            className="absolute z-10 top-1 right-1 p-[10px] bg-neutral-200 hover:bg-neutral-300 dark:bg-neutral-600 dark:hover:bg-neutral-700 rounded-full shadow-xs"
             onClick={removeImage}
           >
             <X size={20} />
           </button>
         )}
       </label>
-      <div className={cn("mt-1 flex shadow-sm", { "rounded-full": aspectRatio === "aspect-square", "rounded-md": aspectRatio === "aspect-video" })}>
+      <div className={cn("mt-1 flex shadow-xs", { "rounded-full": aspectRatio === "aspect-square", "rounded-md": aspectRatio === "aspect-video" })}>
         <input
           id={`${name}-upload`}
           ref={inputRef}

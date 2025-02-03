@@ -23,7 +23,7 @@ export default function Gallery({ data }: { data: GalleryItem[] }) {
                         width={750}
                         height={500}
                         alt={data[0]?.title || "Photo"}
-                        className={"group-hover:brightness-50 group-hover:blur-sm rounded-xl z-0 w-full h-full object-cover absolute"}
+                        className={"group-hover:brightness-50 group-hover:blur-xs rounded-xl z-0 w-full h-full object-cover absolute"}
                         src={data[0]?.image || "/Amazonite-106_horiz.jpeg"}
                         blurDataURL={data[0]?.blurDataURL}
                     />
@@ -40,7 +40,7 @@ export default function Gallery({ data }: { data: GalleryItem[] }) {
                         width={750}
                         height={500}
                         alt={data[0]?.title || "Photo"}
-                        className={"group-hover:brightness-50 group-hover:blur-sm rounded-xl z-0 w-full h-full object-cover absolute"}
+                        className={"group-hover:brightness-50 group-hover:blur-xs rounded-xl z-0 w-full h-full object-cover absolute"}
                         src={data[0]?.image || "/Amazonite-106_horiz.jpeg"}
                         blurDataURL={data[0]?.blurDataURL}
                         priority={true}
@@ -60,7 +60,7 @@ export default function Gallery({ data }: { data: GalleryItem[] }) {
                         width={625}
                         height={475}
                         alt={data[1]?.title || "Photo"}
-                        className={"group-hover:brightness-50 group-hover:blur-sm rounded-xl z-0 w-full h-full object-cover absolute"}
+                        className={"group-hover:brightness-50 group-hover:blur-xs rounded-xl z-0 w-full h-full object-cover absolute"}
                         src={data[1]?.image || "/Amazonite-106_horiz.jpeg"}
                         blurDataURL={data[1]?.blurDataURL}
                     />
@@ -77,7 +77,7 @@ export default function Gallery({ data }: { data: GalleryItem[] }) {
                         width={625}
                         height={475}
                         alt={data[1]?.title || "Photo"}
-                        className={"group-hover:brightness-50 group-hover:blur-sm rounded-xl z-0 w-full h-full object-cover absolute"}
+                        className={"group-hover:brightness-50 group-hover:blur-xs rounded-xl z-0 w-full h-full object-cover absolute"}
                         src={data[1]?.image || "/Amazonite-106_horiz.jpeg"}
                         blurDataURL={data[1]?.blurDataURL}
                     />
@@ -96,7 +96,7 @@ export default function Gallery({ data }: { data: GalleryItem[] }) {
                         width={400}
                         height={225}
                         alt={data[2]?.title || "Photo"}
-                        className={"group-hover:brightness-50 group-hover:blur-sm rounded-xl z-0 w-full h-full object-cover absolute"}
+                        className={"group-hover:brightness-50 group-hover:blur-xs rounded-xl z-0 w-full h-full object-cover absolute"}
                         src={data[2]?.image || "/Amazonite-106_horiz.jpeg"}
                         blurDataURL={data[2]?.blurDataURL}
                     />
@@ -114,7 +114,7 @@ export default function Gallery({ data }: { data: GalleryItem[] }) {
                         width={400}
                         height={225}
                         alt={data[2]?.title || "Photo"}
-                        className={"group-hover:brightness-50 group-hover:blur-sm rounded-xl z-0 w-full h-full object-cover absolute"}
+                        className={"group-hover:brightness-50 group-hover:blur-xs rounded-xl z-0 w-full h-full object-cover absolute"}
                         src={data[2]?.image || "/Amazonite-106_horiz.jpeg"}
                         blurDataURL={data[2]?.blurDataURL}
                     />

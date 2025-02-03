@@ -82,7 +82,7 @@ export default function Editor({ post }: { post: Post }) {
               ])
             });
           }}
-          className={"flex h-7 w-24 items-center justify-center space-x-2 rounded-lg border text-sm transition-all focus:outline-none"}
+          className={"flex h-7 w-24 items-center justify-center space-x-2 rounded-lg border text-sm transition-all focus:outline-hidden"}
           isLoading={isPendingPublishing}
         >
           {data.published ? "Unpublish" : "Publish"}
@@ -95,13 +95,13 @@ export default function Editor({ post }: { post: Post }) {
           defaultValue={post?.title || ""}
           autoFocus
           onChange={(e) => setData({ ...data, title: e.target.value })}
-          className="dark:placeholder-text-600 border-none px-0 text-3xl placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
+          className="dark:placeholder-text-600 border-none px-0 text-3xl placeholder:text-stone-400 focus:outline-hidden focus:ring-0 dark:bg-black dark:text-white"
         />
         <TextareaAutosize
           placeholder="Description"
           defaultValue={post?.description || ""}
           onChange={(e) => setData({ ...data, description: e.target.value })}
-          className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
+          className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-hidden focus:ring-0 dark:bg-black dark:text-white"
         />
       </div>
       <NovelEditor

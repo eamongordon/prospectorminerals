@@ -99,7 +99,7 @@ export default function InfiniteScrollPhotos({
                     height={300}
                     quality={50}
                     id={photo.id}
-                    className={`${hoverItem === photo.id ? "brightness-50 blur-sm" : ""} absolute rounded-lg w-full h-full object-cover`}
+                    className={`${hoverItem === photo.id ? "brightness-50 blur-xs" : ""} absolute rounded-lg w-full h-full object-cover`}
                     blurDataURL={photo.imageBlurhash || undefined}
                   />
                 )}
