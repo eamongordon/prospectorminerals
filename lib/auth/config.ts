@@ -72,7 +72,10 @@ export default {
             if (trigger === "update") {
                 const sessionKeyList = Object.keys(session);
                 sessionKeyList.forEach(async (key) => {
-                    token[key] = session[key];
+                    // forbid user from updating roles from client side
+                    if (key !== 'roles') {
+                        token[key] = session[key];
+                    }
                 });
             }
             return token;
