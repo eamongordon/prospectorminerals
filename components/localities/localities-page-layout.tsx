@@ -52,7 +52,7 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
     const searchParams = useSearchParams();
     const [searchQuery] = useDebounce(searchText, 500);
     
-    const [associatesVal, setAssociatesVal] = useState<any>(minerals);
+    const [associatesVal, setAssociatesVal] = useState<MineralListItem[] | undefined>(minerals);
 
     useEffect(() => {
         if (initialChemistryRender.current) {
