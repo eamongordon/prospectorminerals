@@ -66,7 +66,7 @@ export default function SortDropdown({ sort, sortOptions }: { sort?: string, sor
                 }
             >
                 {(sortOptions || defaultSortOptions).map((item) => (
-                    <SelectItem key={item.value} value={item.value}>
+                    <SelectItem key={item.value}>
                         {item.label}
                     </SelectItem>
                 ))}
