@@ -54,7 +54,7 @@ export default function DeleteForm({ type, name }: DeleteFormProps) {
     };
 
     return (
-        <form onSubmit={submitForm} className="rounded-lg border border-red-600 bg-white dark:bg-black">
+        <form onSubmit={submitForm} className="rounded-lg border border-red-600 bg-white dark:bg-black" id="delete-account">
             <div className="relative flex flex-col space-y-4 p-5 sm:p-10">
                 <h2 className="text-xl dark:text-white">Delete {type === "account" ? "Account" : "Post"}</h2>
                 <p className="text-sm text-stone-500 dark:text-stone-400">

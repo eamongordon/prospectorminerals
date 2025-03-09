@@ -32,7 +32,7 @@ const Page = async () => {
                         </div>
                         <div>
                             <h2 className="text-3xl font-medium scroll-mt-16" id="termsofuse">Terms of Use</h2>
-                            <p>Prospector Minerals is not liable for any damages incurred by the use of this site. When creating an account (signing up for a membership), we, Prospector Minerals, collect your email address, which may then be used for email updates or campaigns. If you would like to remove this information, please delete your account by visiting the <Link className="font-medium text-cyan-500" href="/account/settings#new-password">account settings page</Link>. Members, registered by submission of &quot;Sign Up&quot; forms, must adhere to the Prospector Minerals terms of use. Failure to comply with these terms or abuse of this website or platform may result in membership suspension or account deletion at our sole discretion.</p>
+                            <p>Prospector Minerals is not liable for any damages incurred by the use of this site. When creating an account (signing up for a membership), we, Prospector Minerals, collect your email address, which may then be used for email updates or campaigns. If you would like to remove this information, please delete your account by visiting the <Link className="font-medium text-cyan-500" href="/account/settings#delete-account">account settings page</Link>. Members, registered by submission of &quot;Sign Up&quot; forms, must adhere to the Prospector Minerals terms of use. Failure to comply with these terms or abuse of this website or platform may result in membership suspension or account deletion at our sole discretion.</p>
                         </div>
                         <div className="flex-col">
                             <h2 className="text-3xl font-medium scroll-mt-16" id="privacy">Privacy Policy</h2>
@@ -40,7 +40,7 @@ const Page = async () => {
                             <div className="flex-col space-y-6">
                                 <div>
                                     <h4 className="text-xl font-medium">Account</h4>
-                                    <p>When creating an account (&quot;signing up&quot; for a membership), we, Prospector Minerals, collect your email address, which may then be used for email updates or campaigns. If you would like to remove this information, please delete your account by visiting the <Link className="font-medium text-cyan-500" href="/account/settings#new-password">account settings page</Link>.</p>
+                                    <p>When creating an account (&quot;signing up&quot; for a membership), we, Prospector Minerals, collect your email address, which may then be used for email updates or campaigns. If you would like to remove this information, please delete your account by visiting the <Link className="font-medium text-cyan-500" href="/account/settings#delete-account">account settings page</Link>.</p>
                                 </div>
                                 <div>
                                     <h4 className="text-xl font-medium">Third-Party Login Services</h4>
