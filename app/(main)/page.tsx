@@ -4,7 +4,9 @@ import { getSession } from "@/lib/auth";
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Prospector Minerals | Comprehensive Mineralogy Resource',
+  title: {
+    absolute: 'Prospector Minerals | Comprehensive Mineralogy Resource'
+  },
   description: 'Minerals, Localities, Articles, Resources, and More. Prospector Minerals offers mineralogy-related photos, information, resources and articles.',
 }
 

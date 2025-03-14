@@ -5,7 +5,7 @@ import { fetchPosts } from '@/lib/actions';
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-    title: 'Articles | Prospector Minerals',
+    title: 'Articles',
     description: 'Detailed, comprehensive mineralogy articles covering Minerals, Localities, Chemical Properties, News, and More.',
     openGraph: {
         images: ['/Fluorite-164_horiz-Optimized.jpg'],

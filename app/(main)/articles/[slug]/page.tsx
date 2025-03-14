@@ -19,7 +19,7 @@ export async function generateMetadata(props: Props, parent: ResolvingMetadata):
   const parentData = await parent;
   const previousImages = parentData.openGraph?.images || [];
   return {
-    title: `${data?.title} | Prospector Minerals`,
+    title: data?.title,
     description: data?.description,
     openGraph: {
       ...parentData.openGraph,

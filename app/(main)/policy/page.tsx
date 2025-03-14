@@ -3,7 +3,7 @@ import { Link } from "@heroui/react"
 import AnchorMenu from '@/components/policy/anchor-menu'
 
 export const metadata: Metadata = {
-    title: 'Policy | Prospector Minerals',
+    title: 'Policy',
     description: 'View our site policy, including copyright policy, terms of use, cookie policy, and privacy policy.',
     openGraph: {
         images: ['/Fluorite-164_horiz-Optimized.jpg'],

@@ -6,7 +6,10 @@ import { Analytics } from "@vercel/analytics/react";
 import { baseUrl } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: 'Prospector Minerals',
+  title: {
+    template: '%s | Prospector Minerals',
+    default: 'Prospector Minerals'
+  },
   description: 'A comprehensive mineralogy resource.',
   metadataBase: new URL(baseUrl),
   openGraph: {

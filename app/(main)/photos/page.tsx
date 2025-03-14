@@ -5,7 +5,7 @@ import { fetchPhotos } from '@/lib/actions';
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Photos | Prospector Minerals',
+  title: 'Photos',
   description: 'A searchable photo gallery of minerals from worldwide localities.',
   openGraph: {
     images: ['/Fluorite-164_horiz-Optimized.jpg'],

@@ -6,7 +6,7 @@ import type { CrystalSystemsList, LustersList, MineralClassesList, MineralListIt
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-    title: 'Minerals | Prospector Minerals',
+    title: 'Minerals',
     description: 'A mineralogy database featuring comprehensive information, photos, localities, uses, and properties of mineral species.',
     openGraph: {
         images: ['/Fluorite-164_horiz-Optimized.jpg'],

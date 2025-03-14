@@ -7,7 +7,7 @@ import type { Metadata } from 'next'
 import { convertLocalityDataToComponentType } from "@/types/prisma";
 
 export const metadata: Metadata = {
-    title: 'Localities | Prospector Minerals',
+    title: 'Localities',
     description: 'Explore worldwide localities and mines at Prospector Minerals. Find information, photos, and minerals of mineral, rock, and geology localities and mines.',
     openGraph: {
         images: ['/Fluorite-164_horiz-Optimized.jpg'],
