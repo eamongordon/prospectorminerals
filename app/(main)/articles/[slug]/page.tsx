@@ -31,7 +31,7 @@ export async function generateMetadata(props: Props, parent: ResolvingMetadata):
 
 export default async function SitePostPage(
   props: {
-    params: Promise<{ domain: string; slug: string }>;
+    params: Promise<{ slug: string }>;
   }
 ) {
   const params = await props.params;

@@ -9,8 +9,7 @@ export default function MDX({ source }: { source: string }) {
   };
 
   return (
-    <article
-      className={`prose-md prose prose-stone m-auto w-11/12 dark:prose-invert sm:prose-lg sm:w-3/4`}>
+    <article className="prose-md prose prose-stone m-auto w-11/12 dark:prose-invert sm:prose-lg sm:w-3/4">
       <MDXRemote source={source} components={components} />
     </article>
   );
