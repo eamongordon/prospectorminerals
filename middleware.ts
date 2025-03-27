@@ -15,12 +15,12 @@ export default auth((req) => {
       return new Response('Forbidden', { status: 403 });
     }
 
-    if ((pathname.startsWith('/login') || pathname.startsWith('/signup')) && !searchParams.has('callbackUrl')) {
+    if (pathname === '/login' || pathname === '/signup' && !searchParams.has('callbackUrl')) {
       const redirectUrl = req.url.replace(pathname, '/account/settings');
       return Response.redirect(redirectUrl);
     }
   } else {
-    if (!pathname.startsWith('/login')) {
+    if (pathname !== '/login' && pathname !== '/signup') {
       const redirectUrl = req.url.replace(pathname, `/login?callbackUrl=${encodeURIComponent(req.url)}`);
       return Response.redirect(redirectUrl);
     }
