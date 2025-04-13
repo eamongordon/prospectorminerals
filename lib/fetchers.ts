@@ -122,7 +122,6 @@ const mineralFullSelectObj = {
 } as Prisma.MineralSelect;
 
 export async function fetchMinerals<T extends string>({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: MineralsFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: T }): Promise<FetchMineralsReturn<T>> {
-  // Function body remains the same until the selectObj definition
   let queryArray: Prisma.MineralWhereInput[] = [];
   function pushArrayField(propertyArray: string[], property: string) {
     let filterArray: { [property: string]: { contains: string, mode?: string } }[] = [];
