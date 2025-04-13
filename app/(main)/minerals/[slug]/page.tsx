@@ -1,7 +1,7 @@
 import Gallery from "@/components/minerals/mineral-gallery";
 import MineralTags from "@/components/minerals/mineral-tags";
 import PropertyTable from "@/components/property-table";
-import { fetchMinerals } from "@/lib/actions";
+import { fetchMinerals } from "@/lib/fetchers";
 import { MineralListItem } from "@/types/types";
 import { notFound } from "next/navigation";
 import type { Metadata, ResolvingMetadata } from 'next'

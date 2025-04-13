@@ -1,7 +1,7 @@
 import InfiniteScrollMinerals from '@/components/minerals/infinite-scroll-minerals';
 import MineralPageLayout from "@/components/minerals/mineral-page-layout";
 import SortDropdown from "@/components/sort-dropdown";
-import { fetchMinerals } from '@/lib/actions';
+import { fetchMinerals } from '@/lib/fetchers';
 import type { CrystalSystemsList, LustersList, MineralClassesList, MineralListItem } from '@/types/types';
 import type { Metadata } from 'next'
 

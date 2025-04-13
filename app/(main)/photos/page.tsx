@@ -1,7 +1,7 @@
 import InfiniteScrollPhotos from '@/components/photos/infinite-scroll-photos';
 import PhotosLayout from "@/components/photos/photos-layout";
 import SortDropdown from '@/components/sort-dropdown';
-import { fetchPhotos } from '@/lib/actions';
+import { fetchPhotos } from '@/lib/fetchers';
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {

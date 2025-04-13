@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
-import { fetchPosts } from '@/lib/actions';
 import { Spinner, Button } from "@heroui/react";
 import type { ArticlesFilterObj, PhotosSortObj } from '@/types/types';
 import type { Post } from '@prisma/client';
@@ -33,12 +32,28 @@ export default function InfiniteScrollArticles({
 
   async function loadMoreArticles() {
     if (page) {
-      const articlesQuery = await fetchPosts({ filterObj: filterObj, cursor: page, limit: limit ? limit : 10, ...(sort ? { sortObj: sort } : {}), fieldset: "display" });
-      setPage(articlesQuery.next ? articlesQuery.next : undefined)
-      setArticles((prev: Post[] | undefined) => [
-        ...(prev?.length ? prev : []),
-        ...articlesQuery.results
-      ]);
+      console.log("loadMoreArticles");
+      const queryParams = new URLSearchParams({
+        ...(filterObj ? { filter: JSON.stringify(filterObj) } : {}),
+        cursor: page.toString(),
+        limit: (limit || 10).toString(),
+        ...(sort ? { sortBy: sort.property, sort: sort.order } : {}),
+        fieldset: "display",
+      });
+
+      const response = await fetch(`/api/articles?${queryParams.toString()}`);
+      if (response.ok) {
+        const articlesQuery = await response.json();
+        setPage(articlesQuery.next ? articlesQuery.next : undefined);
+        setArticles((prev: Post[] | undefined) => [
+          ...(prev?.length ? prev : []),
+          ...articlesQuery.results,
+        ]);
+      } else {
+        console.error("Failed to fetch articles from API");
+      }
+    } else {
+      console.log("noMoreArticles");
     }
   }
 

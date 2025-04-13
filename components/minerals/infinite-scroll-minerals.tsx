@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
-import { fetchMinerals } from '@/lib/actions';
 import MineralCard from './mineral-card';
 import { Spinner, Button } from "@heroui/react";
 import type { MineralsFilterObj, PhotosSortObj, MineralListItem } from '@/types/types';
@@ -29,29 +28,33 @@ export default function InfiniteScrollPhotos({
   const [ref, inView] = useInView();
   const [noPhotosLoading, setNoPhotosLoading] = useState(false);
 
-  // TODO: Wrap loadMorePhotos in useCallback
   async function loadMorePhotos() {
     if (page) {
-      console.log("loadMoreMin")
-      const photosQuery = await fetchMinerals({ 
-        ...(filterObj ? { 
-          filterObj: filterObj.associates ? { 
-            ...filterObj, 
-            associates: filterObj.associates.map((associateObj) => (associateObj as MineralListItem).name) 
-          } : filterObj 
-        } : {}), 
-        cursor: page, 
-        limit: limit || 10, 
-        ...(sort ? { sortObj: sort } : {}), 
-        fieldset: "display" 
+      console.log("loadMoreMin");
+      const queryParams = new URLSearchParams({
+        ...(filterObj ? { filter: JSON.stringify(filterObj.associates ? { 
+          ...filterObj, 
+          associates: filterObj.associates.map((associateObj) => (associateObj as MineralListItem).name) 
+        } : filterObj) } : {}),
+        cursor: page.toString(),
+        limit: (limit || 10).toString(),
+        ...(sort ? { sortBy: sort.property, sort: sort.order } : {}),
+        fieldset: "display",
       });
-      setPage(photosQuery.next ? photosQuery.next : undefined)
-      setPhotos((prev: MineralDisplayFieldset[] | undefined) => [
-        ...(prev?.length ? prev : []),
-        ...photosQuery.results
-      ]);
+
+      const response = await fetch(`/api/minerals?${queryParams.toString()}`);
+      if (response.ok) {
+        const photosQuery = await response.json();
+        setPage(photosQuery.next ? photosQuery.next : undefined);
+        setPhotos((prev: MineralDisplayFieldset[] | undefined) => [
+          ...(prev?.length ? prev : []),
+          ...photosQuery.results,
+        ]);
+      } else {
+        console.error("Failed to fetch minerals from API");
+      }
     } else {
-      console.log("noMoreMin")
+      console.log("noMoreMin");
     }
   }
 

@@ -1,5 +1,5 @@
 import LocalitiesPageLayout from "@/components/localities/localities-page-layout"
-import { fetchLocalities } from '@/lib/actions';
+import { fetchLocalities } from '@/lib/fetchers';
 import type { MineralListItem } from '@/types/types';
 import ClearFilters from '@/components/localities/clear-filters';
 import LocalityMap from '@/components/localities/locality-map';

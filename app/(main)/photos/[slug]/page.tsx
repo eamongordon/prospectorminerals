@@ -1,6 +1,6 @@
 import MineralTags from '@/components/minerals/mineral-tags';
 import PhotoSlugImage from '@/components/photos/photo-slug-image';
-import { fetchPhotos } from '@/lib/actions';
+import { fetchPhotos } from '@/lib/fetchers';
 import { MineralListItem } from '@/types/types';
 import { notFound } from 'next/navigation';
 import type { Metadata, ResolvingMetadata } from 'next'

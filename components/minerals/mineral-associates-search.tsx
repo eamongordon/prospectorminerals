@@ -1,6 +1,6 @@
 "use client";
 
-import { fetchMinerals } from '@/lib/actions';
+import { fetchMinerals } from '@/lib/fetchers';
 import type { MineralDisplayFieldset } from "@/types/prisma";
 import { MineralListItem } from '@/types/types';
 import { Chip, Listbox, ListboxItem, Spinner, Textarea } from "@heroui/react";
@@ -50,25 +50,33 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: Min
     }, [inView])
 
     async function loadMorePhotos(isInput?: boolean) {
-        console.log("loadMoreAssociatesResults")
-        if (isInput) {
-            const photosQuery = await fetchMinerals({ filterObj: { name: chemistryQuery }, cursor: undefined, limit: 5 });
-            if (!initialLoad.current) {
-                initialLoad.current = true;
-            }
-            setPage(photosQuery.next ? photosQuery.next : undefined)
-            setMineralList(photosQuery.results);
-        } else {
-            if (page) {
-                const photosQuery = await fetchMinerals({ filterObj: { name: chemistryInput }, cursor: page, limit: 5 });
+        console.log("loadMoreAssociatesResults");
+        const queryParams = new URLSearchParams({
+            ...(isInput ? { filter: JSON.stringify({ name: chemistryQuery }) } : { filter: JSON.stringify({ name: chemistryInput }) }),
+            ...(page ? { cursor: page.toString() } : {}),
+            limit: "5",
+        });
+
+        const response = await fetch(`/api/minerals?${queryParams.toString()}`);
+        if (response.ok) {
+            const photosQuery = await response.json();
+            if (isInput) {
+                if (!initialLoad.current) {
+                    initialLoad.current = true;
+                }
+                setPage(photosQuery.next ? photosQuery.next : undefined);
+                setMineralList(photosQuery.results);
+            } else {
                 if (photosQuery.results?.length) {
-                    setPage(photosQuery.next ? photosQuery.next : undefined)
+                    setPage(photosQuery.next ? photosQuery.next : undefined);
                     setMineralList((prev: any[] | undefined) => [
                         ...(prev?.length ? prev : []),
-                        ...photosQuery.results
+                        ...photosQuery.results,
                     ]);
-                };
+                }
             }
+        } else {
+            console.error("Failed to fetch minerals from API");
         }
     }
 
