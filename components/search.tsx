@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { fetchMinerals, fetchLocalities, fetchPhotos, fetchPosts } from "@/lib/actions";
+import { fetchMinerals, fetchLocalities, fetchPhotos, fetchPosts } from "@/lib/fetchers";
 import BlurImage from "./blur-image";
 import { Button, Chip, Input, Skeleton } from "@heroui/react";
 import { Search as MagnifyingGlassIcon } from "lucide-react";

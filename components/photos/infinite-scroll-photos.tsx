@@ -1,6 +1,6 @@
 'use client'
 
-import { fetchPhotos } from '@/lib/actions'
+import { fetchPhotos } from '@/lib/fetchers'
 import { PhotoDisplayFieldset } from '@/types/prisma'
 import type { PhotosSortObj } from '@/types/types'
 import { Button, Skeleton, Spinner } from "@heroui/react"

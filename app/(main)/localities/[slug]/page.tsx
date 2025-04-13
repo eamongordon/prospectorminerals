@@ -2,7 +2,7 @@ import LocalityMap from '@/components/localities/locality-map';
 import PropertyTable from '@/components/property-table';
 import Gallery from '@/components/minerals/mineral-gallery';
 import MineralTags from '@/components/minerals/mineral-tags';
-import { fetchLocalities } from '@/lib/actions';
+import { fetchLocalities } from '@/lib/fetchers';
 import { Skeleton } from "@heroui/react";
 import { notFound } from "next/navigation";
 import { Suspense } from 'react';

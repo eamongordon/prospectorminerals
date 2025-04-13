@@ -1,7 +1,7 @@
 import InfiniteScrollArticles from '@/components/articles/infinite-scroll-articles';
 import ArticlesLayout from "@/components/articles/articles-layout";
 import SortDropdown from '@/components/sort-dropdown';
-import { fetchPosts } from '@/lib/actions';
+import { fetchPosts } from '@/lib/fetchers';
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
