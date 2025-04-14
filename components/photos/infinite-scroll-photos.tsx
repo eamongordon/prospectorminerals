@@ -55,16 +55,27 @@ export default function InfiniteScrollPhotos({
     router.push(`${pathname}${queryParam}`);
   }, [text])
 
-  // TODO: Wrap loadMorePhotos in useCallback
   async function loadMorePhotos() {
     if (page) {
-      const photosQuery = await fetchPhotos({ filterObj: { name: search }, cursor: page, limit: 10, ...(sort ? { sortObj: sort } : {}), });
-      setPage(photosQuery.next ? photosQuery.next : undefined)
-      setPhotos((prev: PhotoDisplayFieldset[] | undefined) => [
-        ...(prev?.length ? prev : []),
-        ...photosQuery.results
-      ]);
-    } else {
+      const queryParams = new URLSearchParams({
+        ...(search ? { filter: JSON.stringify({ name: search }) } : {}),
+        cursor: page.toString(),
+        limit: "10",
+        ...(sort ? { sortBy: sort.property, sort: sort.order } : {}),
+        fieldset: "display",
+      });
+
+      const response = await fetch(`/api/photos?${queryParams.toString()}`);
+      if (response.ok) {
+        const photosQuery = await response.json();
+        setPage(photosQuery.next ? photosQuery.next : undefined);
+        setPhotos((prev: PhotoDisplayFieldset[] | undefined) => [
+          ...(prev?.length ? prev : []),
+          ...photosQuery.results,
+        ]);
+      } else {
+        console.error("Failed to fetch photos from API");
+      }
     }
   }
 
