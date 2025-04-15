@@ -1,15 +1,20 @@
 import { fetchPhotos } from "@/lib/fetchers";
 
-type FetchPhotosParams = Parameters<typeof fetchPhotos>[0];
-
 export async function GET(req: Request) {
     try {
         const url = new URL(req.url);
         const { searchParams } = url;
 
-        const object = JSON.parse(searchParams.get("object")!) as FetchPhotosParams;
-        const photos = await fetchPhotos(object);
-        
+        const filterObj = searchParams.get("filter") ? JSON.parse(searchParams.get("filter")!) : undefined;
+        const cursor = searchParams.get("cursor") ? parseInt(searchParams.get("cursor")!) : undefined;
+        const limit = searchParams.get("limit") ? parseInt(searchParams.get("limit")!) : undefined;
+        const sortObj = searchParams.get("sortBy") && searchParams.get("sort")
+            ? { property: searchParams.get("sortBy")!, order: searchParams.get("sort")! as "asc" | "desc" }
+            : undefined;
+        const fieldset = searchParams.get("fieldset") || "display";
+
+        const photos = await fetchPhotos({ filterObj, cursor, limit, sortObj, fieldset });
+
         return Response.json(photos);
     } catch (error) {
         console.error("Error fetching photos:", error);
