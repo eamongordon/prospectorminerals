@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { fetchMinerals, fetchLocalities, fetchPhotos, fetchPosts } from "@/lib/fetchers";
+import type { fetchMinerals, fetchLocalities, fetchPhotos, fetchPosts } from "@/lib/fetchers";
 import BlurImage from "./blur-image";
 import { Button, Chip, Input, Skeleton } from "@heroui/react";
 import { Search as MagnifyingGlassIcon } from "lucide-react";
@@ -12,6 +12,11 @@ import { useRouter } from "next/navigation";
 type SearchResult = {
     type: "Mineral" | "Photo" | "Locality" | "Article", name: string, image?: string, imageBlurhash?: string, slug: string
 }
+
+type FetchMineralsReturn = Awaited<ReturnType<typeof fetchMinerals>>;
+type FetchLocalitiesReturn = Awaited<ReturnType<typeof fetchLocalities>>;
+type FetchPhotosReturn = Awaited<ReturnType<typeof fetchPhotos>>;
+type FetchPostsReturn = Awaited<ReturnType<typeof fetchPosts>>;
 
 export default function Search({ isHero }: { isHero?: boolean }) {
     const [searchTerm, setSearchTerm] = useState("");
@@ -59,31 +64,61 @@ export default function Search({ isHero }: { isHero?: boolean }) {
 
     const MAX_RESULTS_LENGTH = 3;
 
-    function fetchResults() {
+    async function fetchResults() {
         console.log("fetching results");
         initialLoad.current = true;
-        Promise.all([
-            fetchMinerals({ filterObj: { name: query }, limit: 3, fieldset: 'display' }),
-            fetchLocalities({ filterObj: { name: query }, limit: 3, fieldset: 'display' }),
-            fetchPosts({ filterObj: { title: query }, limit: 3, fieldset: 'display' }),
-            fetchPhotos({ filterObj: { name: query }, limit: 3, fieldset: 'display' })
-        ]).then(([minerals, localities, posts, photos]) => {
-            let allResults: SearchResult[] = [];
-            minerals.results.forEach((mineral) => {
-                allResults.push({ slug: mineral.slug, type: "Mineral", name: mineral.name, image: mineral.photos.length > 0 && mineral.photos[0].photo.image ? mineral.photos[0].photo.image : undefined, imageBlurhash: mineral.photos.length > 0 && mineral.photos[0].photo.imageBlurhash ? mineral.photos[0].photo.imageBlurhash : undefined });
+
+        const [minerals, localities, posts, photos]: [
+            FetchMineralsReturn,
+            FetchLocalitiesReturn,
+            FetchPostsReturn,
+            FetchPhotosReturn
+        ] = await Promise.all([
+            fetch(`/api/minerals?filter=${JSON.stringify({ name: query })}&limit=3&fieldset=display`).then(res => res.json()),
+            fetch(`/api/localities?filter=${JSON.stringify({ name: query })}&limit=3&fieldset=display`).then(res => res.json()),
+            fetch(`/api/articles?filter=${JSON.stringify({ title: query })}&limit=3&fieldset=display`).then(res => res.json()),
+            fetch(`/api/photos?filter=${JSON.stringify({ name: query })}&limit=3&fieldset=display`).then(res => res.json())
+        ]);
+
+        let allResults: SearchResult[] = [];
+        minerals.results.forEach((mineral) => {
+            allResults.push({ 
+                slug: mineral.slug, 
+                type: "Mineral", 
+                name: mineral.name, 
+                image: mineral.photos.length > 0 && mineral.photos[0].photo.image ? mineral.photos[0].photo.image : undefined, 
+                imageBlurhash: mineral.photos.length > 0 && mineral.photos[0].photo.imageBlurhash ? mineral.photos[0].photo.imageBlurhash : undefined 
             });
-            localities.results.forEach((locality) => {
-                allResults.push({ slug: locality.slug, type: "Locality", name: locality.name, image: locality.photos.length > 0 && locality.photos[0].image ? locality.photos[0].image : undefined, imageBlurhash: locality.photos.length > 0 && locality.photos[0].imageBlurhash ? locality.photos[0].imageBlurhash : undefined });
-            });
-            posts.results.forEach((post) => {
-                allResults.push({ slug: post.slug, type: "Article", name: post.title!, image: post.image!, imageBlurhash: post.imageBlurhash! });
-            });
-            photos.results.forEach((photo) => {
-                allResults.push({ slug: photo.id, type: "Photo", name: photo.name!, image: photo.image!, imageBlurhash: photo.imageBlurhash! });
-            });
-            allResults.length = allResults.length > MAX_RESULTS_LENGTH ? MAX_RESULTS_LENGTH : allResults.length;
-            setResults(allResults);
         });
+        localities.results.forEach((locality) => {
+            allResults.push({ 
+                slug: locality.slug, 
+                type: "Locality", 
+                name: locality.name, 
+                image: locality.photos.length > 0 && locality.photos[0].image ? locality.photos[0].image : undefined, 
+                imageBlurhash: locality.photos.length > 0 && locality.photos[0].imageBlurhash ? locality.photos[0].imageBlurhash : undefined 
+            });
+        });
+        posts.results.forEach((post) => {
+            allResults.push({ 
+                slug: post.slug, 
+                type: "Article", 
+                name: post.title!, 
+                image: post.image!, 
+                imageBlurhash: post.imageBlurhash! 
+            });
+        });
+        photos.results.forEach((photo) => {
+            allResults.push({ 
+                slug: photo.id, 
+                type: "Photo", 
+                name: photo.name!, 
+                image: photo.image!, 
+                imageBlurhash: photo.imageBlurhash! 
+            });
+        });
+        allResults.length = allResults.length > MAX_RESULTS_LENGTH ? MAX_RESULTS_LENGTH : allResults.length;
+        setResults(allResults);
     }
 
     useEffect(() => {
