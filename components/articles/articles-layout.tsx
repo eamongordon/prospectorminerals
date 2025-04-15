@@ -16,7 +16,7 @@ export default function ArticlesLayout({
     sortDropdownElem: React.ReactElement,
     filterObj: ArticlesFilterObj,
 }) {
-    const { title, id } = Object(filterObj);
+    const { title } = Object(filterObj);
 
     const router = useRouter();
     const pathname = usePathname();
@@ -72,12 +72,6 @@ export default function ArticlesLayout({
                             label="Search"
                             size="sm"
                             radius='md'
-                            /*
-                            Increase height of input
-                            classNames={{
-                                inputWrapper: "h-12"
-                            }}
-                            */
                             isClearable={text ? true : false}
                             onValueChange={setText}
                             endContent={
