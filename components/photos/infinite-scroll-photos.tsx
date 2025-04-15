@@ -1,6 +1,6 @@
 'use client'
 
-import { fetchPhotos } from '@/lib/fetchers'
+import { type fetchPhotos } from '@/lib/fetchers'
 import { PhotoDisplayFieldset } from '@/types/prisma'
 import type { PhotosSortObj } from '@/types/types'
 import { Button, Skeleton, Spinner } from "@heroui/react"
@@ -9,6 +9,8 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 import BlurImage from '../blur-image'
+
+type FetchPhotosParams = Parameters<typeof fetchPhotos>[0];
 
 export default function InfiniteScrollPhotos({
   search,
@@ -57,12 +59,16 @@ export default function InfiniteScrollPhotos({
 
   async function loadMorePhotos() {
     if (page) {
-      const queryParams = new URLSearchParams({
-        ...(search ? { filter: JSON.stringify({ name: search }) } : {}),
-        cursor: page.toString(),
-        limit: "10",
-        ...(sort ? { sortBy: sort.property, sort: sort.order } : {}),
+      const object = {
+        filterObj: search ? { name: search } : undefined,
+        cursor: page,
+        limit: 10,
+        ...(sort ? { sortObj: sort } : {}),
         fieldset: "display",
+      } as FetchPhotosParams;
+
+      const queryParams = new URLSearchParams({
+        object: JSON.stringify(object),
       });
 
       const response = await fetch(`/api/photos?${queryParams.toString()}`);
