@@ -470,11 +470,11 @@ export default function MineralPageLayout({
                 </div>
             </div>
             <div className="flex-col items-center w-full">
-                <div className='mb-4 md:mb-5 flex-row md:flex md:gap-x-10 items-center justify-between'>
-                    <div className={`sm:basis-2/3 justify-start pt-1 sm:pb-2 sm:pt-0`}>
+                <div className='mb-4 md:mb-5 flex flex-col-reverse md:flex-row md:gap-x-10 items-center justify-between'>
+                    <div className="w-full md:w-2/3 flex gap-1 flex-wrap pt-1 sm:pb-2 sm:pt-2 md:pt-0">
                         {
                             (searchText) ? (
-                                <Chip className="mr-1 mb-3 sm:mb-1" onClose={() => setSearchText(undefined)} variant="bordered">
+                                <Chip onClose={() => setSearchText(undefined)} variant="bordered">
                                     {`Name: ${searchText}`}
                                 </Chip>
                             ) : (
@@ -483,7 +483,7 @@ export default function MineralPageLayout({
                         }
                         {
                             (hardnessVal) ? (
-                                <Chip className="mr-1 mb-3 sm:mb-1" onClose={() => setHardnessVal(undefined)} variant="bordered">
+                                <Chip onClose={() => setHardnessVal(undefined)} variant="bordered">
                                     {`Hardness: ${hardnessVal[0].toString()} - ${hardnessVal[1].toString()}`}
                                 </Chip>
                             ) : (
@@ -492,7 +492,7 @@ export default function MineralPageLayout({
                         }
                         {
                             (lustersVal) ? (
-                                <Chip className="mr-1 mb-3 sm:mb-1" onClose={() => setLustersVal(undefined)} variant="bordered">
+                                <Chip onClose={() => setLustersVal(undefined)} variant="bordered">
                                     {`Lusters: ${lustersVal.length}`}
                                 </Chip>
                             ) : (
@@ -501,7 +501,7 @@ export default function MineralPageLayout({
                         }
                         {
                             (mineralClassVal) ? (
-                                <Chip className="mr-1 mb-3 sm:mb-1" onClose={() => setMineralClassVal(undefined)} variant="bordered">
+                                <Chip onClose={() => setMineralClassVal(undefined)} variant="bordered">
                                     {`Mineral Classes: ${mineralClassVal.length}`}
                                 </Chip>
                             ) : (
@@ -510,7 +510,7 @@ export default function MineralPageLayout({
                         }
                         {
                             (crystalSystemsVal) ? (
-                                <Chip className="mr-1 mb-3 sm:mb-1" onClose={() => setCrystalSystemsVal(undefined)} variant="bordered">
+                                <Chip onClose={() => setCrystalSystemsVal(undefined)} variant="bordered">
                                     {`Crystal Systems: ${crystalSystemsVal.length}`}
                                 </Chip>
                             ) : (
@@ -519,7 +519,7 @@ export default function MineralPageLayout({
                         }
                         {
                             (chemistryVal) ? (
-                                <Chip className="mr-1 mb-3 sm:mb-1" onClose={() => setChemistryVal(undefined)} variant="bordered">
+                                <Chip onClose={() => setChemistryVal(undefined)} variant="bordered">
                                     {`Chemistry: ${chemistryVal.join(', ')}`}
                                 </Chip>
                             ) : (
@@ -528,7 +528,7 @@ export default function MineralPageLayout({
                         }
                         {
                             (associatesVal) ? (
-                                <Chip className="mr-1 mb-3 sm:mb-1" onClose={() => setAssociatesVal(undefined)} variant="bordered">
+                                <Chip onClose={() => setAssociatesVal(undefined)} variant="bordered">
                                     {`Associates: ${associatesVal.map((associate: MineralListItem) => associate.name).join(", ")}`}
                                 </Chip>
                             ) : (
@@ -538,7 +538,7 @@ export default function MineralPageLayout({
                         {
                             (imageSearch || ids) ? (
                                 <Chip
-                                    classNames={{ avatar: "rounded-full", base: "mr-1 mb-3 sm:mb-1 min-w-auto", content: "truncate" }}
+                                    classNames={{ avatar: "rounded-full", base: "min-w-auto", content: "truncate" }}
                                     avatar={imageSearch ?
                                         (<img
                                             className="object-cover h-full w-full"
@@ -565,7 +565,7 @@ export default function MineralPageLayout({
                             )
                         }
                     </div>
-                    <div className="pb-2 sm:basis-1/2 md:basis-1/3">
+                    <div className="pb-2 w-full md:w-1/3">
                         {sortDropdownElem}
                     </div>
                 </div>
