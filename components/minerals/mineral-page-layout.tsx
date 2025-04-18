@@ -264,7 +264,7 @@ export default function MineralPageLayout({
                         onValueChange={setSearchText}
                         endContent={
                             <>
-                                <div className='h-full flex items-center mr-3'>
+                                <div className='h-full flex items-center mr-2.5'>
                                     <Button as="label" preventFocusOnPress htmlFor="image-upload" variant="light" isIconOnly isLoading={isImageSearchLoading} className="cursor-pointer">
                                         <Camera className="text-gray-500 hover:text-gray-700 dark:text-gray-300 hover:dark:text-gray-100" />
                                     </Button>
