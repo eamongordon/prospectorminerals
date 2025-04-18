@@ -46,7 +46,7 @@ export default function MineralPageLayout({
     const [imageSearch, setImageSearch] = useState<File | null>(null);
     const [isImageSearchLoading, setIsImageSearchLoading] = useState(false);
 
-    const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+    const current = new URLSearchParams(Array.from(searchParams.entries()));
     const ids = current.get("ids");
 
     useEffect(() => {
@@ -54,7 +54,7 @@ export default function MineralPageLayout({
             initialRender.current = false
             return
         }
-        const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+        const current = new URLSearchParams(Array.from(searchParams.entries()));
         if (!searchQuery) {
             current.delete("name");
         } else {
@@ -74,7 +74,7 @@ export default function MineralPageLayout({
         }
         //TO REMOVE
         console.log("afterInitialRenderLusters");
-        const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+        const current = new URLSearchParams(Array.from(searchParams.entries()));
         if (!lustersVal) {
             current.delete("lusters");
         } else {
@@ -91,7 +91,7 @@ export default function MineralPageLayout({
             return
         }
         //TO REMOVE
-        const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+        const current = new URLSearchParams(Array.from(searchParams.entries()));
         if (!mineralClassVal) {
             current.delete("mineralClasses");
         } else {
@@ -107,8 +107,7 @@ export default function MineralPageLayout({
             initialCrystalSystemsRender.current = false
             return
         }
-        //TO REMOVE
-        const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+        const current = new URLSearchParams(Array.from(searchParams.entries()));
         if (!crystalSystemsVal) {
             current.delete("crystalSystems");
         } else {
@@ -124,7 +123,7 @@ export default function MineralPageLayout({
             initialChemistryRender.current = false
             return
         }
-        const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+        const current = new URLSearchParams(Array.from(searchParams.entries()));
         if (!chemistryVal) {
             current.delete("chemistry");
         } else {
@@ -140,7 +139,7 @@ export default function MineralPageLayout({
             initialHardnessRender.current = false
             return
         }
-        const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+        const current = new URLSearchParams(Array.from(searchParams.entries()));
         if (!hardnessVal) {
             current.delete("minHardness");
             current.delete("maxHardness");
@@ -158,7 +157,7 @@ export default function MineralPageLayout({
             initialAssociatesRender.current = false
             return
         }
-        const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+        const current = new URLSearchParams(Array.from(searchParams.entries()));
         if (!associatesVal) {
             current.delete("associates");
         } else {
@@ -173,7 +172,7 @@ export default function MineralPageLayout({
         if (event.target.files && event.target.files[0]) {
             const file = event.target.files[0];
             setImageSearch(file);
-            setIsImageSearchLoading(true); // Set loading state to true
+            setIsImageSearchLoading(true);
             try {
                 // Load the model
                 const model = await tf.loadLayersModel('/model/model.json');
@@ -194,7 +193,7 @@ export default function MineralPageLayout({
                 }
 
                 const tensor = tf.browser
-                    .fromPixels(imageData) // Adjust dimensions as needed
+                    .fromPixels(imageData) // Adjust dimensions
                     .resizeBilinear([128, 128])
                     .div(255.0)
                     .expandDims(0);
@@ -211,7 +210,7 @@ export default function MineralPageLayout({
                     .filter((label) => label !== null);
 
                 if (mineralIds.length > 0) {
-                    const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+                    const current = new URLSearchParams(Array.from(searchParams.entries()));
                     current.set("ids", JSON.stringify(mineralIds)); // Update the ids filter
                     const search = current.toString();
                     const queryParam = search ? `?${search}` : "";
@@ -256,15 +255,10 @@ export default function MineralPageLayout({
                         radius="md"
                         value={searchText || ""}
                         isClearable={searchText ? true : false}
-                        /*
-                        classNames={{
-                            inputWrapper: ["h-12 sm:h-auto"]
-                        }}
-                        */
                         onValueChange={setSearchText}
                         endContent={
                             <>
-                                <div className='h-full flex items-center mr-2.5'>
+                                <div className='h-full flex items-center mr-3'>
                                     <Button as="label" preventFocusOnPress htmlFor="image-upload" variant="light" isIconOnly isLoading={isImageSearchLoading} className="cursor-pointer">
                                         <Camera className="text-gray-500 hover:text-gray-700 dark:text-gray-300 hover:dark:text-gray-100" />
                                     </Button>
@@ -390,17 +384,10 @@ export default function MineralPageLayout({
                                     description='Type an element or formula and hit "enter"'
                                     placeholder={!chemistryVal ? 'Try "Cu" or "SiO2"' : ""}
                                     value={chemistryInput || ""}
-                                    /*
-                                    classNames={{
-                                        innerWrapper: ['overflow-x-auto', 'overflow-y-clip'],
-                                        input: ['min-w-8']
-                                    }}
-                                */
                                     classNames={{
                                         innerWrapper: ['flex flex-wrap'],
                                         //display chips below input, add margin
                                         input: [chemistryVal ? 'mb-1' : null]
-                                        //input: [`${`w-[${chemistryInput.length * 10}px]`} flex-none`]
                                     }}
                                     minRows={1}
                                     size="md"
@@ -438,7 +425,6 @@ export default function MineralPageLayout({
                                         }, 200)
 
                                     }}
-                                    //display chips below input, change to endContent
                                     endContent={
                                         (chemistryVal?.map((val: string, index) => {
                                             return (
@@ -547,9 +533,7 @@ export default function MineralPageLayout({
                                         />) : undefined
                                     }
                                     onClose={() => {
-                                        setImageSearch(null); // Clear the image search state
-
-                                        // Remove the "ids" query parameter from the URL
+                                        setImageSearch(null);
                                         const current = new URLSearchParams(Array.from(searchParams.entries()));
                                         current.delete("ids");
                                         const search = current.toString();
