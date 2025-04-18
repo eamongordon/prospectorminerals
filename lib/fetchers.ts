@@ -131,9 +131,12 @@ export async function fetchMinerals<T extends string>({ filterObj, cursor, limit
     })
     queryArray.push({ OR: filterArray })
   }
-  const { name, minHardness, maxHardness, lusters, streaks, mineralClasses, crystalSystems, chemistry, associates, id, slug } = Object(filterObj);
+  const { name, minHardness, maxHardness, lusters, streaks, mineralClasses, crystalSystems, chemistry, associates, id, ids, slug } = Object(filterObj);
   if (id) {
     queryArray.push({ id: { equals: id } });
+  }
+  if (ids && ids.length > 0) {
+    queryArray.push({ id: { in: ids } });
   }
   if (slug) {
     queryArray.push({ slug: { equals: slug } });

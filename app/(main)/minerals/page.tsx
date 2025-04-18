@@ -22,28 +22,53 @@ const Page = async (
 ) => {
     const searchParams = await props.searchParams;
     const name =
-        typeof searchParams.name === 'string' ? searchParams.name : undefined
+        typeof searchParams.name === 'string' ? searchParams.name : undefined;
     const lusters =
-        typeof searchParams.lusters === 'string' ? searchParams.lusters.split(',') as LustersList[] : undefined
+        typeof searchParams.lusters === 'string' ? searchParams.lusters.split(',') as LustersList[] : undefined;
     const mineralClasses =
-        typeof searchParams.mineralClasses === 'string' ? searchParams.mineralClasses?.split(',') as MineralClassesList[] : undefined
+        typeof searchParams.mineralClasses === 'string' ? searchParams.mineralClasses?.split(',') as MineralClassesList[] : undefined;
     const crystalSystems =
-        typeof searchParams.crystalSystems === 'string' ? searchParams.crystalSystems?.split(',') as CrystalSystemsList[] : undefined
+        typeof searchParams.crystalSystems === 'string' ? searchParams.crystalSystems?.split(',') as CrystalSystemsList[] : undefined;
     const chemistry =
-        typeof searchParams.chemistry === 'string' ? searchParams.chemistry : undefined
+        typeof searchParams.chemistry === 'string' ? searchParams.chemistry : undefined;
     const minHardness =
-        typeof searchParams.minHardness === 'string' ? Number(searchParams.minHardness) : undefined
+        typeof searchParams.minHardness === 'string' ? Number(searchParams.minHardness) : undefined;
     const maxHardness =
-        typeof searchParams.maxHardness === 'string' ? Number(searchParams.maxHardness) : undefined
+        typeof searchParams.maxHardness === 'string' ? Number(searchParams.maxHardness) : undefined;
     const associates =
-        typeof searchParams.associates === 'string' ? JSON.parse(searchParams.associates) : undefined
+        typeof searchParams.associates === 'string' ? JSON.parse(searchParams.associates) : undefined;
+    const ids =
+        typeof searchParams.ids === 'string' ? JSON.parse(searchParams.ids) : undefined; // Parse the ids field
     const property =
-        typeof searchParams.property === 'string' ? searchParams.property : undefined
+        typeof searchParams.property === 'string' ? searchParams.property : undefined;
     const order =
-        typeof searchParams.order === 'string' ? searchParams.order : undefined
-    const filterObj = { name: name, lusters: lusters, mineralClasses: mineralClasses, crystalSystems: crystalSystems, chemistry: chemistry?.split(','), minHardness: minHardness, maxHardness: maxHardness, associates: associates }
-    const photosQuery = await fetchMinerals({ filterObj: filterObj.associates ? { ...filterObj, associates: filterObj.associates?.map((associateObj: MineralListItem) => associateObj.name) } : filterObj, cursor: undefined, limit: 10, ...(property && order ? { sortObj: { property: property, order: order } } : {}), fieldset: 'display' });
+        typeof searchParams.order === 'string' ? searchParams.order : undefined;
+
+    const filterObj = { 
+        name: name, 
+        lusters: lusters, 
+        mineralClasses: mineralClasses, 
+        crystalSystems: crystalSystems, 
+        chemistry: chemistry?.split(','), 
+        minHardness: minHardness, 
+        maxHardness: maxHardness, 
+        associates: associates, 
+        ids: ids // Add ids to the filter object
+    };
+
+    const photosQuery = await fetchMinerals({ 
+        filterObj: filterObj.associates ? { 
+            ...filterObj, 
+            associates: filterObj.associates?.map((associateObj: MineralListItem) => associateObj.name) 
+        } : filterObj, 
+        cursor: undefined, 
+        limit: 10, 
+        ...(property && order ? { sortObj: { property: property, order: order } } : {}), 
+        fieldset: 'display' 
+    });
+
     const serializedKey = JSON.stringify({ filterObj, property, order });
+
     return (
         <main>
             <div className="flex justify-center items-center">
@@ -69,7 +94,7 @@ const Page = async (
                 </section>
             </div>
         </main >
-    )
-}
+    );
+};
 
 export default Page;

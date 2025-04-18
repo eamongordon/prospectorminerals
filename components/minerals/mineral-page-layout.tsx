@@ -3,10 +3,11 @@
 import { useState, useEffect, useRef, Children, cloneElement } from "react";
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { Accordion, AccordionItem, Slider, CheckboxGroup, Checkbox, Input, Chip, Button, Textarea } from "@heroui/react";
-import { Search as MagnifyingGlassIcon, Filter } from 'lucide-react';
+import { Search as MagnifyingGlassIcon, Filter, Camera } from 'lucide-react';
 import { useDebounce } from 'use-debounce';
 import type { MineralsFilterObj, MineralListItem } from "@/types/types";
 import { MineralAssociatesSearch } from "./mineral-associates-search";
+import * as tf from '@tensorflow/tfjs';
 
 export default function MineralPageLayout({
     infiniteScrollElem,
@@ -42,7 +43,11 @@ export default function MineralPageLayout({
     const [associatesVal, setAssociatesVal] = useState<MineralListItem[] | undefined>(associates);
     const [isLusterInvalid, setIsLusterInvalid] = useState(false);
     const [searchQuery] = useDebounce(searchText, 500);
-    
+    const [imageSearch, setImageSearch] = useState<File | null>(null);
+
+    const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+    const ids = current.get("ids");
+
     useEffect(() => {
         if (initialRender.current) {
             initialRender.current = false
@@ -147,24 +152,6 @@ export default function MineralPageLayout({
         router.push(`${pathname}${queryParam}`);
     }, [hardnessVal]);
 
-    const clearFilters = () => {
-        setSearchText(undefined);
-        setLustersVal(undefined);
-        setHardnessVal(undefined);
-        setMineralClassVal(undefined);
-        setCrystalSystemsVal(undefined);
-        setChemistryVal(undefined);
-        setAssociatesVal(undefined);
-    }
-
-    const renderChildren = () => {
-        return Children.map(infiniteScrollElem, (child) => {
-            return cloneElement(child as React.ReactElement<any>, {
-                clearFilters: () => clearFilters()
-            });
-        });
-    };
-
     useEffect(() => {
         if (initialAssociatesRender.current) {
             initialAssociatesRender.current = false
@@ -180,6 +167,76 @@ export default function MineralPageLayout({
         const queryParam = search ? `?${search}` : "";
         router.push(`${pathname}${queryParam}`);
     }, [associatesVal]);
+
+    const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files[0]) {
+            const file = event.target.files[0];
+            setImageSearch(file);
+
+            // Load the model
+            const model = await tf.loadLayersModel('/model/model.json');
+
+            // Decode the image using a canvas
+            const imageBitmap = await createImageBitmap(file);
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 128; // Resize to match the model's input shape
+            canvas.height = 128;
+            ctx?.drawImage(imageBitmap, 0, 0, 128, 128);
+
+            // Extract pixel data
+            const imageData = ctx?.getImageData(0, 0, 128, 128);
+
+            if (!imageData) {
+                throw new Error("Failed to extract image data");
+            }
+
+            const tensor = tf.browser
+                .fromPixels(imageData) // Adjust dimensions as needed
+                .resizeBilinear([128, 128])
+                .div(255.0)
+                .expandDims(0);
+
+            // Make predictions
+            const predictionTensor = model.predict(tensor) as tf.Tensor;
+            const predictionArray = (await predictionTensor.array()) as number[][];
+
+            const uniqueMinerals = await fetch('/model/data/minerals.json').then((res) => res.json());
+
+            // Map predictions to IDs
+            const mineralIds = predictionArray[0]
+                .map((value, index) => (value > 0.2 ? uniqueMinerals[index].id : null))
+                .filter((label) => label !== null);
+
+            if (mineralIds.length > 0) {
+                const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+                current.set("ids", JSON.stringify(mineralIds)); // Update the ids filter
+                const search = current.toString();
+                const queryParam = search ? `?${search}` : "";
+                router.push(`${pathname}${queryParam}`);
+            }
+
+        }
+    };
+
+    const clearFilters = () => {
+        setSearchText(undefined);
+        setLustersVal(undefined);
+        setHardnessVal(undefined);
+        setMineralClassVal(undefined);
+        setCrystalSystemsVal(undefined);
+        setChemistryVal(undefined);
+        setAssociatesVal(undefined);
+        setImageSearch(null);
+    }
+
+    const renderChildren = () => {
+        return Children.map(infiniteScrollElem, (child) => {
+            return cloneElement(child as React.ReactElement<any>, {
+                clearFilters: () => clearFilters()
+            });
+        });
+    };
 
     return (
         <>
@@ -199,7 +256,25 @@ export default function MineralPageLayout({
                         */
                         onValueChange={setSearchText}
                         endContent={
-                            !searchText && (<><div className='h-full flex items-center'><MagnifyingGlassIcon /></div></>)
+                            <>
+                                <div className='h-full flex items-center mr-3'>
+                                    <label htmlFor="image-upload" className="cursor-pointer">
+                                        <Camera className="text-gray-500 hover:text-gray-700 dark:text-gray-300 hover:dark:text-gray-100" />
+                                    </label>
+                                    <input
+                                        id="image-upload"
+                                        type="file"
+                                        accept="image/*"
+                                        className="hidden"
+                                        onChange={handleImageUpload}
+                                    />
+                                </div>
+                                {!searchText && (
+                                    <div className='h-full flex items-center'>
+                                        <MagnifyingGlassIcon />
+                                    </div>
+                                )}
+                            </>
                         }
                     />
                     <Button
@@ -451,7 +526,35 @@ export default function MineralPageLayout({
                                 </Chip>
                             ) : (
                                 <></>
+                            )
+                        }
+                        {
+                            (imageSearch || ids) ? (
+                                <Chip
+                                    classNames={{ avatar: "rounded-full", base: "mr-1 mb-3 sm:mb-1" }}
+                                    avatar={imageSearch ?
+                                        (<img
+                                            className="object-cover h-full w-full"
+                                            src={URL.createObjectURL(imageSearch)}
+                                            alt="Uploaded Image"
+                                        />) : undefined
+                                    }
+                                    onClose={() => {
+                                        setImageSearch(null); // Clear the image search state
 
+                                        // Remove the "ids" query parameter from the URL
+                                        const current = new URLSearchParams(Array.from(searchParams.entries()));
+                                        current.delete("ids");
+                                        const search = current.toString();
+                                        const queryParam = search ? `?${search}` : "";
+                                        router.push(`${pathname}${queryParam}`);
+                                    }}
+                                    variant="bordered"
+                                >
+                                    {imageSearch ? `Image: ${imageSearch.name}` : "Image"}
+                                </Chip>
+                            ) : (
+                                <></>
                             )
                         }
                     </div>
