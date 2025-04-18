@@ -44,6 +44,7 @@ export default function MineralPageLayout({
     const [isLusterInvalid, setIsLusterInvalid] = useState(false);
     const [searchQuery] = useDebounce(searchText, 500);
     const [imageSearch, setImageSearch] = useState<File | null>(null);
+    const [isImageSearchLoading, setIsImageSearchLoading] = useState(false);
 
     const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
     const ids = current.get("ids");
@@ -172,48 +173,54 @@ export default function MineralPageLayout({
         if (event.target.files && event.target.files[0]) {
             const file = event.target.files[0];
             setImageSearch(file);
+            setIsImageSearchLoading(true); // Set loading state to true
+            try {
+                // Load the model
+                const model = await tf.loadLayersModel('/model/model.json');
 
-            // Load the model
-            const model = await tf.loadLayersModel('/model/model.json');
+                // Decode the image using a canvas
+                const imageBitmap = await createImageBitmap(file);
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = 128; // Resize to match the model's input shape
+                canvas.height = 128;
+                ctx?.drawImage(imageBitmap, 0, 0, 128, 128);
 
-            // Decode the image using a canvas
-            const imageBitmap = await createImageBitmap(file);
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = 128; // Resize to match the model's input shape
-            canvas.height = 128;
-            ctx?.drawImage(imageBitmap, 0, 0, 128, 128);
+                // Extract pixel data
+                const imageData = ctx?.getImageData(0, 0, 128, 128);
 
-            // Extract pixel data
-            const imageData = ctx?.getImageData(0, 0, 128, 128);
+                if (!imageData) {
+                    throw new Error("Failed to extract image data");
+                }
 
-            if (!imageData) {
-                throw new Error("Failed to extract image data");
-            }
+                const tensor = tf.browser
+                    .fromPixels(imageData) // Adjust dimensions as needed
+                    .resizeBilinear([128, 128])
+                    .div(255.0)
+                    .expandDims(0);
 
-            const tensor = tf.browser
-                .fromPixels(imageData) // Adjust dimensions as needed
-                .resizeBilinear([128, 128])
-                .div(255.0)
-                .expandDims(0);
+                // Make predictions
+                const predictionTensor = model.predict(tensor) as tf.Tensor;
+                const predictionArray = (await predictionTensor.array()) as number[][];
 
-            // Make predictions
-            const predictionTensor = model.predict(tensor) as tf.Tensor;
-            const predictionArray = (await predictionTensor.array()) as number[][];
+                const uniqueMinerals = await fetch('/model/data/minerals.json').then((res) => res.json());
 
-            const uniqueMinerals = await fetch('/model/data/minerals.json').then((res) => res.json());
+                // Map predictions to IDs
+                const mineralIds = predictionArray[0]
+                    .map((value, index) => (value > 0.2 ? uniqueMinerals[index].id : null))
+                    .filter((label) => label !== null);
 
-            // Map predictions to IDs
-            const mineralIds = predictionArray[0]
-                .map((value, index) => (value > 0.2 ? uniqueMinerals[index].id : null))
-                .filter((label) => label !== null);
-
-            if (mineralIds.length > 0) {
-                const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
-                current.set("ids", JSON.stringify(mineralIds)); // Update the ids filter
-                const search = current.toString();
-                const queryParam = search ? `?${search}` : "";
-                router.push(`${pathname}${queryParam}`);
+                if (mineralIds.length > 0) {
+                    const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+                    current.set("ids", JSON.stringify(mineralIds)); // Update the ids filter
+                    const search = current.toString();
+                    const queryParam = search ? `?${search}` : "";
+                    router.push(`${pathname}${queryParam}`);
+                }
+            } catch (error) {
+                console.error("Error during image search:", error);
+            } finally {
+                setIsImageSearchLoading(false); // Set loading state to false
             }
 
         }
@@ -258,9 +265,9 @@ export default function MineralPageLayout({
                         endContent={
                             <>
                                 <div className='h-full flex items-center mr-3'>
-                                    <label htmlFor="image-upload" className="cursor-pointer">
+                                    <Button as="label" preventFocusOnPress htmlFor="image-upload" variant="light" isIconOnly isLoading={isImageSearchLoading} className="cursor-pointer">
                                         <Camera className="text-gray-500 hover:text-gray-700 dark:text-gray-300 hover:dark:text-gray-100" />
-                                    </label>
+                                    </Button>
                                     <input
                                         id="image-upload"
                                         type="file"
