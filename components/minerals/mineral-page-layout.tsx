@@ -205,7 +205,7 @@ export default function MineralPageLayout({
 
             // Map predictions to IDs
             const mineralIds = predictionArray[0]
-                .map((value, index) => (value > 0.1 ? uniqueMinerals[index].id : null))
+                .map((value, index) => (value > 0.2 ? uniqueMinerals[index].id : null))
                 .filter((label) => label !== null);
 
             if (mineralIds.length > 0) {
