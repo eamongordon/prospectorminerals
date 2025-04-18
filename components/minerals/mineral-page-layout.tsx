@@ -45,61 +45,6 @@ export default function MineralPageLayout({
     const [searchQuery] = useDebounce(searchText, 500);
     const [imageSearch, setImageSearch] = useState<File | null>(null);
 
-    const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files && event.target.files[0]) {
-            const file = event.target.files[0];
-            setImageSearch(file);
-
-            // Load the model
-            const model = await tf.loadLayersModel('/model/model.json');
-
-            // Decode the image using a canvas
-            const imageBitmap = await createImageBitmap(file);
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = 128; // Resize to match the model's input shape
-            canvas.height = 128;
-            ctx?.drawImage(imageBitmap, 0, 0, 128, 128);
-
-            // Extract pixel data
-            const imageData = ctx?.getImageData(0, 0, 128, 128);
-
-            if (!imageData) {
-                throw new Error("Failed to extract image data");
-            }
-
-            const tensor = tf.browser
-                .fromPixels(imageData) // Adjust dimensions as needed
-                .resizeBilinear([128, 128])
-                .div(255.0)
-                .expandDims(0);
-
-            // Make predictions
-            const predictionTensor = model.predict(tensor) as tf.Tensor;
-            const predictionArray = (await predictionTensor.array()) as number[][];
-            // Map predictions to labels
-            const uniqueMinerals = await fetch('/model/data/minerals.json').then((res) => res.json());
-
-            console.log("uniqueMinerals", uniqueMinerals);
-            console.log("predictionArray", predictionArray);
-
-            const mineralIds = predictionArray[0]
-                .map((value, index) => (value > 0.1 ? uniqueMinerals[index].id : null))
-                .filter((label) => label !== null);
-
-            console.log("mineralIds", mineralIds);
-
-            if (mineralIds.length > 0) {
-                const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
-                current.set("ids", JSON.stringify(mineralIds)); // Update the ids filter
-                const search = current.toString();
-                const queryParam = search ? `?${search}` : "";
-                router.push(`${pathname}${queryParam}`);
-            }
-
-        }
-    };
-
     const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
     const ids = current.get("ids");
 
@@ -207,6 +152,73 @@ export default function MineralPageLayout({
         router.push(`${pathname}${queryParam}`);
     }, [hardnessVal]);
 
+    useEffect(() => {
+        if (initialAssociatesRender.current) {
+            initialAssociatesRender.current = false
+            return
+        }
+        const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+        if (!associatesVal) {
+            current.delete("associates");
+        } else {
+            current.set("associates", JSON.stringify(associatesVal));
+        }
+        const search = current.toString();
+        const queryParam = search ? `?${search}` : "";
+        router.push(`${pathname}${queryParam}`);
+    }, [associatesVal]);
+
+    const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files[0]) {
+            const file = event.target.files[0];
+            setImageSearch(file);
+
+            // Load the model
+            const model = await tf.loadLayersModel('/model/model.json');
+
+            // Decode the image using a canvas
+            const imageBitmap = await createImageBitmap(file);
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 128; // Resize to match the model's input shape
+            canvas.height = 128;
+            ctx?.drawImage(imageBitmap, 0, 0, 128, 128);
+
+            // Extract pixel data
+            const imageData = ctx?.getImageData(0, 0, 128, 128);
+
+            if (!imageData) {
+                throw new Error("Failed to extract image data");
+            }
+
+            const tensor = tf.browser
+                .fromPixels(imageData) // Adjust dimensions as needed
+                .resizeBilinear([128, 128])
+                .div(255.0)
+                .expandDims(0);
+
+            // Make predictions
+            const predictionTensor = model.predict(tensor) as tf.Tensor;
+            const predictionArray = (await predictionTensor.array()) as number[][];
+
+            const uniqueMinerals = await fetch('/model/data/minerals.json').then((res) => res.json());
+
+            // Map predictions to IDs
+            const mineralIds = predictionArray[0]
+                .map((value, index) => (value > 0.1 ? uniqueMinerals[index].id : null))
+                .filter((label) => label !== null);
+
+            if (mineralIds.length > 0) {
+                const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+                current.set("ids", JSON.stringify(mineralIds)); // Update the ids filter
+                const search = current.toString();
+                const queryParam = search ? `?${search}` : "";
+                router.push(`${pathname}${queryParam}`);
+            }
+
+        }
+    };
+
     const clearFilters = () => {
         setSearchText(undefined);
         setLustersVal(undefined);
@@ -225,22 +237,6 @@ export default function MineralPageLayout({
             });
         });
     };
-
-    useEffect(() => {
-        if (initialAssociatesRender.current) {
-            initialAssociatesRender.current = false
-            return
-        }
-        const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
-        if (!associatesVal) {
-            current.delete("associates");
-        } else {
-            current.set("associates", JSON.stringify(associatesVal));
-        }
-        const search = current.toString();
-        const queryParam = search ? `?${search}` : "";
-        router.push(`${pathname}${queryParam}`);
-    }, [associatesVal]);
 
     return (
         <>
