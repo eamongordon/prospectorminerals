@@ -48,7 +48,7 @@ export default function MineralPageLayout({
     const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
             const file = event.target.files[0];
-            setImageSearch(file); // Update state to display the uploaded image
+            setImageSearch(file);
 
             // Load the model
             const model = await tf.loadLayersModel('/model/model.json');
@@ -88,7 +88,7 @@ export default function MineralPageLayout({
                 .filter((label) => label !== null);
 
             console.log("mineralIds", mineralIds);
-            
+
             if (mineralIds.length > 0) {
                 const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
                 current.set("ids", JSON.stringify(mineralIds)); // Update the ids filter
