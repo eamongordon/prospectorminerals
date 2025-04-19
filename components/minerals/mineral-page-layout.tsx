@@ -9,6 +9,17 @@ import type { MineralsFilterObj, MineralListItem } from "@/types/types";
 import { MineralAssociatesSearch } from "./mineral-associates-search";
 import * as tf from '@tensorflow/tfjs';
 
+interface FiltersState {
+    name?: string;
+    lusters?: string[];
+    hardness?: [number, number];
+    mineralClasses?: string[];
+    crystalSystems?: string[];
+    chemistry?: string[];
+    associates?: MineralListItem[];
+    ids?: string[];
+}
+
 export default function MineralPageLayout({
     infiniteScrollElem,
     sortDropdownElem,
@@ -24,167 +35,104 @@ export default function MineralPageLayout({
     const searchParams = useSearchParams();
     const [isMobileFiltersOpen, setIsisMobileFiltersOpen] = useState(false);
 
-    const initialRender = useRef(true);
-    const initialLusterRender = useRef(true);
-    const initialMineralClassRender = useRef(true);
-    const initialCrystalSystemsRender = useRef(true);
-    const initialHardnessRender = useRef(true);
-    const initialChemistryRender = useRef(true);
-    const initialAssociatesRender = useRef(true);
-    const initialIdsRender = useRef(true);
+    const initialRenderFilters = useRef(true);
+    const initialRenderSearchQuery = useRef(true);
+
     const [searchText, setSearchText] = useState(name);
-    const [lustersVal, setLustersVal] = useState<string[] | undefined>(lusters);
-    const [hardnessVal, setHardnessVal] = useState<number[] | undefined>((minHardness != null && maxHardness != null) ? [minHardness, maxHardness] : undefined);
-    const [mineralClassVal, setMineralClassVal] = useState<string[] | undefined>(mineralClasses);
-    const [crystalSystemsVal, setCrystalSystemsVal] = useState<string[] | undefined>(crystalSystems);
-    const [isMineralClassInvalid, setIsMineralClassInvalid] = useState(false);
-    const [isCrystalSystemsInvalid, setIsCrystalSystemsInvalid] = useState(false);
-    const [chemistryVal, setChemistryVal] = useState<string[] | undefined>(chemistry);
-    const [chemistryInput, setChemistryInput] = useState("");
-    const [associatesVal, setAssociatesVal] = useState<MineralListItem[] | undefined>(associates);
-    const [isLusterInvalid, setIsLusterInvalid] = useState(false);
-    const [searchQuery] = useDebounce(searchText, 500);
+    const [filters, setFilters] = useState<FiltersState>({
+        name: name,
+        lusters: lusters,
+        hardness: (minHardness != null && maxHardness != null) ? [minHardness, maxHardness] : undefined,
+        mineralClasses: mineralClasses,
+        crystalSystems: crystalSystems,
+        chemistry: chemistry,
+        associates: associates,
+        ids: ids,
+    });
+
     const [imageSearch, setImageSearch] = useState<File | null>(null);
+    const [searchQuery] = useDebounce(searchText, 500);
     const [isImageSearchLoading, setIsImageSearchLoading] = useState(false);
-    const [idsVal, setIdsVal] = useState<string[] | undefined>(ids);
 
     useEffect(() => {
-        if (initialRender.current) {
-            initialRender.current = false
-            return
+        if (initialRenderSearchQuery.current) {
+            initialRenderSearchQuery.current = false;
+            return;
         }
-        const current = new URLSearchParams(Array.from(searchParams.entries()));
-        if (!searchQuery) {
-            current.delete("name");
-        } else {
-            current.set("name", searchQuery);
+        if (searchQuery !== filters.name) {
+            updateFilter("name", searchQuery);
         }
-        const search = current.toString();
-        const queryParam = search ? `?${search}` : "";
-        router.push(`${pathname}${queryParam}`);
     }, [searchQuery]);
 
+    const updateFilter = (key: string, value: any) => {
+        setFilters((prev) => ({ ...prev, [key]: value }));
+    };
+
     useEffect(() => {
-        if (initialLusterRender.current) {
-            //TO REMOVE
-            console.log("initialRenderLusters");
-            initialLusterRender.current = false
-            return
+        if (initialRenderFilters.current) {
+            initialRenderFilters.current = false;
+            return;
         }
-        //TO REMOVE
-        console.log("afterInitialRenderLusters");
+
         const current = new URLSearchParams(Array.from(searchParams.entries()));
-        if (!lustersVal) {
+
+        if (!searchText) {
+            current.delete("name");
+        } else {
+            current.set("name", searchText);
+        }
+
+        if (!filters.lusters) {
             current.delete("lusters");
         } else {
-            current.set("lusters", lustersVal.join(','));
+            current.set("lusters", filters.lusters.join(','));
         }
-        const search = current.toString();
-        const queryParam = search ? `?${search}` : "";
-        router.push(`${pathname}${queryParam}`);
-    }, [lustersVal]);
 
-    useEffect(() => {
-        if (initialMineralClassRender.current) {
-            initialMineralClassRender.current = false
-            return
-        }
-        //TO REMOVE
-        const current = new URLSearchParams(Array.from(searchParams.entries()));
-        if (!mineralClassVal) {
+        if (!filters.mineralClasses) {
             current.delete("mineralClasses");
         } else {
-            current.set("mineralClasses", mineralClassVal.join(','));
+            current.set("mineralClasses", filters.mineralClasses.join(','));
         }
-        const search = current.toString();
-        const queryParam = search ? `?${search}` : "";
-        router.push(`${pathname}${queryParam}`);
-    }, [mineralClassVal]);
 
-    useEffect(() => {
-        if (initialCrystalSystemsRender.current) {
-            initialCrystalSystemsRender.current = false
-            return
-        }
-        const current = new URLSearchParams(Array.from(searchParams.entries()));
-        if (!crystalSystemsVal) {
+        if (!filters.crystalSystems) {
             current.delete("crystalSystems");
         } else {
-            current.set("crystalSystems", crystalSystemsVal.join(','));
+            current.set("crystalSystems", filters.crystalSystems.join(','));
         }
-        const search = current.toString();
-        const queryParam = search ? `?${search}` : "";
-        router.push(`${pathname}${queryParam}`);
-    }, [crystalSystemsVal]);
 
-    useEffect(() => {
-        if (initialChemistryRender.current) {
-            initialChemistryRender.current = false
-            return
-        }
-        const current = new URLSearchParams(Array.from(searchParams.entries()));
-        if (!chemistryVal) {
+        if (!filters.chemistry) {
             current.delete("chemistry");
         } else {
-            current.set("chemistry", chemistryVal.join(','));
+            current.set("chemistry", filters.chemistry.join(','));
         }
-        const search = current.toString();
-        const queryParam = search ? `?${search}` : "";
-        router.push(`${pathname}${queryParam}`);
-    }, [chemistryVal]);
 
-    useEffect(() => {
-        if (initialHardnessRender.current) {
-            initialHardnessRender.current = false
-            return
-        }
-        const current = new URLSearchParams(Array.from(searchParams.entries()));
-        if (!hardnessVal) {
+        if (!filters.hardness) {
             current.delete("minHardness");
             current.delete("maxHardness");
         } else {
-            current.set("minHardness", hardnessVal[0].toString());
-            current.set("maxHardness", hardnessVal[1].toString());
+            current.set("minHardness", filters.hardness[0].toString());
+            current.set("maxHardness", filters.hardness[1].toString());
         }
-        const search = current.toString();
-        const queryParam = search ? `?${search}` : "";
-        router.push(`${pathname}${queryParam}`);
-    }, [hardnessVal]);
 
-    useEffect(() => {
-        if (initialAssociatesRender.current) {
-            initialAssociatesRender.current = false
-            return
-        }
-        const current = new URLSearchParams(Array.from(searchParams.entries()));
-        if (!associatesVal) {
+        if (!filters.associates) {
             current.delete("associates");
         } else {
-            current.set("associates", JSON.stringify(associatesVal));
+            current.set("associates", JSON.stringify(filters.associates));
         }
-        const search = current.toString();
-        const queryParam = search ? `?${search}` : "";
-        router.push(`${pathname}${queryParam}`);
-    }, [associatesVal]);
 
-    useEffect(() => {
-        if (initialIdsRender.current) {
-            initialIdsRender.current = false
-            return
-        }
-        const current = new URLSearchParams(Array.from(searchParams.entries()));
-        if (!idsVal) {
+        if (!filters.ids) {
             current.delete("ids");
             if (imageSearch) {
                 setImageSearch(null);
             }
         } else {
-            current.set("ids", JSON.stringify(idsVal));
+            current.set("ids", JSON.stringify(filters.ids));
         }
+
         const search = current.toString();
         const queryParam = search ? `?${search}` : "";
         router.push(`${pathname}${queryParam}`);
-    }, [idsVal]);
+    }, [filters]);
 
     const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
@@ -192,18 +140,14 @@ export default function MineralPageLayout({
             setImageSearch(file);
             setIsImageSearchLoading(true);
             try {
-                // Load the model
                 const model = await tf.loadLayersModel('/model/model.json');
-
-                // Decode the image using a canvas
                 const imageBitmap = await createImageBitmap(file);
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
-                canvas.width = 128; // Resize to match the model's input shape
+                canvas.width = 128;
                 canvas.height = 128;
                 ctx?.drawImage(imageBitmap, 0, 0, 128, 128);
 
-                // Extract pixel data
                 const imageData = ctx?.getImageData(0, 0, 128, 128);
 
                 if (!imageData) {
@@ -211,48 +155,47 @@ export default function MineralPageLayout({
                 }
 
                 const tensor = tf.browser
-                    .fromPixels(imageData) // Adjust dimensions
+                    .fromPixels(imageData)
                     .resizeBilinear([128, 128])
                     .div(255.0)
                     .expandDims(0);
 
-                // Make predictions
                 const predictionTensor = model.predict(tensor) as tf.Tensor;
                 const predictionArray = (await predictionTensor.array()) as number[][];
 
                 const uniqueMinerals = await fetch('/model/data/minerals.json').then((res) => res.json());
 
-                // Map predictions to IDs
                 const mineralIds = predictionArray[0]
                     .map((value, index) => (value > 0.2 ? uniqueMinerals[index].id : null))
                     .filter((label) => label !== null);
 
                 if (mineralIds.length > 0) {
-                    setIdsVal(mineralIds);
+                    updateFilter("ids", mineralIds);
                 }
 
-                // Dispose of tensors and model
                 tf.dispose([tensor, predictionTensor]);
                 model.dispose();
             } catch (error) {
                 console.error("Error during image search:", error);
             } finally {
-                setIsImageSearchLoading(false); // Set loading state to false
+                setIsImageSearchLoading(false);
             }
-
         }
     };
 
     const clearFilters = () => {
         setSearchText(undefined);
-        setLustersVal(undefined);
-        setHardnessVal(undefined);
-        setMineralClassVal(undefined);
-        setCrystalSystemsVal(undefined);
-        setChemistryVal(undefined);
-        setAssociatesVal(undefined);
-        setIdsVal(undefined);
-    }
+        setFilters({
+            lusters: undefined,
+            hardness: undefined,
+            mineralClasses: undefined,
+            crystalSystems: undefined,
+            chemistry: undefined,
+            associates: undefined,
+            ids: undefined,
+            name: undefined
+        });
+    };
 
     const renderChildren = () => {
         return Children.map(infiniteScrollElem, (child) => {
@@ -312,7 +255,7 @@ export default function MineralPageLayout({
                     >{isMobileFiltersOpen ? "Close Filters" : "Open Filters"}</Button>
                     <div className={`${isMobileFiltersOpen ? "contents sm:contents" : "hidden sm:contents"}`}>
                         <Accordion>
-                            <AccordionItem key="hardness" aria-label="Hardness" title="Hardness" subtitle={hardnessVal ? `${hardnessVal[0].toString()} - ${hardnessVal[1].toString()}` : null}>
+                            <AccordionItem key="hardness" aria-label="Hardness" title="Hardness" subtitle={filters.hardness ? `${filters.hardness[0].toString()} - ${filters.hardness[1].toString()}` : null}>
                                 <Slider
                                     label="Mohs Hardness"
                                     step={1}
@@ -320,23 +263,19 @@ export default function MineralPageLayout({
                                     color="foreground"
                                     minValue={0}
                                     maxValue={10}
-                                    value={hardnessVal || [0, 10]}
+                                    value={filters.hardness || [0, 10]}
                                     className="w-full pr-3"
-                                    onChangeEnd={value => setHardnessVal(value as number[])}
+                                    onChangeEnd={value => updateFilter("hardness", value as number[])}
                                 />
                             </AccordionItem>
-                            <AccordionItem key="lusters" aria-label="Lusters" title="Lusters" subtitle={lustersVal ? `${lustersVal.length} Selected` : null}>
+                            <AccordionItem key="lusters" aria-label="Lusters" title="Lusters" subtitle={filters.lusters ? `${filters.lusters.length} Selected` : null}>
                                 <CheckboxGroup
                                     isRequired
                                     color="default"
                                     description="Select lusters to filter by"
-                                    isInvalid={isLusterInvalid}
                                     label="Select lusters"
-                                    value={lustersVal || ["Silky", "Vitreous", "Waxy", "Submetallic", "Metallic", "Resinous", "Pearly", "Greasy", "Dull", "Adamantine"]}
-                                    onValueChange={(value) => {
-                                        setIsLusterInvalid(value.length < 1);
-                                        setLustersVal(value);
-                                    }}
+                                    value={filters.lusters || ["Silky", "Vitreous", "Waxy", "Submetallic", "Metallic", "Resinous", "Pearly", "Greasy", "Dull", "Adamantine"]}
+                                    onValueChange={(value) => updateFilter("lusters", value)}
                                 >
                                     <Checkbox value="Silky">Silky</Checkbox>
                                     <Checkbox value="Vitreous">Vitreous</Checkbox>
@@ -350,18 +289,14 @@ export default function MineralPageLayout({
                                     <Checkbox value="Adamantine">Adamantine</Checkbox>
                                 </CheckboxGroup>
                             </AccordionItem>
-                            <AccordionItem key="mineralClasses" aria-label="Mineral Class" title="Mineral Class" subtitle={mineralClassVal ? `${mineralClassVal.length} Selected` : null}>
+                            <AccordionItem key="mineralClasses" aria-label="Mineral Class" title="Mineral Class" subtitle={filters.mineralClasses ? `${filters.mineralClasses.length} Selected` : null}>
                                 <CheckboxGroup
                                     isRequired
                                     color="default"
                                     description="Select mineral classes to filter by"
-                                    isInvalid={isMineralClassInvalid}
                                     label="Select mineral classes"
-                                    value={mineralClassVal || ["Silicates", "Phosphates", "Carbonates", "Sulfates", "Sulfides", "Halides", "Oxides", "Native Elements"]}
-                                    onValueChange={(value) => {
-                                        setIsMineralClassInvalid(value.length < 1);
-                                        setMineralClassVal(value);
-                                    }}
+                                    value={filters.mineralClasses || ["Silicates", "Phosphates", "Carbonates", "Sulfates", "Sulfides", "Halides", "Oxides", "Native Elements"]}
+                                    onValueChange={(value) => updateFilter("mineralClasses", value)}
                                 >
                                     <Checkbox value="Silicates">Silicates</Checkbox>
                                     <Checkbox value="Phosphates">Phosphates</Checkbox>
@@ -373,18 +308,14 @@ export default function MineralPageLayout({
                                     <Checkbox value="Native Elements">Native Elements</Checkbox>
                                 </CheckboxGroup>
                             </AccordionItem>
-                            <AccordionItem key="crystalSystems" aria-label="Crystal Systems" title="Crystal Systems" subtitle={crystalSystemsVal ? `${crystalSystemsVal.length} Selected` : null}>
+                            <AccordionItem key="crystalSystems" aria-label="Crystal Systems" title="Crystal Systems" subtitle={filters.crystalSystems ? `${filters.crystalSystems.length} Selected` : null}>
                                 <CheckboxGroup
                                     isRequired
                                     color="default"
                                     description="Select crystal systems to filter by"
-                                    isInvalid={isCrystalSystemsInvalid}
                                     label="Select crystal systems"
-                                    value={crystalSystemsVal || ["Tetragonal", "Isometric", "Hexagonal", "Triclinic", "Monoclinic", "Trigonal", "Orthorhombic"]}
-                                    onValueChange={(value) => {
-                                        setIsCrystalSystemsInvalid(value.length < 1);
-                                        setCrystalSystemsVal(value);
-                                    }}
+                                    value={filters.crystalSystems || ["Tetragonal", "Isometric", "Hexagonal", "Triclinic", "Monoclinic", "Trigonal", "Orthorhombic"]}
+                                    onValueChange={(value) => updateFilter("crystalSystems", value)}
                                 >
                                     <Checkbox value="Tetragonal">Tetragonal</Checkbox>
                                     <Checkbox value="Isometric">Isometric</Checkbox>
@@ -395,66 +326,28 @@ export default function MineralPageLayout({
                                     <Checkbox value="Orthorhombic">Orthorhombic</Checkbox>
                                 </CheckboxGroup>
                             </AccordionItem>
-                            <AccordionItem key="chemistry" aria-label="Chemistry" title="Chemistry" subtitle={chemistryVal ? `${chemistryVal.join(', ')}` : null}>
+                            <AccordionItem key="chemistry" aria-label="Chemistry" title="Chemistry" subtitle={filters.chemistry ? `${filters.chemistry.join(', ')}` : null}>
                                 <Textarea
                                     type="text"
                                     label="Chemical Formulas"
                                     description='Type an element or formula and hit "enter"'
-                                    placeholder={!chemistryVal ? 'Try "Cu" or "SiO2"' : ""}
-                                    value={chemistryInput || ""}
+                                    placeholder={!filters.chemistry ? 'Try "Cu" or "SiO2"' : ""}
+                                    value={filters.chemistry?.join(', ') || ""}
                                     classNames={{
                                         innerWrapper: ['flex flex-wrap'],
-                                        //display chips below input, add margin
-                                        input: [chemistryVal ? 'mb-1' : null]
+                                        input: [filters.chemistry ? 'mb-1' : null]
                                     }}
                                     minRows={1}
                                     size="md"
-                                    onValueChange={(value) => { setChemistryInput(value); }}
-                                    onKeyDown={(e) => {
-                                        if (e.key === "Enter") {
-                                            if (e.currentTarget.value.length) {
-                                                let currentChemistry = chemistryVal ? [...chemistryVal] : [];
-                                                currentChemistry?.push(e.currentTarget.value);
-                                                setChemistryVal(currentChemistry);
-                                                setChemistryInput("");
-                                            }
-                                            e.preventDefault();
-                                        }
-                                        if (e.key === "Backspace" && !e.currentTarget.value.length) {
-                                            let currentChemistry = chemistryVal ? [...chemistryVal] : [];
-                                            currentChemistry?.pop();
-                                            if (currentChemistry.length > 0) {
-                                                setChemistryVal(currentChemistry);
-                                            } else {
-                                                setChemistryVal(undefined);
-                                            }
-                                        }
-
-                                        setTimeout(() => {
-                                            if (e.key === "Backspace" && e.currentTarget.value === chemistryInput) {
-                                                let currentChemistry = chemistryVal ? [...chemistryVal] : [];
-                                                currentChemistry?.pop();
-                                                if (currentChemistry.length > 0) {
-                                                    setChemistryVal(currentChemistry);
-                                                } else {
-                                                    setChemistryVal(undefined);
-                                                }
-                                            }
-                                        }, 200)
-
-                                    }}
+                                    onValueChange={(value) => updateFilter("chemistry", value.split(', '))}
                                     endContent={
-                                        (chemistryVal?.map((val: string, index) => {
+                                        (filters.chemistry?.map((val: string, index) => {
                                             return (
                                                 <Chip className="mr-1 min-h-[28px]"
                                                     size="md"
                                                     onClose={() => {
-                                                        const newArray = chemistryVal.filter((chemval) => chemval !== val);
-                                                        if (newArray.length === 0) {
-                                                            setChemistryVal(undefined);
-                                                        } else {
-                                                            setChemistryVal(newArray);
-                                                        }
+                                                        const newArray = filters.chemistry?.filter((chemval) => chemval !== val);
+                                                        updateFilter("chemistry", newArray);
                                                     }}
                                                     key={index}
                                                     variant="bordered"
@@ -466,8 +359,8 @@ export default function MineralPageLayout({
                                     }
                                 />
                             </AccordionItem>
-                            <AccordionItem key="associates" aria-label="Associates" title="Associates" subtitle={associatesVal ? associatesVal.map((associate: MineralListItem) => associate.name).join(", ") : null}>
-                                <MineralAssociatesSearch minerals={associatesVal} onChange={setAssociatesVal} />
+                            <AccordionItem key="associates" aria-label="Associates" title="Associates" subtitle={filters.associates ? filters.associates.map((associate: MineralListItem) => associate.name).join(", ") : null}>
+                                <MineralAssociatesSearch minerals={filters.associates} onChange={(value) => updateFilter("associates", value)} />
                             </AccordionItem>
                         </Accordion>
                     </div>
@@ -477,70 +370,70 @@ export default function MineralPageLayout({
                 <div className='mb-4 md:mb-5 flex flex-col-reverse md:flex-row md:gap-x-10 items-center justify-between'>
                     <div className="w-full md:w-2/3 flex gap-1 flex-wrap pt-1 sm:pb-2 sm:pt-2 md:pt-0">
                         {
-                            (searchText) ? (
+                            (filters.name) ? (
                                 <Chip onClose={() => setSearchText(undefined)} variant="bordered">
-                                    {`Name: ${searchText}`}
+                                    {`Name: ${filters.name}`}
                                 </Chip>
                             ) : (
                                 <></>
                             )
                         }
                         {
-                            (hardnessVal) ? (
-                                <Chip onClose={() => setHardnessVal(undefined)} variant="bordered">
-                                    {`Hardness: ${hardnessVal[0].toString()} - ${hardnessVal[1].toString()}`}
+                            (filters.hardness) ? (
+                                <Chip onClose={() => updateFilter("hardness", undefined)} variant="bordered">
+                                    {`Hardness: ${filters.hardness[0].toString()} - ${filters.hardness[1].toString()}`}
                                 </Chip>
                             ) : (
                                 <></>
                             )
                         }
                         {
-                            (lustersVal) ? (
-                                <Chip onClose={() => setLustersVal(undefined)} variant="bordered">
-                                    {`Lusters: ${lustersVal.length}`}
+                            (filters.lusters) ? (
+                                <Chip onClose={() => updateFilter("lusters", undefined)} variant="bordered">
+                                    {`Lusters: ${filters.lusters.length}`}
                                 </Chip>
                             ) : (
                                 <></>
                             )
                         }
                         {
-                            (mineralClassVal) ? (
-                                <Chip onClose={() => setMineralClassVal(undefined)} variant="bordered">
-                                    {`Mineral Classes: ${mineralClassVal.length}`}
+                            (filters.mineralClasses) ? (
+                                <Chip onClose={() => updateFilter("mineralClasses", undefined)} variant="bordered">
+                                    {`Mineral Classes: ${filters.mineralClasses.length}`}
                                 </Chip>
                             ) : (
                                 <></>
                             )
                         }
                         {
-                            (crystalSystemsVal) ? (
-                                <Chip onClose={() => setCrystalSystemsVal(undefined)} variant="bordered">
-                                    {`Crystal Systems: ${crystalSystemsVal.length}`}
+                            (filters.crystalSystems) ? (
+                                <Chip onClose={() => updateFilter("crystalSystems", undefined)} variant="bordered">
+                                    {`Crystal Systems: ${filters.crystalSystems.length}`}
                                 </Chip>
                             ) : (
                                 <></>
                             )
                         }
                         {
-                            (chemistryVal) ? (
-                                <Chip onClose={() => setChemistryVal(undefined)} variant="bordered">
-                                    {`Chemistry: ${chemistryVal.join(', ')}`}
+                            (filters.chemistry) ? (
+                                <Chip onClose={() => updateFilter("chemistry", undefined)} variant="bordered">
+                                    {`Chemistry: ${filters.chemistry.join(', ')}`}
                                 </Chip>
                             ) : (
                                 <></>
                             )
                         }
                         {
-                            (associatesVal) ? (
-                                <Chip onClose={() => setAssociatesVal(undefined)} variant="bordered">
-                                    {`Associates: ${associatesVal.map((associate: MineralListItem) => associate.name).join(", ")}`}
+                            (filters.associates) ? (
+                                <Chip onClose={() => updateFilter("associates", undefined)} variant="bordered">
+                                    {`Associates: ${filters.associates.map((associate: MineralListItem) => associate.name).join(", ")}`}
                                 </Chip>
                             ) : (
                                 <></>
                             )
                         }
                         {
-                            (imageSearch || idsVal) ? (
+                            (imageSearch || filters.ids) ? (
                                 <Chip
                                     style={{ minWidth: "auto" }}
                                     classNames={{ avatar: "rounded-full", base: "truncate", content: "truncate" }}
@@ -551,7 +444,7 @@ export default function MineralPageLayout({
                                             alt="Uploaded Image"
                                         />) : undefined
                                     }
-                                    onClose={() => setIdsVal(undefined)}
+                                    onClose={() => updateFilter("ids", undefined)}
                                     variant="bordered"
                                 >
                                     {imageSearch ? `Image: ${imageSearch.name}` : "Image"}
