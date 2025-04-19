@@ -184,7 +184,6 @@ export default function MineralPageLayout({
     };
 
     const clearFilters = () => {
-        setSearchText(undefined);
         setFilters({
             lusters: undefined,
             hardness: undefined,
@@ -195,6 +194,7 @@ export default function MineralPageLayout({
             ids: undefined,
             name: undefined
         });
+        setSearchText(undefined);
     };
 
     const renderChildren = () => {
