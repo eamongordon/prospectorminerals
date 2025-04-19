@@ -106,8 +106,6 @@ export default function InfiniteScrollArticles({
             </div>
           )
         }
-
-        {/* loading spinner */}
         <div
           ref={ref}
           className={`${!page ? "hidden" : ""} mt-16 mb-16 flex items-center justify-center col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-3`}

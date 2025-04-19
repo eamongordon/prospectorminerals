@@ -138,7 +138,6 @@ export default function InfiniteScrollPhotos({
             </div>
           )
         }
-        {/* loading spinner */}
         <div
           ref={ref}
           className={`${!page ? "hidden" : ""} mt-16 mb-16 flex items-center justify-center col-span-2 sm:col-span-2 md:col-span-4 lg:col-span-5`}
