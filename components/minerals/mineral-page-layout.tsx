@@ -218,6 +218,7 @@ export default function MineralPageLayout({
                         isClearable={searchText ? true : false}
                         onValueChange={setSearchText}
                         endContent={
+                            !searchText ?
                             <>
                                 <div className='h-full flex items-center mr-3'>
                                     <Button as="label" preventFocusOnPress htmlFor="image-upload" variant="light" isIconOnly isLoading={isImageSearchLoading} className="cursor-pointer">
@@ -231,12 +232,11 @@ export default function MineralPageLayout({
                                         onChange={handleImageUpload}
                                     />
                                 </div>
-                                {!searchText && (
-                                    <div className='h-full flex items-center'>
-                                        <MagnifyingGlassIcon />
-                                    </div>
-                                )}
+                                <div className='h-full flex items-center'>
+                                    <MagnifyingGlassIcon />
+                                </div>
                             </>
+                            : undefined
                         }
                     />
                     <Button
