@@ -10,88 +10,77 @@ import { useDebounce } from "use-debounce";
 import { MineralAssociatesSearch } from "../minerals/mineral-associates-search";
 import LocalityCard from './locality-card';
 
+interface FiltersState {
+    name?: string;
+    minerals?: MineralListItem[];
+}
+
 export default function LocalitiesPageLayout({ filterObj, localities, mapElement, clearButton }: { filterObj: LocalitiesQueryParams, localities: LocalityDisplayFieldsetComponent[], mapElement: React.ReactElement, clearButton?: React.ReactElement }) {
-
-    const [selectedTab, SetSelectedTab] = useState<string | number>("map");
-    const [coord, setCoord] = useState([51.505, -0.09])
-
-    const SearchLocation = () => {
-        return (
-            <div className="search-location">
-                <input type="text" placeholder="Search Location" />
-            </div>
-        )
-    }
-
-    const GetMyLocation = () => {
-        const getMyLocation = () => {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition((position) => {
-                    setCoord([position.coords.latitude, position.coords.longitude])
-                })
-            } else {
-                console.log("Geolocation is not supported by this browser.")
-            }
-        }
-
-        return (
-            <div className="get-my-location">
-                <button onClick={getMyLocation}>Get My Location</button>
-            </div>
-        )
-    }
-
-    //OLD CODE TO MERGE
     const { name, minerals } = Object(filterObj);
 
-    const initialChemistryRender = useRef(true);
-    const [searchText, setSearchText] = useState(name);
-    const [isMobileFiltersOpen, setIsisMobileFiltersOpen] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
+
+    const [searchText, setSearchText] = useState(name);
+    const [filters, setFilters] = useState<FiltersState>({
+        name: name,
+        minerals: minerals,
+    });
+
+    const [isMobileFiltersOpen, setIsisMobileFiltersOpen] = useState(false);
     const [searchQuery] = useDebounce(searchText, 500);
-    
-    const [associatesVal, setAssociatesVal] = useState<MineralListItem[] | undefined>(minerals);
+    const [selectedTab, setSelectedTab] = useState<string | number>("map");
+
+    const initialRenderFilters = useRef(true);
+    const initialRenderSearchQuery = useRef(true);
+
+    const updateFilter = (key: string, value: any) => {
+        setFilters((prev) => ({ ...prev, [key]: value }));
+    };
 
     useEffect(() => {
-        if (initialChemistryRender.current) {
-            initialChemistryRender.current = false
-            return
+        if (initialRenderSearchQuery.current) {
+            initialRenderSearchQuery.current = false;
+            return;
         }
-        const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
-        if (!associatesVal) {
-            current.delete("minerals");
-        } else {
-            current.set("minerals", JSON.stringify(associatesVal));
+        if (searchQuery !== filters.name) {
+            updateFilter("name", searchQuery);
         }
-        //setChemistryInput("");
-        const search = current.toString();
-        const queryParam = search ? `?${search}` : "";
-        router.push(`${pathname}${queryParam}`);
-    }, [associatesVal]);
-
-    useEffect(() => {
-        if (initialRender.current) {
-            initialRender.current = false
-            return
-        }
-        const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
-        if (!searchQuery) {
-            current.delete("name");
-        } else {
-            current.set("name", searchQuery);
-        }
-        const search = current.toString();
-        const queryParam = search ? `?${search}` : "";
-        router.push(`${pathname}${queryParam}`);
     }, [searchQuery]);
 
-    const initialRender = useRef(true);
+    useEffect(() => {
+        if (initialRenderFilters.current) {
+            initialRenderFilters.current = false;
+            return;
+        }
+
+        const current = new URLSearchParams(Array.from(searchParams.entries()));
+
+        if (!filters.name) {
+            current.delete("name");
+        } else {
+            current.set("name", searchText);
+        }
+
+        if (!filters.minerals) {
+            current.delete("minerals");
+        } else {
+            current.set("minerals", JSON.stringify(filters.minerals));
+        }
+
+        const search = current.toString();
+        const queryParam = search ? `?${search}` : "";
+        router.push(`${pathname}${queryParam}`);
+    }, [filters]);
 
     const clearFilters = () => {
+        setFilters({
+            minerals: undefined,
+            name: undefined
+        });
         setSearchText(undefined);
-    }
+    };
 
     const renderChildren = () => {
         return Children.map(clearButton, (child) => {
@@ -100,16 +89,6 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
             });
         });
     };
-
-    /*
-    const cloneAndAddClassName = (element: React.ReactElement, additionalClassName: string): ReactElement => {
-        return cloneElement(element, {
-            className: `${element.props.className || ''} ${additionalClassName}`
-        });
-    };
-
-    const updatedLocalityCard = cloneAndAddClassName(<LocalityCard name={locality.name} id={locality.id} />, 'locality-card-text');
-*/
 
     return (
         <div>
@@ -144,11 +123,7 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                     <div className={`${isMobileFiltersOpen ? "contents sm:contents" : "hidden sm:contents"}`}>
                         <Accordion>
                             <AccordionItem key="minerals" aria-label="Minerals" title="Minerals">
-                                <MineralAssociatesSearch minerals={associatesVal} onChange={setAssociatesVal} />
-                            </AccordionItem>
-                            <AccordionItem key="Extra dev" aria-label="Extra dev" title="Extra dev" className="hidden">
-                                <SearchLocation />
-                                <GetMyLocation />
+                                <MineralAssociatesSearch minerals={filters.minerals} onChange={(value) => updateFilter("minerals", value)} />
                             </AccordionItem>
                         </Accordion>
                     </div>
@@ -157,7 +132,7 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                     <Tabs aria-label="Localities" classNames={
                         { base: 'flex justify-end', tabList: "w-48 absolute z-10 mt-2 mr-4 sm:m-2", panel: "py-0 px-0" }
                     }
-                        onSelectionChange={SetSelectedTab}
+                        onSelectionChange={setSelectedTab}
                         destroyInactiveTabPanel={false}
                     >
                         <Tab key="map"
