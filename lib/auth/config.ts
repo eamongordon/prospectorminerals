@@ -1,8 +1,6 @@
 import { NextAuthConfig } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import prisma from "@/lib/prisma";
 import { baseUrl } from "@/lib/utils";
 import { JWT } from "next-auth/jwt";
 
@@ -56,7 +54,6 @@ export default {
         verifyRequest: `/login`,
         error: "/login", // Error code passed in query string as ?error=
     },
-    adapter: PrismaAdapter(prisma),
     session: { strategy: "jwt" },
     theme: {
         colorScheme: "auto", // "auto" | "dark" | "light"
@@ -87,24 +84,7 @@ export default {
                 ...(token.sub && { id: token.sub }),
             };
             return session;
-        },
-        signIn: async ({ user, email }) => {
-            if (email?.verificationRequest) {
-                //if email provider is used and user exists in table, send a magic link
-                const userExists = await prisma.user.findUnique({
-                    where: {
-                        email: user.email || undefined
-                    },
-                });
-                if (userExists) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return true;
-            }
-        },
+        }
     }
 
 } satisfies NextAuthConfig

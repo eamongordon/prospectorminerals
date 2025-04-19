@@ -4,10 +4,32 @@ import Nodemailer from "next-auth/providers/nodemailer";
 import { createTransport } from "nodemailer";
 import authConfig from "./config";
 import prisma from "@/lib/prisma";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 import { compare } from "bcrypt";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   ...authConfig,
+  adapter: PrismaAdapter(prisma),
+  callbacks: {
+    ...authConfig.callbacks,
+    signIn: async ({ user, email }) => {
+      if (email?.verificationRequest) {
+        //if email provider is used and user exists in table, send a magic link
+        const userExists = await prisma.user.findUnique({
+          where: {
+            email: user.email || undefined
+          },
+        });
+        if (userExists) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
+    },
+  },
   providers: [
     ...authConfig.providers,
     CredentialsProvider({
