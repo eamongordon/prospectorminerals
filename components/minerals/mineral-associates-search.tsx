@@ -211,6 +211,7 @@ export function MineralAssociatesSearch({ minerals, onChange }: { minerals?: Min
                                 blurDataURL={item.photos[0].photo.imageBlurhash || undefined}
                             /> : undefined}
                         key={item.name}
+                        onMouseDown={(e) => e.preventDefault()} // Prevent losing focus
                     >
                         {item.name}
                     </ListboxItem>
