@@ -223,6 +223,10 @@ export default function MineralPageLayout({
                     const queryParam = search ? `?${search}` : "";
                     router.push(`${pathname}${queryParam}`);
                 }
+
+                // Dispose of tensors and model
+                tf.dispose([tensor, predictionTensor]);
+                model.dispose();
             } catch (error) {
                 console.error("Error during image search:", error);
             } finally {
