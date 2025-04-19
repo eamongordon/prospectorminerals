@@ -168,6 +168,13 @@ export default function MineralPageLayout({
         router.push(`${pathname}${queryParam}`);
     }, [associatesVal]);
 
+    useEffect(() => {
+        // Remove imageSearch after IDs are removed from query params
+        if (!ids && imageSearch) {
+            setImageSearch(null);
+        }
+    }, [ids]);
+
     const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
             const file = event.target.files[0];
@@ -533,7 +540,6 @@ export default function MineralPageLayout({
                                         />) : undefined
                                     }
                                     onClose={() => {
-                                        setImageSearch(null);
                                         const current = new URLSearchParams(Array.from(searchParams.entries()));
                                         current.delete("ids");
                                         const search = current.toString();
