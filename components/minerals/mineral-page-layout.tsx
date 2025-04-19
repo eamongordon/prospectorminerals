@@ -18,7 +18,7 @@ export default function MineralPageLayout({
     sortDropdownElem: React.ReactElement,
     filterObj?: MineralsFilterObj
 }) {
-    const { name, minHardness, maxHardness, lusters, mineralClasses, crystalSystems, chemistry, associates } = Object(filterObj);
+    const { name, minHardness, maxHardness, lusters, mineralClasses, crystalSystems, chemistry, associates, ids } = Object(filterObj);
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -31,6 +31,7 @@ export default function MineralPageLayout({
     const initialHardnessRender = useRef(true);
     const initialChemistryRender = useRef(true);
     const initialAssociatesRender = useRef(true);
+    const initialIdsRender = useRef(true);
     const [searchText, setSearchText] = useState(name);
     const [lustersVal, setLustersVal] = useState<string[] | undefined>(lusters);
     const [hardnessVal, setHardnessVal] = useState<number[] | undefined>((minHardness != null && maxHardness != null) ? [minHardness, maxHardness] : undefined);
@@ -45,9 +46,7 @@ export default function MineralPageLayout({
     const [searchQuery] = useDebounce(searchText, 500);
     const [imageSearch, setImageSearch] = useState<File | null>(null);
     const [isImageSearchLoading, setIsImageSearchLoading] = useState(false);
-
-    const current = new URLSearchParams(Array.from(searchParams.entries()));
-    const ids = current.get("ids");
+    const [idsVal, setIdsVal] = useState<string[] | undefined>(ids);
 
     useEffect(() => {
         if (initialRender.current) {
@@ -169,11 +168,23 @@ export default function MineralPageLayout({
     }, [associatesVal]);
 
     useEffect(() => {
-        // Remove imageSearch after IDs are removed from query params
-        if (!ids && imageSearch) {
-            setImageSearch(null);
+        if (initialIdsRender.current) {
+            initialIdsRender.current = false
+            return
         }
-    }, [ids]);
+        const current = new URLSearchParams(Array.from(searchParams.entries()));
+        if (!idsVal) {
+            current.delete("ids");
+            if (imageSearch) {
+                setImageSearch(null);
+            }
+        } else {
+            current.set("ids", JSON.stringify(idsVal));
+        }
+        const search = current.toString();
+        const queryParam = search ? `?${search}` : "";
+        router.push(`${pathname}${queryParam}`);
+    }, [idsVal]);
 
     const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
@@ -217,11 +228,7 @@ export default function MineralPageLayout({
                     .filter((label) => label !== null);
 
                 if (mineralIds.length > 0) {
-                    const current = new URLSearchParams(Array.from(searchParams.entries()));
-                    current.set("ids", JSON.stringify(mineralIds)); // Update the ids filter
-                    const search = current.toString();
-                    const queryParam = search ? `?${search}` : "";
-                    router.push(`${pathname}${queryParam}`);
+                    setIdsVal(mineralIds);
                 }
 
                 // Dispose of tensors and model
@@ -244,7 +251,7 @@ export default function MineralPageLayout({
         setCrystalSystemsVal(undefined);
         setChemistryVal(undefined);
         setAssociatesVal(undefined);
-        setImageSearch(null);
+        setIdsVal(undefined);
     }
 
     const renderChildren = () => {
@@ -533,7 +540,7 @@ export default function MineralPageLayout({
                             )
                         }
                         {
-                            (imageSearch || ids) ? (
+                            (imageSearch || idsVal) ? (
                                 <Chip
                                     style={{ minWidth: "auto" }}
                                     classNames={{ avatar: "rounded-full", base: "truncate", content: "truncate" }}
@@ -544,13 +551,7 @@ export default function MineralPageLayout({
                                             alt="Uploaded Image"
                                         />) : undefined
                                     }
-                                    onClose={() => {
-                                        const current = new URLSearchParams(Array.from(searchParams.entries()));
-                                        current.delete("ids");
-                                        const search = current.toString();
-                                        const queryParam = search ? `?${search}` : "";
-                                        router.push(`${pathname}${queryParam}`);
-                                    }}
+                                    onClose={() => setIdsVal(undefined)}
                                     variant="bordered"
                                 >
                                     {imageSearch ? `Image: ${imageSearch.name}` : "Image"}

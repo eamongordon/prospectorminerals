@@ -15,6 +15,7 @@ export type MineralsFilterObj = {
     chemistry?: string[],
     associates?: string[] | MineralListItem[],
     id?: string,
+    ids?: string[],
     slug?: string
 }
 

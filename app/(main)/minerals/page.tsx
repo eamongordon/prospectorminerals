@@ -53,7 +53,7 @@ const Page = async (
         minHardness: minHardness, 
         maxHardness: maxHardness, 
         associates: associates, 
-        ids: ids // Add ids to the filter object
+        ids: ids
     };
 
     const photosQuery = await fetchMinerals({ 
