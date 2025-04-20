@@ -67,15 +67,13 @@ export default async function Home() {
       <div className="pb-20 sm:pb-40">
         <Hero />
       </div>
-      <ul className='pb-20 sm:pb-40 max-w-[1024px] mx-auto gap-4 grid grid-cols-1 w-600 md:grid-cols-2 lg:grid-cols-3 justify-items-center' id="explore">
+      <div className='px-4 lg:px-0 pb-20 sm:pb-40 max-w-[1024px] mx-auto gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center' id="explore">
         {
           cardItemList.map((obj, index) => (
-            <li key={index}>
-              <Card title={obj.title} description={obj.description} cta={obj.cta} image={obj.image} link={obj.link} />
-            </li>
+            <Card title={obj.title} description={obj.description} cta={obj.cta} image={obj.image} link={obj.link} key={index} />
           ))
         }
-      </ul>
+      </div>
     </main>
   )
 }
