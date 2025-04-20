@@ -367,7 +367,7 @@ export default function MineralPageLayout({
                 </div>
             </div>
             <div className="flex-col items-center w-full overflow-clip">
-                <div className='mb-4 md:mb-5 flex flex-col-reverse md:flex-row md:gap-x-10 items-center justify-between'>
+                <div className='mb-4 md:mb-5 flex flex-col-reverse md:flex-row md:gap-8 items-center justify-between'>
                     <div className="w-full md:w-2/3 flex gap-1 flex-wrap pt-1 sm:pb-2 sm:pt-2 md:pt-0">
                         {
                             (filters.name) ? (
