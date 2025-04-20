@@ -435,8 +435,7 @@ export default function MineralPageLayout({
                         {
                             (imageSearch || filters.ids) ? (
                                 <Chip
-                                    style={{ minWidth: "auto" }}
-                                    classNames={{ avatar: "rounded-full", base: "truncate", content: "truncate" }}
+                                    classNames={{ avatar: "rounded-full", base: "min-w-0 truncate", content: "truncate" }}
                                     avatar={imageSearch ?
                                         (<img
                                             className="object-cover h-full w-full"
