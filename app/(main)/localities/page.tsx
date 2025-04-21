@@ -2,7 +2,7 @@ import LocalitiesPageLayout from "@/components/localities/localities-page-layout
 import { fetchLocalities } from '@/lib/fetchers';
 import type { MineralListItem } from '@/types/types';
 import ClearFilters from '@/components/localities/clear-filters';
-import LocalityMap from '@/components/localities/locality-map';
+import LocalityMapWrapper from '@/components/localities/locality-map-wrapper';
 import type { Metadata } from 'next'
 import { convertLocalityDataToComponentType } from "@/types/prisma";
 
@@ -34,12 +34,16 @@ const Page = async (
     const localities = await fetchLocalities({ filterObj: { ...filterObj, minerals: minerals ? minerals.map((obj: MineralListItem) => obj.name) : undefined }, cursor: undefined, limit: 100, ...(property && order ? { sortObj: { property: property, order: order } } : {}) });
     const serializedKey = JSON.stringify({ filterObj, property, order });
     const modifiedLocalities = convertLocalityDataToComponentType(localities.results);
+
+    
     return (
         <main>
             <LocalitiesPageLayout
                 filterObj={{ ...filterObj, minerals: minerals }}
                 localities={modifiedLocalities}
-                mapElement={<LocalityMap localities={modifiedLocalities} center={[25, 0]} zoom={2} />}
+                mapElement={
+                    <LocalityMapWrapper localities={modifiedLocalities} center={[25, 0]} zoom={2} />
+                }
                 clearButton={
                     <ClearFilters key={serializedKey} />
                 }
