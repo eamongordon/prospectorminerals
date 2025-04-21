@@ -1,11 +1,10 @@
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { replaceLinks } from "@/lib/remark-plugins";
-import BlurImage from "@/components/blur-image";
+import { replaceImgs, replaceLinks } from "@/lib/remark-plugins";
 
 export default function MDX({ source }: { source: string }) {
   const components = {
     a: replaceLinks,
-    BlurImage
+    img: replaceImgs
   };
 
   return (

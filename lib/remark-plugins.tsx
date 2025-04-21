@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { ReactNode } from "react";
-//
+import type { ReactNode, ImgHTMLAttributes } from "react";
+import BlurImage from "@/components/blur-image";
+
 export function replaceLinks({
   href,
   children,
@@ -20,4 +21,10 @@ export function replaceLinks({
       {children} ↗
     </a>
   );
+}
+
+export function replaceImgs(props: ImgHTMLAttributes<HTMLImageElement>) {
+  // replace native <img> tags with <BlurImage />
+  const src = typeof props.src === "string" ? props.src : "/Fluorite-164_horiz-Optimized.jpg";
+  return <BlurImage {...props} src={src} alt={props.alt ?? ""} width={728} height={728} className="w-full rounded-xl md:rounded-2xl" />;
 }
