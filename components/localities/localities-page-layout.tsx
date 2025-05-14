@@ -3,7 +3,7 @@
 import type { LocalityDisplayFieldsetComponent } from "@/types/prisma";
 import type { LocalitiesQueryParams, MineralListItem } from '@/types/types';
 import { Accordion, AccordionItem, Button, Input, Tab, Tabs, Select, SelectItem } from "@heroui/react";
-import { Filter, Search as MagnifyingGlassIcon, Map, Rows } from 'lucide-react';
+import { Filter, Search as MagnifyingGlassIcon, Map, MapPin, Rows } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Children, cloneElement, useEffect, useRef, useState } from 'react';
 import { useDebounce } from "use-debounce";
@@ -254,6 +254,7 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                                     <Button
                                         type="button"
                                         className="w-full"
+                                        startContent={<MapPin height={18} />}
                                         onPress={autofillLocation}
                                     >
                                         Use Current Location
