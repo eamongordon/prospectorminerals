@@ -179,8 +179,8 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
 
     return (
         <div>
-            <div className="flex w-full flex-col sm:flex-row">
-                <div className="w-full sm:w-96 py-4 px-4 sm:p-2">
+            <div className="flex w-full flex-col sm:flex-row xl:max-h-[calc(80svh-64px)] xl:min-h-[400px]">
+                <div className="w-full sm:w-96 py-4 px-4 sm:p-2 lg:overflow-y-auto">
                     <Input
                         type="text"
                         label="Search"
@@ -319,7 +319,7 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                             }
                         </Tab>
                     </Tabs>
-                    <div className={`contents w-full max-h-[400px] aspect-[5/3] ${selectedTab !== "map" ? "hidden" : ""}`}>
+                    <div className={`contents w-full ${selectedTab !== "map" ? "hidden" : ""}`}>
                         {mapElement}
                     </div>
                 </div>
