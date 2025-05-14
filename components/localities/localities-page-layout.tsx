@@ -216,6 +216,7 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                                         placeholder="Latitude"
                                         min={-90}
                                         max={90}
+                                        step="any"
                                     />
                                     <Input
                                         type="number"
@@ -225,6 +226,7 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                                         placeholder="Longitude"
                                         min={-180}
                                         max={180}
+                                        step="any"
                                     />
                                     <div className="flex items-center gap-2">
                                         <Input
@@ -235,6 +237,7 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                                             placeholder="Radius"
                                             min={1}
                                             max={1000}
+                                            step="any"
                                             className="flex-1"
                                         />
                                         <Select
