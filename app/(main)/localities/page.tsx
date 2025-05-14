@@ -30,12 +30,30 @@ const Page = async (
         typeof searchParams.order === 'string' ? searchParams.order : undefined
     const minerals =
         typeof searchParams.minerals === 'string' ? JSON.parse(searchParams.minerals) : undefined
-    const filterObj = { name: name };
-    const localities = await fetchLocalities({ filterObj: { ...filterObj, minerals: minerals ? minerals.map((obj: MineralListItem) => obj.name) : undefined }, cursor: undefined, limit: 100, ...(property && order ? { sortObj: { property: property, order: order } } : {}) });
+
+    // New: location params
+    const latitude =
+        typeof searchParams.latitude === 'string' ? parseFloat(searchParams.latitude) : undefined;
+    const longitude =
+        typeof searchParams.longitude === 'string' ? parseFloat(searchParams.longitude) : undefined;
+    const radius =
+        typeof searchParams.radius === 'string' ? parseFloat(searchParams.radius) : undefined;
+    const radiusUnit =
+        typeof searchParams.radiusUnit === 'string' ? searchParams.radiusUnit : undefined;
+
+    const filterObj = { name, latitude, longitude, radius, radiusUnit };
+    const localities = await fetchLocalities({
+        filterObj: {
+            ...filterObj,
+            minerals: minerals ? minerals.map((obj: MineralListItem) => obj.name) : undefined
+        },
+        cursor: undefined,
+        limit: 100,
+        ...(property && order ? { sortObj: { property: property, order: order } } : {})
+    });
     const serializedKey = JSON.stringify({ filterObj, property, order });
     const modifiedLocalities = convertLocalityDataToComponentType(localities.results);
 
-    
     return (
         <main>
             <LocalitiesPageLayout

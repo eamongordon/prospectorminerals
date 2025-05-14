@@ -2,13 +2,15 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL") // uses connection pooling
-  directUrl = env("DATABASE_URL_UNPOOLED") // uses a direct connection
+  provider   = "postgresql"
+  url        = env("DATABASE_URL") // uses connection pooling
+  directUrl  = env("DATABASE_URL_UNPOOLED") // uses a direct connection
+  extensions = [postgis]
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 model User {
@@ -123,18 +125,19 @@ model Photo {
 }
 
 model Locality {
-  id                String    @id @default(cuid())
+  id                String                               @id @default(cuid())
   name              String
-  slug              String    @unique
+  slug              String                               @unique
   type              String
   coordinates_known Boolean
   description       String?
   latitude          Decimal
   longitude         Decimal
-  number            Int       @unique @default(autoincrement())
+  number            Int                                  @unique @default(autoincrement())
   minerals          Mineral[]
   photos            Photo[]
-  updatedAt         DateTime  @updatedAt
+  updatedAt         DateTime                             @updatedAt
+  location          Unsupported("geography(Point,4326)")?
 
   @@index([slug])
 }

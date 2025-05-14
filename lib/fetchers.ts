@@ -262,7 +262,34 @@ type FetchLocalitiesReturn<T extends string> = T extends 'full'
 
 export async function fetchLocalities<T extends string>({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: LocalitiesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: T }): Promise<FetchLocalitiesReturn<T>> {
   let queryArray = [];
-  const { name, minerals, id, slug } = Object(filterObj);
+  const { name, minerals, id, slug, latitude, longitude, radius, radiusUnit } = Object(filterObj);
+  
+  // Geospatial query
+  let geoIds: string[] | undefined = undefined;
+  if (
+    typeof latitude === "number" &&
+    typeof longitude === "number" &&
+    typeof radius === "number"
+  ) {
+    const radiusInKm = radiusUnit === "mile" ? radius * 1.60934 : radius;
+    const radiusMeters = radiusInKm * 1000;
+    const results = await prisma.$queryRaw<Array<{ id: string }>>(Prisma.sql`
+      SELECT id
+      FROM "Locality"
+      WHERE ST_DWithin(
+        location,
+        ST_SetSRID(ST_MakePoint(${longitude}, ${latitude}), 4326),
+        ${radiusMeters}
+      )
+    `);
+    geoIds = results.map(r => r.id);
+    // If no matches, short-circuit to return empty
+    if (geoIds.length === 0) {
+      return { results: [], next: undefined } as FetchLocalitiesReturn<T>;
+    }
+    queryArray.push({ id: { in: geoIds } });
+  }
+
   if (id) {
     queryArray.push({ id: { equals: id } });
   }
