@@ -31,7 +31,8 @@ export type LocalitiesFilterObj = {
 
 export type ArticlesFilterObj = {
     title?: string,
-    id?: string
+    id?: string,
+    slug?: string
 }
 
 
@@ -40,7 +41,7 @@ export type LocalitiesQueryParams = {
     type_code?: string,
     latitude?: number,
     longitude?: number,
-    minerals?: {name: string, image: string}[]
+    minerals?: { name: string, image: string }[]
 }
 
 export type MineralListItem = {

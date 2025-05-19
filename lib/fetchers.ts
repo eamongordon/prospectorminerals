@@ -263,7 +263,7 @@ type FetchLocalitiesReturn<T extends string> = T extends 'full'
 export async function fetchLocalities<T extends string>({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: LocalitiesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: T }): Promise<FetchLocalitiesReturn<T>> {
   let queryArray = [];
   const { name, minerals, id, slug, latitude, longitude, radius, radiusUnit } = Object(filterObj);
-  
+
   // Geospatial query
   let geoIds: string[] | undefined = undefined;
   if (
@@ -364,9 +364,12 @@ export async function FetchUniqueLocality<T extends string>(slug: string, fields
 
 export async function fetchPosts({ filterObj, cursor, limit, sortObj, fieldset }: { filterObj?: ArticlesFilterObj, cursor?: number, limit?: number, sortObj?: PhotosSortObj, fieldset?: string }) {
   let queryArray = [];
-  const { title, id } = Object(filterObj)
+  const { title, id, slug } = Object(filterObj)
   if (id) {
     queryArray.push({ id: { equals: id } });
+  }
+  if (slug) {
+    queryArray.push({ slug: { equals: slug } });
   }
   if (title) {
     queryArray.push({ title: { contains: title, mode: 'insensitive' } });
