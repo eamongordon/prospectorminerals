@@ -1,5 +1,4 @@
 import { NextAuthConfig } from "next-auth";
-import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { baseUrl } from "@/lib/utils";
 import { JWT } from "next-auth/jwt";
@@ -35,19 +34,7 @@ export default {
                     image: profile.picture,
                 }
             }
-        }),
-        GitHubProvider({
-            clientId: process.env.AUTH_GITHUB_ID as string,
-            clientSecret: process.env.AUTH_GITHUB_SECRET as string,
-            profile(profile) {
-                return {
-                    id: profile.id.toString(),
-                    name: profile.name || profile.login,
-                    email: profile.email,
-                    image: profile.avatar_url,
-                };
-            },
-        }),
+        })
     ],
     pages: {
         signIn: `/login`,
