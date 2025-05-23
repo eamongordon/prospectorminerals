@@ -10,7 +10,7 @@ export default function LocalityMapWrapper(props: React.ComponentProps<typeof Lo
     const Map = useMemo(() => dynamic(
         () => import('./locality-map'),
         {
-            loading: () => <Skeleton className="w-full aspect-[5/3] sm:h-full" />,
+            loading: () => <Skeleton className="w-full h-[calc(75svh-64px)] aspect-[5/3] sm:h-full" />,
             ssr: false
         }
     ), []);

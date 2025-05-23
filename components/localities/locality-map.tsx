@@ -21,7 +21,7 @@ export default function LocalityMap({ localities, center, zoom }: { localities: 
 
     return (
         <MapContainer
-            className='w-full aspect-[5/3] sm:h-full z-0 py-0'
+            className='w-full aspect-[5/3] h-[calc(75svh-64px)] sm:h-full z-0 py-0'
             center={center} zoom={zoom} scrollWheelZoom={false}>
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
