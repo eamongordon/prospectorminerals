@@ -2,9 +2,8 @@
 
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
-import { Button } from "@heroui/react";
+import { Button, addToast } from "@heroui/react";
 import { useState, useEffect } from "react";
-import { toast } from "sonner";
 
 export default function LoginButton({
   signup,
@@ -24,9 +23,15 @@ export default function LoginButton({
     const errorMessage = Array.isArray(error) ? error.pop() : error;
     if (errorMessage) {
       if (errorMessage === "OAuthAccountNotLinked") {
-        toast.error("It appears that you signed up with an email and password. Please log in with those credentials.")
+        addToast({
+          color: "danger",
+          title: "It appears that you signed up with an email and password. Please log in with those credentials."
+        });
       } else {
-        toast.error("There was an error logging in. Please try again.");
+        addToast({
+          color: "danger",
+          title: "There was an error logging in. Please try again."
+        });
       }
     }
   }, [error]);

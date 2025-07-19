@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, useRef } from 'react';
-import { Input, Button } from "@heroui/react";
+import { Input, Button, addToast } from "@heroui/react";
 import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
-import { toast } from "sonner";
 import Uploader from "./uploader";
 import va from "@vercel/analytics";
 import { type FormSubmitObj } from "@/lib/actions";
@@ -67,7 +66,10 @@ export default function Form({
     handleSubmit(submitObj).then(async (res: any) => {
       setLoading(false);
       if (res.error) {
-        toast.error(res.error);
+        addToast({
+          color: "danger",
+          title: res.error
+        });
       } else {
         va.track(`Updated ${inputAttrs.name}`, id ? { id } : {});
         if (id || slug) {
@@ -89,7 +91,10 @@ export default function Form({
           }
           router.refresh();
         }
-        toast.success(`Successfully updated ${inputAttrs.name}!`);
+        addToast({
+          color: "success",
+          title: `Successfully updated ${inputAttrs.name}!`
+        });
       }
     });
   };

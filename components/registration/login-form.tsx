@@ -6,7 +6,7 @@ import { Button, Input, Divider, Tab, Tabs } from "@heroui/react";
 import Image from "next/image";
 import Link from 'next/link';
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { toast } from "sonner";
+import { addToast } from "@heroui/react";
 import { createUser } from "@/lib/actions";
 import LoginButton from "./social-login-button";
 
@@ -161,24 +161,36 @@ export default function FormWrapper({ isModal, onCloseAction }: { isModal?: bool
       setLoading(false);
       const toastLoginSuccessMsg = initialLogin ? "Signed Up Successfully. Welcome aboard!" : "Logged In Successfully!";
       if (signInResult?.error) {
-        toast.error("Invalid Email or Password");
+        addToast({
+          color: "danger",
+          title: "Invalid Email or Password"
+        });
       } else {
         router.refresh();
         if (isModal) {
           onCloseAction?.();
-          toast.success(toastLoginSuccessMsg);
+          addToast({
+            color: "success",
+            title: toastLoginSuccessMsg
+          });
         } else {
           if (callbackUrl) {
             router.push(decodeURIComponent(callbackUrl));
           } else {
             router.push("/");
-            toast.success(toastLoginSuccessMsg);
+            addToast({
+              color: "success",
+              title: toastLoginSuccessMsg
+            });
           }
         }
       }
     } catch {
       setLoading(false);
-      toast.error("An unknown error occurred. Please try again later.");
+      addToast({
+        color: "danger",
+        title: "An unknown error occurred. Please try again later."
+      });
     }
   };
 
@@ -190,12 +202,21 @@ export default function FormWrapper({ isModal, onCloseAction }: { isModal?: bool
       setLoading(false);
       if (err instanceof Error) {
         if (err.message === "User already exists") {
-          toast.error("An account already exists under this email.");
+          addToast({
+            color: "danger",
+            title: "An account already exists under this email."
+          });
         } else {
-          toast.error("An error occurred. Please try again later.");
+          addToast({
+            color: "danger",
+            title: "An error occurred. Please try again later."
+          });
         }
       } else {
-        toast.error("An unknown error occurred. Please try again later.");
+        addToast({
+          color: "danger",
+          title: "An unknown error occurred. Please try again later."
+        });
       }
     }
   };
@@ -205,13 +226,22 @@ export default function FormWrapper({ isModal, onCloseAction }: { isModal?: bool
       const signInResult = await signIn('nodemailer', { redirect: false, email, callbackUrl: '/account/settings/#new-password' });
       setLoading(false);
       if (signInResult?.error) {
-        toast.error("There was an error sending the email. Please try again later.");
+        addToast({
+          color: "danger",
+          title: "There was an error sending the email. Please try again later."
+        });
       } else {
-        toast.success("Email Sent! Check your inbox.");
+        addToast({
+          color: "success",
+          title: "Email Sent! Check your inbox."
+        });
       }
     } catch {
       setLoading(false);
-      toast.error("There was an error sending the email. Please try again later.");
+      addToast({
+        color: "danger",
+        title: "There was an error sending the email. Please try again later."
+      });
     }
   };
 

@@ -6,8 +6,7 @@ import { updatePost, updatePostMetadata } from "@/lib/actions";
 import { Editor as NovelEditor } from "novel";
 import TextareaAutosize from "react-textarea-autosize";
 import { ExternalLink } from "lucide-react";
-import { toast } from "sonner";
-import { Button } from "@heroui/react";
+import { Button, addToast } from "@heroui/react";
 import { baseUrl } from "@/lib/utils";
 import Link from "next/link";
 
@@ -67,10 +66,10 @@ export default function Editor({ post }: { post: Post }) {
               Promise.all([
                 await updatePostMetadata(updatePostMetadataPublishedObj).then(
                   () => {
-                    toast.success(
-                      `Successfully ${data.published ? "unpublished" : "published"
-                      } your post.`,
-                    );
+                    addToast({
+                      color: "success",
+                      title: `Successfully ${data.published ? "unpublished" : "published"} your post.`
+                    });
                     setData((prev: any) => ({ ...prev, published: !prev.published }));
                   },
                 ),

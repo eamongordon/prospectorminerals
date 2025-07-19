@@ -3,8 +3,7 @@
 
 import { createPhotoBulk, createMineralBulk, createRelationsBulk, createLocalityBulk } from "@/lib/actions";
 import { useState } from "react";
-import { Button, Input } from "@heroui/react";
-import { toast } from "sonner";
+import { Button, Input, addToast } from "@heroui/react";
 
 export default function PhotoAdd() {
     const [loading, setLoading] = useState(false);
@@ -15,9 +14,15 @@ export default function PhotoAdd() {
         createPhotoBulk(textInput).then((res: any) => {
             setLoading(false);
             if (res.error) {
-                toast.error(res.error);
+                addToast({
+                    color: "danger",
+                    title: res.error
+                });
             } else {
-                toast.success("Added photos to DB");
+                addToast({
+                    color: "success",
+                    title: "Added photos to DB"
+                });
             }
         })
     }
@@ -26,9 +31,15 @@ export default function PhotoAdd() {
         createMineralBulk(textInput).then((res: any) => {
             setLoading(false);
             if (res.error) {
-                toast.error(res.error);
+                addToast({
+                    color: "danger",
+                    title: res.error
+                });
             } else {
-                toast.success("Added minerals to DB");
+                addToast({
+                    color: "success",
+                    title: "Added minerals to DB"
+                });
             }
         })
     }
@@ -37,9 +48,15 @@ export default function PhotoAdd() {
         createRelationsBulk(textInput).then((res: any) => {
             setLoading(false);
             if (res.error) {
-                toast.error(res.error);
+                addToast({
+                    color: "danger",
+                    title: res.error
+                });
             } else {
-                toast.success("Added minerals to DB");
+                addToast({
+                    color: "success",
+                    title: "Added relations to DB"
+                });
             }
         })
     }
@@ -48,9 +65,15 @@ export default function PhotoAdd() {
         createLocalityBulk(textInput).then((res: any) => {
             setLoading(false);
             if (res.error) {
-                toast.error(res.error);
+                addToast({
+                    color: "danger",
+                    title: res.error
+                });
             } else {
-                toast.success("Added minerals to DB");
+                addToast({
+                    color: "success",
+                    title: "Added localities to DB"
+                });
             }
         })
     }

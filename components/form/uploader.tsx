@@ -2,7 +2,7 @@
 
 import { cn, resizeImage } from "@/lib/utils";
 import { useRef, useState } from "react";
-import { toast } from "sonner";
+import { addToast } from "@heroui/react";
 import { X } from "lucide-react";
 
 export default function Uploader({
@@ -26,13 +26,19 @@ export default function Uploader({
   const handleUpload = (file: File | null) => {
     if (file) {
       if (file.size / 1024 / 1024 > 50) {
-        toast.error("File size too big (max 50MB)");
+        addToast({
+          color: "danger",
+          title: "File size too big (max 50MB)"
+        });
       } else if (
         !file.type.includes("png") &&
         !file.type.includes("jpg") &&
         !file.type.includes("jpeg")
       ) {
-        toast.error("Invalid file type (must be .png, .jpg, or .jpeg)");
+        addToast({
+          color: "danger",
+          title: "Invalid file type (must be .png, .jpg, or .jpeg)"
+        });
       } else {
         if (formFunction) {
           let formattedFileType;

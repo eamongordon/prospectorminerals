@@ -6,7 +6,7 @@ import va from "@vercel/analytics";
 import { signOut } from "next-auth/react";
 import { useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { toast } from "sonner";
+import { addToast } from "@heroui/toast";
 
 interface DeleteFormProps {
     type: "account" | "post";
@@ -35,16 +35,25 @@ export default function DeleteForm({ type, name }: DeleteFormProps) {
                     await deleteUser();
                     va.track("Deleted User");
                     signOut({ callbackUrl: "/" });
-                    toast.success(`Account deleted.`);
+                    addToast({
+                        color: "success",
+                        title: "Account Deleted"
+                    })
                 } else if (type === "post") {
                     await deletePost(slug);
                     va.track("Deleted Post");
                     router.refresh();
                     router.push(`/manage/posts`);
-                    toast.success(`Successfully deleted post!`);
+                    addToast({
+                        color: "success",
+                        title: "Post Deleted"
+                    });
                 }
             } catch (err: unknown) {
-                toast.error(`There was an error deleting your ${type}. Please try again later.`);
+                addToast({
+                    color: "danger",
+                    title: `There was an error deleting your ${type}. Please try again later.`
+                });
             } finally {
                 setLoading(false);
             }
