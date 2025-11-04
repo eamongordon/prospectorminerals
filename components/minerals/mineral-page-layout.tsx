@@ -7,6 +7,7 @@ import { Search as MagnifyingGlassIcon, Filter, Camera } from 'lucide-react';
 import { useDebounce } from 'use-debounce';
 import type { MineralsFilterObj, MineralListItem } from "@/types/types";
 import { MineralAssociatesSearch } from "./mineral-associates-search";
+import ChemistryChipsInput from "./chemistry-input";
 import * as tf from '@tensorflow/tfjs';
 
 interface FiltersState {
@@ -51,7 +52,6 @@ export default function MineralPageLayout({
     });
 
     const [imageSearch, setImageSearch] = useState<File | null>(null);
-    const [chemistryInput, setChemistryInput] = useState<string | undefined>(undefined);
     const [searchQuery] = useDebounce(searchText, 500);
     const [isImageSearchLoading, setIsImageSearchLoading] = useState(false);
 
@@ -328,56 +328,9 @@ export default function MineralPageLayout({
                                 </CheckboxGroup>
                             </AccordionItem>
                             <AccordionItem key="chemistry" aria-label="Chemistry" title="Chemistry" subtitle={filters.chemistry ? `${filters.chemistry.join(', ')}` : null}>
-                                <Textarea
-                                    type="text"
-                                    label="Chemical Formulas"
-                                    description='Type an element or formula and hit "enter"'
-                                    placeholder={!filters.chemistry ? 'Try "Cu" or "SiO2"' : ""}
-                                    value={chemistryInput || ""}
-                                    classNames={{
-                                        innerWrapper: ['flex flex-wrap'],
-                                        input: [filters.chemistry ? 'mb-1' : null]
-                                    }}
-                                    minRows={1}
-                                    size="md"
-                                    onValueChange={(value) => setChemistryInput(value)}
-                                    onKeyDown={(e) => {
-                                        if (e.key === 'Enter') {
-                                            e.preventDefault();
-                                            const token = (chemistryInput || '').trim();
-                                            if (token.length) {
-                                                const existing = filters.chemistry ? [...filters.chemistry] : [];
-                                                // deduplicate
-                                                if (!existing.includes(token)) {
-                                                    updateFilter('chemistry', [...existing, token]);
-                                                }
-                                                setChemistryInput('');
-                                            }
-                                        }
-                                        if (e.key === 'Backspace' && !e.currentTarget.value.length) {
-                                            const current = filters.chemistry ? [...filters.chemistry] : [];
-                                            current.pop();
-                                            updateFilter('chemistry', current.length ? current : undefined);
-                                        }
-                                    }}
-                                    endContent={
-                                        (filters.chemistry?.map((val: string, index) => {
-                                            return (
-                                                <Chip
-                                                    classNames={{ base: 'mr-1 min-h-[28px]' }}
-                                                    size="md"
-                                                    onClose={() => {
-                                                        const newArray = filters.chemistry?.filter((chemval) => chemval !== val);
-                                                        updateFilter('chemistry', newArray && newArray.length ? newArray : undefined);
-                                                    }}
-                                                    key={index}
-                                                    variant="flat"
-                                                >
-                                                    {val}
-                                                </Chip>
-                                            );
-                                        }))
-                                    }
+                                <ChemistryChipsInput
+                                    value={filters.chemistry}
+                                    onChange={(vals) => updateFilter('chemistry', vals)}
                                 />
                             </AccordionItem>
                             <AccordionItem key="associates" aria-label="Associates" title="Associates" subtitle={filters.associates ? filters.associates.map((associate: MineralListItem) => associate.name).join(", ") : null}>
