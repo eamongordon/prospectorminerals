@@ -51,6 +51,7 @@ export default function MineralPageLayout({
     });
 
     const [imageSearch, setImageSearch] = useState<File | null>(null);
+    const [chemistryInput, setChemistryInput] = useState<string | undefined>(undefined);
     const [searchQuery] = useDebounce(searchText, 500);
     const [isImageSearchLoading, setIsImageSearchLoading] = useState(false);
 
@@ -332,29 +333,49 @@ export default function MineralPageLayout({
                                     label="Chemical Formulas"
                                     description='Type an element or formula and hit "enter"'
                                     placeholder={!filters.chemistry ? 'Try "Cu" or "SiO2"' : ""}
-                                    value={filters.chemistry?.join(', ') || ""}
+                                    value={chemistryInput || ""}
                                     classNames={{
                                         innerWrapper: ['flex flex-wrap'],
                                         input: [filters.chemistry ? 'mb-1' : null]
                                     }}
                                     minRows={1}
                                     size="md"
-                                    onValueChange={(value) => updateFilter("chemistry", value.split(', '))}
+                                    onValueChange={(value) => setChemistryInput(value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') {
+                                            e.preventDefault();
+                                            const token = (chemistryInput || '').trim();
+                                            if (token.length) {
+                                                const existing = filters.chemistry ? [...filters.chemistry] : [];
+                                                // deduplicate
+                                                if (!existing.includes(token)) {
+                                                    updateFilter('chemistry', [...existing, token]);
+                                                }
+                                                setChemistryInput('');
+                                            }
+                                        }
+                                        if (e.key === 'Backspace' && !e.currentTarget.value.length) {
+                                            const current = filters.chemistry ? [...filters.chemistry] : [];
+                                            current.pop();
+                                            updateFilter('chemistry', current.length ? current : undefined);
+                                        }
+                                    }}
                                     endContent={
                                         (filters.chemistry?.map((val: string, index) => {
                                             return (
-                                                <Chip className="mr-1 min-h-[28px]"
+                                                <Chip
+                                                    classNames={{ base: 'mr-1 min-h-[28px]' }}
                                                     size="md"
                                                     onClose={() => {
                                                         const newArray = filters.chemistry?.filter((chemval) => chemval !== val);
-                                                        updateFilter("chemistry", newArray);
+                                                        updateFilter('chemistry', newArray && newArray.length ? newArray : undefined);
                                                     }}
                                                     key={index}
-                                                    variant="bordered"
+                                                    variant="flat"
                                                 >
                                                     {val}
                                                 </Chip>
-                                            )
+                                            );
                                         }))
                                     }
                                 />
