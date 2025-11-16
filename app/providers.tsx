@@ -5,7 +5,6 @@ import { SessionProvider } from "next-auth/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { useRouter } from 'next/navigation';
 import { ToastProvider } from "@heroui/toast";
-import { workSansClassName } from '@/lib/utils';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter();

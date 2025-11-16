@@ -7,7 +7,7 @@ import { Post, Prisma } from '@prisma/client';
 import { del, put } from "@vercel/blob";
 import { hash } from "bcrypt";
 import { customAlphabet } from "nanoid";
-import { revalidateTag } from "next/cache";
+import { updateTag } from "next/cache";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -477,9 +477,7 @@ export const updatePost = async (data: Post) => {
         content: data.content,
       },
     });
-    await revalidateTag(
-      `post-${post.slug}`,
-    );
+    updateTag(`post-${post.slug}`);
     return response;
   } catch (error: any) {
     return {
@@ -529,9 +527,7 @@ export const updatePostMetadata = async (
         },
       });
     }
-    await revalidateTag(
-      `post-${slug}`,
-    );
+    updateTag(`post-${slug}`);
     return response;
   } catch (error: any) {
     if (error.code === "P2002") {
@@ -556,9 +552,7 @@ export const createPost = async (_?: FormData) => {
   const response = await prisma.post.create({
     data: {},
   });
-  await revalidateTag(
-    `posts`,
-  );
+  updateTag(`posts`);
   return response;
 };
 
@@ -575,9 +569,7 @@ export const deletePost = async (postSlug: string) => {
         slug: postSlug
       },
     });
-    await revalidateTag(
-      `posts`,
-    );
+    updateTag(`posts`);
     return response;
   } catch (error: any) {
     return {
