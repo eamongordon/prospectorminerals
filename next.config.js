@@ -4,7 +4,8 @@ const nextConfig = {
         remotePatterns: [
             { hostname: process.env.BLOB_HOSTNAME },
             { hostname: "lh3.googleusercontent.com", pathname: '/a/**' },
-        ]
+        ],
+        qualities: [25, 50, 75]
     },
     async redirects() {
         return [
