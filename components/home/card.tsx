@@ -19,7 +19,7 @@ export default function NavCard({
     blurDataURL?: string;
 }) {
     return (
-        <Link href={link}>
+        <Link href={link} className="contents">
             <Card className="w-full h-[240px] dark:border dark:border-gray-400 relative justify-end px-2">
                 <BlurImage
                     alt="Card background"
