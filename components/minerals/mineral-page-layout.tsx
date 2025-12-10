@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, Children, cloneElement } from "react";
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
-import { Accordion, AccordionItem, Slider, CheckboxGroup, Checkbox, Input, Chip, Button, Textarea } from "@heroui/react";
+import { Accordion, AccordionItem, Slider, CheckboxGroup, Checkbox, Input, Chip, Button } from "@heroui/react";
 import { Search as MagnifyingGlassIcon, Filter, Camera } from 'lucide-react';
 import { useDebounce } from 'use-debounce';
 import type { MineralsFilterObj, MineralListItem } from "@/types/types";

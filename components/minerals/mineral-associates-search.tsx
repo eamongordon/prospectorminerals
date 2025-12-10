@@ -1,6 +1,5 @@
 "use client";
 
-import { fetchMinerals } from '@/lib/fetchers';
 import type { MineralDisplayFieldset } from "@/types/prisma";
 import { MineralListItem } from '@/types/types';
 import { Chip, Listbox, ListboxItem, Spinner, Textarea } from "@heroui/react";
