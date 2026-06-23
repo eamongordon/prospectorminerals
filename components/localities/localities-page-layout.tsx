@@ -272,7 +272,7 @@ export default function LocalitiesPageLayout({ filterObj, localities, mapElement
                         </Accordion>
                     </div>
                 </div>
-                <div className="flex-col items-center w-full">
+                <div className="flex-col items-center w-full lg:overflow-y-auto">
                     <Tabs aria-label="Localities" classNames={
                         { base: 'flex justify-end', tabList: "w-72 absolute z-10 mt-2 mr-4 sm:m-2", panel: "py-0 px-0" }
                     }
