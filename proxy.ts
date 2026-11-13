@@ -1,9 +1,11 @@
 import NextAuth from "next-auth"
+import type { NextFetchEvent, NextRequest } from "next/server"
 import authConfig from "@/lib/auth/config"
+import { logBotHit, matchAiBot } from "@/lib/bot-log"
 
 export const { auth } = NextAuth(authConfig)
 
-export default auth((req) => {
+const authProxy = auth((req) => {
   const { pathname } = req.nextUrl;
   const url = new URL(req.url);
   const searchParams = url.searchParams;
@@ -25,8 +27,32 @@ export default auth((req) => {
       return Response.redirect(redirectUrl);
     }
   }
-})
+}) as unknown as (req: NextRequest, event: NextFetchEvent) => Response | Promise<Response | undefined> | undefined
+
+const AUTH_PATHS = /^\/(manage|account)(\/|$)|^\/(sandbox|login|signup)$/
+
+export default function proxy(req: NextRequest, event: NextFetchEvent) {
+  const userAgent = req.headers.get('user-agent');
+  const bot = matchAiBot(userAgent);
+  if (bot && userAgent) {
+    // Only matched AI bots are logged; human visitors' IPs are never read or stored.
+    const ip = req.headers.get('x-real-ip') ?? req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? null;
+    event.waitUntil(logBotHit({
+      bot,
+      userAgent,
+      ip,
+      method: req.method,
+      path: req.nextUrl.pathname,
+      query: req.nextUrl.search,
+      hostname: req.nextUrl.hostname,
+      referrer: req.headers.get('referer'),
+    }));
+  }
+
+  if (AUTH_PATHS.test(req.nextUrl.pathname)) return authProxy(req, event);
+}
 
 export const config = {
-  matcher: ["/manage/:path*", "/account/:path*", "/sandbox", "/login", "/signup"]
+  // Every request except API routes, build output and static files, so cached pages are still seen.
+  matcher: ["/((?!api/|_next/|.*\\.(?:ico|png|jpe?g|gif|svg|webp|avif|css|js|map|woff2?|ttf|otf|mp4|webm|json)$).*)"]
 }
